@@ -18,12 +18,12 @@ years <- c('1962-63')
 
 
 
--------------------------------------------------------
+#-------------------------------------------------------
   
 from <- 1962
 to <- lubridate::year(Sys.Date())
 range_ <- c(.desde:.hasta)
-pages <- c(1:(from - to +1))
+pages <- c(1:(to - (from - 1)))
 
 
 take_years <-  function(x){
@@ -35,30 +35,32 @@ take_years <-  function(x){
 }
 
 # Getting the data
-URL <- rbindlist(
+URLs <- rbindlist(
   lapply(
     pages, take_years),
   fill = TRUE
 )
-URL <- as.character(URL$b[.pages])
+URLs <- as.character(URLs$df[pages])
+all_rosters <- purrr::map(URLs, get_roster)
+historic_roster <- data.table::rbindlist(data_frames,
+                                              fill = TRUE)
 
 
-Catcher1 <- data.frame(Equipo = character(), P_URL = character())
-for(i in URL) {
-  df1 <- read_html(i)
-  Equipo <- df1 %>% 
-    html_nodes(css = '.sortable') %>% 
-    html_table(fill = TRUE) %>% 
-    .[[1]] 
-  
-  P_URL <- df1 %>%
-    html_nodes(css = '.sortable') %>% 
-    html_table(fill = TRUE) %>% 
-    .[[2]] 
-  
-  temp <- data.frame(Equipo, P_URL)
-  Catcher1 <- rbind(Catcher1, temp)
-  cat("*")
-}
+# URLs <- as.character(URL$b[.pages])
 
-fin <- length(Catcher1$Equipo)
+# for(i in URLs) {
+#   df1 <- read_html(i)
+#   Equipo <- df1 %>% 
+#     html_nodes(css = '.sortable') %>% 
+#     html_table(fill = TRUE) %>% 
+#     .[[1]] 
+#   
+#   P_URL <- df1 %>%
+#     html_nodes(css = '.sortable') %>% 
+#     html_table(fill = TRUE) %>% 
+#     .[[2]] 
+#   
+#   temp <- data.frame(Equipo, P_URL)
+#   Catcher1 <- rbind(Catcher1, temp)
+#   cat("*")
+# }

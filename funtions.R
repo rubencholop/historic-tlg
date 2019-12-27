@@ -5,10 +5,10 @@ library(futile.logger)
 
 
 #roster players ----
-get_roster <- function(.tgl_page){
+get_roster <- function(.URL){
   flog.info('Getting available URl')
   
-  roster <- read_html(.tgl_page) %>% 
+  roster <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
     .[[1]] %>% 
@@ -35,10 +35,10 @@ get_roster <- function(.tgl_page){
 
 
 # Batting players ---- 
-get_batting <- function(.tgl_page){
+get_batting <- function(.URL){
   flog.info('Getting available URl')
   
-  batting <- read_html(.tgl_page) %>% 
+  batting <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
     .[[2]] %>% 
@@ -84,10 +84,10 @@ get_batting <- function(.tgl_page){
 
 
 # Pitching players ----
-get_pitching <- function(.tgl_page){
+get_pitching <- function(.URL){
   flog.info('Getting available URl')
   
-  pitching <- read_html(.tgl_page) %>% 
+  pitching <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
     .[[3]] %>% 
