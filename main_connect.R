@@ -3,6 +3,7 @@ library(dplyr)
 library(rvest)
 library(futile.logger)
 library(data.table)
+library(progress)
 #page http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1962-63
 
 
@@ -21,9 +22,9 @@ years <- c('1962-63')
 #-------------------------------------------------------
   
 from <- 1962
-to <- lubridate::year(Sys.Date())
-range_ <- c(.desde:.hasta)
-pages <- c(1:(to - (from - 1)))
+to <- lubridate::year(Sys.Date()) + 1
+range_ <- c(from:to)
+pages <- c(1:(to - (from )))
 
 
 take_years <-  function(x){
@@ -41,9 +42,18 @@ URLs <- rbindlist(
   fill = TRUE
 )
 URLs <- as.character(URLs$df[pages])
-all_rosters <- purrr::map(URLs, get_roster)
+all_rosters <- purrr::map(URLs, get_roster) 
 historic_roster <- data.table::rbindlist(data_frames,
                                               fill = TRUE)
+
+
+.test <- all_rosters[-c(14)]
+
+# .pb <- progress_bar$new(total = 100)
+# for (i in 1:100) {
+#   .pb$tick()
+#   Sys.sleep(1 / 100)
+# }
 
 
 # URLs <- as.character(URL$b[.pages])
