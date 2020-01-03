@@ -4,6 +4,8 @@ library(rvest)
 library(futile.logger)
 library(data.table)
 library(progress)
+library(stringr)
+library(purrr)
 #page http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1962-63
 
 
@@ -18,21 +20,20 @@ years <- c('1962-63')
 .tgl_page <- paste('http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=', years, sep = "" )
 
 
-
-#-------------------------------------------------------
-  
+# Function to get a list with df ----
 from <- 1962
 to <- lubridate::year(Sys.Date()) + 1
 range_ <- c(from:to)
 pages <- c(1:(to - (from )))
-
 
 take_years <-  function(x){
   df <- paste(
     "http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=", range_[x], "-", substring(range_[x+1],3),
     sep=""
   )
-  data.frame(df)
+  years <- str_extract(x, '(?<=TIB&TE=).*')
+  data.frame(df) %>% 
+    mutate(years = years)
 }
 
 # Getting the data
@@ -40,14 +41,13 @@ URLs <- rbindlist(
   lapply(
     pages, take_years),
   fill = TRUE
-)
+) 
 URLs <- as.character(URLs$df[pages])
-all_rosters <- purrr::map(URLs, get_roster) 
-historic_roster <- data.table::rbindlist(data_frames,
+all_rosters <- map(URLs, get_roster) %>% 
+  keep(function(x) nrow(x) > 0)
+
+historic_roster <- data.table::rbindlist(all_rosters,
                                               fill = TRUE)
-
-
-.test <- all_rosters[-c(14)]
 
 # .pb <- progress_bar$new(total = 100)
 # for (i in 1:100) {
