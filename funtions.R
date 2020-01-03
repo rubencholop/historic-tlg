@@ -7,6 +7,7 @@ library(futile.logger)
 #roster players ----
 get_roster <- function(.URL){
   flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
   
   roster <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
@@ -26,7 +27,9 @@ get_roster <- function(.URL){
       'estado' = X10,
       'ciudad' = X11
     ) %>% 
-    subset(jugador != 'Nombre')
+    subset(jugador != 'Nombre') %>% 
+    mutate(years = years) %>% 
+    select(years, jugador, name, pos, bat, lan, exp, pais, estado, ciudad)
   flog.info('Data Wrangling completed')
   
   flog.info('Roster Df')
@@ -37,6 +40,7 @@ get_roster <- function(.URL){
 # Batting players ---- 
 get_batting <- function(.URL){
   flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
   
   batting <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
@@ -74,7 +78,11 @@ get_batting <- function(.URL){
     ) %>% 
     subset(edad != 'EDAD') %>% 
     slice(1:(n()-3)
-    )
+    ) %>% 
+    mutate(years = years) 
+  # %>% 
+    # select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, sb, cs, bb,s,
+    #        oavg, obp, slg, ops, ir, rc, tb, xb, hbp, sh, sf)
   flog.info('Data Wrangling completed')
   
   
@@ -86,6 +94,7 @@ get_batting <- function(.URL){
 # Pitching players ----
 get_pitching <- function(.URL){
   flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
   
   pitching <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
@@ -111,24 +120,28 @@ get_pitching <- function(.URL){
       'er' = X15,
       'hr' = X16,
       'bb' = X17,
-      'bb' = X18,
-      'so' = X19,
-      'ir' = X20,
-      'whip' = X21,
-      'h/9' = X22,
-      'hr/9' = X23,
-      'bb/9' = X24,
-      'so/9' = X25,
-      'so/bb' = X26,
-      'bk' = X27
+      'so' = X18,
+      'ir' = X19,
+      'whip' = X20,
+      'h/9' = X21,
+      'hr/9' = X22,
+      'bb/9' = X23,
+      'so/9' = X24,
+      'so/bb' = X25,
+      'bk' = X26
     ) %>% 
     subset(edad != 'EDAD') %>% 
     slice(1:(n()-3)
-    )
+    ) %>% 
+    mutate(years = years)
+  # %>% 
+  #   select(years, jugador, w, l, 'w-l%', era, g, gs, cg, sho, sv, ip, h, r, er, hr, bb, so, ir, whip, 'h/9', 
+  #          'bb/9', 'so/9', 'so/bb', 'bk')
   flog.info('Data Wrangling completed')
   
   flog.info('Pitching Df')
   pitching
 }
+
 
 # complete_batting <- merge(roster, batting_, by.x = "jugador", by.y = "jugador") 

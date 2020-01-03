@@ -10,19 +10,18 @@ library(purrr)
 
 
 # Connect to Pelota binaria ----
-#Page year 1962-1963
+#P age year 1962-1963
 .url <- 'http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1962-63'
 
-#vector of years statistics baseball 
+# Vector of years statistics baseball 
 years <- c('1962-63')
 
-#url with all years
+# Url with all years
 .tgl_page <- paste('http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=', years, sep = "" )
-
 
 # Function to get a list with df ----
 from <- 1962
-to <- lubridate::year(Sys.Date()) + 1
+to <- lubridate::year(Sys.Date()) 
 range_ <- c(from:to)
 pages <- c(1:(to - (from )))
 
@@ -31,12 +30,10 @@ take_years <-  function(x){
     "http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=", range_[x], "-", substring(range_[x+1],3),
     sep=""
   )
-  years <- str_extract(x, '(?<=TIB&TE=).*')
-  data.frame(df) %>% 
-    mutate(years = years)
+  data.frame(df)
 }
 
-# Getting the data
+# Getting Roster hictoric data ----
 URLs <- rbindlist(
   lapply(
     pages, take_years),
@@ -46,8 +43,41 @@ URLs <- as.character(URLs$df[pages])
 all_rosters <- map(URLs, get_roster) %>% 
   keep(function(x) nrow(x) > 0)
 
+#Historic roster df
 historic_roster <- data.table::rbindlist(all_rosters,
                                               fill = TRUE)
+
+# Getting batting  historic data ----
+URLs_batting <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_batting <- as.character(URLs_batting$df[pages])
+all_batting_df <- map(URLs, get_batting) 
+
+# Historic batting df
+historic_batting_df <- data.table::rbindlist(all_batting_df,
+                                         fill = TRUE)
+
+# Getting pitching  historic data ----
+URLs_pitching <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_pitching <- as.character(URLs_pitching$df[pages])
+all_pitching_df <- map(URLs_pitching, get_pitching) 
+
+# Historic batting df
+historic_pitching_df <- data.table::rbindlist(all_pitching_df,
+                                             fill = TRUE)
+
+
+
+
+
+
 
 # .pb <- progress_bar$new(total = 100)
 # for (i in 1:100) {
