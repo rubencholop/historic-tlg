@@ -1,73 +1,107 @@
 #Libraries ----
 library(dplyr)
 library(rvest)
+library(futile.logger)
+library(data.table)
+library(progress)
+library(stringr)
+library(purrr)
+#page http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1962-63
 
 
-
-#Page year 1962-1963
+# Connect to Pelota binaria ----
+#P age year 1962-1963
 .url <- 'http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1962-63'
 
-#vector of years statistics baseball 
+# Vector of years statistics baseball 
 years <- c('1962-63')
 
-#url with all years
+# Url with all years
 .tgl_page <- paste('http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=', years, sep = "" )
 
-# Connecting to page
-roster <- read_html(.tgl_page) %>% 
-  html_nodes(css = '.sortable') %>% 
-  html_table(fill = TRUE) %>% 
-  .[[1]] %>% 
-  as.data.frame()
+# Function to get a list with df ----
+from <- 1962
+to <- lubridate::year(Sys.Date()) 
+range_ <- c(from:to)
+pages <- c(1:(to - (from )))
+
+take_years <-  function(x){
+  df <- paste(
+    "http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=", range_[x], "-", substring(range_[x+1],3),
+    sep=""
+  )
+  data.frame(df)
+}
+
+# Getting Roster hictoric data ----
+URLs <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs <- as.character(URLs$df[pages])
+all_rosters <- map(URLs, get_roster) %>% 
+  keep(function(x) nrow(x) > 0)
+
+#Historic roster df
+historic_roster <- data.table::rbindlist(all_rosters,
+                                              fill = TRUE)
+
+# Getting batting  historic data ----
+URLs_batting <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_batting <- as.character(URLs_batting$df[pages])
+all_batting_df <- map(URLs, get_batting) 
+
+# Historic batting df
+historic_batting_df <- data.table::rbindlist(all_batting_df,
+                                         fill = TRUE)
+
+# Getting pitching  historic data ----
+URLs_pitching <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_pitching <- as.character(URLs_pitching$df[pages])
+all_pitching_df <- map(URLs_pitching, get_pitching) 
+
+# Historic batting df
+historic_pitching_df <- data.table::rbindlist(all_pitching_df,
+                                             fill = TRUE)
 
 
-#Note: Falta eliminar la primera fila del df o header y eliminar primero columna de Roster y 
-#ver como se eliminan las ultimas 3 o 4 filas de batting y pitching
-
-batting_ <- read_html(.url) %>% 
-  html_nodes(css = '.sortable') %>% 
-  html_table(fill = TRUE) %>% 
-  .[[2]] %>% 
-  as.data.frame() 
-   
-pitching <- read_html(.url) %>% 
-  html_nodes(css = '.sortable') %>% 
-  html_table(fill = TRUE) %>% 
-  .[[3]] %>% 
-  as.data.frame()
-
-data_batting <- batting_ %>% 
-  subset(X3 != 'EDAD') %>% 
-  select(-c('X2')) %>% 
-  rename(
-    'jugador' = X1,
-    'edad' = X3,
-    'G' = X4,
-    'ab' = X5,
-    'r' = X6,
-    'h' = X7,
-    '2b' = X8,
-    '3b' = X9,
-    'hr' = X10,
-    'hr' = X11,
-    'rbi' = X12,
-    'sb' = X13,
-    'cs' = X14,
-    'bb' = X15,
-    'so' = X16,
-    'avg' = X17,
-    'obp' = X18,
-    'slg' = X19,
-    'ops' = X20,
-    'ir' = X21,
-    'rc' = X22,
-    'tb' = X23,
-    'xb' = X24,
-    'hbp' = X25,
-    'sh' = X26,
-    'sf' = X27
-  )  
-
-  
 
 
+
+
+
+# .pb <- progress_bar$new(total = 100)
+# for (i in 1:100) {
+#   .pb$tick()
+#   Sys.sleep(1 / 100)
+# }
+
+
+# URLs <- as.character(URL$b[.pages])
+
+# for(i in URLs) {
+#   df1 <- read_html(i)
+#   Equipo <- df1 %>% 
+#     html_nodes(css = '.sortable') %>% 
+#     html_table(fill = TRUE) %>% 
+#     .[[1]] 
+#   
+#   P_URL <- df1 %>%
+#     html_nodes(css = '.sortable') %>% 
+#     html_table(fill = TRUE) %>% 
+#     .[[2]] 
+#   
+#   temp <- data.frame(Equipo, P_URL)
+#   Catcher1 <- rbind(Catcher1, temp)
+#   cat("*")
+# }
+>>>>>>> 83c027cf96946297f8e3fe6583bdd7b9e3ec1365
