@@ -30,11 +30,17 @@ batting_ <- read_html(.url) %>%
   .[[2]] %>% 
   as.data.frame() 
    
+pitching <- read_html(.url) %>% 
+  html_nodes(css = '.sortable') %>% 
+  html_table(fill = TRUE) %>% 
+  .[[3]] %>% 
+  as.data.frame()
 
 data_batting <- batting_ %>% 
+  subset(X3 != 'EDAD') %>% 
+  select(-c('X2')) %>% 
   rename(
     'jugador' = X1,
-    'nose' = X2,
     'edad' = X3,
     'G' = X4,
     'ab' = X5,
@@ -60,16 +66,8 @@ data_batting <- batting_ %>%
     'hbp' = X25,
     'sh' = X26,
     'sf' = X27
-  ) %>% 
-  colnames()
-  subset(
-    X2 != 'Nombre'
-  ) %>% 
+  )  
+
   
 
 
-pitching <- read_html(.url) %>% 
-  html_nodes(css = '.sortable') %>% 
-  html_table(fill = TRUE) %>% 
-  .[[3]] %>% 
-  as.data.frame()
