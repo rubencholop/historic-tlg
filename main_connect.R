@@ -21,7 +21,7 @@ years <- c('1962-63')
 
 # Function to get a list with df ----
 from <- 1962
-to <- lubridate::year(Sys.Date()) 
+to <- lubridate::year(Sys.Date()) s
 range_ <- c(from:to)
 pages <- c(1:(to - (from )))
 
@@ -117,12 +117,15 @@ URLs_pitching <- rbindlist(
     pages, take_years),
   fill = TRUE
 ) 
-URLs_pitching <- as.character(URLs_pitching$df[pages])
-all_pitching_df <- map(URLs_pitching, get_pitching) 
+URLs_pitching_tem_reg <- as.character(URLs_pitching$df[pages])
+years_tem_reg <- c(1:2, 12, 17, 26, 29, 31:38, 40:41, 43:45, 49, 51, 56:57)
+URLs_temp_reg <- URLs_pitching_tem_reg[years_tem_reg]
+all_pitching_tem_reg <- map(URLs_temp_reg, get_pitching) 
 
 # Historic pitching df
-historic_pitching_df <- data.table::rbindlist(all_pitching_df,
-                                             fill = TRUE)
+historic_pitching_tem_reg <- data.table::rbindlist(all_pitching_tem_reg,
+                                             fill = TRUE) %>% 
+  select(years, 1:26)
 
 
 # Getting pitching Round Robin ----
@@ -138,7 +141,8 @@ all_pitching_rr <- map(URLs_pitching_rr, get_pitching_rr)
 
 # Historic pitching df
 historic_pitching_df <- data.table::rbindlist(all_pitching_df,
-                                              fill = TRUE)
+                                              fill = TRUE) 
+  
 
 # Getting pitching Finals ----
 URLs_pitching_finals <- rbindlist(

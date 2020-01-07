@@ -3,14 +3,14 @@ library(rvest)
 library(futile.logger)
 
 
-# Años de la pisicion de la tabla de pitching en temporada regular
+# Años de la pisicion de la tabla de batting round robin en temporada regular
   1962-63 <- 3
-  1963-74 <- 3
-  1964-65 <- 3
-  1965-66 <- 3
-  1966-67 <- 3
-  1967-68 <- 3
-  1968-69 <- 3
+  1963-64 <- 3
+  1964-65 <- 4
+  1965-66 <- 5
+  1966-67 <- 5
+  1967-68 <- 4
+  1968-69 <- 4
   1969-70 <- 5
   1970-71 <- 5
   1971-72 <- 5
@@ -32,7 +32,7 @@ library(futile.logger)
   1987-88 <- 3
   1988-89 <- 4
   1989-90 <- 4
-  1991-92 <- 3
+  1990-91 <- 3
   1991-92 <- 4
   1992-93 <- 3
   1993-94 <- 3

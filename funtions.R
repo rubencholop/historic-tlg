@@ -265,39 +265,39 @@ get_pitching <- function(.URL){
     html_table(fill = TRUE) %>% 
     .[[3]] %>% 
     as.data.frame() %>% 
-    select(-X2) %>% 
     rename(
       'jugador' = X1,
+      'X2' = X2,
       'edad' = X3,
       'w' = X4,
       'l' = X5,
       'w-l%' = X6,
       'era' = X7,
       'g' = X8,
-      'gs' = X8,
-      'cg' = X9,
-      'sho' = X10,
-      'sv' = X11,
-      'ip' = X12,
-      'h' = X13,
-      'r' = X14,
-      'er' = X15,
-      'hr' = X16,
-      'bb' = X17,
-      'so' = X18,
-      'ir' = X19,
-      'whip' = X20,
-      'h/9' = X21,
-      'hr/9' = X22,
-      'bb/9' = X23,
-      'so/9' = X24,
-      'so/bb' = X25,
-      'bk' = X26
+      'gs' = X9,
+      'cg' = X10,
+      'sho' = X11,
+      'sv' = X12,
+      'ip' = X13,
+      'h' = X14,
+      'r' = X15,
+      'er' = X16,
+      'hr' = X17,
+      'bb' = X18,
+      'so' = X19,
+      'ir' = X20,
+      'whip' = X21,
+      'h/9' = X22,
+      'hr/9' = X23,
+      'bb/9' = X24,
+      'so/9' = X25,
+      'so/bb' = X26,
+      'bk' = X27
     ) %>% 
-    subset(edad != 'EDAD') %>% 
     slice(1:(n()-3)
     ) %>% 
-    mutate(years = years)
+    mutate(years = years) %>% 
+    select(-X2)
   # %>% 
   #   select(years, jugador, w, l, 'w-l%', era, g, gs, cg, sho, sv, ip, h, r, er, hr, bb, so, ir, whip, 'h/9', 
   #          'bb/9', 'so/9', 'so/bb', 'bk')
@@ -415,4 +415,6 @@ get_pitching_finals <- function(.URL){
   flog.info('Pitching  finals ')
   pitching_finals
 }
+
+
 
