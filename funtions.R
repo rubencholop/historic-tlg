@@ -148,8 +148,10 @@ get_batting_rr <- function(.URL){
 get_batting_finals <- function(.URL){
   flog.info('Getting available URl')
   years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  campeon <- c('1964-65', '1965-66', '1968-69', '1970-71',
+               '1982-1983', '1984-85', '1985-86')
   
-  batting_rr <- read_html(.URL) %>% 
+  batting_finals <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
     .[[4]] %>% 
@@ -185,7 +187,10 @@ get_batting_finals <- function(.URL){
     subset(edad != 'EDAD') %>% 
     slice(1:(n()-3)
     ) %>% 
-    mutate(years = years) 
+    mutate(
+      years = years,
+      resultado = if_else(years %in% campeon, 'campeon', 'subcampeon')
+    )
   # %>% 
   # select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, sb, cs, bb,s,
   #        oavg, obp, slg, ops, ir, rc, tb, xb, hbp, sh, sf)
@@ -193,8 +198,65 @@ get_batting_finals <- function(.URL){
   
   
   flog.info('Batting Df')
-  batting_rr
+  batting_finals
 }
+# Batting stats but with other order in the table
+get_batting_finals1 <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  campeon <- c('1964-65', '1965-66', '1968-69', '1970-71',
+               '1982-1983', '1984-85', '1985-86')
+  
+  batting_finals1 <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[3]] %>% 
+    as.data.frame() %>% 
+    rename(
+      'jugador' = X1,
+      'edad' = X2,
+      'g' = X3,
+      'pa' = X4,
+      'ab' = X4,
+      'r' = X6,
+      'h' = X7,
+      '2b' = X8,
+      '3b' = X9,
+      'hr' = X10,
+      'rbi' = X11,
+      'sb' = X12,
+      'cs' = X13,
+      'bb' = X14,
+      'so' = X15,
+      'avg' = X16,
+      'obp' = X17,
+      'slg' = X18,
+      'ops' = X19,
+      'rc' = X20,
+      'tb' = X21,
+      'xb' = X22,
+      'hbp' = X23,
+      'sh' = X24,
+      'sf' = X25,
+      'refuerzo' = X26
+    ) %>% 
+    subset(edad != 'EDAD') %>% 
+    slice(1:(n()-3)
+    ) %>% 
+    mutate(
+      years = years,
+      resultado = if_else(years %in% campeon, 'campeon', 'subcampeon')
+    )
+  # %>% 
+  # select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, sb, cs, bb,s,
+  #        oavg, obp, slg, ops, ir, rc, tb, xb, hbp, sh, sf)
+  flog.info('Data Wrangling completed')
+  
+  
+  flog.info('Batting Df')
+  batting_finals1
+}
+
 
 
 # Pitching players ----

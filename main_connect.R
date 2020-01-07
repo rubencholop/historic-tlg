@@ -85,14 +85,29 @@ URLs_batting_finals <- rbindlist(
   fill = TRUE
 ) 
 URLs_batting_finals <- as.character(URLs_batting_finals$df[pages])
-years_finals <- c(8:10, 13, 15, 21, 23:25, 50)
+years_finals <- c(5, 8:10, 13, 15, 21, 23:25, 50)
 URLs_finals <- URLs_batting_finals[years_finals]
 all_batting_finals <- map(URLs_finals, get_batting_finals) 
 historic_batting_finals <- data.table::rbindlist(all_batting_finals,
-                                             fill = TRUE)
+                                             fill = TRUE) %>% 
+  select(1:28)
 
+# Otres finals but with distinct order in the table
+URLs_batting_finals1 <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_batting_finals1 <- as.character(URLs_batting_finals1$df[pages])
+years_finals1 <- c(3:4, 7)
+URLs_finals1 <- URLs_batting_finals1[years_finals1]
+all_batting_finals1 <- map(URLs_finals1, get_batting_finals1) 
+historic_batting_finals1 <- data.table::rbindlist(all_batting_finals1,
+                                                 fill = TRUE)
 
-
+# Battinf df global in finals
+batting_finals <- rbind(historic_batting_finals, historic_batting_finals1)
+write.csv(batting_finals, file = 'batting_finals.csv')
 
 
 
