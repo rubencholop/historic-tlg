@@ -2,56 +2,22 @@ library(dplyr)
 library(rvest)
 library(futile.logger)
 
-get_pitching <- function(.URL){
-  flog.info('Getting available URl')
-  years <- str_extract(.URL, '(?<=TIB&TE=).*')
-  -
-  pitching <- read_html('http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1969-70') %>% 
-    html_nodes(css = '.sortable') %>% 
-    html_table(fill = TRUE) %>% 
-    .[[3]] %>% 
-    as.data.frame() %>% 
-    select(-X2) %>% 
-    rename(
-      'jugador' = X1,
-      'edad' = X3,
-      'w' = X4,
-      'l' = X5,
-      'w-l%' = X6,
-      'era' = X7,
-      'g' = X8,
-      'gs' = X8,
-      'cg' = X9,
-      'sho' = X10,
-      'sv' = X11,
-      'ip' = X12,
-      'h' = X13,
-      'r' = X14,
-      'er' = X15,
-      'hr' = X16,
-      'bb' = X17,
-      'so' = X18,
-      'ir' = X19,
-      'whip' = X20,
-      'h/9' = X21,
-      'hr/9' = X22,
-      'bb/9' = X23,
-      'so/9' = X24,
-      'so/bb' = X25,
-      'bk' = X26
-    ) %>% 
-    subset(edad != 'EDAD') %>% 
-    slice(1:(n()-3)
-    )
-  
-  #antes 3 en todos los años. Revisar igual
+
+# Años de la pisicion de la tabla de pitching en temporada regular
+  1962-63 <- 3
+  1963-74 <- 3
+  1964-65 <- 3
+  1965-66 <- 3
+  1966-67 <- 3
+  1967-68 <- 3
+  1968-69 <- 3
   1969-70 <- 5
   1970-71 <- 5
   1971-72 <- 5
   1972-73 <- 4
   1973-74 <- 3
   1974-75 <- 4
-  1975-76 <- 0
+  1975-76 <- 0 # No hay datos. Tibuleones 
   1976-77 <- 5
   1977-78 <- 4
   1978-79 <- 3

@@ -91,6 +91,112 @@ get_batting <- function(.URL){
 }
 
 
+# Batting stats Round Robin
+get_batting_rr <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  batting_rr <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[3]] %>% 
+    as.data.frame() %>% 
+    rename(
+      'jugador' = X1,
+      'edad' = X2,
+      'g' = X3,
+      'pa' = X4,
+      'ab' = X4,
+      'r' = X6,
+      'h' = X7,
+      '2b' = X8,
+      '3b' = X9,
+      'hr' = X10,
+      'rbi' = X11,
+      'sb' = X12,
+      'cs' = X13,
+      'bb' = X14,
+      'so' = X15,
+      'avg' = X16,
+      'obp' = X17,
+      'slg' = X18,
+      'ops' = X19,
+      'rc' = X20,
+      'tb' = X21,
+      'xb' = X22,
+      'hbp' = X23,
+      'sh' = X24,
+      'sf' = X25,
+      'refuerzo' = X26
+    ) %>% 
+    subset(edad != 'EDAD') %>% 
+    slice(1:(n()-3)
+    ) %>% 
+    mutate(years = years) 
+  # %>% 
+  # select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, sb, cs, bb,s,
+  #        oavg, obp, slg, ops, ir, rc, tb, xb, hbp, sh, sf)
+  flog.info('Data Wrangling completed')
+  
+  
+  flog.info('Batting Df')
+  batting_rr
+}
+
+
+# Batting stats final
+get_batting_finals <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  batting_rr <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[4]] %>% 
+    as.data.frame() %>% 
+    rename(
+      'jugador' = X1,
+      'edad' = X2,
+      'g' = X3,
+      'pa' = X4,
+      'ab' = X4,
+      'r' = X6,
+      'h' = X7,
+      '2b' = X8,
+      '3b' = X9,
+      'hr' = X10,
+      'rbi' = X11,
+      'sb' = X12,
+      'cs' = X13,
+      'bb' = X14,
+      'so' = X15,
+      'avg' = X16,
+      'obp' = X17,
+      'slg' = X18,
+      'ops' = X19,
+      'rc' = X20,
+      'tb' = X21,
+      'xb' = X22,
+      'hbp' = X23,
+      'sh' = X24,
+      'sf' = X25,
+      'refuerzo' = X26
+    ) %>% 
+    subset(edad != 'EDAD') %>% 
+    slice(1:(n()-3)
+    ) %>% 
+    mutate(years = years) 
+  # %>% 
+  # select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, sb, cs, bb,s,
+  #        oavg, obp, slg, ops, ir, rc, tb, xb, hbp, sh, sf)
+  flog.info('Data Wrangling completed')
+  
+  
+  flog.info('Batting Df')
+  batting_rr
+}
+
+
 # Pitching players ----
 get_pitching <- function(.URL){
   flog.info('Getting available URl')
@@ -143,5 +249,57 @@ get_pitching <- function(.URL){
   pitching
 }
 
+# Pitching Round Robin stats ----
+get_pitching_rr <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  pitching_rr <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[4]] %>% 
+    as.data.frame() %>% 
+    select(-X2) %>% 
+    rename(
+      'jugador' = X1,
+      'edad' = X3,
+      'w' = X4,
+      'l' = X5,
+      'w-l%' = X6,
+      'era' = X7,
+      'g' = X8,
+      'gs' = X8,
+      'cg' = X9,
+      'sho' = X10,
+      'sv' = X11,
+      'ip' = X12,
+      'h' = X13,
+      'r' = X14,
+      'er' = X15,
+      'hr' = X16,
+      'bb' = X17,
+      'so' = X18,
+      'ir' = X19,
+      'whip' = X20,
+      'h/9' = X21,
+      'hr/9' = X22,
+      'bb/9' = X23,
+      'so/9' = X24,
+      'so/bb' = X25,
+      'bk' = X26,
+      'refuerzo' = X27
+    ) %>% 
+    subset(edad != 'EDAD') %>% 
+    slice(1:(n()-3)
+    ) %>% 
+    mutate(years = years)
+  # %>% 
+  #   select(years, jugador, w, l, 'w-l%', era, g, gs, cg, sho, sv, ip, h, r, er, hr, bb, so, ir, whip, 'h/9', 
+  #          'bb/9', 'so/9', 'so/bb', 'bk')
+  flog.info('Data Wrangling completed')
+  
+  flog.info('Pitching  RR ')
+  pitching
+}
 
-# complete_batting <- merge(roster, batting_, by.x = "jugador", by.y = "jugador") 
+

@@ -45,20 +45,56 @@ all_rosters <- map(URLs, get_roster) %>%
 
 #Historic roster df
 historic_roster <- data.table::rbindlist(all_rosters,
-                                              fill = TRUE)
+                                              fill = TRUE) %>% 
+  select(years, jugador, name, pos, bat, lan, exp, pais, estado, ciudad)
+  
 
 # Getting batting  historic data ----
-URLs_batting <- rbindlist(
+URLs_batting_tem_reg <- rbindlist(
   lapply(
     pages, take_years),
   fill = TRUE
 ) 
-URLs_batting <- as.character(URLs_batting$df[pages])
-all_batting_df <- map(URLs, get_batting) 
+URLs_batting_tem_reg <- as.character(URLs_batting_tem_reg$df[pages])
+all_batting_tem_reg <- map(URLs_batting_tem_reg, get_batting) 
 
-# Historic batting df
-historic_batting_df <- data.table::rbindlist(all_batting_df,
-                                         fill = TRUE)
+# Historic batting df in regular season
+historic_batting_tem_reg <- data.table::rbindlist(all_batting_tem_reg,
+                                         fill = TRUE) %>% 
+  select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, 
+         sb, cs, bb, so, avg, obp, slg, ops, ir, rc, tb, xb, hbp,
+         sh, sf)
+
+# Historic batting df in Round robin 
+URLs_batting_rr <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_batting_rr <- as.character(URLs_batting_rr$df[pages])
+years_rr <- c(8:11, 13, 15:16, 18:25, 27:28, 30, 39, 42, 46:48, 50, 52:55, 58)
+URLs_rr <- URLs_batting_rr[years_rr]
+all_batting_rr <- map(URLs_rr, get_batting_rr) 
+historic_batting_rr <- data.table::rbindlist(all_batting_rr,
+                                              fill = TRUE)
+
+# Historic batting df in Finals
+URLs_batting_finals <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_batting_finals <- as.character(URLs_batting_finals$df[pages])
+years_finals <- c(8:10, 13, 15, 21, 23:25, 50)
+URLs_finals <- URLs_batting_finals[years_finals]
+all_batting_finals <- map(URLs_finals, get_batting_finals) 
+historic_batting_finals <- data.table::rbindlist(all_batting_finals,
+                                             fill = TRUE)
+
+
+
+
+
 
 # Getting pitching  historic data ----
 URLs_pitching <- rbindlist(
