@@ -65,7 +65,7 @@ historic_batting_tem_reg <- data.table::rbindlist(all_batting_tem_reg,
          sb, cs, bb, so, avg, obp, slg, ops, ir, rc, tb, xb, hbp,
          sh, sf)
 
-# Historic batting df in Round robin 
+# Historic batting df in Round robin ----
 URLs_batting_rr <- rbindlist(
   lapply(
     pages, take_years),
@@ -78,7 +78,7 @@ all_batting_rr <- map(URLs_rr, get_batting_rr)
 historic_batting_rr <- data.table::rbindlist(all_batting_rr,
                                               fill = TRUE)
 
-# Historic batting df in Finals
+# Historic batting df in Finals ----
 URLs_batting_finals <- rbindlist(
   lapply(
     pages, take_years),
@@ -92,7 +92,7 @@ historic_batting_finals <- data.table::rbindlist(all_batting_finals,
                                              fill = TRUE) %>% 
   select(1:28)
 
-# Otres finals but with distinct order in the table
+# Others finals but with distinct order in the table
 URLs_batting_finals1 <- rbindlist(
   lapply(
     pages, take_years),
@@ -107,7 +107,7 @@ historic_batting_finals1 <- data.table::rbindlist(all_batting_finals1,
 
 # Battinf df global in finals
 batting_finals <- rbind(historic_batting_finals, historic_batting_finals1)
-write.csv(batting_finals, file = 'batting_finals.csv')
+write.csv(batting_finals, file = 'data/batting_finals.csv')
 
 
 
@@ -120,39 +120,42 @@ URLs_pitching <- rbindlist(
 URLs_pitching <- as.character(URLs_pitching$df[pages])
 all_pitching_df <- map(URLs_pitching, get_pitching) 
 
-# Historic batting df
+# Historic pitching df
 historic_pitching_df <- data.table::rbindlist(all_pitching_df,
                                              fill = TRUE)
 
 
+# Getting pitching Round Robin ----
+URLs_pitching_rr <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_pitching <- as.character(URLs_pitching$df[pages])
+years_rr <- c(8:11, 13, 15:16, 18:25, 27:28, 30, 39, 42, 46:48, 50, 52:55, 58)
+URLs_rr <- URLs_pitching_rr[years_rr]
+all_pitching_rr <- map(URLs_pitching_rr, get_pitching_rr) 
+
+# Historic pitching df
+historic_pitching_df <- data.table::rbindlist(all_pitching_df,
+                                              fill = TRUE)
+
+# Getting pitching Finals ----
+URLs_pitching_finals <- rbindlist(
+  lapply(
+    pages, take_years),
+  fill = TRUE
+) 
+URLs_pitching_finals <- as.character(URLs_pitching_finals$df[pages])
+years_finals <- c(5, 8:10, 13, 15, 21, 23:25, 50)
+URLs_finals <- URLs_pitching_finals1[years_finals]
+all_pitching_finals <- map(URLs_pitching_finals, get_pitching_finals) 
+
+# Historic pitching df
+historic_pitching_finals <- data.table::rbindlist(all_pitching_finals,
+                                              fill = TRUE)
 
 
 
 
 
-# .pb <- progress_bar$new(total = 100)
-# for (i in 1:100) {
-#   .pb$tick()
-#   Sys.sleep(1 / 100)
-# }
-
-
-# URLs <- as.character(URL$b[.pages])
-
-# for(i in URLs) {
-#   df1 <- read_html(i)
-#   Equipo <- df1 %>% 
-#     html_nodes(css = '.sortable') %>% 
-#     html_table(fill = TRUE) %>% 
-#     .[[1]] 
-#   
-#   P_URL <- df1 %>%
-#     html_nodes(css = '.sortable') %>% 
-#     html_table(fill = TRUE) %>% 
-#     .[[2]] 
-#   
-#   temp <- data.frame(Equipo, P_URL)
-#   Catcher1 <- rbind(Catcher1, temp)
-#   cat("*")
-# }
->>>>>>> 83c027cf96946297f8e3fe6583bdd7b9e3ec1365

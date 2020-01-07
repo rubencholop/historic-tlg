@@ -4,7 +4,7 @@ library(rvest)
 library(futile.logger)
 
 
-#roster players ----
+# Roster players ----
 get_roster <- function(.URL){
   flog.info('Getting available URl')
   years <- str_extract(.URL, '(?<=TIB&TE=).*')
@@ -89,8 +89,6 @@ get_batting <- function(.URL){
   flog.info('Batting Df')
   batting
 }
-
-
 # Batting stats Round Robin
 get_batting_rr <- function(.URL){
   flog.info('Getting available URl')
@@ -142,8 +140,6 @@ get_batting_rr <- function(.URL){
   flog.info('Batting Df')
   batting_rr
 }
-
-
 # Batting stats final
 get_batting_finals <- function(.URL){
   flog.info('Getting available URl')
@@ -310,8 +306,7 @@ get_pitching <- function(.URL){
   flog.info('Pitching Df')
   pitching
 }
-
-# Pitching Round Robin stats ----
+# Pitching Round Robin stats 
 get_pitching_rr <- function(.URL){
   flog.info('Getting available URl')
   years <- str_extract(.URL, '(?<=TIB&TE=).*')
@@ -319,7 +314,7 @@ get_pitching_rr <- function(.URL){
   pitching_rr <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
-    .[[4]] %>% 
+    .[[5]] %>% 
     as.data.frame() %>% 
     select(-X2) %>% 
     rename(
@@ -352,7 +347,7 @@ get_pitching_rr <- function(.URL){
       'refuerzo' = X27
     ) %>% 
     subset(edad != 'EDAD') %>% 
-    slice(1:(n()-3)
+    slice(1:(n()-2)
     ) %>% 
     mutate(years = years)
   # %>% 
@@ -361,7 +356,63 @@ get_pitching_rr <- function(.URL){
   flog.info('Data Wrangling completed')
   
   flog.info('Pitching  RR ')
-  pitching
+  pitching_rr
 }
-
+# Pitching finals
+get_pitching_finals <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  campeon <- c('1964-65', '1965-66', '1968-69', '1970-71',
+               '1982-1983', '1984-85', '1985-86')
+  
+  pitching_finals <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[7]] %>% 
+    as.data.frame() %>% 
+    select(-X2) %>% 
+    rename(
+      'jugador' = X1,
+      'edad' = X3,
+      'w' = X4,
+      'l' = X5,
+      'w-l%' = X6,
+      'era' = X7,
+      'g' = X8,
+      'gs' = X8,
+      'cg' = X9,
+      'sho' = X10,
+      'sv' = X11,
+      'ip' = X12,
+      'h' = X13,
+      'r' = X14,
+      'er' = X15,
+      'hr' = X16,
+      'bb' = X17,
+      'so' = X18,
+      'ir' = X19,
+      'whip' = X20,
+      'h/9' = X21,
+      'hr/9' = X22,
+      'bb/9' = X23,
+      'so/9' = X24,
+      'so/bb' = X25,
+      'bk' = X26,
+      'refuerzo' = X27
+    ) %>% 
+    subset(edad != 'EDAD') %>% 
+    slice(1:(n()-2)
+    ) %>% 
+    mutate(
+      years = years,
+      resultado = if_else(years %in% campeon, 'campeon', 'subcampeon')
+    )
+  # %>% 
+  #   select(years, jugador, w, l, 'w-l%', era, g, gs, cg, sho, sv, ip, h, r, er, hr, bb, so, ir, whip, 'h/9', 
+  #          'bb/9', 'so/9', 'so/bb', 'bk')
+  flog.info('Data Wrangling completed')
+  
+  flog.info('Pitching  finals ')
+  pitching_finals
+}
 
