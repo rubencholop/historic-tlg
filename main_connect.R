@@ -162,26 +162,50 @@ historic_pitching_rr <- data.table::rbindlist(all_pitching_rr,
                                               fill = TRUE) %>% 
   select(years, 2:26)
   
+write.csv(historic_pitching_rr, file = 'data/pitching_rr.csv')
+
 
 # Getting pitching Finals ----
-URLs_pitching_finals <- rbindlist(
-  lapply(
-    pages, take_years),
-  fill = TRUE
-) 
-URLs_pitching_finals <- as.character(URLs_pitching_finals$df[pages])
-years_finals <- c(5, 8:10, 13, 15, 21, 23:25, 50)
-URLs_finals <- URLs_pitching_finals1[years_finals]
-all_pitching_finals <- map(URLs_pitching_finals, get_pitching_finals) 
+# Historic pitching finals df1
+URLs_pitching_finals1 <- as.character(URLs_pitching$df[pages])
+years_finals1 <- c(4:5, 9:10, 15, 21, 23:25, 50)
+URLs_finals1 <- URLs_pitching_finals1[years_finals1]
+all_pitching_finals1 <- map(URLs_finals1, get_pitching_finals1) 
+historic_pitching_finals <- data.table::rbindlist(all_pitching_finals1,
+                                              fill = TRUE) %>% 
+  select(years, 1:28)
 
-# Historic pitching df
-historic_pitching_finals <- data.table::rbindlist(all_pitching_finals,
-                                              fill = TRUE)
+# Historic pitching finals df2
+URLs_pitching_finals2 <- as.character(URLs_pitching$df[pages])
+years_finals2 <- c(3, 7)
+URLs_finals2 <- URLs_pitching_finals2[years_finals2]
+all_pitching_finals2 <- map(URLs_finals2, get_pitching_finals2) 
+historic_pitching_finals2 <- data.table::rbindlist(all_pitching_finals2,
+                                                  fill = TRUE) %>% 
+  select(years, 1:28)
+
+# Historic pitching finals df3
+URLs_pitching_finals3 <- as.character(URLs_pitching$df[pages])
+years_finals3 <- c(8)
+URLs_finals3 <- URLs_pitching_finals3[years_finals3]
+all_pitching_finals3 <- map(URLs_finals3, get_pitching_finals3) 
+historic_pitching_finals3 <- data.table::rbindlist(all_pitching_finals3,
+                                                   fill = TRUE) %>% 
+  select(years, 1:28)
+
+#Historic pitching finals
+pitching_finals <- rbind(historic_pitching_finals,
+                         historic_pitching_finals2,
+                         historic_pitching_finals3) %>% 
+  arrange(years)
+write.csv(pitching_finals, file = 'data/pitching_finals.csv')
 
 
 
+#Nota:
+#Revisar que tengan el numero de columnas igual que en realidad Pitching rr y todos los
+#demas df menos pitching finals porque ya fue auditado. revisar la 69-70 tiene 3 filas al
+#final y no 4
 
-
-
-
-
+# Hacer una funcion completa para toda esta carga de datos ya que no es un cogido bien
+# leible
