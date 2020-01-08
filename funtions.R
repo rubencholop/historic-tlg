@@ -297,10 +297,112 @@ get_pitching <- function(.URL){
     slice(1:(n()-3)
     ) %>% 
     mutate(years = years) %>% 
-    select(-X2)
+    select(-X2) %>% 
+    subset(edad != 'EDAD')
   # %>% 
   #   select(years, jugador, w, l, 'w-l%', era, g, gs, cg, sho, sv, ip, h, r, er, hr, bb, so, ir, whip, 'h/9', 
   #          'bb/9', 'so/9', 'so/bb', 'bk')
+  flog.info('Data Wrangling completed')
+  
+  flog.info('Pitching Df')
+  pitching
+}
+# Pitching players regular season 2
+get_pitching2 <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  pitching <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[5]] %>% 
+    as.data.frame() %>% 
+    rename(
+      'jugador' = X1,
+      'X2' = X2,
+      'edad' = X3,
+      'w' = X4,
+      'l' = X5,
+      'w-l%' = X6,
+      'era' = X7,
+      'g' = X8,
+      'gs' = X9,
+      'cg' = X10,
+      'sho' = X11,
+      'sv' = X12,
+      'ip' = X13,
+      'h' = X14,
+      'r' = X15,
+      'er' = X16,
+      'hr' = X17,
+      'bb' = X18,
+      'so' = X19,
+      'ir' = X20,
+      'whip' = X21,
+      'h/9' = X22,
+      'hr/9' = X23,
+      'bb/9' = X24,
+      'so/9' = X25,
+      'so/bb' = X26,
+      'bk' = X27
+    ) %>% 
+    slice(1:(n()-3)
+    ) %>% 
+    mutate(years = years) %>% 
+    select(-X2) %>% 
+    subset(edad != 'EDAD')
+  # %>% 
+  #   select(years, jugador, w, l, 'w-l%', era, g, gs, cg, sho, sv, ip, h, r, er, hr, bb, so, ir, whip, 'h/9', 
+  #          'bb/9', 'so/9', 'so/bb', 'bk')
+  flog.info('Data Wrangling completed')
+  
+  flog.info('Pitching Df')
+  pitching
+}
+# Pitching players regular season 3 
+get_pitching3 <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  pitching <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[5]] %>% 
+    as.data.frame() %>% 
+    rename(
+      'jugador' = X1,
+      'X2' = X2,
+      'edad' = X3,
+      'w' = X4,
+      'l' = X5,
+      'w-l%' = X6,
+      'era' = X7,
+      'g' = X8,
+      'gs' = X9,
+      'cg' = X10,
+      'sho' = X11,
+      'sv' = X12,
+      'ip' = X13,
+      'h' = X14,
+      'r' = X15,
+      'er' = X16,
+      'hr' = X17,
+      'bb' = X18,
+      'so' = X19,
+      'ir' = X20,
+      'whip' = X21,
+      'h/9' = X22,
+      'hr/9' = X23,
+      'bb/9' = X24,
+      'so/9' = X25,
+      'so/bb' = X26,
+      'bk' = X27
+    ) %>% 
+    slice(1:(n()-3)
+    ) %>% 
+    mutate(years = years) %>% 
+    select(-X2) %>% 
+    subset(edad != 'EDAD')
   flog.info('Data Wrangling completed')
   
   flog.info('Pitching Df')
@@ -314,7 +416,7 @@ get_pitching_rr <- function(.URL){
   pitching_rr <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
-    .[[5]] %>% 
+    .[[6]] %>% 
     as.data.frame() %>% 
     select(-X2) %>% 
     rename(
@@ -417,4 +519,44 @@ get_pitching_finals <- function(.URL){
 }
 
 
+
+pitching <- read_html('http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2011-12') %>% 
+  html_nodes(css = '.sortable') %>% 
+  html_table(fill = TRUE) %>% 
+  .[[5]] %>% 
+  as.data.frame() %>% 
+  rename(
+    'jugador' = X1,
+    'X2' = X2,
+    'edad' = X3,
+    'w' = X4,
+    'l' = X5,
+    'w-l%' = X6,
+    'era' = X7,
+    'g' = X8,
+    'gs' = X9,
+    'cg' = X10,
+    'sho' = X11,
+    'sv' = X12,
+    'ip' = X13,
+    'h' = X14,
+    'r' = X15,
+    'er' = X16,
+    'hr' = X17,
+    'bb' = X18,
+    'so' = X19,
+    'ir' = X20,
+    'whip' = X21,
+    'h/9' = X22,
+    'hr/9' = X23,
+    'bb/9' = X24,
+    'so/9' = X25,
+    'so/bb' = X26,
+    'bk' = X27
+  ) %>% 
+  slice(1:(n()-3)
+  ) %>% 
+  mutate(years = years) %>% 
+  select(-X2) 
+  
 
