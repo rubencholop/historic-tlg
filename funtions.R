@@ -367,7 +367,7 @@ get_pitching3 <- function(.URL){
   pitching <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
-    .[[5]] %>% 
+    .[[4]] %>% 
     as.data.frame() %>% 
     rename(
       'jugador' = X1,
@@ -413,20 +413,19 @@ get_pitching_rr <- function(.URL){
   flog.info('Getting available URl')
   years <- str_extract(.URL, '(?<=TIB&TE=).*')
   
-  pitching_rr <- read_html(.URL) %>% 
+  pitching <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
-    .[[6]] %>% 
+    .[[5]] %>% 
     as.data.frame() %>% 
-    select(-X2) %>% 
     rename(
       'jugador' = X1,
-      'edad' = X3,
-      'w' = X4,
-      'l' = X5,
-      'w-l%' = X6,
-      'era' = X7,
-      'g' = X8,
+      'edad' = X2,
+      'w' = X3,
+      'l' = X4,
+      'w-l%' = X5,
+      'era' = X6,
+      'g' = X7,
       'gs' = X8,
       'cg' = X9,
       'sho' = X10,
@@ -438,27 +437,24 @@ get_pitching_rr <- function(.URL){
       'hr' = X16,
       'bb' = X17,
       'so' = X18,
-      'ir' = X19,
-      'whip' = X20,
-      'h/9' = X21,
-      'hr/9' = X22,
-      'bb/9' = X23,
-      'so/9' = X24,
-      'so/bb' = X25,
-      'bk' = X26,
-      'refuerzo' = X27
+      'whip' = X19,
+      'h/9' = X20,
+      'hr/9' = X21,
+      'bb/9' = X22,
+      'so/9' = X23,
+      'so/bb' = X24,
+      'bk' = X25,
+      'refuerzo' = X26
     ) %>% 
-    subset(edad != 'EDAD') %>% 
-    slice(1:(n()-2)
+    slice(1:(n()-3)
     ) %>% 
-    mutate(years = years)
-  # %>% 
-  #   select(years, jugador, w, l, 'w-l%', era, g, gs, cg, sho, sv, ip, h, r, er, hr, bb, so, ir, whip, 'h/9', 
-  #          'bb/9', 'so/9', 'so/bb', 'bk')
+    mutate(years = years) %>% 
+    subset(edad != 'EDAD')
+
   flog.info('Data Wrangling completed')
   
   flog.info('Pitching  RR ')
-  pitching_rr
+  pitching
 }
 # Pitching finals
 get_pitching_finals <- function(.URL){
@@ -527,36 +523,35 @@ pitching <- read_html('http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TI
   as.data.frame() %>% 
   rename(
     'jugador' = X1,
-    'X2' = X2,
-    'edad' = X3,
-    'w' = X4,
-    'l' = X5,
-    'w-l%' = X6,
-    'era' = X7,
-    'g' = X8,
-    'gs' = X9,
-    'cg' = X10,
-    'sho' = X11,
-    'sv' = X12,
-    'ip' = X13,
-    'h' = X14,
-    'r' = X15,
-    'er' = X16,
-    'hr' = X17,
-    'bb' = X18,
-    'so' = X19,
-    'ir' = X20,
-    'whip' = X21,
-    'h/9' = X22,
-    'hr/9' = X23,
-    'bb/9' = X24,
-    'so/9' = X25,
-    'so/bb' = X26,
-    'bk' = X27
+    'edad' = X2,
+    'w' = X3,
+    'l' = X4,
+    'w-l%' = X5,
+    'era' = X6,
+    'g' = X7,
+    'gs' = X8,
+    'cg' = X9,
+    'sho' = X10,
+    'sv' = X11,
+    'ip' = X12,
+    'h' = X13,
+    'r' = X14,
+    'er' = X15,
+    'hr' = X16,
+    'bb' = X17,
+    'so' = X18,
+    'whip' = X19,
+    'h/9' = X20,
+    'hr/9' = X21,
+    'bb/9' = X22,
+    'so/9' = X23,
+    'so/bb' = X24,
+    'bk' = X25,
+    'refuerzo' = X26
   ) %>% 
   slice(1:(n()-3)
   ) %>% 
   mutate(years = years) %>% 
-  select(-X2) 
+  subset(edad != 'EDAD')
   
 

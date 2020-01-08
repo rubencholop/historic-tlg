@@ -123,7 +123,7 @@ URLs_pitching_tem_reg <- as.character(URLs_pitching$df[pages])
 years_tem_reg <- c(1:2, 12, 17, 26, 29, 31:38, 40:41, 43:45, 49, 51, 56:57)
 URLs_temp_reg <- URLs_pitching_tem_reg[years_tem_reg]
 pitching_tem_reg1 <- map(URLs_temp_reg, get_pitching) 
-pitching_tem_reg1 <- data.table::rbindlist(pitching_tem_reg1,
+all_pitching_tem_reg1 <- data.table::rbindlist(pitching_tem_reg1,
                                              fill = TRUE) %>% 
   select(years, 1:26)
 
@@ -146,23 +146,21 @@ all_pitching_tem_reg3 <- data.table::rbindlist(pitching_tem_reg3,
                                                fill = TRUE) %>% 
   select(years, 1:26)
 
-
+# Pitching regolar season df
+pitching_rs <- rbind(all_pitching_tem_reg1, all_pitching_tem_reg3, all_pitching_tem_reg2) %>% 
+  arrange(years)
+# write csv file 
+write.csv(pitching_rs, file = 'data/pitching_rs.csv')
 
 
 # Getting pitching Round Robin ----
-URLs_pitching <- rbindlist(
-  lapply(
-    pages, take_years),
-  fill = TRUE
-) 
 URLs_pitching_rr <- as.character(URLs_pitching$df[pages])
-years_rr <- c(8:11, 13, 15:16, 18:25, 27:28, 30, 39, 42, 46:48, 50, 52:55, 58)
+years_rr <- c(11, 13, 16, 18:20, 22, 27:28, 30, 39, 42, 46:48, 52:55)
 URLs_pit_rr <- URLs_pitching_rr[years_rr]
 all_pitching_rr <- map(URLs_pit_rr, get_pitching_rr) 
-
-# Historic pitching df
-historic_pitching_df <- data.table::rbindlist(all_pitching_df,
-                                              fill = TRUE) 
+historic_pitching_rr <- data.table::rbindlist(all_pitching_rr,
+                                              fill = TRUE) %>% 
+  select(years, 2:26)
   
 
 # Getting pitching Finals ----
