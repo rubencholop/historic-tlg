@@ -432,6 +432,51 @@ get_pitching_rr <- function(.URL){
   flog.info('Pitching  RR ')
   pitching
 }
+# Pitching Round Robin stats 1
+get_pitching_rr1 <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  pitching <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[6]] %>% 
+    as.data.frame() %>% 
+    rename(
+      'jugador' = X1,
+      'edad' = X2,
+      'w' = X3,
+      'l' = X4,
+      'w-l%' = X5,
+      'era' = X6,
+      'g' = X7,
+      'gs' = X8,
+      'cg' = X9,
+      'sho' = X10,
+      'sv' = X11,
+      'ip' = X12,
+      'h' = X13,
+      'r' = X14,
+      'er' = X15,
+      'hr' = X16,
+      'bb' = X17,
+      'so' = X18,
+      'whip' = X19,
+      'h/9' = X20,
+      'hr/9' = X21,
+      'bb/9' = X22,
+      'so/9' = X23,
+      'so/bb' = X24,
+      'bk' = X25,
+      'refuerzo' = X26
+    ) %>% 
+    mutate(years = years) %>% 
+    subset(edad != 'EDAD')
+  flog.info('Data Wrangling completed')
+  
+  flog.info('Pitching  RR ')
+  pitching
+}
 # Pitching finals
 get_pitching_finals1 <- function(.URL){
   flog.info('Getting available URl')

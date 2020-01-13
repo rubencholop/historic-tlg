@@ -68,143 +68,150 @@ Hbatting_rr <- data.table::rbindlist(batting_rr,
                                               fill = TRUE) %>% 
   select(years, 1:26) %>% 
   arrange(jugador) %>% 
-  filter(str_detect(jugador, 'Jugadores') |
-           str_detect(jugador, 'Tirulares') |
-           str_detect(jugador, 'Refuerzos')
+  filter(!(str_detect(jugador, 'Jugadores|Refuerzos|Titulares'))
          )
 
-.cols <-contains(Hbatting_rr$jugador, 'Jugadores')
-
-write.csv(batting_rr, file = 'data/batting_rr.csv')
+write.csv(Hbatting_rr, file = 'data/batting_rr.csv')
 
 # Historic batting df in Finals ----
-URLs_batting_finals <- rbindlist(
-  lapply(
-    pages, take_years),
-  fill = TRUE
-) 
-URLs_batting_finals <- as.character(URLs_batting_finals$df[pages])
-years_finals <- c(5, 8:10, 13, 15, 21, 23:25, 50)
-URLs_finals <- URLs_batting_finals[years_finals]
-all_batting_finals <- map(URLs_finals, get_batting_finals) 
-historic_batting_finals <- data.table::rbindlist(all_batting_finals,
+years_finals <- c(5, 8:10, 15, 21, 23:25, 50)
+URLs_finals <- URLs[years_finals]
+batting_finals <- map(URLs_finals, get_batting_finals) 
+batting_finals1 <- data.table::rbindlist(batting_finals,
                                              fill = TRUE) %>% 
-  select(1:28)
+  select(years, 1:28) %>% 
+  filter(!(str_detect(jugador, 'Jugadores|Refuerzos|Titulares'))
+  )
 
 # Others finals but with distinct order in the table
-URLs_batting_finals1 <- rbindlist(
-  lapply(
-    pages, take_years),
-  fill = TRUE
-) 
-URLs_batting_finals1 <- as.character(URLs_batting_finals1$df[pages])
 years_finals1 <- c(3:4, 7)
-URLs_finals1 <- URLs_batting_finals1[years_finals1]
-all_batting_finals1 <- map(URLs_finals1, get_batting_finals1) 
-historic_batting_finals1 <- data.table::rbindlist(all_batting_finals1,
-                                                 fill = TRUE)
-
-# Battinf df global in finals
-batting_finals <- rbind(historic_batting_finals, historic_batting_finals1)
-write.csv(batting_finals, file = 'data/batting_finals.csv')
-
+URLs_finals1 <- URLs[years_finals1]
+batting_finals12 <- map(URLs_finals1, get_batting_finals1) 
+batting_finals2 <- data.table::rbindlist(batting_finals12,
+                                                 fill = TRUE) %>% 
+  select(years, 1:28) %>% 
+  filter(!(str_detect(jugador, 'Jugadores|Refuerzos|Titulares'))
+  )
+  
+# Battinf  finals
+Hbatting_finals <- rbind(batting_finals1, batting_finals2)
+write.csv(Hbatting_finals, file = 'data/batting_finals.csv')
 
 
 # Getting pitching  regular season ----
-URLs_pitching <- rbindlist(
-  lapply(
-    pages, take_years),
-  fill = TRUE
-) 
-
 # pitching df1
-URLs_pitching_tem_reg <- as.character(URLs_pitching$df[pages])
 years_tem_reg <- c(1:2, 12, 17, 26, 29, 31:38, 40:41, 43:45, 49, 51, 56:57)
-URLs_temp_reg <- URLs_pitching_tem_reg[years_tem_reg]
+URLs_temp_reg <- URLs[years_tem_reg]
 pitching_tem_reg1 <- map(URLs_temp_reg, get_pitching) 
-all_pitching_tem_reg1 <- data.table::rbindlist(pitching_tem_reg1,
+pitching_reseason1 <- data.table::rbindlist(pitching_tem_reg1,
                                              fill = TRUE) %>% 
-  select(years, 1:26)
+  select(years, 1:26) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Peloteros|Importados|Criollos'))
+  )
 
 # pitching df2
-URLs_pitching_tem_reg2 <- as.character(URLs_pitching$df[pages])
 years_tem_reg2 <- c(4:5, 8:10, 15, 21, 23:25, 50)
-URLs_temp_reg2 <- URLs_pitching_tem_reg[years_tem_reg2]
+URLs_temp_reg2 <- URLs[years_tem_reg2]
 pitching_tem_reg2 <- map(URLs_temp_reg2, get_pitching2)  
-all_pitching_tem_reg2 <- data.table::rbindlist(pitching_tem_reg2,
+pitching_reseason2 <- data.table::rbindlist(pitching_tem_reg2,
                                                    fill = TRUE) %>% 
-  select(years, 1:26)
+  select(years, 1:26) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Peloteros|Importados|Criollos'))
+  )
 
 # pitching df3
-URLs_pitching_tem_reg3 <- as.character(URLs_pitching$df[pages])
 years_tem_reg3 <- c(3, 6:7, 11, 13, 16, 18:20, 22, 27:28, 30, 39, 42,
                     46:48, 52:55)
-URLs_temp_reg3 <- URLs_pitching_tem_reg[years_tem_reg3]
+URLs_temp_reg3 <- URLs[years_tem_reg3]
 pitching_tem_reg3 <- map(URLs_temp_reg3, get_pitching3)  
-all_pitching_tem_reg3 <- data.table::rbindlist(pitching_tem_reg3,
+pitching_reseason3 <- data.table::rbindlist(pitching_tem_reg3,
                                                fill = TRUE) %>% 
-  select(years, 1:26)
+  select(years, 1:26) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Peloteros|Importados|Criollos'))
+  )
 
 # Pitching regolar season df
-pitching_rs <- rbind(all_pitching_tem_reg1, all_pitching_tem_reg3, all_pitching_tem_reg2) %>% 
+pitching_rs <- rbind(pitching_reseason1, pitching_reseason2, pitching_reseason3) %>% 
   arrange(years)
 # write csv file 
-write.csv(pitching_rs, file = 'data/pitching_rs.csv')
+write.csv(pitching_rs, file = 'data/pitching_reseason.csv')
 
 
 # Getting pitching Round Robin ----
-URLs_pitching_rr <- as.character(URLs_pitching$df[pages])
+#Pitching rr df1
 years_rr <- c(11, 13, 16, 18:20, 22, 27:28, 30, 39, 42, 46:48, 52:55)
-URLs_pit_rr <- URLs_pitching_rr[years_rr]
-all_pitching_rr <- map(URLs_pit_rr, get_pitching_rr) 
-historic_pitching_rr <- data.table::rbindlist(all_pitching_rr,
+URLs_pit_rr <- URLs[years_rr]
+pitching_rr <- map(URLs_pit_rr, get_pitching_rr) 
+pitching_rrobin1 <- data.table::rbindlist(pitching_rr,
                                               fill = TRUE) %>% 
-  select(years, 2:26)
+  select(years, 1:26) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Refuerzos|Titulares|Peloteros'))
+  )
   
-write.csv(historic_pitching_rr, file = 'data/pitching_rr.csv')
+#Pitching rr df2
+years_rr1 <- c(4:5, 8:10, 15, 21, 23:25, 50)
+URLs_pit_rr1 <- URLs[years_rr1]
+pitching_rr1 <- map(URLs_pit_rr1, get_pitching_rr1) 
+pitching_rrobin2 <- data.table::rbindlist(pitching_rr1,
+                                              fill = TRUE) %>% 
+  select(years, 1:26) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Refuerzos|Titulares|Peloteros'))
+  )
+
+Pitching_rrobin <- rbind(pitching_rrobin1, pitching_rrobin2)
+
+write.csv(Pitching_rrobin, file = 'data/pitching_rrobin.csv')
 
 
 # Getting pitching Finals ----
 # Historic pitching finals df1
-URLs_pitching_finals1 <- as.character(URLs_pitching$df[pages])
 years_finals1 <- c(4:5, 9:10, 15, 21, 23:25, 50)
-URLs_finals1 <- URLs_pitching_finals1[years_finals1]
-all_pitching_finals1 <- map(URLs_finals1, get_pitching_finals1) 
-historic_pitching_finals <- data.table::rbindlist(all_pitching_finals1,
+URLs_finals1 <- URLs[years_finals1]
+pitching_fin1 <- map(URLs_finals1, get_pitching_finals1) 
+pitching_finals1 <- data.table::rbindlist(pitching_fin1,
                                               fill = TRUE) %>% 
-  select(years, 1:28)
+  select(years, 1:28) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Refuerzos|Titulares|Peloteros'))
+  )
 
 # Historic pitching finals df2
-URLs_pitching_finals2 <- as.character(URLs_pitching$df[pages])
 years_finals2 <- c(3, 7)
-URLs_finals2 <- URLs_pitching_finals2[years_finals2]
-all_pitching_finals2 <- map(URLs_finals2, get_pitching_finals2) 
-historic_pitching_finals2 <- data.table::rbindlist(all_pitching_finals2,
+URLs_finals2 <- URLs[years_finals2]
+pitching_fin2 <- map(URLs_finals2, get_pitching_finals2) 
+pitching_finals2 <- data.table::rbindlist(pitching_fin2,
                                                   fill = TRUE) %>% 
-  select(years, 1:28)
+  select(years, 1:28) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Refuerzos|Titulares|Peloteros'))
+  )
 
 # Historic pitching finals df3
-URLs_pitching_finals3 <- as.character(URLs_pitching$df[pages])
 years_finals3 <- c(8)
-URLs_finals3 <- URLs_pitching_finals3[years_finals3]
-all_pitching_finals3 <- map(URLs_finals3, get_pitching_finals3) 
-historic_pitching_finals3 <- data.table::rbindlist(all_pitching_finals3,
+URLs_finals3 <- URLs[years_finals3]
+pitching_fin3 <- map(URLs_finals3, get_pitching_finals3) 
+pitching_finals3 <- data.table::rbindlist(pitching_fin3,
                                                    fill = TRUE) %>% 
-  select(years, 1:28)
+  select(years, 1:28) %>% 
+  arrange(jugador) %>% 
+  filter(!(str_detect(jugador, 'Refuerzos|Titulares|Peloteros'))
+  )
+
 
 #Historic pitching finals
-pitching_finals <- rbind(historic_pitching_finals,
-                         historic_pitching_finals2,
-                         historic_pitching_finals3) %>% 
+pitching_finals <- rbind(pitching_finals1,
+                         pitching_finals2,
+                         pitching_finals3) %>% 
   arrange(years)
+
 write.csv(pitching_finals, file = 'data/pitching_finals.csv')
 
 
 
-#Nota:
-#Revisar que tengan el numero de columnas igual que en realidad Pitching rr y todos los
-#demas df menos pitching finals porque ya fue auditado. revisar la 69-70 tiene 3 filas al
-#final y no 4
 
-# Hacer una funcion completa para toda esta carga de datos ya que no es un cogido bien
-# leible
+#Falta fielding tables
