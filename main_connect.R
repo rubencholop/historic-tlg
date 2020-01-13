@@ -6,6 +6,7 @@ library(data.table)
 library(progress)
 library(stringr)
 library(purrr)
+library(tidyselect)
 #page http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1962-63
 
 
@@ -44,43 +45,37 @@ all_rosters <- map(URLs, get_roster) %>%
   keep(function(x) nrow(x) > 0)
 
 #Historic roster df
-historic_roster <- data.table::rbindlist(all_rosters,
+Rosters <- data.table::rbindlist(all_rosters,
                                               fill = TRUE) %>% 
   select(years, jugador, name, pos, bat, lan, exp, pais, estado, ciudad)
-write.csv(historic_roster, file = 'data/historic_roster.csv')
+write.csv(Rosters, file = 'data/rosters.csv')
   
 
 # Getting batting regular season ----
-URLs_batting_tem_reg <- rbindlist(
-  lapply(
-    pages, take_years),
-  fill = TRUE
-) 
-URLs_batting_tem_reg <- as.character(URLs_batting_tem_reg$df[pages])
-all_batting_tem_reg <- map(URLs_batting_tem_reg, get_batting) 
-
-# Historic batting df in regular season
-historic_batting_tem_reg <- data.table::rbindlist(all_batting_tem_reg,
+batting_reseason <- map(URLs, get_batting) 
+Hbatting_reseason <- data.table::rbindlist(batting_reseason,
                                          fill = TRUE) %>% 
   select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, 
          sb, cs, bb, so, avg, obp, slg, ops, ir, rc, tb, xb, hbp,
          sh, sf)
-write.csv(historic_batting_tem_reg, file = 'data/batting_rs')
+write.csv(Hbatting_reseason, file = 'data/batting_reseason.csv')
 
 # Historic batting df in Round robin ----
-URLs_batting_rr <- rbindlist(
-  lapply(
-    pages, take_years),
-  fill = TRUE
-) 
-URLs_batting_rr <- as.character(URLs_batting_rr$df[pages])
-years_rr <- c(8:11, 13, 15:16, 18:25, 27:28, 30, 39, 42, 46:48, 50, 52:55, 58)
-URLs_rr <- URLs_batting_rr[years_rr]
-all_batting_rr <- map(URLs_rr, get_batting_rr) 
-historic_batting_rr <- data.table::rbindlist(all_batting_rr,
+years_rr <- c(4:5, 8:11, 13, 15:16, 18:25, 27:28, 30, 39, 42, 46:48, 50, 52:55)
+URLs_rr <- URLs[years_rr]
+batting_rr <- map(URLs_rr, get_batting_rr) 
+Hbatting_rr <- data.table::rbindlist(batting_rr,
                                               fill = TRUE) %>% 
-  select(years, 1:26)
-write.csv(historic_batting_rr, file = 'data/batting_rr.csv')
+  select(years, 1:26) %>% 
+  arrange(jugador) %>% 
+  filter(str_detect(jugador, 'Jugadores') |
+           str_detect(jugador, 'Tirulares') |
+           str_detect(jugador, 'Refuerzos')
+         )
+
+.cols <-contains(Hbatting_rr$jugador, 'Jugadores')
+
+write.csv(batting_rr, file = 'data/batting_rr.csv')
 
 # Historic batting df in Finals ----
 URLs_batting_finals <- rbindlist(
