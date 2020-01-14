@@ -627,6 +627,56 @@ get_pitching_finals3 <- function(.URL){
 }
 
 
+# Fielding players ----
+#fielding
+get_fielding <- function(.URL){
+  flog.info('Getting available URl')
+  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+  campeon <- c('1964-65', '1965-66', '1968-69', '1970-71',
+               '1982-1983', '1984-85', '1985-86')
+  
+  fielding <- read_html(.URL) %>% 
+    html_nodes(css = '.sortable') %>% 
+    html_table(fill = TRUE) %>% 
+    .[[7]] %>% 
+    as.data.frame() %>% 
+    rename(
+      'jugador' = X1,
+      'edad' = X2,
+      'w' = X3,
+      'l' = X4,
+      'w-l%' = X5,
+      'era' = X6,
+      'g' = X7,
+      'gs' = X8,
+      'cg' = X9,
+      'sho' = X10,
+      'sv' = X11,
+      'ip' = X12,
+      'h' = X13,
+      'r' = X14,
+      'er' = X15,
+      'hr' = X16,
+      'bb' = X17,
+      'so' = X18,
+      'whip' = X19,
+      'h/9' = X20,
+      'hr/9' = X21,
+      'bb/9' = X22,
+      'so/9' = X23,
+      'so/bb' = X24,
+      'bk' = X25,
+      'refuerzo' = X26
+    ) %>% 
+    subset(edad != 'EDAD') %>% 
+    mutate(
+      years = years,
+      resultado = if_else(years %in% campeon, 'campeon', 'subcampeon')
+    )
+  flog.info('Data Wrangling completed')
+  fielding
+}
+
 
 
 

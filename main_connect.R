@@ -203,7 +203,7 @@ pitching_finals3 <- data.table::rbindlist(pitching_fin3,
   )
 
 
-#Historic pitching finals
+# Historic pitching finals
 pitching_finals <- rbind(pitching_finals1,
                          pitching_finals2,
                          pitching_finals3) %>% 
@@ -213,5 +213,42 @@ write.csv(pitching_finals, file = 'data/pitching_finals.csv')
 
 
 
+#Falta fielding tables ----
 
-#Falta fielding tables
+
+#Data sets ----
+distinct_players <- Rosters %>% 
+  arrange(years) %>% 
+  filter(pais == 'Venezuela') 
+  
+distinct_players <- Rosters %>% 
+  mutate(key = paste(as.character(years), jugador)) %>% 
+  select(key, name)
+
+
+Hbf <- Hbatting_finals %>% 
+  mutate(key = paste(as.character(years), jugador)) %>% 
+  select(key, 1:28) %>% 
+  left_join(distinct_players, by = c('key')) %>% 
+  select(key, years, jugador, name,4:30) %>% 
+  filter(refuerzo == 'SI') %>% 
+  arrange(years)
+
+Hbrs <- Hbatting_reseason %>% 
+  mutate(key = paste(as.character(years), jugador))
+
+Hbrr  <- Hbatting_rr %>% 
+  mutate(key = paste(as.character(years), jugador)) %>% 
+  select(key, 1:28)
+
+Hprs <- pitching_rs %>% 
+  mutate(key = paste(as.character(years), jugador)) %>% 
+  select(key, 1:28)
+
+Hprr <- Pitching_rrobin %>% 
+  mutate(key = paste(as.character(years), jugador)) %>% 
+  select(key, 1:13)
+
+Hpf <- pitching_finals %>% 
+  mutate(key = paste(as.character(years), jugador)) %>%
+  select(key, 1:29)
