@@ -8,10 +8,15 @@ library(shinydashboardPlus)
 shinyApp(
   ui = dashboardPagePlus(
     
+    # Tittle ----
+    title = "Tiburones de la Guaira",
+    
     # Header ----
     header = dashboardHeaderPlus(
       enable_rightsidebar = TRUE,
-      rightSidebarIcon = "gears"
+      rightSidebarIcon = "gears",
+      left_menu = NULL,
+      userOutput("user")
     ),
     
     # Side bar ----
@@ -47,14 +52,45 @@ shinyApp(
       left_text = "By Rubén López \n
                   (Sports Data Analytics)",
       right_text = "Caracas, 2020"
-    ),
-    
-    # Tittle ----
-    title = "Tiburones de la Guaira"
+    )
   ),
   
   # Server ----
-  server = function(input, output) { }
-
+  server = function(input, output) { 
+  
+# Example  User ----
+  output$user <- renderUser({
+    dashboardUser(
+      name = "Rubén López",
+      src = "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
+      title = "Sports Data Analytics",
+      subtitle = "",
+      footer = p("DASHBOARD HITORICO DE TIBURONES DE LA GUAIRA", class = "text-center"),
+      fluidRow(
+        dashboardUserItem(
+          width = 4,
+          socialButton(
+            url = "https://www.linkedin.com/in/ruben-lopez-28002bb4/",
+            type = "linkedin"
+          )
+        ),
+        dashboardUserItem(
+          width = 4,
+          socialButton(
+            url = "https://github.com/ruhanslop",
+            type = "github"
+          )
+        ),
+        dashboardUserItem(
+          width = 4,
+          socialButton(
+            url = "https://github.com/ruhanslop",
+            type = "instagram"
+          )
+        )
+      )
+    )
+  })
+}
 )
 
