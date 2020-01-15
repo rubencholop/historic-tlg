@@ -22,7 +22,24 @@ shinyApp(
     
     # Right bar ----
     rightsidebar = rightSidebar(
-      background = "dark"
+      background = "dark",
+      rightSidebarTabContent(
+        id = 1,
+        icon = "desktop",
+        active = TRUE,
+        title = "Tab 1"
+      ),
+      rightSidebarTabContent(
+        id = 2,
+        title = "Tab 2",
+        textInput("caption", "Caption", "Data Summary")
+      ),
+      rightSidebarTabContent(
+        id = 3,
+        icon = "paint-brush",
+        title = "Tab 3",
+        numericInput("obs", "Observations:", 10, min = 1, max = 100)
+      )
     ),
     
     # Footer ----
@@ -38,5 +55,6 @@ shinyApp(
   
   # Server ----
   server = function(input, output) { }
+
 )
 
