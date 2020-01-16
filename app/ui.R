@@ -12,7 +12,7 @@ shinyApp(
   ui = dashboardPagePlus(
     
     # Tittle ----
-    title = "DashboardPage",
+    title = "Tiburones de la Guaira",
     # skin = "black",
     
     # Header ----
@@ -62,14 +62,18 @@ shinyApp(
     
     # Side bar ----
     sidebar = dashboardSidebar(
-      # menuItem Estadisticas ----
+       # MenuItem Inicio ----
       sidebarMenu(
-        menuItem(
-          'Estadísticas',
+        menuItem('Tiburones de la Guaira',
+          tabName = 'inicio',
+          icon = icon('shark')
+          ),
+        
+        # menuItem Estadisticas ----
+        menuItem('Estadísticas',
           tabName = 'estadisticas',
           icon = icon('dashboard'),
-          collapsible = 
-            menuSubItem('000', tabName = '000'),
+          startExpanded = TRUE,
             menuSubItem('Temporada Regular', tabName = 'tem_reg'),
             menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
             menuSubItem('Finales', tabName = 'finales'),
@@ -83,8 +87,6 @@ shinyApp(
           'Geo Estadísticas',
           tabName = 'g_estadisticas',
           icon = icon('stats'),
-          collapsible = 
-            menuSubItem('001', tabName = '001'),
             menuSubItem('Geograficas', tabName = 'geo'),
             menuSubItem('Caracateristicas', tabName = 'hab')
         )
@@ -95,8 +97,6 @@ shinyApp(
           'Records',
           tabName = 'records',
           icon = icon('up'),
-          collapsible = 
-            menuSubItem('002', tabName = '002'),
             menuSubItem('Historicos', tabName = 'historicos'),
             menuSubItem('Por temporadas', tabName = 'p_tem'),
             menuSubItem('Records en LVBP', tabName = 'lvbp'),
@@ -109,8 +109,6 @@ shinyApp(
           'Historia',
           tabName = 'historia',
           icon = icon('dashboard'),
-          collapsible = 
-            menuSubItem('004', tabName = '004'),
             menuSubItem('En números', tabName = 'en_num'),
             menuSubItem('Estadio', tabName = 'rr_sm')
         )
@@ -121,8 +119,6 @@ shinyApp(
           'Glosario',
           tabName = 'glosario',
           icon = icon('dashboard'),
-          collapsible = 
-            menuSubItem('005', tabName = '005'),
             menuSubItem('Glosario Sabermetricor', tabName = 'g_saberm'),
             menuSubItem('Cálculos', tabName = 'calc')
         )
@@ -133,16 +129,100 @@ shinyApp(
     body = dashboardBody(
       # TabItem Estadisticas ----
       tabItems(
+        
+        # tabItem Inicio ----
         tabItem(
+          tabName = 'inicio',
+          h1('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
+        ),
+        
+        # tabItem Temporada regular ----
+        tabItem(
+          h1('Temporada Regular', align = 'center'),
           tabName = 'tem_reg',
-          h3("Picheo"),
           tabsetPanel(
+            id = 'picheo',
             tabPanel(
+              'Picheo',
+              # valeu = 'page1',
               fluidRow(
-                column(9,
-                       dataTableOutput('df_delta')
+                column(2,
+                       tableOutput('Table')
                        )
                 )
+              ),
+            tabPanel(
+              'Bateo',
+              tableOutput('1321321')
+              ),
+            tabPanel(
+              'Fildeo',
+              tableOutput('132asdsadasd')
+              )
+            )
+          ),
+        # tabItem Roun robin ----
+        tabItem(
+          h1('Round Robin / Semi Finales', align = 'center'),
+          tabName = 'rr_sm',
+          tabsetPanel(
+            id = 'picheo',
+            tabPanel(
+              'Picheo',
+              # valeu = 'page1',
+              fluidRow(
+                column(2,
+                       tableOutput('Table')
+                )
+              )
+            ),
+            tabPanel(
+              'Bateo',
+              tableOutput('1321321')
+              )
+            )
+          ),
+        
+        # tabItem Finales ----
+        tabItem(
+          h1('Finales', align = 'center'),
+          tabName = 'finales',
+          tabsetPanel(
+            id = 'picheo',
+            tabPanel(
+              'Picheo',
+              # valeu = 'page1',
+              fluidRow(
+                column(2,
+                       tableOutput('Table')
+                )
+              )
+            ),
+            tabPanel(
+              'Bateo',
+              tableOutput('1321321')
+              )
+            )
+          ),
+        
+        # tabItem Por jugador ----
+        tabItem(
+          h1('Estadísticas Individuales', align = 'center'),
+          tabName = 'jugador',
+          tabsetPanel(
+            id = 'picheo',
+            tabPanel(
+              'Picheo',
+              # valeu = 'page1',
+              fluidRow(
+                column(2,
+                       tableOutput('Table')
+                )
+              )
+            ),
+            tabPanel(
+              'Bateo',
+              tableOutput('1321321')
               )
             )
           )
@@ -238,3 +318,21 @@ shinyApp(
 )
 
 
+
+# h3("Picheo"),
+# tabsetPanel(
+#   tabPanel('Picheo',
+#            fluidRow(
+#              column(9,
+#                     dataTableOutput('df_delta')
+#              )
+#            )
+#   ),
+#   tabPanel('Bateo',
+#            fluidRow(
+#              column(9,
+#                     dataTableOutput('df_delta')
+#              )
+#            )
+#   )
+# )
