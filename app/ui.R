@@ -9,18 +9,97 @@ shinyApp(
   ui = dashboardPagePlus(
     
     # Tittle ----
-    title = "Tiburones de la Guaira",
+    title = "DashboardPage",
+    # skin = "black",
     
     # Header ----
     header = dashboardHeaderPlus(
       enable_rightsidebar = TRUE,
       rightSidebarIcon = "gears",
-      left_menu = NULL,
+      left_menu = tagList(
+        dropdownBlock(
+          id = "mydropdown",
+          title = "Dropdown 1",
+          icon = "sliders",
+          sliderInput(
+            inputId = "n",
+            label = "Number of observations",
+            min = 10, max = 100, value = 30
+          ),
+          prettyToggle(
+            inputId = "na",
+            label_on = "NAs keeped",
+            label_off = "NAs removed",
+            icon_on = icon("check"),
+            icon_off = icon("remove")
+          )
+        ),
+        dropdownBlock(
+          id = "mydropdown2",
+          title = "Dropdown 2",
+          icon = "sliders",
+          prettySwitch(
+            inputId = "switch4",
+            label = "Fill switch with status:",
+            fill = TRUE,
+            status = "primary"
+          ),
+          prettyCheckboxGroup(
+            inputId = "checkgroup2",
+            label = "Click me!",
+            thick = TRUE,
+            choices = c("Click me !", "Me !", "Or me !"),
+            animation = "pulse",
+            status = "info"
+            )
+          )
+        ),
       userOutput("user")
     ),
     
     # Side bar ----
-    sidebar = dashboardSidebar(),
+    sidebar = dashboardSidebar(
+      # menuItem stats ----
+      sidebarMenu(
+        menuItem(
+          'Estadísticas',
+          tabName = 'estadisticas',
+          icon = icon('dashboard')
+          )
+      ),
+      # menuItem Estadisticas geograficas ----
+      sidebarMenu(
+        menuItem(
+          'Geo Estadísticas',
+          tabName = 'g_estadisticas',
+          icon = icon('stats')
+        )
+      ),
+      # menuItem Records ----
+      sidebarMenu(
+        menuItem(
+          'Records',
+          tabName = 'records',
+          icon = icon('up')
+        )
+      ),
+      # menuItem Historia ----
+      sidebarMenu(
+        menuItem(
+          'Historia',
+          tabName = 'historia',
+          icon = icon('dashboard')
+        )
+      ),
+      # menuItem Glosario ----
+      sidebarMenu(
+        menuItem(
+          'Glosario',
+          tabName = 'glosario',
+          icon = icon('dashboard')
+        )
+      )
+    ),
     
     # Body ----
     body = dashboardBody(),
@@ -94,3 +173,27 @@ shinyApp(
 }
 )
 
+
+# 
+# rightSidebarMenu(
+#   rightSidebarMenuItem(
+#     icon = menuIcon(
+#       name = "birthday-cake",
+#       color = "red"
+#     ),
+#     info = menuInfo(
+#       title = "Langdon's Birthday",
+#       description = "Will be 23 on April 24th"
+#     )
+#   ),
+#   rightSidebarMenuItem(
+#     icon = menuIcon(
+#       name = "user",
+#       color = "yellow"
+#     ),
+#     info = menuInfo(
+#       title = "Frodo Updated His Profile",
+#       description = "New phone +1(800)555-1234"
+#     )
+#   )
+# )
