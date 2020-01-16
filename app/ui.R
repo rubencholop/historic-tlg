@@ -3,6 +3,9 @@ library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinydashboardPlus)
+library(lubridate)
+library(plotly)
+
 
 # Ui
 shinyApp(
@@ -59,7 +62,7 @@ shinyApp(
     
     # Side bar ----
     sidebar = dashboardSidebar(
-      # menuItem stats ----
+      # menuItem Estadisticas ----
       sidebarMenu(
         menuItem(
           'Estadísticas',
@@ -69,7 +72,9 @@ shinyApp(
             menuSubItem('000', tabName = '000'),
             menuSubItem('Temporada Regular', tabName = 'tem_reg'),
             menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
-            menuSubItem('Finales', tabName = 'finales')
+            menuSubItem('Finales', tabName = 'finales'),
+            menuSubItem('Por Jugador', tabName = 'jugador')
+          
           )
       ),
       # menuItem Estadisticas geograficas ----
@@ -81,7 +86,7 @@ shinyApp(
           collapsible = 
             menuSubItem('001', tabName = '001'),
             menuSubItem('Geograficas', tabName = 'geo'),
-            menuSubItem('Habilidades', tabName = 'hab')
+            menuSubItem('Caracateristicas', tabName = 'hab')
         )
       ),
       # menuItem Records ----
@@ -125,7 +130,44 @@ shinyApp(
     ),
     
     # Body ----
-    body = dashboardBody(),
+    body = dashboardBody(
+      # TabItem Estadisticas ----
+      tabItems(
+        tabItem(
+          tabName = 'tem_reg',
+          h3("Picheo"),
+          tabsetPanel(
+            tabPanel(
+              fluidRow(
+                column(9,
+                       dataTableOutput('df_delta')
+                       )
+                )
+              )
+            )
+          )
+        ),
+      
+      # TabItem Geo Estadisticas ----
+      tabItems(
+        tabItem(tabName = 'g_estadisticas')
+        ),
+      
+      # TabItem Records ----
+      tabItems(
+        tabItem(tabName = 'records')
+        ),
+      
+      # TabItem Historia ----
+      tabItems(
+        tabItem(tabName = 'hisroria')
+        ),
+      
+      # TamItem Glosario ----
+      tabItems(
+        tabItem(tabName = 'glosario')
+        )
+    ),
     
     # Right bar ----
     rightsidebar = rightSidebar(
@@ -151,9 +193,8 @@ shinyApp(
     
     # Footer ----
     footer = dashboardFooter(
-      left_text = "By Rubén López \n
-                  (Sports Data Analytics)",
-      right_text = "Caracas, 2020"
+      left_text = "Fuente: www.pelotabinaria.com",
+      right_text = 'Caracas - 2020'
     )
   ),
   
@@ -193,30 +234,7 @@ shinyApp(
       )
     )
   })
-}
+  }
 )
 
 
-# 
-# rightSidebarMenu(
-#   rightSidebarMenuItem(
-#     icon = menuIcon(
-#       name = "birthday-cake",
-#       color = "red"
-#     ),
-#     info = menuInfo(
-#       title = "Langdon's Birthday",
-#       description = "Will be 23 on April 24th"
-#     )
-#   ),
-#   rightSidebarMenuItem(
-#     icon = menuIcon(
-#       name = "user",
-#       color = "yellow"
-#     ),
-#     info = menuInfo(
-#       title = "Frodo Updated His Profile",
-#       description = "New phone +1(800)555-1234"
-#     )
-#   )
-# )
