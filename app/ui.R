@@ -64,7 +64,12 @@ shinyApp(
         menuItem(
           'Estadísticas',
           tabName = 'estadisticas',
-          icon = icon('dashboard')
+          icon = icon('dashboard'),
+          collapsible = 
+            menuSubItem('000', tabName = '000'),
+            menuSubItem('Temporada Regular', tabName = 'tem_reg'),
+            menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
+            menuSubItem('Finales', tabName = 'finales')
           )
       ),
       # menuItem Estadisticas geograficas ----
@@ -72,7 +77,11 @@ shinyApp(
         menuItem(
           'Geo Estadísticas',
           tabName = 'g_estadisticas',
-          icon = icon('stats')
+          icon = icon('stats'),
+          collapsible = 
+            menuSubItem('001', tabName = '001'),
+            menuSubItem('Geograficas', tabName = 'geo'),
+            menuSubItem('Habilidades', tabName = 'hab')
         )
       ),
       # menuItem Records ----
@@ -80,7 +89,13 @@ shinyApp(
         menuItem(
           'Records',
           tabName = 'records',
-          icon = icon('up')
+          icon = icon('up'),
+          collapsible = 
+            menuSubItem('002', tabName = '002'),
+            menuSubItem('Historicos', tabName = 'historicos'),
+            menuSubItem('Por temporadas', tabName = 'p_tem'),
+            menuSubItem('Records en LVBP', tabName = 'lvbp'),
+            menuSubItem('Sabermetria', tabName = 'saberm')
         )
       ),
       # menuItem Historia ----
@@ -88,7 +103,11 @@ shinyApp(
         menuItem(
           'Historia',
           tabName = 'historia',
-          icon = icon('dashboard')
+          icon = icon('dashboard'),
+          collapsible = 
+            menuSubItem('004', tabName = '004'),
+            menuSubItem('En números', tabName = 'en_num'),
+            menuSubItem('Estadio', tabName = 'rr_sm')
         )
       ),
       # menuItem Glosario ----
@@ -96,7 +115,11 @@ shinyApp(
         menuItem(
           'Glosario',
           tabName = 'glosario',
-          icon = icon('dashboard')
+          icon = icon('dashboard'),
+          collapsible = 
+            menuSubItem('005', tabName = '005'),
+            menuSubItem('Glosario Sabermetricor', tabName = 'g_saberm'),
+            menuSubItem('Cálculos', tabName = 'calc')
         )
       )
     ),
