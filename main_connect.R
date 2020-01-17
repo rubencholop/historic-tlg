@@ -225,8 +225,9 @@ distinct_years <- Rosters %>%
   select(years) %>% 
   distinct(years) %>% 
   arrange(desc(years)) %>% 
-  pull() %>% 
-  unique()
+  pull()
+
+  choices_years <- as.numeric(distinct_years)
 
 
 Hbf <- Hbatting_finals %>% 

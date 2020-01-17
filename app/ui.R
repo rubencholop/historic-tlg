@@ -57,24 +57,19 @@ ui = dashboardPagePlus(
           # id = 'picheo',
           tabPanel('Picheo', 
                    fluidRow(
+                     column(10),
+                     column(2,
+                            selectInput(
+                              inputId =  'season',
+                              label = 'Temporada',
+                              choices = distinct_years)
+                            ),
+                     ),
+                   fluidRow(
                      column(12,
-                            box(
-                              selectInput(
-                                inputId =  'season',
-                                label = 'Elige una temporada',
-                                choices = distinct_years
-                              )
+                            DT::dataTableOutput('picheo_rs')
                             )
                      )
-                   ),
-                   
-                  fluidRow(
-                    column(12,
-                      box(
-                          DT::dataTableOutput('picheo_rs')
-                          )
-                      )
-                    )
                   ),
           tabPanel('Bateo', tableOutput('bateo_rs')),
           tabPanel('Fildeo', tableOutput('fildeo_rs'))
