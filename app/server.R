@@ -11,14 +11,12 @@ shinyApp(ui, server)
 Server = function(input, output) {
   
   # Reactive Picheo regular season ----
-  pitching_full_tem = reactive({
-    df <- Hprs
-    
-    req(inpunt$season)
+  pitching_full_tem <- reactive({
+    req(input$season)
 
-    df %>%
+    df <- Hprs %>%
       select(years, 3:28) %>% 
-      filter(years %in% input$season)
+      filter(years == distinct_years)
       
   })
   
@@ -26,10 +24,20 @@ Server = function(input, output) {
   
   
   output$picheo_rs <- DT::renderDataTable({
-    input$season
+    req(input$season)
     
-    DT::datatable(df %>% 
-                    arrange(years))
+    DT::datatable(
+      pitching_full_tem(),
+      extensions = "ColReorder",
+      options = list(
+        pageLegth = 25,
+        autoWidth = TRUE,
+        colReorder = TRUE,
+        scrollX = TRUE,
+        columnDefs = list(list(className = "dt-center", targets = 0:4))
+      )
+  
+      )
   })
   
   
