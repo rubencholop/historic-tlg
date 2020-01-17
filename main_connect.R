@@ -221,9 +221,12 @@ distinct_players <- Rosters %>%
   arrange(years) %>% 
   filter(pais == 'Venezuela') 
   
-distinct_players <- Rosters %>% 
-  mutate(key = paste(as.character(years), jugador)) %>% 
-  select(key, name)
+distinct_years <- Rosters %>% 
+  select(years) %>% 
+  distinct(years) %>% 
+  arrange(desc(years)) %>% 
+  pull() %>% 
+  unique()
 
 
 Hbf <- Hbatting_finals %>% 
@@ -252,3 +255,5 @@ Hprr <- Pitching_rrobin %>%
 Hpf <- pitching_finals %>% 
   mutate(key = paste(as.character(years), jugador)) %>%
   select(key, 1:29)
+
+.years_test <- c('1962-63', '1987-88')
