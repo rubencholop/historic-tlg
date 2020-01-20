@@ -62,7 +62,7 @@ ui = dashboardPagePlus(
                             selectInput(
                               inputId =  'season',
                               label = 'Temporada',
-                              choices = distinct_years)
+                              choices = list_years)
                             ),
                      ),
                    fluidRow(

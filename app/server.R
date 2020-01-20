@@ -17,7 +17,8 @@ Server = function(input, output) {
 
     df  %>%
       select(years, 3:28) %>% 
-      filter(years %in% distinct_years)
+      left
+      # filter(years %in% list_years)
       
   })
   
@@ -25,18 +26,55 @@ Server = function(input, output) {
   output$picheo_rs <- DT::renderDataTable({
     req(input$season)
     
+    
+   df <-  pitching_full_tem() %>%
+     # filter(years  %in% input$season) %>% 
+     rename(
+       `Temporada` = years,
+       `Jugador` = jugador,
+       `Edad` = edad,
+       `W` = w,
+       `L` = l,
+       `W - L %` = 'w-l%',
+       `ERA` = era,
+       `G` = g,
+       `GS` = gs,
+       `CG` = cg,
+       `SHO` = sho,
+       `SV` = sv,
+       `IP` = ip,
+       `H` = h,
+       `R` = r,
+       `ER` = er,
+       `HR` = hr,
+       `BB` = bb,
+       `SO` = so,
+       `IR` = ir,
+       `WHIP` = whip,
+       `H/9` = 'h/9',
+       `HR/9` = 'hr/9',
+       `BB/9` = 'bb/9',
+       `SO/9` = 'so/9',
+       `SO/9` = 'so/9',
+       `SO/BB` = 'so/bb',
+       `BK` = 'bk') %>% 
+     arrange((Temporada)) 
+    
     DT::datatable(
-      Hprs %>% select(2:28) %>% arrange(desc(years)),
+      df,
       extensions = "ColReorder",
       rownames = FALSE,
       options = list(
-        pageLegth = 25,
-        # autoWidth = TRUE,
-        # colReorder = TRUE,
+        autoWidth = TRUE,
+        pageLegth = 50,
+        lengthMenu = c(50, 75, 100),
         scrollX = TRUE,
+        scrollY = "500px",
+        fixedColumns = list(LeftColumns = 3 ),
         paging = TRUE,
         fixedHeader = TRUE,
-        columnDefs = list(list(className = "dt-center", targets = 0:4))
+        columnDefs = list(list(className = "dt-center", targets = 0:26),
+                          list(width = '100px', targets = 1))
       )
   
       )
@@ -45,7 +83,7 @@ Server = function(input, output) {
   
   
   
-  4801
+
   
   
   
