@@ -31,17 +31,17 @@ ui = dashboardPagePlus(
           'Estadísticas',
           startExpanded = TRUE,
           tabName = 'estadisticas',
-          icon = icon('dashboard'),
+          icon = icon('chart-line', lib = 'font-awesome'),
           menuSubItem('Temporada Regular', tabName = 'tem_reg'),
           menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
-          menuSubItem('Finales', tabName = 'finales'),
+          menuSubItem('Finales', tabName = 'finals'),
           menuSubItem('Por Jugador', tabName = 'jugador')
         )
       )
     )
   ),
   
-  # Body ---
+  # Body ----
   body = dashboardBody(
     tabItems(
       tabItem(
@@ -99,8 +99,106 @@ ui = dashboardPagePlus(
           # tabPanel Fildeo
           tabPanel('Fildeo', tableOutput('fildeo_rs'))
         )
+      ),
+      
+      # tabItem for Picheo, Bateo in Round robin / semi finals ----
+      tabItem(
+        h1('Temporada Regular', align = 'center'),
+        tabName = 'rr_sm',
+        tabsetPanel(
+          # tabPanel Picheo
+          tabPanel('Picheo', 
+                   fluidRow(
+                     column(9),
+                     column(3,
+                            box(
+                              tittle = 'Información',
+                              solidHeader = TRUE,
+                              status = 'info',
+                              collapsible = TRUE,
+                              width = 12,
+                              p('Filtre la tabla por cualquier variable', align = 'center')
+                            )
+                     ),
+                   ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('picheo_rr_sm')
+                     )
+                   )
+          ),
+          # tabPanel Bateo
+          tabPanel('Bateo',
+                   fluidRow(
+                     column(9),
+                     column(3,
+                            box(
+                              tittle = 'Información',
+                              solidHeader = TRUE,
+                              status = 'info',
+                              collapsible = TRUE,
+                              width = 12,
+                              p('Filtre la tabla por cualquier variable', align = 'center')
+                            )
+                     ),
+                   ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('bateo_rr_sm')
+                     )
+                   )
+          )
+        )
+      ),
+      # tabItem for Picheo, Bateo in  finals ---- 
+      tabItem(
+        h1('Temporada Regular', align = 'center'),
+        tabName = 'rr_sm',
+        tabsetPanel(
+          # tabPanel Picheo
+          tabPanel('Picheo', 
+                   fluidRow(
+                     column(9),
+                     column(3,
+                            box(
+                              tittle = 'Información',
+                              solidHeader = TRUE,
+                              status = 'info',
+                              collapsible = TRUE,
+                              width = 12,
+                              p('Filtre la tabla por cualquier variable', align = 'center')
+                            )
+                     ),
+                   ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('picheo_finals')
+                     )
+                   )
+          ),
+          # tabPanel Bateo
+          tabPanel('Bateo',
+                   fluidRow(
+                     column(9),
+                     column(3,
+                            box(
+                              tittle = 'Información',
+                              solidHeader = TRUE,
+                              status = 'info',
+                              collapsible = TRUE,
+                              width = 12,
+                              p('Filtre la tabla por cualquier variable', align = 'center')
+                            )
+                     ),
+                   ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('bateo_finals')
+                     )
+                   )
+          )
+        )
       )
     )
   )
-  
 )

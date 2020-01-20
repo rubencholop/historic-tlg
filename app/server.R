@@ -52,7 +52,6 @@ Server = function(input, output) {
        `HR/9` = 'hr/9',
        `BB/9` = 'bb/9',
        `SO/9` = 'so/9',
-       `SO/9` = 'so/9',
        `SO/BB` = 'so/bb',
        `BK` = 'bk') %>% 
      arrange(TEMPORADA)
@@ -144,6 +143,63 @@ Server = function(input, output) {
   
   
   
+  
+  
+  # Table picheo round robin / semi - finals----
+  output$picheo_rr_sm <- DT::renderDataTable({
+    
+    df <-  Hprr %>%
+      select(years, refuerzo, 3:28) %>% 
+      rename(
+        `TEMPORADA` = years,
+        `JUGADOR` = jugador,
+        `Edad` = edad,
+        `W` = w,
+        `L` = l,
+        `W - L %` = 'w-l%',
+        `ERA` = era,
+        `G` = g,
+        `GS` = gs,
+        `CG` = cg,
+        `SHO` = sho,
+        `SV` = sv,
+        `IP` = ip,
+        `H` = h,
+        `R` = r,
+        `ER` = er,
+        `HR` = hr,
+        `BB` = bb,
+        `SO` = so,
+        `WHIP` = whip,
+        `H/9` = 'h/9',
+        `HR/9` = 'hr/9',
+        `BB/9` = 'bb/9',
+        `SO/9` = 'so/9',
+        `SO/BB` = 'so/bb',
+        `BK` = 'bk',
+        `REFUERZO` = refuerzo
+        ) %>% 
+      arrange(TEMPORADA)
+    
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      options = list(
+        autoWidth = TRUE,
+        pageLegth = 50,
+        lengthMenu = c(50, 75, 100),
+        scrollX = TRUE,
+        scrollY = "500px",
+        fixedColumns = list(LeftColumns = 3 ),
+        paging = TRUE,
+        fixedHeader = TRUE,
+        columnDefs = list(list(className = "dt-center", targets = 0:26),
+                          list(width = '100px', targets = 2))
+      )
+      
+    )
+  })
   
   
 # Ends of server ----  

@@ -251,7 +251,7 @@ Hprs <- pitching_rs %>%
 
 Hprr <- Pitching_rrobin %>% 
   mutate(key = paste(as.character(years), jugador)) %>% 
-  select(key, 1:13)
+  select(key, 1:27)
 
 Hpf <- pitching_finals %>% 
   mutate(key = paste(as.character(years), jugador)) %>%
