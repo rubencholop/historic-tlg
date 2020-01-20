@@ -234,7 +234,7 @@ Hbf <- Hbatting_finals %>%
   mutate(key = paste(as.character(years), jugador)) %>% 
   select(key, 1:28) %>% 
   left_join(distinct_players, by = c('key')) %>% 
-  select(key, years, jugador, name,4:30) %>% 
+  select(key, years, jugador, name, 4:30) %>% 
   filter(refuerzo == 'SI') %>% 
   arrange(years)
 

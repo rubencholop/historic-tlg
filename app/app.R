@@ -71,7 +71,7 @@ ui = dashboardPagePlus(
                icon = icon('shark')
       ),
       
-      # menuItem Estadisticas ----
+    # menuItem Estadisticas ----
       menuItem('Estadísticas',
                tabName = 'estadisticas',
                icon = icon('dashboard'),

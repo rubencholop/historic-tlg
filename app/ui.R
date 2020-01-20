@@ -21,12 +21,15 @@ ui = dashboardPagePlus(
   
   # Sidebar ----
   sidebar = dashboardSidebar(
-    sidebarMenu(
-      menuItem('Tiburones de la Guaira',
-               tabName = 'inicio',
-               icon = icon('shark')
-      ),
-      sidebarMenu(
+    br(),
+      # meniItem Tiburones de la Guaira ----
+       menuItem(
+         'Tiburones de la Guaira',
+         tabName = 'inicio',
+         icon = icon('text-height', lib = 'font-awesome')
+         ),
+      br(),
+      # menuItem  Estadisticas ----
         menuItem(
           'Estadísticas',
           startExpanded = TRUE,
@@ -36,9 +39,46 @@ ui = dashboardPagePlus(
           menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
           menuSubItem('Finales', tabName = 'finals'),
           menuSubItem('Por Jugador', tabName = 'jugador')
+        ),
+      br(),
+      # menuItem Geo Estadisticas ----
+        menuItem(
+          'Geo Estadísticas',
+          startExpanded = TRUE,
+          tabName = 'geo_estadisticas',
+          icon =  icon('globe-americas', lib = 'font-awesome'),
+          menuSubItem('Geograficas', tabName = 'geo'),
+          menuSubItem('Caracateristicas', tabName = 'hab')
+        ),
+      br(),
+      # menuItem Records ----
+        menuItem(
+          'Records',
+          tabName = 'records',
+          icon = icon('edit', lib = 'font-awesome'),
+          menuSubItem('Historicos', tabName = 'historicos'),
+          menuSubItem('Por temporadas', tabName = 'p_tem'),
+          menuSubItem('Records en LVBP', tabName = 'lvbp'),
+          menuSubItem('Sabermetria', tabName = 'saberm')
+        ),
+      br(),
+      # menuItem Historia ----
+        menuItem(
+          'Historia',
+          tabName = 'historia',
+          icon = icon('search-location', lib = 'font-awesome'),
+          menuSubItem('En números', tabName = 'en_num'),
+          menuSubItem('Estadio', tabName = 'rr_sm')
+        ),
+      br(),
+      # menuItem Glosario ----
+        menuItem(
+          'Glosario',
+          tabName = 'glosario',
+          icon = icon('google', lib = 'font-awesome'),
+          menuSubItem('Glosario Sabermetrico', tabName = 'g_saberm'),
+          menuSubItem('Cálculos', tabName = 'calc')
         )
-      )
-    )
   ),
   
   # Body ----
@@ -153,7 +193,7 @@ ui = dashboardPagePlus(
       # tabItem for Picheo, Bateo in  finals ---- 
       tabItem(
         h1('Temporada Regular', align = 'center'),
-        tabName = 'rr_sm',
+        tabName = 'finals',
         tabsetPanel(
           # tabPanel Picheo
           tabPanel('Picheo', 
