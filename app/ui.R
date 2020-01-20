@@ -54,15 +54,19 @@ ui = dashboardPagePlus(
         h1('Temporada Regular', align = 'center'),
         tabName = 'tem_reg',
         tabsetPanel(
-          # id = 'picheo',
+          # tabPanel Picheo
           tabPanel('Picheo', 
                    fluidRow(
-                     column(10),
-                     column(2,
-                            selectInput(
-                              inputId =  'season',
-                              label = 'Temporada',
-                              choices = list_years)
+                     column(9),
+                     column(3,
+                            box(
+                              tittle = 'Información',
+                              solidHeader = TRUE,
+                              status = 'info',
+                              collapsible = TRUE,
+                              width = 12,
+                              p('Filtre la tabla por cualquier variable', align = 'center')
+                              )
                             ),
                      ),
                    fluidRow(
@@ -71,7 +75,28 @@ ui = dashboardPagePlus(
                             )
                      )
                   ),
-          tabPanel('Bateo', tableOutput('bateo_rs')),
+          # tabPanel Bateo
+          tabPanel('Bateo',
+                   fluidRow(
+                     column(9),
+                     column(3,
+                            box(
+                              tittle = 'Información',
+                              solidHeader = TRUE,
+                              status = 'info',
+                              collapsible = TRUE,
+                              width = 12,
+                              p('Filtre la tabla por cualquier variable', align = 'center')
+                            )
+                     ),
+                   ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('bateo_rs')
+                            )
+                     )
+                   ),
+          # tabPanel Fildeo
           tabPanel('Fildeo', tableOutput('fildeo_rs'))
         )
       )
