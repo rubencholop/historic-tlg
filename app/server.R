@@ -399,5 +399,83 @@ Server = function(input, output) {
   
   
   
+  # Table por jugador ----
+  output$info_jugador <- DT::renderDataTable({
+    
+    df <-  Hbf %>%
+      select(years, resultado, refuerzo, 2:28) %>% 
+      rename(
+        `TEMPORADA` = years,
+        `JUGADOR` = jugador,
+        `RESULTADO` = resultado,
+        `Edad` = edad,
+        `g` = g,
+        `PA` = X5,
+        `AB` = ab,
+        `R` = r,
+        `H` = h,
+        `2B` = '2b',
+        `3B` = '3b',
+        `HR` = hr,
+        `RBI` = rbi,
+        `SB` = sb,
+        `CS` = cs,
+        `BB` = bb,
+        `SO` = so,
+        `AVG` = avg,
+        `OBP` = obp,
+        `SLG` = slg,
+        `OPS` = ops,
+        `RC` = rc,
+        `TB` = tb,
+        `XB` = xb,
+        `HBP` = hbp,
+        `SH` = sh,
+        `SF` = sf
+      ) %>% 
+      arrange(TEMPORADA) %>% 
+      filter(
+        trimws(PA) != ''  # To filter a empty value in colum AB
+      ) %>% 
+      select(-name)
+    
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      options = list(
+        # autoWidth = TRUE,
+        pageLegth = 50,
+        lengthMenu = c(50, 75, 100),
+        scrollX = TRUE,
+        scrollY = "500px",
+        fixedColumns = list(LeftColumns = 3 ),
+        paging = TRUE,
+        fixedHeader = TRUE,
+        columnDefs = list(list(className = "dt-center", targets = 0:26),
+                          list(width = '100px', targets = 3))
+      )
+      
+    )
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # image jugador ----
+  # output$info_jugador <- renderImage({
+  #   img(src = 'G.Blanco.png', height = '300px')
+  #   
+  # })
 # Ends of server ----  
 } 

@@ -243,12 +243,22 @@ ui = dashboardPagePlus(
         h1('Ruben López', align = 'center'),
         tabName = 'jugador',
         fluidRow(
+          column(10),
+          column(2,
+                 selectInput(
+                   inputId = 'select_jugador',
+                   label = 'Elige un jugador',
+                   choices = distinct_players
+                 )
+                )
+        ),
+        fluidRow(
           column(4,
                  imageOutput('jugador_',
                              click = 'image_click')
                  ),
           column(8,
-                 DT::dataTableOutput('imagen_jugador')
+                 DT::dataTableOutput('info_jugador')
                  )
         )
       )
@@ -264,6 +274,12 @@ ui = dashboardPagePlus(
 #   h1('Jugador', align = 'center'),
 #   tabName = 'por_jugador',
 #   tabsetPanel(
+
+
+
+
+
+
 #     # tabPanel Data ----
 #     tabPanel('info_pj',
 #              fluidRow(
