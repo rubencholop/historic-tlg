@@ -218,8 +218,8 @@ write.csv(pitching_finals, file = 'data/pitching_finals.csv')
 
 #Data sets ----
 distinct_players <- Rosters %>% 
-  arrange(years) %>% 
-  filter(pais == 'Venezuela') 
+  distinct(jugador) %>% 
+  arrange(jugador) 
   
 distinct_years <- Rosters %>% 
   select(years) %>% 
@@ -234,9 +234,8 @@ Hbf <- Hbatting_finals %>%
   mutate(key = paste(as.character(years), jugador)) %>% 
   select(key, 1:28) %>% 
   left_join(distinct_players, by = c('key')) %>% 
-  select(key, years, jugador, name, 4:30) %>% 
-  filter(refuerzo == 'SI') %>% 
-  arrange(years)
+  select(key, years, jugador, name, 4:30) 
+
 
 Hbrs <- Hbatting_reseason %>% 
   mutate(key = paste(as.character(years), jugador))

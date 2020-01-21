@@ -32,7 +32,6 @@ ui = dashboardPagePlus(
       # menuItem  Estadisticas ----
         menuItem(
           'Estadísticas',
-          startExpanded = TRUE,
           tabName = 'estadisticas',
           icon = icon('chart-line', lib = 'font-awesome'),
           menuSubItem('Temporada Regular', tabName = 'tem_reg'),
@@ -44,7 +43,7 @@ ui = dashboardPagePlus(
       # menuItem Geo Estadisticas ----
         menuItem(
           'Geo Estadísticas',
-          startExpanded = TRUE,
+          startExpanded = FALSE,
           tabName = 'geo_estadisticas',
           icon =  icon('globe-americas', lib = 'font-awesome'),
           menuSubItem('Geograficas', tabName = 'geo'),
@@ -143,7 +142,7 @@ ui = dashboardPagePlus(
       
       # tabItem for Picheo, Bateo in Round robin / semi finals ----
       tabItem(
-        h1('Temporada Regular', align = 'center'),
+        h1('Round Robin - Semi Final', align = 'center'),
         tabName = 'rr_sm',
         tabsetPanel(
           # tabPanel Picheo
@@ -192,7 +191,7 @@ ui = dashboardPagePlus(
       ),
       # tabItem for Picheo, Bateo in  finals ---- 
       tabItem(
-        h1('Temporada Regular', align = 'center'),
+        h1('Finales', align = 'center'),
         tabName = 'finals',
         tabsetPanel(
           # tabPanel Picheo
@@ -238,7 +237,60 @@ ui = dashboardPagePlus(
                    )
           )
         )
+      ),
+      # tabItem for Jugador ----
+      tabItem(
+        h1('Ruben López', align = 'center'),
+        tabName = 'jugador',
+        fluidRow(
+          column(4,
+                 imageOutput('jugador_',
+                             click = 'image_click')
+                 ),
+          column(8,
+                 DT::dataTableOutput('imagen_jugador')
+                 )
+        )
       )
     )
   )
 )
+
+
+
+
+
+# tabItem(
+#   h1('Jugador', align = 'center'),
+#   tabName = 'por_jugador',
+#   tabsetPanel(
+#     # tabPanel Data ----
+#     tabPanel('info_pj',
+#              fluidRow(
+#                column(9),
+#                column(3,
+#                       box(
+#                         tittle = 'Información',
+#                         solidHeader = TRUE,
+#                         status = 'info',
+#                         collapsible = TRUE,
+#                         width = 12,
+#                         p('Filtre la tabla por cualquier variable', align = 'center')
+#                       )
+#                ),
+#              ),
+#              fluidRow(
+#                column(4,
+#                       imageOutput('jugador',
+#                                   height = 300,
+#                                   click = 'image_click'
+#                       )
+#                ),
+#                column(8,
+#                       DT::dataTableOutput('info_jugador'
+#                       )
+#                )
+#              )
+#     )
+#   )
+# )

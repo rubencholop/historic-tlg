@@ -152,6 +152,7 @@ Server = function(input, output) {
       select(years, refuerzo, 3:28) %>% 
       rename(
         `TEMPORADA` = years,
+        `REFUERZO` = refuerzo,
         `JUGADOR` = jugador,
         `Edad` = edad,
         `W` = w,
@@ -176,8 +177,7 @@ Server = function(input, output) {
         `BB/9` = 'bb/9',
         `SO/9` = 'so/9',
         `SO/BB` = 'so/bb',
-        `BK` = 'bk',
-        `REFUERZO` = refuerzo
+        `BK` = 'bk'
         ) %>% 
       arrange(TEMPORADA)
     
