@@ -25,7 +25,7 @@ ui = dashboardPagePlus(
     # ),
     title = tagList(
       span(class = "logo-lg", "Tiburones de la Guaira"), 
-      img(src = "www/Tiburones_de_La_Guaira.eps")),
+      img(src = "andreas_Bureau_de_change.svg")),
     # (title = span(tagList(icon("calendar"), "Example"))
     # fixed = TRUE,
     titleWidth = 250,
@@ -260,11 +260,14 @@ ui = dashboardPagePlus(
         h1('Ruben López', align = 'center'),
         tabName = 'jugador',
         fluidRow(
+          column(8,
+                 box()
+                 ),
           column(4,
-                 imageOutput('jugador_',
-                             click = 'image_click')
-          )
+                 box()
+                 )
         ),
+        # Table test align fluirow ----
         fluidRow(
           column(10),
           column(2,
@@ -273,8 +276,81 @@ ui = dashboardPagePlus(
                    label = 'Elige un jugador',
                    choices = distinct_players
                  )
-                )
+          )
         ),
+        # Payer image ----
+        fluidRow(
+          column(6,
+                 box(
+                   title = 'Marcelino Pons Lopez',
+                   collapsible = TRUE,
+                   status = 'warning',
+                   imageOutput('jugador_',
+                               click = 'image_click') 
+                 )
+          ),
+          # Individual stats ----
+          column(6,
+                 box(
+                   title = "Exp: 5 Temporadas",
+                   align = 'center',
+                   status = "warning",
+                   width = NULL,
+                   collapsible = TRUE,
+                   fluidRow(
+                     # Stats primary ----
+                     column(6,
+                            boxPad(
+                              color = "blue",
+                              descriptionBlock(
+                                header = "Venezuela", 
+                                text = "País", 
+                                right_border = FALSE,
+                                margin_bottom = TRUE
+                              ),
+                              descriptionBlock(
+                                header = "Zulia", 
+                                text = "Estado", 
+                                right_border = FALSE,
+                                margin_bottom = TRUE
+                              ),
+                              descriptionBlock(
+                                header = "Maracaibo", 
+                                text = "Ciudad", 
+                                right_border = FALSE,
+                                margin_bottom = FALSE
+                                )
+                              )
+                            ),
+                     # Stats secundary ----
+                     column(6,
+                            boxPad(
+                            color = "blue",
+                            descriptionBlock(
+                              header = "C", 
+                              text = "Posición", 
+                              right_border = FALSE,
+                              margin_bottom = TRUE
+                              ),
+                            descriptionBlock(
+                              header = batting_average, # Información renderizable
+                              text = "Batea", 
+                              right_border = FALSE,
+                              margin_bottom = TRUE
+                              ),
+                            descriptionBlock(
+                              header = "Derecha", 
+                              text = "Lanza", 
+                              right_border = FALSE,
+                              margin_bottom = FALSE
+                              )
+                            )
+                          )
+                       )
+                    )
+                 )
+        ),
+        # Table by player ----
         fluidRow(
           column(12,
                  DT::dataTableOutput('info_jugador')
@@ -285,7 +361,7 @@ ui = dashboardPagePlus(
   )
 )
 
-
+# End Body ----
 
 
 
@@ -296,10 +372,7 @@ ui = dashboardPagePlus(
 
 
 
-
-
-
-#     # tabPanel Data ----
+#     # tabPanel Data 
 #     tabPanel('info_pj',
 #              fluidRow(
 #                column(9),

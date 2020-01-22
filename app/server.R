@@ -485,7 +485,8 @@ Server = function(input, output) {
   output$user <- renderUser({
         dashboardUser(
             name = "Ruben López",
-            src = "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
+            # src = "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
+            src = "ball.png",
             title = "shinydashboardPlus",
             subtitle = "Author",
            footer = p("The footer", class = "text-center"),
