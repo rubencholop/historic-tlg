@@ -473,9 +473,41 @@ Server = function(input, output) {
   
   
   # image jugador ----
-  # output$info_jugador <- renderImage({
-  #   img(src = 'G.Blanco.png', height = '300px')
-  #   
-  # })
+#   output$info_jugador <- renderImage({
+#     req(input$select_jugador)
+# 
+#     img(src = paste(input$select_jugador, '.jpg', sep = ''),
+#           height = '300px')
+# 
+# })
+  
+  # User Ruben Lopez ----
+  output$user <- renderUser({
+        dashboardUser(
+            name = "Ruben López",
+            src = "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
+            title = "shinydashboardPlus",
+            subtitle = "Author",
+           footer = p("The footer", class = "text-center"),
+            fluidRow(
+             dashboardUserItem(
+              width = 6,
+              socialButton(
+               url = "https://dropbox.com",
+              type = "dropbox"
+              )
+             ),
+             dashboardUserItem(
+             width = 6,
+              socialButton(
+              url = "https://github.com",
+              type = "github"
+              )
+             )
+            )
+           )
+        })
+  
 # Ends of server ----  
 } 
+

@@ -17,15 +17,32 @@ ui = dashboardPagePlus(
   # collapse_sidebar = TRUE, 
   
   # Herader ----
-  header = dashboardHeaderPlus(),
+  header = dashboardHeaderPlus(
+    # titlePanel(
+    #   rel = "icon",
+    #   type = "image/gif",
+    #   href = "https://guidetoiceland.is/image/389003/x/0/the-beautiful-waterfalls-of-south-iceland-seljalandsfoss-skogafoss-amp-gljufrabui-1.jpg"
+    # ),
+    title = tagList(
+      span(class = "logo-lg", "Tiburones de la Guaira"), 
+      img(src = "www/Tiburones_de_La_Guaira.eps")),
+    # (title = span(tagList(icon("calendar"), "Example"))
+    # fixed = TRUE,
+    titleWidth = 250,
+    enable_rightsidebar = TRUE,
+    rightSidebarIcon = "bars",
+    userOutput("user")
+  ),
   
   # Sidebar ----
   sidebar = dashboardSidebar(
     br(),
       # meniItem Tiburones de la Guaira ----
        menuItem(
-         'Tiburones de la Guaira',
+         text = 'Tiburones de la Guaira',
          tabName = 'inicio',
+         badgeLabel = "new", 
+         badgeColor = "green",
          icon = icon('text-height', lib = 'font-awesome')
          ),
       br(),
@@ -243,6 +260,12 @@ ui = dashboardPagePlus(
         h1('Ruben López', align = 'center'),
         tabName = 'jugador',
         fluidRow(
+          column(4,
+                 imageOutput('jugador_',
+                             click = 'image_click')
+          )
+        ),
+        fluidRow(
           column(10),
           column(2,
                  selectInput(
@@ -253,11 +276,7 @@ ui = dashboardPagePlus(
                 )
         ),
         fluidRow(
-          column(4,
-                 imageOutput('jugador_',
-                             click = 'image_click')
-                 ),
-          column(8,
+          column(12,
                  DT::dataTableOutput('info_jugador')
                  )
         )
