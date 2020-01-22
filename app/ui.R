@@ -259,14 +259,18 @@ ui = dashboardPagePlus(
       tabItem(
         h1('Ruben López', align = 'center'),
         tabName = 'jugador',
-        fluidRow(
-          column(8,
-                 box()
-                 ),
-          column(4,
-                 box()
-                 )
-        ),
+        # fluidRow(
+        #   column(8,
+        #          box(
+        #            width = 12
+        #          )
+        #          ),
+        #   column(4,
+        #          box(
+        #            width = 12
+        #          )
+        #          )
+        # ),
         # Table test align fluirow ----
         fluidRow(
           column(10),
@@ -282,11 +286,15 @@ ui = dashboardPagePlus(
         fluidRow(
           column(6,
                  box(
+                   width = 12,
+                   # height = 250,
                    title = 'Marcelino Pons Lopez',
                    collapsible = TRUE,
                    status = 'warning',
                    imageOutput('jugador_',
-                               click = 'image_click') 
+                               click = 'image_click',
+                               height = 200
+                               ) 
                  )
           ),
           # Individual stats ----
