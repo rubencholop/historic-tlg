@@ -286,14 +286,14 @@ ui = dashboardPagePlus(
         fluidRow(
           column(6,
                  boxPlus(
-                   width = 12,
+                   width = NULL,
                    # height = 250,
-                   title = 'Marcelino Pons Lopez',
+                   title = 'Nombre completo del jugador',
                    collapsible = TRUE,
                    status = 'warning',
                    imageOutput('jugador_',
-                               click = 'image_click',
-                               height = 200
+                               click = 'image_click'
+                               # height  = 
                                ) 
                  )
           ),

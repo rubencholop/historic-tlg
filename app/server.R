@@ -9,7 +9,7 @@ shinyApp(ui, server)
 
 # Server ----
 Server = function(input, output) {
-  
+ 
   # Reactive info player ----
   info_player <- reactive({
     req(input$select_jugador)
@@ -474,23 +474,6 @@ Server = function(input, output) {
   
   
   
-  # InfoBox lan player ----
-  output$lan <- renderInfoBox({
-    
-    lan_player <- info_player() %>% 
-      select(lan) %>%
-      summarise(
-        lan = last(lan))
-    
-    # box_color = if_else(net_profit >= 0, 'green', 'red')
-    
-    infoBox('Posición',
-            value = lan_player,
-            color = 'blue',
-            icon = icon('usd', lib = 'glyphicon')
-            )
-  })
-  
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
     
@@ -508,6 +491,23 @@ Server = function(input, output) {
     )
   })
   
+  # InfoBox lan player ----
+  output$lan <- renderInfoBox({
+    
+    lan_player <- info_player() %>% 
+      select(lan) %>%
+      summarise(
+        lan = last(lan))
+    
+    # box_color = if_else(net_profit >= 0, 'green', 'red')
+    
+    infoBox('Lanza',
+            value = lan_player,
+            color = 'blue',
+            icon = icon('usd', lib = 'glyphicon')
+    )
+  })
+  
   # InfoBox bat player ----
   output$bat <- renderInfoBox({
     
@@ -518,8 +518,64 @@ Server = function(input, output) {
     
     # box_color = if_else(net_profit >= 0, 'green', 'red')
     
-    infoBox('Posición',
+    infoBox('Batea',
             value = bat_player,
+            color = 'blue',
+            icon = icon('usd', lib = 'glyphicon')
+    )
+  })
+  
+  
+  
+  
+  
+  
+  # InfoBox pais player ----
+  output$pais <- renderInfoBox({
+    
+    pais_player <- info_player() %>% 
+      select(pais) %>%
+      summarise(
+        pais = last(pais))
+    
+    # box_color = if_else(net_profit >= 0, 'green', 'red')
+    
+    infoBox('País',
+            value = pais_player,
+            color = 'blue',
+            icon = icon('usd', lib = 'glyphicon')
+    )
+  })
+  
+  # InfoBox estado player ----
+  output$estado <- renderInfoBox({
+    
+    estado_player <- info_player() %>% 
+      select(estado) %>%
+      summarise(
+        estado = last(estado))
+    
+    # box_color = if_else(net_profit >= 0, 'green', 'red')
+    
+    infoBox('Estado',
+            value = estado_player,
+            color = 'blue',
+            icon = icon('usd', lib = 'glyphicon')
+    )
+  })
+  
+  # InfoBox ciudad player ----
+  output$ciudad <- renderInfoBox({
+    
+    ciudad_player <- info_player() %>% 
+      select(ciudad) %>%
+      summarise(
+        ciudad = last(ciudad))
+    
+    # box_color = if_else(net_profit >= 0, 'green', 'red')
+    
+    infoBox('Ciudad',
+            value = ciudad_player,
             color = 'blue',
             icon = icon('usd', lib = 'glyphicon')
     )
