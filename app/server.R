@@ -439,9 +439,6 @@ Server = function(input, output) {
       select(-name) %>% 
       filter(JUGADOR == input$select_jugador) 
 
-    
-    # EN EL SUBMENUITEM PLAYER, HAY UNAS CAJAS QUE HAY QUE CAMBIAR A INFOR BOX
-    # O A VALEU BOX... SINO, BUSCAR OTRO INPUT PORQUE LA QUE TENGO, NO SE RENDERIZA
 
     # Datatable ----
     DT::datatable(
@@ -477,6 +474,23 @@ Server = function(input, output) {
   
   
   
+  # InfoBox lan player ----
+  output$lan <- renderInfoBox({
+    
+    lan_player <- info_player() %>% 
+      select(lan) %>%
+      summarise(
+        lan = last(lan))
+    
+    # box_color = if_else(net_profit >= 0, 'green', 'red')
+    
+    infoBox('Posición',
+            value = lan_player,
+            color = 'blue',
+            icon = icon('usd', lib = 'glyphicon')
+            )
+  })
+  
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
     
@@ -491,8 +505,42 @@ Server = function(input, output) {
             value = pos_player,
             color = 'blue',
             icon = icon('usd', lib = 'glyphicon')
-            )
+    )
   })
+  
+  # InfoBox bat player ----
+  output$bat <- renderInfoBox({
+    
+    bat_player <- info_player() %>% 
+      select(bat) %>%
+      summarise(
+        bat = last(bat))
+    
+    # box_color = if_else(net_profit >= 0, 'green', 'red')
+    
+    infoBox('Posición',
+            value = bat_player,
+            color = 'blue',
+            icon = icon('usd', lib = 'glyphicon')
+    )
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   # image jugador ----
 #   output$info_jugador <- renderImage({

@@ -285,7 +285,7 @@ ui = dashboardPagePlus(
         # Payer image ----
         fluidRow(
           column(6,
-                 box(
+                 boxPlus(
                    width = 12,
                    # height = 250,
                    title = 'Marcelino Pons Lopez',
@@ -299,7 +299,7 @@ ui = dashboardPagePlus(
           ),
           # Individual stats ----
           column(6,
-                 box(
+                 boxPlus(
                    title = "Exp: 5 Temporadas",
                    align = 'center',
                    status = "warning",
@@ -308,45 +308,15 @@ ui = dashboardPagePlus(
                    fluidRow(
                      # Stats primary ----
                      column(6,
-                            boxPad(
-                              color = "blue",
-                              descriptionBlock(
-                                header = pos_jugador$pais[1], 
-                                text = "País", 
-                                right_border = FALSE,
-                                margin_bottom = TRUE
-                              ),
-                              descriptionBlock(
-                                header = pos_jugador$estado[1], 
-                                text = "Estado", 
-                                right_border = FALSE,
-                                margin_bottom = TRUE
-                              ),
-                              descriptionBlock(
-                                header = pos_jugador$ciudad[1], 
-                                text = "Ciudad", 
-                                right_border = FALSE,
-                                margin_bottom = FALSE
-                                )
-                              )
-                            ),
+                            valueBoxOutput(outputId = 'pais', width = NULL),
+                            valueBoxOutput(outputId = 'estado', width = NULL),
+                            valueBoxOutput(outputId = 'ciudad', width = NULL)
+                     ),
                      # Stats secundary ----
                      column(6,
-                            boxPlus(
-                              title = "Closable box, with label", 
-                              closable = TRUE, 
-                              enable_label = TRUE,
-                              label_text = 1,
-                              label_status = "danger",
-                              status = "warning", 
-                              solidHeader = FALSE, 
-                              collapsible = TRUE,
-                              p("Box Content"),
-                              width = 12,
-                            valueBoxOutput(outputId = 'pos', width = NULL),
-                            valueBoxOutput(outputId = 'lan', width = NULL),
-                            valueBoxOutput(outputId = 'bat', width = NULL)
-                            )
+                              valueBoxOutput(outputId = 'lan', width = NULL),
+                              valueBoxOutput(outputId = 'pos', width = NULL),
+                              valueBoxOutput(outputId = 'bat', width = NULL)
                           )
                        )
                     )
