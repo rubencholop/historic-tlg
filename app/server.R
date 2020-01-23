@@ -10,15 +10,13 @@ shinyApp(ui, server)
 # Server ----
 Server = function(input, output) {
   
-  # Reactive Picheo regular season ----
-  pitching_full_tem <- reactive({
-    df <- Hprs
-    # req(input$season)
+  # Reactive info player ----
+  info_player <- reactive({
+    req(input$select_jugador)
+    
+    df <- Rosters %>% 
+      filter(jugador %in% input$select_jugador) 
 
-    df  %>%
-      select(years, 3:28) 
-      # filter(years %in% list_years)
-      
   })
   
   # Table picheo regular season ----
@@ -401,6 +399,7 @@ Server = function(input, output) {
   
   # Table por jugador ----
   output$info_jugador <- DT::renderDataTable({
+    req(input$select_jugador)
     
     df <-  Hbf %>%
       select(years, resultado, refuerzo, 2:28) %>% 
@@ -437,8 +436,14 @@ Server = function(input, output) {
       filter(
         trimws(PA) != ''  # To filter a empty value in colum AB
       ) %>% 
-      select(-name)
+      select(-name) %>% 
+      filter(JUGADOR == input$select_jugador) 
+
     
+    # EN EL SUBMENUITEM PLAYER, HAY UNAS CAJAS QUE HAY QUE CAMBIAR A INFOR BOX
+    # O A VALEU BOX... SINO, BUSCAR OTRO INPUT PORQUE LA QUE TENGO, NO SE RENDERIZA
+
+    # Datatable ----
     DT::datatable(
       df,
       extensions = "ColReorder",
@@ -471,6 +476,23 @@ Server = function(input, output) {
   
   
   
+  
+  # InfoBox Position player ----
+  output$pos <- renderInfoBox({
+    
+    pos_player <- info_player() %>% 
+      select(pos) %>%
+      summarise(
+        pos = last(pos))
+    
+    # box_color = if_else(net_profit >= 0, 'green', 'red')
+    
+    infoBox('Posición',
+            value = pos_player,
+            color = 'blue',
+            icon = icon('usd', lib = 'glyphicon')
+            )
+  })
   
   # image jugador ----
 #   output$info_jugador <- renderImage({

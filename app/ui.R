@@ -311,19 +311,19 @@ ui = dashboardPagePlus(
                             boxPad(
                               color = "blue",
                               descriptionBlock(
-                                header = "Venezuela", 
+                                header = pos_jugador$pais[1], 
                                 text = "País", 
                                 right_border = FALSE,
                                 margin_bottom = TRUE
                               ),
                               descriptionBlock(
-                                header = "Zulia", 
+                                header = pos_jugador$estado[1], 
                                 text = "Estado", 
                                 right_border = FALSE,
                                 margin_bottom = TRUE
                               ),
                               descriptionBlock(
-                                header = "Maracaibo", 
+                                header = pos_jugador$ciudad[1], 
                                 text = "Ciudad", 
                                 right_border = FALSE,
                                 margin_bottom = FALSE
@@ -332,26 +332,20 @@ ui = dashboardPagePlus(
                             ),
                      # Stats secundary ----
                      column(6,
-                            boxPad(
-                            color = "blue",
-                            descriptionBlock(
-                              header = "C", 
-                              text = "Posición", 
-                              right_border = FALSE,
-                              margin_bottom = TRUE
-                              ),
-                            descriptionBlock(
-                              header = batting_average, # Información renderizable
-                              text = "Batea", 
-                              right_border = FALSE,
-                              margin_bottom = TRUE
-                              ),
-                            descriptionBlock(
-                              header = "Derecha", 
-                              text = "Lanza", 
-                              right_border = FALSE,
-                              margin_bottom = FALSE
-                              )
+                            boxPlus(
+                              title = "Closable box, with label", 
+                              closable = TRUE, 
+                              enable_label = TRUE,
+                              label_text = 1,
+                              label_status = "danger",
+                              status = "warning", 
+                              solidHeader = FALSE, 
+                              collapsible = TRUE,
+                              p("Box Content"),
+                              width = 12,
+                            valueBoxOutput(outputId = 'pos', width = NULL),
+                            valueBoxOutput(outputId = 'lan', width = NULL),
+                            valueBoxOutput(outputId = 'bat', width = NULL)
                             )
                           )
                        )
