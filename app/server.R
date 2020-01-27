@@ -397,8 +397,145 @@ Server = function(input, output) {
   
   
   
-  # Table por jugador ----
-  output$info_jugador <- DT::renderDataTable({
+  # Table por  Bat_rs  by jugador ----
+  output$bat_rs <- DT::renderDataTable({
+    req(input$select_jugador)
+    
+    df <-  Hbrs %>%
+      select(years, 2:27) %>% 
+      rename(
+        `TEMPORADA` = years,
+        `JUGADOR` = jugador,
+        `Edad` = edad,
+        `g` = g,
+        `PA` = pa,
+        `AB` = ab,
+        `R` = r,
+        `H` = h,
+        `2B` = '2b',
+        `3B` = '3b',
+        `HR` = hr,
+        `RBI` = rbi,
+        `SB` = sb,
+        `CS` = cs,
+        `BB` = bb,
+        `SO` = so,
+        `AVG` = avg,
+        `OBP` = obp,
+        `SLG` = slg,
+        `OPS` = ops,
+        `RC` = rc,
+        `TB` = tb,
+        `XB` = xb,
+        `HBP` = hbp,
+        `SH` = sh,
+        `SF` = sf
+      ) %>% 
+      arrange(TEMPORADA) %>% 
+      filter(
+        trimws(AB) != ''  # To filter a empty value in colum AB
+      ) %>% 
+      filter(JUGADOR == input$select_jugador) 
+
+
+    # Datatable ----
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      options = list(
+        # autoWidth = TRUE,
+        pageLegth = 50,
+        lengthMenu = c(50, 75, 100),
+        scrollX = TRUE,
+        scrollY = "500px",
+        fixedColumns = list(LeftColumns = 3 ),
+        paging = TRUE,
+        fixedHeader = TRUE,
+        columnDefs = list(list(className = "dt-center", targets = 0:26),
+                          list(width = '100px', targets = 3))
+      )
+      
+    )
+  })
+  
+  
+  # Table por  Bat_rr  by jugador ----
+  output$bat_rr <- DT::renderDataTable({
+    req(input$select_jugador)
+    
+    df <-  Hbrr %>%
+      select(years, refuerzo, 2:27) %>% 
+      rename(
+        `TEMPORADA` = years,
+        `JUGADOR` = jugador,
+        `REFUERZO` = refuerzo,
+        `Edad` = edad,
+        `g` = g,
+        `PA` = X5,
+        `AB` = ab,
+        `R` = r,
+        `H` = h,
+        `2B` = '2b',
+        `3B` = '3b',
+        `HR` = hr,
+        `RBI` = rbi,
+        `SB` = sb,
+        `CS` = cs,
+        `BB` = bb,
+        `SO` = so,
+        `AVG` = avg,
+        `OBP` = obp,
+        `SLG` = slg,
+        `OPS` = ops,
+        `RC` = rc,
+        `TB` = tb,
+        `XB` = xb,
+        `HBP` = hbp,
+        `SH` = sh,
+        `SF` = sf
+      ) %>% 
+      arrange(TEMPORADA) %>% 
+      filter(
+        trimws(AB) != ''  # To filter a empty value in colum AB
+      ) %>% 
+      filter(JUGADOR == input$select_jugador) 
+    
+    
+    # Datatable ----
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      options = list(
+        # autoWidth = TRUE,
+        pageLegth = 50,
+        lengthMenu = c(50, 75, 100),
+        scrollX = TRUE,
+        scrollY = "500px",
+        fixedColumns = list(LeftColumns = 3 ),
+        paging = TRUE,
+        fixedHeader = TRUE,
+        columnDefs = list(list(className = "dt-center", targets = 0:26),
+                          list(width = '100px', targets = 3))
+      )
+      
+    )
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  # Table por  Bat_finals  by jugador ----
+  output$bat_final <- DT::renderDataTable({
     req(input$select_jugador)
     
     df <-  Hbf %>%
@@ -438,8 +575,8 @@ Server = function(input, output) {
       ) %>% 
       select(-name) %>% 
       filter(JUGADOR == input$select_jugador) 
-
-
+    
+    
     # Datatable ----
     DT::datatable(
       df,
@@ -460,19 +597,6 @@ Server = function(input, output) {
       
     )
   })
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
@@ -600,6 +724,12 @@ Server = function(input, output) {
     }
   }, deleteFile = FALSE)
   
+  # Text output Jugador
+  output$jugador_bat <- renderText({
+    req(input$select_jugador)
+    
+  paste(input$select_jugador)
+  })
   # User Ruben Lopez ----
   output$user <- renderUser({
         dashboardUser(

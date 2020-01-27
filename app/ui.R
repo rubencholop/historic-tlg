@@ -262,7 +262,8 @@ ui = dashboardPagePlus(
           tabPanel(
           # Bateo ----
             title = 'Bateo',
-            h1('Ruben López', align = 'center'),
+            h1(textOutput('jugador_bat')
+               , align = 'center'),
             # Table test align fluirow ----
             fluidRow(
               column(10),
@@ -318,7 +319,15 @@ ui = dashboardPagePlus(
             # Table by player ----
             fluidRow(
               column(12,
-                     DT::dataTableOutput('info_jugador')
+                     # br(),
+                     h1('Bateo en temporada regular', align = 'center'),
+                     DT::dataTableOutput('bat_rs'),
+                     # br(),
+                     h1('Bateo en round robin - postemporada', align = 'center'),
+                     DT::dataTableOutput('bat_rr'),
+                     # br(),
+                     h1('Bateo en finales', align = 'center'),
+                     DT::dataTableOutput('bat_final')
                      )
               )
             ),
