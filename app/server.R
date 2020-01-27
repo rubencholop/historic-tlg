@@ -560,7 +560,7 @@ Server = function(input, output) {
     infoBox('Estado',
             value = estado_player,
             color = 'red',
-            icon = icon('usd', lib = 'glyphicon')
+            icon = icon('map-marker', lib = 'font-awesome')
     )
   })
   
@@ -581,27 +581,23 @@ Server = function(input, output) {
     )
   })
 
-# image jugador ----
-  output$image2 <- renderImage({
+  # image jugador ----
+  output$jugador_ <- renderImage({
     req(input$select_jugador)
+    player <- paste('www/', input$select_jugador, '.jpg', sep = '')
     
     if (is.null(input$select_jugador))
-      return(NULL)
+      return(cat('Not image'))
     
-    if (input$select_jugador == "G. Blanco") {
+    if (input$select_jugador == input$select_jugador) {
       return(list(
-        src = "www/G.Blanco.jpg",
-        contentType = "image/jpg",
-        alt = "G.Blanco"
-      ))
-    } else if (input$picture == "chainring") {
-      return(list(
-        src = "images/chainring.jpg",
-        filetype = "image/jpeg",
-        alt = "This is a chainring"
+        src = player,
+        contentType = "image/jpg"
+        # width = 400,
+        # height = 300
+        # alt = 'Selecciona un jugador'
       ))
     }
-    
   }, deleteFile = FALSE)
   
   # User Ruben Lopez ----

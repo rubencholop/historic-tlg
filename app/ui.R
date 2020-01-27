@@ -258,9 +258,9 @@ ui = dashboardPagePlus(
       # tabItem for Jugador ----
       tabItem(
         tabName = 'jugador',
-        # tabSetpanel bateo ----
         tabsetPanel(
           tabPanel(
+          # Bateo ----
             title = 'Bateo',
             h1('Ruben López', align = 'center'),
             # Table test align fluirow ----
@@ -278,15 +278,16 @@ ui = dashboardPagePlus(
             fluidRow(
               column(6,
                      boxPlus(
-                       width = NULL,
+                       width = 12,
                        # height = 250,
                        title = 'Nombre completo del jugador',
                        collapsible = TRUE,
                        status = 'warning',
-                       imageOutput('jugador_',
-                                   click = 'image_click'
-                                   # height  = 
-                       ) 
+                       fluidRow(
+                         column(12,
+                                imageOutput('jugador_')
+                                )
+                         )
                      )
               ),
               # Individual stats ----
@@ -300,15 +301,15 @@ ui = dashboardPagePlus(
                        fluidRow(
                          # Stats primary ----
                          column(6,
-                                valueBoxOutput(outputId = 'pais', width = NULL),
-                                valueBoxOutput(outputId = 'estado', width = NULL),
-                                valueBoxOutput(outputId = 'ciudad', width = NULL)
+                                valueBoxOutput(outputId = 'pais', width = 12),
+                                valueBoxOutput(outputId = 'estado', width = 12),
+                                valueBoxOutput(outputId = 'ciudad', width = 12)
                          ),
                          # Stats secundary ----
                          column(6,
-                                valueBoxOutput(outputId = 'lan', width = NULL),
-                                valueBoxOutput(outputId = 'pos', width = NULL),
-                                valueBoxOutput(outputId = 'bat', width = NULL)
+                                valueBoxOutput(outputId = 'lan', width = 12),
+                                valueBoxOutput(outputId = 'pos', width = 12),
+                                valueBoxOutput(outputId = 'bat', width = 12)
                          )
                        )
                      )
@@ -321,10 +322,11 @@ ui = dashboardPagePlus(
                      )
               )
             ),
+          # Picheo ----
           tabPanel(
             title = 'Picheo',
             h1('Ruben López', align = 'center'),
-              # Table test align fluirow ----
+            # Table test align fluirow ----
               fluidRow(
                 column(10),
                 column(2,
@@ -335,7 +337,7 @@ ui = dashboardPagePlus(
                        )
                 )
               ),
-              # Payer image ----
+            # Payer image ----
               fluidRow(
                 column(6,
                        boxPlus(
@@ -361,21 +363,21 @@ ui = dashboardPagePlus(
                          fluidRow(
                            # Stats primary ----
                            column(6,
-                                  valueBoxOutput(outputId = 'pais_pit', width = NULL),
-                                  valueBoxOutput(outputId = 'estado_pit', width = NULL),
-                                  valueBoxOutput(outputId = 'ciudad_pit', width = NULL)
+                                  valueBoxOutput(outputId = 'pais_pit', width = 12),
+                                  valueBoxOutput(outputId = 'estado_pit', width = 12),
+                                  valueBoxOutput(outputId = 'ciudad_pit', width = 12)
                            ),
                            # Stats secundary ----
                            column(6,
-                                  valueBoxOutput(outputId = 'lan_pit', width = NULL),
-                                  valueBoxOutput(outputId = 'pos_pit', width = NULL),
-                                  valueBoxOutput(outputId = 'bat_pit', width = NULL)
+                                  valueBoxOutput(outputId = 'lan_pit', width = 12),
+                                  valueBoxOutput(outputId = 'pos_pit', width = 12),
+                                  valueBoxOutput(outputId = 'bat_pit', width = 12)
                            )
                          )
                        )
                 )
               ),
-              # Table by player ----
+            # Table by player ----
               fluidRow(
                 column(12,
                        DT::dataTableOutput('picheo_jugador')
