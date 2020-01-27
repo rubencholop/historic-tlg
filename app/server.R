@@ -487,7 +487,7 @@ Server = function(input, output) {
     infoBox('Posición',
             value = pos_player,
             color = 'blue',
-            icon = icon('usd', lib = 'glyphicon')
+            icon = icon('baseball', lib = 'font-awesome')
     )
   })
   
@@ -504,7 +504,7 @@ Server = function(input, output) {
     infoBox('Lanza',
             value = lan_player,
             color = 'blue',
-            icon = icon('usd', lib = 'glyphicon')
+            icon = icon('baseball-ball', lib = 'font-awesome')
     )
   })
   
@@ -542,8 +542,8 @@ Server = function(input, output) {
     
     infoBox('País',
             value = pais_player,
-            color = 'blue',
-            icon = icon('usd', lib = 'glyphicon')
+            color = 'red',
+            icon = icon('globe-americas', lib = 'font-awesome')
     )
   })
   
@@ -559,7 +559,7 @@ Server = function(input, output) {
     
     infoBox('Estado',
             value = estado_player,
-            color = 'blue',
+            color = 'red',
             icon = icon('usd', lib = 'glyphicon')
     )
   })
@@ -576,36 +576,33 @@ Server = function(input, output) {
     
     infoBox('Ciudad',
             value = ciudad_player,
-            color = 'blue',
-            icon = icon('usd', lib = 'glyphicon')
+            color = 'red',
+            icon = icon('building', lib = 'font-awesome')
     )
   })
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  # image jugador ----
-#   output$info_jugador <- renderImage({
-#     req(input$select_jugador)
-# 
-#     img(src = paste(input$select_jugador, '.jpg', sep = ''),
-#           height = '300px')
-# 
-# })
+
+# image jugador ----
+  output$image2 <- renderImage({
+    req(input$select_jugador)
+    
+    if (is.null(input$select_jugador))
+      return(NULL)
+    
+    if (input$select_jugador == "G. Blanco") {
+      return(list(
+        src = "www/G.Blanco.jpg",
+        contentType = "image/jpg",
+        alt = "G.Blanco"
+      ))
+    } else if (input$picture == "chainring") {
+      return(list(
+        src = "images/chainring.jpg",
+        filetype = "image/jpeg",
+        alt = "This is a chainring"
+      ))
+    }
+    
+  }, deleteFile = FALSE)
   
   # User Ruben Lopez ----
   output$user <- renderUser({
