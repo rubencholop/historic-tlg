@@ -257,77 +257,133 @@ ui = dashboardPagePlus(
       ),
       # tabItem for Jugador ----
       tabItem(
-        h1('Ruben López', align = 'center'),
         tabName = 'jugador',
-        # fluidRow(
-        #   column(8,
-        #          box(
-        #            width = 12
-        #          )
-        #          ),
-        #   column(4,
-        #          box(
-        #            width = 12
-        #          )
-        #          )
-        # ),
-        # Table test align fluirow ----
-        fluidRow(
-          column(10),
-          column(2,
-                 selectInput(
-                   inputId = 'select_jugador',
-                   label = 'Elige un jugador',
-                   choices = distinct_players
-                 )
-          )
-        ),
-        # Payer image ----
-        fluidRow(
-          column(6,
-                 boxPlus(
-                   width = NULL,
-                   # height = 250,
-                   title = 'Nombre completo del jugador',
-                   collapsible = TRUE,
-                   status = 'warning',
-                   imageOutput('jugador_',
-                               click = 'image_click'
-                               # height  = 
-                               ) 
-                 )
-          ),
-          # Individual stats ----
-          column(6,
-                 boxPlus(
-                   title = "Exp: 5 Temporadas",
-                   align = 'center',
-                   status = "warning",
-                   width = NULL,
-                   collapsible = TRUE,
-                   fluidRow(
-                     # Stats primary ----
-                     column(6,
-                            valueBoxOutput(outputId = 'pais', width = NULL),
-                            valueBoxOutput(outputId = 'estado', width = NULL),
-                            valueBoxOutput(outputId = 'ciudad', width = NULL)
-                     ),
-                     # Stats secundary ----
-                     column(6,
-                              valueBoxOutput(outputId = 'lan', width = NULL),
-                              valueBoxOutput(outputId = 'pos', width = NULL),
-                              valueBoxOutput(outputId = 'bat', width = NULL)
-                          )
+        # tabSetpanel bateo ----
+        tabsetPanel(
+          tabPanel(
+            title = 'Bateo',
+            h1('Ruben López', align = 'center'),
+            # Table test align fluirow ----
+            fluidRow(
+              column(10),
+              column(2,
+                     selectInput(
+                       inputId = 'select_jugador',
+                       label = 'Elige un jugador',
+                       choices = distinct_players
+                     )
+              )
+            ),
+            # Payer image ----
+            fluidRow(
+              column(6,
+                     boxPlus(
+                       width = NULL,
+                       # height = 250,
+                       title = 'Nombre completo del jugador',
+                       collapsible = TRUE,
+                       status = 'warning',
+                       imageOutput('jugador_',
+                                   click = 'image_click'
+                                   # height  = 
+                       ) 
+                     )
+              ),
+              # Individual stats ----
+              column(6,
+                     boxPlus(
+                       title = "Exp: 5 Temporadas",
+                       align = 'center',
+                       status = "warning",
+                       width = NULL,
+                       collapsible = TRUE,
+                       fluidRow(
+                         # Stats primary ----
+                         column(6,
+                                valueBoxOutput(outputId = 'pais', width = NULL),
+                                valueBoxOutput(outputId = 'estado', width = NULL),
+                                valueBoxOutput(outputId = 'ciudad', width = NULL)
+                         ),
+                         # Stats secundary ----
+                         column(6,
+                                valueBoxOutput(outputId = 'lan', width = NULL),
+                                valueBoxOutput(outputId = 'pos', width = NULL),
+                                valueBoxOutput(outputId = 'bat', width = NULL)
+                         )
                        )
-                    )
-                 )
-        ),
-        # Table by player ----
-        fluidRow(
-          column(12,
-                 DT::dataTableOutput('info_jugador')
-                 )
-        )
+                     )
+              )
+            ),
+            # Table by player ----
+            fluidRow(
+              column(12,
+                     DT::dataTableOutput('info_jugador')
+                     )
+              )
+            ),
+          tabPanel(
+            title = 'Picheo',
+            h1('Ruben López', align = 'center'),
+              # Table test align fluirow ----
+              fluidRow(
+                column(10),
+                column(2,
+                       selectInput(
+                         inputId = 'select_jugador_pit',
+                         label = 'Elige un jugador',
+                         choices = distinct_players
+                       )
+                )
+              ),
+              # Payer image ----
+              fluidRow(
+                column(6,
+                       boxPlus(
+                         width = NULL,
+                         # height = 250,
+                         title = 'Nombre completo del jugador',
+                         collapsible = TRUE,
+                         status = 'warning',
+                         imageOutput('jugador_pit',
+                                     click = 'image_click'
+                                     # height  = 
+                         ) 
+                       )
+                ),
+                # Individual stats ----
+                column(6,
+                       boxPlus(
+                         title = "Exp: 5 Temporadas",
+                         align = 'center',
+                         status = "warning",
+                         width = NULL,
+                         collapsible = TRUE,
+                         fluidRow(
+                           # Stats primary ----
+                           column(6,
+                                  valueBoxOutput(outputId = 'pais_pit', width = NULL),
+                                  valueBoxOutput(outputId = 'estado_pit', width = NULL),
+                                  valueBoxOutput(outputId = 'ciudad_pit', width = NULL)
+                           ),
+                           # Stats secundary ----
+                           column(6,
+                                  valueBoxOutput(outputId = 'lan_pit', width = NULL),
+                                  valueBoxOutput(outputId = 'pos_pit', width = NULL),
+                                  valueBoxOutput(outputId = 'bat_pit', width = NULL)
+                           )
+                         )
+                       )
+                )
+              ),
+              # Table by player ----
+              fluidRow(
+                column(12,
+                       DT::dataTableOutput('picheo_jugador')
+                )
+              )
+            ) 
+          ),
+        # ----
       )
     )
   )
