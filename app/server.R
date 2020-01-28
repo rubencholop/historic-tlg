@@ -79,7 +79,7 @@ Server = function(input, output) {
   output$bateo_rs <- DT::renderDataTable({
     
     df <-  Hbrs %>%
-      select(years, 2:28) %>% 
+      select(years, 2:27) %>% 
       rename(
         `TEMPORADA` = years,
         `JUGADOR` = jugador,
@@ -401,41 +401,128 @@ Server = function(input, output) {
   output$bat_rs <- DT::renderDataTable({
     req(input$select_jugador)
     
-    df <-  Hbrs %>%
-      select(years, 2:27) %>% 
-      rename(
-        `TEMPORADA` = years,
-        `JUGADOR` = jugador,
-        `Edad` = edad,
-        `g` = g,
-        `PA` = pa,
-        `AB` = ab,
-        `R` = r,
-        `H` = h,
-        `2B` = '2b',
-        `3B` = '3b',
-        `HR` = hr,
-        `RBI` = rbi,
-        `SB` = sb,
-        `CS` = cs,
-        `BB` = bb,
-        `SO` = so,
-        `AVG` = avg,
-        `OBP` = obp,
-        `SLG` = slg,
-        `OPS` = ops,
-        `RC` = rc,
-        `TB` = tb,
-        `XB` = xb,
-        `HBP` = hbp,
-        `SH` = sh,
-        `SF` = sf
-      ) %>% 
-      arrange(TEMPORADA) %>% 
-      filter(
-        trimws(AB) != ''  # To filter a empty value in colum AB
-      ) %>% 
-      filter(JUGADOR == input$select_jugador) 
+    player_summarise <- Hbrs %>%
+      filter(jugador == input$select_jugador) %>%
+      select(1:27) %>%
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        pa = as.numeric(pa),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        ir = as.numeric(ir),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) %>%
+      summarise(
+        years = 'Totales',
+        jugador = last(jugador),
+        edad = NROW(edad),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      )
+
+
+    batting_player <- Hbrs %>%
+      filter(jugador == input$select_jugador) %>%
+      select(1:27) %>%
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        pa = as.numeric(pa),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        ir = as.numeric(ir),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      )
+    
+     df <- rbind(batting_player, player_summarise) %>% 
+       rename(
+         `TEMPORADA` = years,
+         `JUGADOR` = jugador,
+         `Edad` = edad,
+         `g` = g,
+         `PA` = pa,
+         `AB` = ab,
+         `R` = r,
+         `H` = h,
+         `2B` = '2b',
+         `3B` = '3b',
+         `HR` = hr,
+         `RBI` = rbi,
+         `SB` = sb,
+         `CS` = cs,
+         `BB` = bb,
+         `SO` = so,
+         `AVG` = avg,
+         `OBP` = obp,
+         `SLG` = slg,
+         `OPS` = ops,
+         `RC` = rc,
+         `TB` = tb,
+         `XB` = xb,
+         `HBP` = hbp,
+         `SH` = sh,
+         `SF` = sf
+       ) %>% 
+       arrange(TEMPORADA) 
 
 
     # Datatable ----
