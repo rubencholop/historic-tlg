@@ -36,67 +36,7 @@ ui = dashboardPagePlus(
   
   # Sidebar ----
   sidebar = dashboardSidebar(
-    br(),
-      # meniItem Tiburones de la Guaira ----
-       menuItem(
-         text = 'Tiburones de la Guaira',
-         tabName = 'inicio',
-         badgeLabel = "new", 
-         badgeColor = "green",
-         icon = icon('text-height', lib = 'font-awesome')
-         ),
-      br(),
-      # menuItem  Estadisticas ----
-        menuItem(
-          'Estadísticas',
-          tabName = 'estadisticas',
-          icon = icon('chart-line', lib = 'font-awesome'),
-          menuSubItem('Temporada Regular', tabName = 'tem_reg'),
-          menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
-          menuSubItem('Finales', tabName = 'finals'),
-          menuSubItem('Por Jugador', tabName = 'jugador')
-        ),
-      br(),
-      # menuItem Geo Estadisticas ----
-        menuItem(
-          'Geo Estadísticas',
-          startExpanded = FALSE,
-          tabName = 'geo_estadisticas',
-          icon =  icon('globe-americas', lib = 'font-awesome'),
-          menuSubItem('Geograficas', tabName = 'geo'),
-          menuSubItem('Caracateristicas', tabName = 'hab')
-        ),
-      br(),
-      # menuItem Records ----
-        menuItem(
-          'Records',
-          tabName = 'records',
-          icon = icon('edit', lib = 'font-awesome'),
-          menuSubItem('Historicos', tabName = 'historicos'),
-          menuSubItem('Por temporadas', tabName = 'p_tem'),
-          menuSubItem('Records en LVBP', tabName = 'lvbp'),
-          menuSubItem('Sabermetria', tabName = 'saberm')
-        ),
-      br(),
-      # menuItem Historia ----
-        menuItem(
-          'Historia',
-          tabName = 'historia',
-          icon = icon('search-location', lib = 'font-awesome'),
-          menuSubItem('En números', tabName = 'en_num'),
-          menuSubItem('Estadio', tabName = 'rr_sm')
-        ),
-      br(),
-      # menuItem Glosario ----
-        menuItem(
-          'Glosario',
-          tabName = 'glosario',
-          icon = icon('google', lib = 'font-awesome'),
-          menuSubItem('Glosario Sabermetrico', tabName = 'g_saberm'),
-          menuSubItem('Cálculos', tabName = 'calc')
-        )
-  ),
-  
+    sidebarMenuOutput('collapsible_sidebar')),
   # Body ----
   body = dashboardBody(
     tabItems(
@@ -197,7 +137,8 @@ ui = dashboardPagePlus(
           # Picheo ----
           tabPanel(
             title = 'Picheo',
-            h1('Ruben López', align = 'center'),
+            h1(textOutput('jugador_lan')
+               , align = 'center'),
             # Table test align fluirow ----
               fluidRow(
                 column(10),
@@ -215,7 +156,7 @@ ui = dashboardPagePlus(
                        boxPlus(
                          width = NULL,
                          # height = 250,
-                         title = 'Nombre completo del jugador',
+                         title = '',
                          collapsible = TRUE,
                          status = 'warning',
                          imageOutput('jugador_pit',
@@ -227,7 +168,7 @@ ui = dashboardPagePlus(
                 # Individual stats ----
                 column(6,
                        boxPlus(
-                         title = "Exp: 5 Temporadas",
+                         title = "",
                          align = 'center',
                          status = "warning",
                          width = NULL,
@@ -278,7 +219,7 @@ ui = dashboardPagePlus(
                      boxPlus(
                        width = 12,
                        # height = 250,
-                       title = 'Nombre completo del jugador',
+                       title = '',
                        collapsible = TRUE,
                        status = 'warning',
                        fluidRow(
@@ -291,7 +232,7 @@ ui = dashboardPagePlus(
               # Individual stats ----
               column(6,
                      boxPlus(
-                       title = "Exp: 5 Temporadas",
+                       title = "",
                        align = 'center',
                        status = "warning",
                        width = NULL,

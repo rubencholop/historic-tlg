@@ -9,7 +9,76 @@ shinyApp(ui, server)
 
 # Server ----
 Server = function(input, output) {
- 
+  # Sidebar collapsible ----
+  output$collapsible_sidebar = renderMenu({
+    sidebarMenu(
+    # br(),
+    # meniItem Tiburones de la Guaira ----
+    menuItem(
+      text = 'Tiburones de la Guaira',
+      tabName = 'inicio',
+      badgeLabel = "new", 
+      badgeColor = "green",
+      icon = icon('text-height', lib = 'font-awesome')
+    ),
+    br(),
+    # menuItem  Estadisticas ----
+    menuItem(
+      'Estadísticas',
+      tabName = 'estadisticas',
+      icon = icon('chart-line', lib = 'font-awesome'),
+      menuSubItem('Temporada Regular', tabName = 'tem_reg'),
+      menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
+      menuSubItem('Finales', tabName = 'finals'),
+      menuSubItem('Por Jugador', tabName = 'jugador')
+    ),
+    br(),
+    # menuItem Geo Estadisticas ----
+    menuItem(
+      'Geo Estadísticas',
+      startExpanded = FALSE,
+      tabName = 'geo_estadisticas',
+      icon =  icon('globe-americas', lib = 'font-awesome'),
+      menuSubItem('Geograficas', tabName = 'geo'),
+      menuSubItem('Caracateristicas', tabName = 'hab')
+    ),
+    br(),
+    # menuItem Records ----
+    menuItem(
+      'Records',
+      tabName = 'records',
+      icon = icon('edit', lib = 'font-awesome'),
+      menuSubItem('Historicos', tabName = 'historicos'),
+      menuSubItem('Por temporadas', tabName = 'p_tem'),
+      menuSubItem('Records en LVBP', tabName = 'lvbp'),
+      menuSubItem('Sabermetria', tabName = 'saberm')
+    ),
+    br(),
+    # menuItem Historia ----
+    menuItem(
+      'Historia',
+      tabName = 'historia',
+      icon = icon('search-location', lib = 'font-awesome'),
+      menuSubItem('En números', tabName = 'en_num'),
+      menuSubItem('Estadio', tabName = 'rr_sm')
+    ),
+    br(),
+    # menuItem Glosario ----
+    menuItem(
+      'Glosario',
+      tabName = 'glosario',
+      icon = icon('google', lib = 'font-awesome'),
+      menuSubItem('Glosario Sabermetrico', tabName = 'g_saberm'),
+      menuSubItem('Cálculos', tabName = 'calc')
+    )
+  )
+  
+})
+  
+  
+  
+  
+  # Reactive 
   # Reactive info player ----
   info_player <- reactive({
     req(input$select_jugador)
@@ -19,6 +88,9 @@ Server = function(input, output) {
 
   })
   
+  
+  
+  # Boards  
   # Table picheo regular season ----
   output$picheo_rs <- DT::renderDataTable({
     
@@ -866,6 +938,8 @@ Server = function(input, output) {
     )
   })
   
+  
+  # Infoboxes
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
     
@@ -973,6 +1047,9 @@ Server = function(input, output) {
     )
   })
 
+  
+  
+  # Images
   # image jugador ----
   output$jugador_ <- renderImage({
     req(input$select_jugador)
@@ -992,7 +1069,9 @@ Server = function(input, output) {
     }
   }, deleteFile = FALSE)
   
-  # Text output Jugador ----
+  
+  # Text Outputs
+  # Text output Jugador bat ----
   output$jugador_bat <- renderText({
     req(input$select_jugador)
     
@@ -1002,6 +1081,21 @@ Server = function(input, output) {
     unique() %>% 
     pull()
   })
+  # Text output Jugador lan ----
+  output$jugador_lan <- renderText({
+    req(input$select_jugador_pit)
+    
+    df <- Rosters %>% 
+      filter( jugador == input$select_jugador_pit) %>% 
+      select(name) %>% 
+      unique() %>% 
+      pull()
+  })
+  
+  # User
+  
+  
+  
   # User Ruben Lopez ----
   output$user <- renderUser({
         dashboardUser(
