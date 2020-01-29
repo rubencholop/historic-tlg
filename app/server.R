@@ -518,6 +518,7 @@ Server = function(input, output) {
          `RC` = rc,
          `TB` = tb,
          `XB` = xb,
+         `IR` = ir,
          `HBP` = hbp,
          `SH` = sh,
          `SF` = sf
@@ -532,10 +533,10 @@ Server = function(input, output) {
       rownames = FALSE,
       options = list(
         # autoWidth = TRUE,
-        pageLegth = 50,
-        lengthMenu = c(50, 75, 100),
+        pageLegth = 15,
+        lengthMenu = c(15, 20, 25),
         scrollX = TRUE,
-        scrollY = "500px",
+        # scrollY = "500px",
         fixedColumns = list(LeftColumns = 3 ),
         paging = TRUE,
         fixedHeader = TRUE,
@@ -550,8 +551,98 @@ Server = function(input, output) {
   # Table por  Bat_rr  by jugador ----
   output$bat_rr <- DT::renderDataTable({
     req(input$select_jugador)
+
+    player_summarise <- Hbrr %>%
+      filter(jugador == input$select_jugador) %>%
+      select(2:28) %>% 
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        X5 = as.numeric(X5),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) %>% 
+      summarise(
+        years = 'Totales',
+        jugador = last(jugador),
+        edad = NROW(edad),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = ''
+      )
     
-    df <-  Hbrr %>%
+    
+    batting_player <- Hbrr %>%
+      filter(jugador == input$select_jugador) %>%
+      select(2:28) %>% 
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        X5 = as.numeric(X5),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      )
+    
+    df <-  rbind(player_summarise, batting_player) %>%
       select(years, refuerzo, 2:27) %>% 
       rename(
         `TEMPORADA` = years,
@@ -582,12 +673,7 @@ Server = function(input, output) {
         `SH` = sh,
         `SF` = sf
       ) %>% 
-      arrange(TEMPORADA) %>% 
-      filter(
-        trimws(AB) != ''  # To filter a empty value in colum AB
-      ) %>% 
-      filter(JUGADOR == input$select_jugador) 
-    
+      arrange(TEMPORADA)  
     
     # Datatable ----
     DT::datatable(
@@ -596,10 +682,10 @@ Server = function(input, output) {
       rownames = FALSE,
       options = list(
         # autoWidth = TRUE,
-        pageLegth = 50,
-        lengthMenu = c(50, 75, 100),
+        pageLegth = 10,
+        lengthMenu = c(10, 15, 20),
         scrollX = TRUE,
-        scrollY = "500px",
+        # scrollY = "500px",
         fixedColumns = list(LeftColumns = 3 ),
         paging = TRUE,
         fixedHeader = TRUE,
@@ -625,12 +711,107 @@ Server = function(input, output) {
   output$bat_final <- DT::renderDataTable({
     req(input$select_jugador)
     
-    df <-  Hbf %>%
-      select(years, resultado, refuerzo, 2:28) %>% 
+    player_summarise <- Hbf %>% 
+      filter(jugador == input$select_jugador) %>% 
+      select(years, resultado, refuerzo, 2:29) %>% 
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        X5 = as.numeric(X5),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) %>% 
+      summarise(
+        years = 'Totales',
+        resultado = '',
+        jugador = last(jugador),
+        edad = NROW(edad),
+        refuerzo = '',
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      )
+    
+    
+    batting_player <- Hbf %>% 
+      filter(jugador == input$select_jugador) %>% 
+      select(years, resultado, refuerzo, 2:29) %>% 
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        X5 = as.numeric(X5),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) %>%
+      select(-name)
+    
+    
+
+    df <- rbind(batting_player, player_summarise) %>%
+      select(years, refuerzo, 2:28) %>% 
       rename(
         `TEMPORADA` = years,
         `JUGADOR` = jugador,
         `RESULTADO` = resultado,
+        `REFUERZO` = refuerzo,
         `Edad` = edad,
         `g` = g,
         `PA` = X5,
@@ -656,13 +837,10 @@ Server = function(input, output) {
         `SH` = sh,
         `SF` = sf
       ) %>% 
-      arrange(TEMPORADA) %>% 
+      arrange(TEMPORADA)  %>% 
       filter(
         trimws(PA) != ''  # To filter a empty value in colum AB
-      ) %>% 
-      select(-name) %>% 
-      filter(JUGADOR == input$select_jugador) 
-    
+      ) 
     
     # Datatable ----
     DT::datatable(
@@ -671,10 +849,10 @@ Server = function(input, output) {
       rownames = FALSE,
       options = list(
         # autoWidth = TRUE,
-        pageLegth = 50,
-        lengthMenu = c(50, 75, 100),
+        pageLegth = 10,
+        lengthMenu = c(10, 15, 20),
         scrollX = TRUE,
-        scrollY = "500px",
+        # scrollY = "500px",
         fixedColumns = list(LeftColumns = 3 ),
         paging = TRUE,
         fixedHeader = TRUE,
@@ -811,7 +989,7 @@ Server = function(input, output) {
     }
   }, deleteFile = FALSE)
   
-  # Text output Jugador
+  # Text output Jugador ----
   output$jugador_bat <- renderText({
     req(input$select_jugador)
     
