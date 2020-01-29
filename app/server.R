@@ -27,10 +27,10 @@ Server = function(input, output) {
      rename(
        `TEMPORADA` = years,
        `JUGADOR` = jugador,
-       `Edad` = edad,
+       `EDAD` = edad,
        `W` = w,
        `L` = l,
-       `W - L %` = 'w-l%',
+       `W-L %` = 'w-l%',
        `ERA` = era,
        `G` = g,
        `GS` = gs,
@@ -52,7 +52,7 @@ Server = function(input, output) {
        `SO/9` = 'so/9',
        `SO/BB` = 'so/bb',
        `BK` = 'bk') %>% 
-     arrange(TEMPORADA)
+     arrange(TEMPORADA) 
     
     DT::datatable(
       df,
@@ -83,8 +83,8 @@ Server = function(input, output) {
       rename(
         `TEMPORADA` = years,
         `JUGADOR` = jugador,
-        `Edad` = edad,
-        `g` = g,
+        `EDAD` = edad,
+        `G` = g,
         `PA` = pa,
         `AB` = ab,
         `R` = r,
@@ -119,6 +119,7 @@ Server = function(input, output) {
       extensions = "ColReorder",
       rownames = FALSE,
       options = list(
+        searching = TRUE,
         # autoWidth = TRUE,
         pageLegth = 50,
         lengthMenu = c(50, 75, 100),
@@ -152,10 +153,10 @@ Server = function(input, output) {
         `TEMPORADA` = years,
         `REFUERZO` = refuerzo,
         `JUGADOR` = jugador,
-        `Edad` = edad,
+        `EDAD` = edad,
         `W` = w,
         `L` = l,
-        `W - L %` = 'w-l%',
+        `W-L%` = 'w-l%',
         `ERA` = era,
         `G` = g,
         `GS` = gs,
@@ -200,7 +201,7 @@ Server = function(input, output) {
   })
   
   
-  # Table bateo regular season ----
+  # Table bateo round robin / semi - finals ----
   output$bateo_rr_sm <- DT::renderDataTable({
     
     df <-  Hbrr %>%
@@ -208,8 +209,9 @@ Server = function(input, output) {
       rename(
         `TEMPORADA` = years,
         `JUGADOR` = jugador,
-        `Edad` = edad,
-        `g` = g,
+        `EDAD` = edad,
+        `REFUERZO` = refuerzo,
+        `G` = g,
         `PA` = X5,
         `AB` = ab,
         `R` = r,
@@ -276,10 +278,10 @@ Server = function(input, output) {
         `TEMPORADA` = years,
         `RESULTADO` = resultado,
         `JUGADOR` = jugador,
-        `Edad` = edad,
+        `EDAD` = edad,
         `W` = w,
         `L` = l,
-        `W - L %` = 'w-l%',
+        `W-L %` = 'w-l%',
         `ERA` = era,
         `G` = g,
         `GS` = gs,
@@ -334,8 +336,8 @@ Server = function(input, output) {
         `TEMPORADA` = years,
         `JUGADOR` = jugador,
         `RESULTADO` = resultado,
-        `Edad` = edad,
-        `g` = g,
+        `EDAD` = edad,
+        `G` = g,
         `PA` = X5,
         `AB` = ab,
         `R` = r,
@@ -362,7 +364,8 @@ Server = function(input, output) {
       arrange(TEMPORADA) %>% 
       filter(
         trimws(PA) != ''  # To filter a empty value in colum AB
-      )
+      ) %>% 
+      select(-name)
     
     DT::datatable(
       df,
@@ -497,8 +500,8 @@ Server = function(input, output) {
        rename(
          `TEMPORADA` = years,
          `JUGADOR` = jugador,
-         `Edad` = edad,
-         `g` = g,
+         `EDAD` = edad,
+         `G` = g,
          `PA` = pa,
          `AB` = ab,
          `R` = r,
@@ -648,8 +651,8 @@ Server = function(input, output) {
         `TEMPORADA` = years,
         `JUGADOR` = jugador,
         `REFUERZO` = refuerzo,
-        `Edad` = edad,
-        `g` = g,
+        `EDAD` = edad,
+        `G` = g,
         `PA` = X5,
         `AB` = ab,
         `R` = r,
@@ -812,8 +815,8 @@ Server = function(input, output) {
         `JUGADOR` = jugador,
         `RESULTADO` = resultado,
         `REFUERZO` = refuerzo,
-        `Edad` = edad,
-        `g` = g,
+        `EDAD` = edad,
+        `G` = g,
         `PA` = X5,
         `AB` = ab,
         `R` = r,
@@ -993,7 +996,11 @@ Server = function(input, output) {
   output$jugador_bat <- renderText({
     req(input$select_jugador)
     
-  paste(input$select_jugador)
+  df <- Rosters %>% 
+    filter( jugador == input$select_jugador) %>% 
+    select(name) %>% 
+    unique() %>% 
+    pull()
   })
   # User Ruben Lopez ----
   output$user <- renderUser({

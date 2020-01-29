@@ -217,10 +217,12 @@ write.csv(pitching_finals, file = 'data/pitching_finals.csv')
 
 
 #Data sets ----
+# Distinct jugadores ----
 distinct_players <- Rosters %>% 
   distinct(jugador) %>% 
   arrange(jugador) 
-  
+
+# Distinct  temporadas ---- 
 distinct_years <- Rosters %>% 
   select(years) %>% 
   distinct(years) %>% 
@@ -228,8 +230,21 @@ distinct_years <- Rosters %>%
   pull()
 
   choices_years <- as.numeric(distinct_years)
+  
+# Distinct bats ----
+  distinct_bats <- Rosters %>% 
+    filter(pos != 'P') %>% 
+    select(jugador) %>% 
+    arrange(jugador) %>% 
+    distinct(jugador)
+# Distinct lanzadores ----
+  distinct_lan <- Rosters %>% 
+    filter(pos == 'P') %>% 
+    select(jugador) %>% 
+    arrange(jugador) %>% 
+    distinct(jugador)
 
-
+# Tablas de informacion ----
 Hbf <- Hbatting_finals %>% 
   mutate(key = paste(as.character(years), jugador)) %>% 
   select(key, 1:28) %>% 

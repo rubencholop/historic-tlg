@@ -112,19 +112,19 @@ ui = dashboardPagePlus(
         tabsetPanel(
           # tabPanel Picheo
           tabPanel('Picheo', 
-                   fluidRow(
-                     column(9),
-                     column(3,
-                            box(
-                              tittle = 'Información',
-                              solidHeader = TRUE,
-                              status = 'info',
-                              collapsible = TRUE,
-                              width = 12,
-                              p('Filtre la tabla por cualquier variable', align = 'center')
-                              )
-                            ),
-                     ),
+                   # fluidRow(
+                   #   column(9),
+                   #   column(3,
+                   #          box(
+                   #            tittle = 'Información',
+                   #            solidHeader = TRUE,
+                   #            status = 'info',
+                   #            collapsible = TRUE,
+                   #            width = 12,
+                   #            p('Filtre la tabla por cualquier variable', align = 'center')
+                   #            )
+                   #          ),
+                   #   ),
                    fluidRow(
                      column(12,
                             DT::dataTableOutput('picheo_rs')
@@ -133,19 +133,6 @@ ui = dashboardPagePlus(
                   ),
           # tabPanel Bateo
           tabPanel('Bateo',
-                   fluidRow(
-                     column(9),
-                     column(3,
-                            box(
-                              tittle = 'Información',
-                              solidHeader = TRUE,
-                              status = 'info',
-                              collapsible = TRUE,
-                              width = 12,
-                              p('Filtre la tabla por cualquier variable', align = 'center')
-                            )
-                     ),
-                   ),
                    fluidRow(
                      column(12,
                             DT::dataTableOutput('bateo_rs')
@@ -165,19 +152,6 @@ ui = dashboardPagePlus(
           # tabPanel Picheo
           tabPanel('Picheo', 
                    fluidRow(
-                     column(9),
-                     column(3,
-                            box(
-                              tittle = 'Información',
-                              solidHeader = TRUE,
-                              status = 'info',
-                              collapsible = TRUE,
-                              width = 12,
-                              p('Filtre la tabla por cualquier variable', align = 'center')
-                            )
-                     ),
-                   ),
-                   fluidRow(
                      column(12,
                             DT::dataTableOutput('picheo_rr_sm')
                      )
@@ -185,19 +159,6 @@ ui = dashboardPagePlus(
           ),
           # tabPanel Bateo
           tabPanel('Bateo',
-                   fluidRow(
-                     column(9),
-                     column(3,
-                            box(
-                              tittle = 'Información',
-                              solidHeader = TRUE,
-                              status = 'info',
-                              collapsible = TRUE,
-                              width = 12,
-                              p('Filtre la tabla por cualquier variable', align = 'center')
-                            )
-                     ),
-                   ),
                    fluidRow(
                      column(12,
                             DT::dataTableOutput('bateo_rr_sm')
@@ -214,19 +175,6 @@ ui = dashboardPagePlus(
           # tabPanel Picheo
           tabPanel('Picheo', 
                    fluidRow(
-                     column(9),
-                     column(3,
-                            box(
-                              tittle = 'Información',
-                              solidHeader = TRUE,
-                              status = 'info',
-                              collapsible = TRUE,
-                              width = 12,
-                              p('Filtre la tabla por cualquier variable', align = 'center')
-                            )
-                     ),
-                   ),
-                   fluidRow(
                      column(12,
                             DT::dataTableOutput('picheo_finals')
                      )
@@ -234,19 +182,6 @@ ui = dashboardPagePlus(
           ),
           # tabPanel Bateo
           tabPanel('Bateo',
-                   fluidRow(
-                     column(9),
-                     column(3,
-                            box(
-                              tittle = 'Información',
-                              solidHeader = TRUE,
-                              status = 'info',
-                              collapsible = TRUE,
-                              width = 12,
-                              p('Filtre la tabla por cualquier variable', align = 'center')
-                            )
-                     ),
-                   ),
                    fluidRow(
                      column(12,
                             DT::dataTableOutput('bateo_finals')
@@ -259,78 +194,6 @@ ui = dashboardPagePlus(
       tabItem(
         tabName = 'jugador',
         tabsetPanel(
-          tabPanel(
-          # Bateo ----
-            title = 'Bateo',
-            h1(textOutput('jugador_bat')
-               , align = 'center'),
-            # Table test align fluirow ----
-            fluidRow(
-              column(10),
-              column(2,
-                     selectInput(
-                       inputId = 'select_jugador',
-                       label = 'Elige un jugador',
-                       choices = distinct_players
-                     )
-              )
-            ),
-            # Payer image ----
-            fluidRow(
-              column(6,
-                     boxPlus(
-                       width = 12,
-                       # height = 250,
-                       title = 'Nombre completo del jugador',
-                       collapsible = TRUE,
-                       status = 'warning',
-                       fluidRow(
-                         column(12,
-                                imageOutput('jugador_')
-                                )
-                         )
-                     )
-              ),
-              # Individual stats ----
-              column(6,
-                     boxPlus(
-                       title = "Exp: 5 Temporadas",
-                       align = 'center',
-                       status = "warning",
-                       width = NULL,
-                       collapsible = TRUE,
-                       fluidRow(
-                         # Stats primary ----
-                         column(6,
-                                valueBoxOutput(outputId = 'pais', width = 12),
-                                valueBoxOutput(outputId = 'estado', width = 12),
-                                valueBoxOutput(outputId = 'ciudad', width = 12)
-                         ),
-                         # Stats secundary ----
-                         column(6,
-                                valueBoxOutput(outputId = 'lan', width = 12),
-                                valueBoxOutput(outputId = 'pos', width = 12),
-                                valueBoxOutput(outputId = 'bat', width = 12)
-                         )
-                       )
-                     )
-              )
-            ),
-            # Table by player ----
-            fluidRow(
-              column(12,
-                     # br(),
-                     h1('Bateo en temporada regular', align = 'center'),
-                     DT::dataTableOutput('bat_rs'),
-                     # br(),
-                     h1('Bateo en round robin - postemporada', align = 'center'),
-                     DT::dataTableOutput('bat_rr'),
-                     # br(),
-                     h1('Bateo en finales', align = 'center'),
-                     DT::dataTableOutput('bat_final')
-                     )
-              )
-            ),
           # Picheo ----
           tabPanel(
             title = 'Picheo',
@@ -342,7 +205,7 @@ ui = dashboardPagePlus(
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Elige un jugador',
-                         choices = distinct_players
+                         choices = distinct_lan
                        )
                 )
               ),
@@ -392,7 +255,79 @@ ui = dashboardPagePlus(
                        DT::dataTableOutput('picheo_jugador')
                 )
               )
-            ) 
+            ),
+          tabPanel(
+            # Bateo ----
+            title = 'Bateo',
+            h1(textOutput('jugador_bat')
+               , align = 'center'),
+            # Table test align fluirow ----
+            fluidRow(
+              column(10),
+              column(2,
+                     selectInput(
+                       inputId = 'select_jugador',
+                       label = 'Elige un jugador',
+                       choices = distinct_bats
+                     )
+              )
+            ),
+            # Payer image ----
+            fluidRow(
+              column(6,
+                     boxPlus(
+                       width = 12,
+                       # height = 250,
+                       title = 'Nombre completo del jugador',
+                       collapsible = TRUE,
+                       status = 'warning',
+                       fluidRow(
+                         column(12,
+                                imageOutput('jugador_')
+                         )
+                       )
+                     )
+              ),
+              # Individual stats ----
+              column(6,
+                     boxPlus(
+                       title = "Exp: 5 Temporadas",
+                       align = 'center',
+                       status = "warning",
+                       width = NULL,
+                       collapsible = TRUE,
+                       fluidRow(
+                         # Stats primary ----
+                         column(6,
+                                valueBoxOutput(outputId = 'pais', width = 12),
+                                valueBoxOutput(outputId = 'estado', width = 12),
+                                valueBoxOutput(outputId = 'ciudad', width = 12)
+                         ),
+                         # Stats secundary ----
+                         column(6,
+                                valueBoxOutput(outputId = 'lan', width = 12),
+                                valueBoxOutput(outputId = 'pos', width = 12),
+                                valueBoxOutput(outputId = 'bat', width = 12)
+                         )
+                       )
+                     )
+              )
+            ),
+            # Table by player ----
+            fluidRow(
+              column(12,
+                     # br(),
+                     h1('Bateo en temporada regular', align = 'center'),
+                     DT::dataTableOutput('bat_rs'),
+                     # br(),
+                     h1('Bateo en round robin - postemporada', align = 'center'),
+                     DT::dataTableOutput('bat_rr'),
+                     # br(),
+                     h1('Bateo en finales', align = 'center'),
+                     DT::dataTableOutput('bat_final')
+                )
+              )
+            )
           ),
         # ----
       )
