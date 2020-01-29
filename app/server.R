@@ -28,7 +28,7 @@ Server = function(input, output) {
       tabName = 'estadisticas',
       icon = icon('chart-line', lib = 'font-awesome'),
       menuSubItem('Temporada Regular', tabName = 'tem_reg'),
-      menuSubItem('Round Robin / Semi final', tabName = 'rr_sm'),
+      menuSubItem('Round Robin', tabName = 'rr_sm'),
       menuSubItem('Finales', tabName = 'finals'),
       menuSubItem('Por Jugador', tabName = 'jugador')
     ),
@@ -79,6 +79,8 @@ Server = function(input, output) {
   
   
   # Reactive 
+  
+  
   # Reactive info player ----
   info_player <- reactive({
     req(input$select_jugador)
@@ -87,7 +89,6 @@ Server = function(input, output) {
       filter(jugador %in% input$select_jugador) 
 
   })
-  
   
   
   # Boards  
