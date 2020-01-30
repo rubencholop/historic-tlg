@@ -141,8 +141,7 @@ ui = dashboardPagePlus(
                , align = 'center'),
             # Table test align fluirow ----
               fluidRow(
-                column(10),
-                column(2,
+                column(10,
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Elige un jugador',
@@ -152,7 +151,7 @@ ui = dashboardPagePlus(
               ),
             # Payer image ----
               fluidRow(
-                column(6,
+                column(4,
                        boxPlus(
                          width = NULL,
                          # height = 250,
@@ -166,29 +165,7 @@ ui = dashboardPagePlus(
                        )
                 ),
                 # Individual stats ----
-                column(6,
-                       boxPlus(
-                         title = "",
-                         align = 'center',
-                         status = "warning",
-                         width = NULL,
-                         collapsible = TRUE,
-                         fluidRow(
-                           # Stats primary ----
-                           column(6,
-                                  valueBoxOutput(outputId = 'pais_pit', width = 12),
-                                  valueBoxOutput(outputId = 'estado_pit', width = 12),
-                                  valueBoxOutput(outputId = 'ciudad_pit', width = 12)
-                           ),
-                           # Stats secundary ----
-                           column(6,
-                                  valueBoxOutput(outputId = 'lan_pit', width = 12),
-                                  valueBoxOutput(outputId = 'pos_pit', width = 12),
-                                  valueBoxOutput(outputId = 'bat_pit', width = 12)
-                           )
-                         )
-                       )
-                )
+
               ),
             # Table by player ----
               fluidRow(
@@ -200,62 +177,71 @@ ui = dashboardPagePlus(
           tabPanel(
             # Bateo ----
             title = 'Bateo',
-            # Table test align fluirow ----
             # Payer image ----
             fluidRow(
-              column(6,
-                     boxPlus(
-                       width = 12,
-                       # height = 250,
-                       title = '',
-                       collapsible = TRUE,
-                       status = 'warning',
-                       fluidRow(
-                         column(12,
-                                imageOutput('jugador_')
-                         )
-                       )
+              column(10,
+                     selectInput(
+                       inputId = 'select_jugador_pit',
+                       label = 'Elige un jugador',
+                       choices = distinct_bats
                      )
-              ),
-              # Individual stats ----
-              column(6,
+              )
+            ),
+            fluidRow(
+              column(4,
                      boxPlus(
                        title = "",
                        align = 'center',
                        status = "warning",
-                       width = NULL,
+                       width = 12,
                        collapsible = TRUE,
                        fluidRow(
-                         column(8,
-                                h3(textOutput('jugador_bat')
-                                   , align = 'rigth')
-                         ),
-                         column(4,
+                         column(6,
                                 selectInput(
                                   inputId = 'select_jugador',
                                   label = 'Elige un jugador',
                                   choices = distinct_bats
                                 )
                          )
-                       ),
-                       fluidRow(
-                         column(12,
-                         h3(textOutput('pos_jugador'))
-                         )
-                       ),
-                       fluidRow(
-                         column(12,
-                                h3(textOutput('bl_jugador'))
-                         )
-                       ),
-                       fluidRow(
-                         column(12,
-                                h3(textOutput('pais_jugador'))
                        )
-                    )
-                  )   
-              )
-            ),
+                     )
+              ),
+              column(8,
+                     boxPlus(
+                       width = 12,
+                       # height = 250,
+                       title = h3(textOutput('jugador_bat'), align = 'center'),
+                       collapsible = TRUE,
+                       status = 'warning',
+                       column(8,
+                           fluidRow(
+                             column(12,
+                                    imageOutput('jugador_')
+                                    )
+                             )
+                          ),
+                       column(4,
+                              fluidRow(
+                                column(12,
+                                       h3(textOutput('pos_jugador'),  align = 'rigth')
+                                       )
+                              ),
+                              fluidRow(
+                                column(12,
+                                       h3(textOutput('bl_jugador'), align = 'rigth')
+                                       )
+                              ),
+                              fluidRow(
+                                column(12,
+                                       h3(textOutput('pais_jugador'),  align = 'rigth')
+                                       )
+                                )
+                              )
+                       )
+                 )
+              ),
+            # Individual stats ----
+
             # Table by player ----
             fluidRow(
               column(12,
@@ -320,20 +306,3 @@ ui = dashboardPagePlus(
 #   )
 # )
 
-
-# 
-
-# fluidRow(
-#   # Stats primary ----
-#   column(6,
-#          valueBoxOutput(outputId = 'pais', width = 12),
-#          valueBoxOutput(outputId = 'estado', width = 12),
-#          valueBoxOutput(outputId = 'ciudad', width = 12)
-#   ),
-#   # Stats secundary ----
-#   column(6,
-#          valueBoxOutput(outputId = 'lan', width = 12),
-#          valueBoxOutput(outputId = 'pos', width = 12),
-#          valueBoxOutput(outputId = 'bat', width = 12)
-#   )
-# )

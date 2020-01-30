@@ -15,13 +15,12 @@ Server = function(input, output) {
     # br(),
     # meniItem Tiburones de la Guaira ----
     menuItem(
-      text = 'Tiburones de la Guaira',
+      text = 'Inicio',
       tabName = 'inicio',
       badgeLabel = "new", 
       badgeColor = "green",
       icon = icon('text-height', lib = 'font-awesome')
     ),
-    br(),
     # menuItem  Estadisticas ----
     menuItem(
       'Estadísticas',
@@ -32,7 +31,6 @@ Server = function(input, output) {
       menuSubItem('Finales', tabName = 'finals'),
       menuSubItem('Por Jugador', tabName = 'jugador')
     ),
-    br(),
     # menuItem Geo Estadisticas ----
     menuItem(
       'Geo Estadísticas',
@@ -42,7 +40,6 @@ Server = function(input, output) {
       menuSubItem('Geograficas', tabName = 'geo'),
       menuSubItem('Caracateristicas', tabName = 'hab')
     ),
-    br(),
     # menuItem Records ----
     menuItem(
       'Records',
@@ -53,7 +50,6 @@ Server = function(input, output) {
       menuSubItem('Records en LVBP', tabName = 'lvbp'),
       menuSubItem('Sabermetria', tabName = 'saberm')
     ),
-    br(),
     # menuItem Historia ----
     menuItem(
       'Historia',
@@ -62,7 +58,6 @@ Server = function(input, output) {
       menuSubItem('En números', tabName = 'en_num'),
       menuSubItem('Estadio', tabName = 'rr_sm')
     ),
-    br(),
     # menuItem Glosario ----
     menuItem(
       'Glosario',
@@ -1095,7 +1090,7 @@ Server = function(input, output) {
       unique() %>% 
       pull()
     
-    paste('Posición:', df, sep = ' ')
+    paste('Posición :', df, sep = '  ')
     
   })
   
@@ -1121,19 +1116,44 @@ Server = function(input, output) {
       unique() %>% 
       pull()
     
-    paste('B / L:', df, '/', df1, sep = ' ')
+    paste('B / L :', df, '/', df1, sep = ' ')
     
   })
   
-  # Text output Jugador lan ----
-  output$jugador_lan <- renderText({
+  # Text output Jugador pais ----
+  output$pais_jugador <- renderText({
     req(input$select_jugador_pit)
     
+    
     df <- Rosters %>% 
-      filter( jugador == input$select_jugador_pit) %>% 
-      select(name) %>% 
+      filter( jugador == input$select_jugador) %>% 
+      select(pais) %>% 
+      summarise(
+        pais = last(pais)
+      ) %>% 
       unique() %>% 
       pull()
+    
+    df1 <- Rosters %>% 
+      filter( jugador == input$select_jugador) %>% 
+      select(estado) %>% 
+      summarise(
+        estado = last(estado)
+      ) %>% 
+      unique() %>% 
+      pull()
+    
+    df2 <- Rosters %>% 
+      filter( jugador == input$select_jugador) %>% 
+      select(ciudad) %>% 
+      summarise(
+        ciudad = last(ciudad)
+      ) %>% 
+      unique() %>% 
+      pull()
+    
+    paste(df,':', df1, '-', df2, sep = '  ')
+
   })
   
   # User
