@@ -217,6 +217,9 @@ write.csv(pitching_finals, file = 'data/pitching_finals.csv')
 
 
 #Data sets ----
+Rosters$jugador[[2487]] <-  'A. Álvares' # To different names with others names in df
+Rosters$jugador[[1323]] <-  'L. Salazar' # To different names with others names in df
+
 # Distinct jugadores ----
 distinct_players <- Rosters %>% 
   distinct(jugador) %>% 
@@ -234,7 +237,7 @@ distinct_years <- Rosters %>%
 # Distinct bats ----
   distinct_bats <- Rosters %>% 
     filter(pos != 'P') %>% 
-    select(jugador) %>% 
+    select(jugador, name) %>% 
     arrange(jugador) %>% 
     distinct(jugador)
 # Distinct lanzadores ----
@@ -283,3 +286,4 @@ list_years <- c("2019-20",
                 "2010-11",
                 "2009-10"
                 )
+

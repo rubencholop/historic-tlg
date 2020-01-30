@@ -1082,6 +1082,49 @@ Server = function(input, output) {
     unique() %>% 
     pull()
   })
+  # Text output Jugador position ----
+  output$pos_jugador <- renderText({
+    req(input$select_jugador)
+    
+    df <- Rosters %>% 
+      filter( jugador == input$select_jugador) %>% 
+      select(pos) %>% 
+      summarise(
+        pos = last(pos)
+      ) %>% 
+      unique() %>% 
+      pull()
+    
+    paste('Posición:', df, sep = ' ')
+    
+  })
+  
+  # Text output Jugador batea-lanza ----
+  output$bl_jugador <- renderText({
+    req(input$select_jugador)
+    
+    df <- Rosters %>% 
+      filter( jugador == input$select_jugador) %>% 
+      select(bat) %>% 
+      summarise(
+        bat = last(bat)
+      ) %>% 
+      unique() %>% 
+      pull()
+    
+    df1 <- Rosters %>% 
+      filter( jugador == input$select_jugador) %>% 
+      select(lan) %>% 
+      summarise(
+        lan = last(lan)
+      ) %>% 
+      unique() %>% 
+      pull()
+    
+    paste('B / L:', df, '/', df1, sep = ' ')
+    
+  })
+  
   # Text output Jugador lan ----
   output$jugador_lan <- renderText({
     req(input$select_jugador_pit)

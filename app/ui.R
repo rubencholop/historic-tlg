@@ -200,19 +200,7 @@ ui = dashboardPagePlus(
           tabPanel(
             # Bateo ----
             title = 'Bateo',
-            h1(textOutput('jugador_bat')
-               , align = 'center'),
             # Table test align fluirow ----
-            fluidRow(
-              column(10),
-              column(2,
-                     selectInput(
-                       inputId = 'select_jugador',
-                       label = 'Elige un jugador',
-                       choices = distinct_bats
-                     )
-              )
-            ),
             # Payer image ----
             fluidRow(
               column(6,
@@ -238,20 +226,34 @@ ui = dashboardPagePlus(
                        width = NULL,
                        collapsible = TRUE,
                        fluidRow(
-                         # Stats primary ----
-                         column(6,
-                                valueBoxOutput(outputId = 'pais', width = 12),
-                                valueBoxOutput(outputId = 'estado', width = 12),
-                                valueBoxOutput(outputId = 'ciudad', width = 12)
+                         column(8,
+                                h3(textOutput('jugador_bat')
+                                   , align = 'rigth')
                          ),
-                         # Stats secundary ----
-                         column(6,
-                                valueBoxOutput(outputId = 'lan', width = 12),
-                                valueBoxOutput(outputId = 'pos', width = 12),
-                                valueBoxOutput(outputId = 'bat', width = 12)
+                         column(4,
+                                selectInput(
+                                  inputId = 'select_jugador',
+                                  label = 'Elige un jugador',
+                                  choices = distinct_bats
+                                )
                          )
+                       ),
+                       fluidRow(
+                         column(12,
+                         h3(textOutput('pos_jugador'))
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                h3(textOutput('bl_jugador'))
+                         )
+                       ),
+                       fluidRow(
+                         column(12,
+                                h3(textOutput('pais_jugador'))
                        )
-                     )
+                    )
+                  )   
               )
             ),
             # Table by player ----
@@ -321,3 +323,17 @@ ui = dashboardPagePlus(
 
 # 
 
+# fluidRow(
+#   # Stats primary ----
+#   column(6,
+#          valueBoxOutput(outputId = 'pais', width = 12),
+#          valueBoxOutput(outputId = 'estado', width = 12),
+#          valueBoxOutput(outputId = 'ciudad', width = 12)
+#   ),
+#   # Stats secundary ----
+#   column(6,
+#          valueBoxOutput(outputId = 'lan', width = 12),
+#          valueBoxOutput(outputId = 'pos', width = 12),
+#          valueBoxOutput(outputId = 'bat', width = 12)
+#   )
+# )
