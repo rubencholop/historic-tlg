@@ -606,6 +606,7 @@ Server = function(input, output) {
         # autoWidth = TRUE,
         pageLegth = 15,
         lengthMenu = c(15, 20, 25),
+        lengthChange = FALSE,
         scrollX = TRUE,
         # scrollY = "500px",
         fixedColumns = list(LeftColumns = 3 ),
@@ -614,7 +615,6 @@ Server = function(input, output) {
         columnDefs = list(list(className = "dt-center", targets = 0:26),
                           list(width = '100px', targets = 3))
       )
-      
     )
   })
   
@@ -755,13 +755,15 @@ Server = function(input, output) {
         # autoWidth = TRUE,
         pageLegth = 10,
         lengthMenu = c(10, 15, 20),
+        lengthChange = FALSE,
         scrollX = TRUE,
         # scrollY = "500px",
         fixedColumns = list(LeftColumns = 3 ),
         paging = TRUE,
         fixedHeader = TRUE,
         columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '100px', targets = 3))
+                          list(width = '100px', targets = 3)),
+        rownames = FALSE
       )
       
     )
@@ -922,13 +924,15 @@ Server = function(input, output) {
         # autoWidth = TRUE,
         pageLegth = 10,
         lengthMenu = c(10, 15, 20),
+        lengthChange = FALSE,
         scrollX = TRUE,
         # scrollY = "500px",
         fixedColumns = list(LeftColumns = 3 ),
         paging = TRUE,
         fixedHeader = TRUE,
         columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '100px', targets = 3))
+                          list(width = '100px', targets = 3)),
+        rownames= FALSE
       )
       
     )
@@ -1117,6 +1121,8 @@ Server = function(input, output) {
       pull()
     
     paste('B / L :', df, '/', df1, sep = ' ')
+    
+    # paste0("x=", input$plot_click$x, "\ny=", input$plot_click$y)
     
   })
   
