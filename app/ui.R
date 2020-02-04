@@ -16,7 +16,7 @@ ui = dashboardPagePlus(
   title = 'Tiburones de la Guaira',
   # collapse_sidebar = TRUE, 
   
-  # Herader ----
+  # Header ----
   header = dashboardHeaderPlus(
     # titlePanel(
     #   rel = "icon",
@@ -25,7 +25,7 @@ ui = dashboardPagePlus(
     # ),
     title = tagList(
       span(class = "logo-lg", "Tiburones de la Guaira"), 
-      img(src = "andreas_Bureau_de_change.svg")),
+      img(src = "logo_tiburones.svg")),
     # (title = span(tagList(icon("calendar"), "Example"))
     # fixed = TRUE,
     titleWidth = 250,
@@ -39,8 +39,13 @@ ui = dashboardPagePlus(
     sidebarMenuOutput('collapsible_sidebar')),
   # Body ----
   body = dashboardBody(
+    includeCSS("www/style.css"),
     tabItems(
       tabItem(
+        setBackgroundImage(
+          src = "www/logo_tiburones.jpeg"
+          # shinydashboard = TRUE
+        ),
         tabName = 'inicio',
         h1('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
       ),
@@ -137,7 +142,7 @@ ui = dashboardPagePlus(
           # Picheo ----
           tabPanel(
             title = 'Picheo',
-            # Table test align fluirow ----
+            # Input ----
               fluidRow(
                 column(10,
                        selectInput(
@@ -147,23 +152,18 @@ ui = dashboardPagePlus(
                        )
                 )
               ),
-            # Payer image ----
+            # Image ----
               fluidRow(
                 column(4,
                        boxPlus(
                          width = NULL,
-                         # height = 250,
-                         title = '',
+                         title = 'Lanzador',
                          collapsible = TRUE,
-                         status = 'warning',
-                         imageOutput('jugador_pit',
-                                     click = 'image_click'
-                                     # height  = 
-                         ) 
+                         status = 'warning'
                        )
                 )
               ),
-            # Table by player ----
+            # Table  ----
               fluidRow(
                 column(12,
                        DT::dataTableOutput('picheo_jugador')
@@ -173,7 +173,7 @@ ui = dashboardPagePlus(
           # Bateo ----
           tabPanel(
             title = 'Bateo',
-            # Payer image ----
+            # Input ----
             fluidRow(
               column(10,
                      selectInput(
@@ -183,32 +183,32 @@ ui = dashboardPagePlus(
                      )
               )
             ),
+            # Image ----
             fluidRow(
               column(8,
                      boxPlus(
-                       width = 12,
-                       # height = 250,
-                       title = h3(textOutput('jugador_bat'), align = 'center'),
+                       width = NULL,
                        collapsible = TRUE,
                        status = 'warning',
+                       title = h3(textOutput('jugador_bat'), align = 'center'),
                        column(8,
-                           fluidRow(
-                             column(12,
-                                    imageOutput('jugador_')
-                                    )
-                             )
-                          ),
+                              fluidRow(
+                                column(12,
+                                       imageOutput('jugador_')
+                                       )
+                                )
+                              ),
                        column(4,
                               fluidRow(
                                 column(12,
                                        h3(textOutput('pos_jugador'),  align = 'rigth')
                                        )
-                              ),
+                                ),
                               fluidRow(
                                 column(12,
                                        h3(textOutput('bl_jugador'), align = 'rigth')
                                        )
-                              ),
+                                ),
                               fluidRow(
                                 column(12,
                                        h3(textOutput('pais_jugador'),  align = 'rigth')
@@ -216,10 +216,9 @@ ui = dashboardPagePlus(
                                 )
                               )
                        )
-                 )
-              ),
-            # Individual stats ----
-            # Table by player ----
+              )
+            ),
+            # Table  ----
             fluidRow(
               column(12,
                      boxPlus(
@@ -238,7 +237,7 @@ ui = dashboardPagePlus(
                        ),
                      boxPlus(
                        width = NULL,
-                       title = 'Bateo en finales',
+                       title = 'Bateo en Finales',
                        align = 'center',
                        collapsible = TRUE,
                        status = 'warning',
@@ -258,41 +257,4 @@ ui = dashboardPagePlus(
 
 
 
-# tabItem(
-#   h1('Jugador', align = 'center'),
-#   tabName = 'por_jugador',
-#   tabsetPanel(
-
-
-
-#     # tabPanel Data 
-#     tabPanel('info_pj',
-#              fluidRow(
-#                column(9),
-#                column(3,
-#                       box(
-#                         tittle = 'Información',
-#                         solidHeader = TRUE,
-#                         status = 'info',
-#                         collapsible = TRUE,
-#                         width = 12,
-#                         p('Filtre la tabla por cualquier variable', align = 'center')
-#                       )
-#                ),
-#              ),
-#              fluidRow(
-#                column(4,
-#                       imageOutput('jugador',
-#                                   height = 300,
-#                                   click = 'image_click'
-#                       )
-#                ),
-#                column(8,
-#                       DT::dataTableOutput('info_jugador'
-#                       )
-#                )
-#              )
-#     )
-#   )
-# )
 
