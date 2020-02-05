@@ -42,10 +42,6 @@ ui = dashboardPagePlus(
     includeCSS("www/style.css"),
     tabItems(
       tabItem(
-        setBackgroundImage(
-          src = "www/logo_tiburones.jpeg"
-          # shinydashboard = TRUE
-        ),
         tabName = 'inicio',
         h1('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
       ),
@@ -154,12 +150,20 @@ ui = dashboardPagePlus(
               ),
             # Image ----
               fluidRow(
-                column(4,
+                column(8,
                        boxPlus(
                          width = NULL,
                          title = 'Lanzador',
                          collapsible = TRUE,
                          status = 'warning'
+                       )
+                ),
+                column(4,
+                       boxPlus(
+                         width = NULL,
+                         collapsible = TRUE,
+                         status = 'warning',
+                         title = 'Radarchart'
                        )
                 )
               ),
@@ -216,6 +220,14 @@ ui = dashboardPagePlus(
                                 )
                               )
                        )
+              ),
+              column(4,
+                     boxPlus(
+                       width = NULL,
+                       collapsible = TRUE,
+                       status = 'warning',
+                       title = 'Radarchart'
+                     )
               )
             ),
             # Table  ----
