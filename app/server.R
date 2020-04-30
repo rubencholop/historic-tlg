@@ -5,7 +5,7 @@ library(shinyWidgets)
 library(shinydashboardPlus)
 
 # Run app
-shinyApp(ui, server)
+  shinyApp(ui, server)
 
 # Server ----
 Server = function(input, output) {
@@ -142,7 +142,6 @@ Server = function(input, output) {
       )
   })
   
-  
   # Table bateo regular season ----
   output$bateo_rs <- DT::renderDataTable({
     
@@ -202,15 +201,6 @@ Server = function(input, output) {
       
     )
   })
-  
-
-  
-  
-  
-  
-  
-  
-  
   
   # Table picheo round robin / semi - finals ----
   output$picheo_rr_sm <- DT::renderDataTable({
@@ -566,9 +556,9 @@ Server = function(input, output) {
     
      df <- rbind(batting_player, player_summarise) %>% 
        rename(
-         `TEMPORADA` = years,
-         `JUGADOR` = jugador,
-         `EDAD` = edad,
+         `Season` = years,
+         `Player` = jugador,
+         `Age` = edad,
          `G` = g,
          `PA` = pa,
          `AB` = ab,
@@ -594,7 +584,7 @@ Server = function(input, output) {
          `SH` = sh,
          `SF` = sf
        ) %>% 
-       arrange(TEMPORADA) 
+       arrange(Season) 
 
 
     # Datatable ----
@@ -602,6 +592,7 @@ Server = function(input, output) {
       df,
       extensions = "ColReorder",
       rownames = FALSE,
+      style = ,
       options = list(
         # autoWidth = TRUE,
         pageLegth = 15,
@@ -613,7 +604,14 @@ Server = function(input, output) {
         paging = TRUE,
         fixedHeader = TRUE,
         columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '100px', targets = 3))
+                          list(width = '100px', targets = 1)),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
       )
     )
   })
@@ -714,12 +712,12 @@ Server = function(input, output) {
       )
     
     df <-  rbind(player_summarise, batting_player) %>%
-      select(years, refuerzo, 2:27) %>% 
+      select(years, jugador, refuerzo, 2:27) %>% 
       rename(
-        `TEMPORADA` = years,
-        `JUGADOR` = jugador,
-        `REFUERZO` = refuerzo,
-        `EDAD` = edad,
+        `Season` = years,
+        `Player  ` = jugador,
+        `Signing` = refuerzo,
+        `Age` = edad,
         `G` = g,
         `PA` = X5,
         `AB` = ab,
@@ -744,7 +742,7 @@ Server = function(input, output) {
         `SH` = sh,
         `SF` = sf
       ) %>% 
-      arrange(TEMPORADA)  
+      arrange(Season)  
     
     # Datatable ----
     DT::datatable(
@@ -762,23 +760,19 @@ Server = function(input, output) {
         paging = TRUE,
         fixedHeader = TRUE,
         columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '100px', targets = 3)),
-        rownames = FALSE
+                          list(width = '100px', targets = 1)),
+        rownames = FALSE,
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '10px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
       )
       
     )
   })
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   # Table por  Bat_finals  by jugador ----
   output$bat_final <- DT::renderDataTable({
@@ -879,13 +873,13 @@ Server = function(input, output) {
     
 
     df <- rbind(batting_player, player_summarise) %>%
-      select(years, refuerzo, 2:28) %>% 
+      select(years, jugador, resultado, refuerzo, 2:28) %>% 
       rename(
-        `TEMPORADA` = years,
-        `JUGADOR` = jugador,
-        `RESULTADO` = resultado,
-        `REFUERZO` = refuerzo,
-        `EDAD` = edad,
+        `Temporada` = years,
+        `Jugador` = jugador,
+        `Campeonato` = resultado,
+        `Refuerzo` = refuerzo,
+        `Edad` = edad,
         `G` = g,
         `PA` = X5,
         `AB` = ab,
@@ -910,7 +904,7 @@ Server = function(input, output) {
         `SH` = sh,
         `SF` = sf
       ) %>% 
-      arrange(TEMPORADA)  %>% 
+      arrange(Temporada)  %>% 
       filter(
         trimws(PA) != ''  # To filter a empty value in colum AB
       ) 
@@ -931,8 +925,15 @@ Server = function(input, output) {
         paging = TRUE,
         fixedHeader = TRUE,
         columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '100px', targets = 3)),
-        rownames= FALSE
+                          list(width = '25px', targets = 5:26)),
+        rownames = FALSE,
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Arial'});",
+          "$(this.api().table().body()).css({'font-size': '10px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Calibri'});",
+          "}"
+        )
       )
       
     )
@@ -1071,6 +1072,7 @@ Server = function(input, output) {
   
   
   # Text Outputs
+  
   # Text output Jugador bat ----
   output$jugador_bat <- renderText({
     req(input$select_jugador)
@@ -1163,6 +1165,7 @@ Server = function(input, output) {
   })
   
   # User
+  
   
   
   

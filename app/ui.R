@@ -16,7 +16,7 @@ ui = dashboardPagePlus(
   title = 'Tiburones de la Guaira',
   # collapse_sidebar = TRUE, 
   
-  # Header ----
+  # Header  ----
   header = dashboardHeaderPlus(
     # titlePanel(
     #   rel = "icon",
@@ -31,7 +31,7 @@ ui = dashboardPagePlus(
     titleWidth = 250,
     enable_rightsidebar = TRUE,
     rightSidebarIcon = "bars",
-    userOutput("user")
+      userOutput("user")
   ),
   
   # Sidebar ----
@@ -150,7 +150,7 @@ ui = dashboardPagePlus(
               ),
             # Image ----
               fluidRow(
-                column(8,
+                column(7,
                        boxPlus(
                          width = NULL,
                          title = 'Lanzador',
@@ -158,7 +158,7 @@ ui = dashboardPagePlus(
                          status = 'warning'
                        )
                 ),
-                column(4,
+                column(5,
                        boxPlus(
                          width = NULL,
                          collapsible = TRUE,
@@ -189,7 +189,7 @@ ui = dashboardPagePlus(
             ),
             # Image ----
             fluidRow(
-              column(8,
+              column(7,
                      boxPlus(
                        width = NULL,
                        collapsible = TRUE,
@@ -221,7 +221,7 @@ ui = dashboardPagePlus(
                               )
                        )
               ),
-              column(4,
+              column(5,
                      boxPlus(
                        width = NULL,
                        collapsible = TRUE,
@@ -237,6 +237,7 @@ ui = dashboardPagePlus(
                        width = NULL,
                        title = 'Bateo en Temporada',
                        collapsible = TRUE,
+                       closable = FALSE,
                        status = 'warning',
                        DT::dataTableOutput('bat_rs')
                        ),
@@ -244,6 +245,7 @@ ui = dashboardPagePlus(
                        width = NULL,
                        title = 'Bateo en Round Robin',
                        collapsible = TRUE,
+                       closable = FALSE,
                        status = 'warning',
                        DT::dataTableOutput('bat_rr')
                        ),
@@ -252,6 +254,7 @@ ui = dashboardPagePlus(
                        title = 'Bateo en Finales',
                        align = 'center',
                        collapsible = TRUE,
+                       closable = FALSE,
                        status = 'warning',
                        DT::dataTableOutput('bat_final')
                        ) 
