@@ -1,0 +1,5 @@
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: none;
+  line-height : 0.5;
+}

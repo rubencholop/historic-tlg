@@ -237,7 +237,7 @@ distinct_years <- Rosters %>%
 # Distinct bats ----
   distinct_bats <- Rosters %>% 
     filter(pos != 'P') %>% 
-    select(jugador, name) %>% 
+    select(jugador, name, pos) %>% 
     arrange(jugador) %>% 
     distinct(jugador)
 # Distinct lanzadores ----

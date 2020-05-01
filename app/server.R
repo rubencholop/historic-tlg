@@ -464,7 +464,7 @@ Server = function(input, output) {
     
     player_summarise <- Hbrs %>%
       filter(jugador == input$select_jugador) %>%
-      select(1:27) %>%
+      select(-jugador, -key) %>%
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -493,8 +493,7 @@ Server = function(input, output) {
         `3b` = as.numeric(`3b`)
       ) %>%
       summarise(
-        years = 'Totales',
-        jugador = last(jugador),
+        years = 'Temporadas',
         edad = NROW(edad),
         g = sum(g, na.rm = T),
         pa = sum(pa, na.rm = T),
@@ -525,7 +524,7 @@ Server = function(input, output) {
 
     batting_player <- Hbrs %>%
       filter(jugador == input$select_jugador) %>%
-      select(1:27) %>%
+      select(-jugador, -key) %>%
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -556,9 +555,8 @@ Server = function(input, output) {
     
      df <- rbind(batting_player, player_summarise) %>% 
        rename(
-         `Season` = years,
-         `Player` = jugador,
-         `Age` = edad,
+         `Temporada` = years,
+         `Edad` = edad,
          `G` = g,
          `PA` = pa,
          `AB` = ab,
@@ -584,10 +582,16 @@ Server = function(input, output) {
          `SH` = sh,
          `SF` = sf
        ) %>% 
-       arrange(Season) 
+       arrange(Temporada) 
 
 
     # Datatable ----
+     headerCallback <- c(
+       "function(thead, data, start, end, display){",
+       "  $('th', thead).css('border-bottom', 'none');",
+       "}"
+     )  # To deleate header line horizontal in bottom of colums name
+     
     DT::datatable(
       df,
       extensions = "ColReorder",
@@ -595,16 +599,18 @@ Server = function(input, output) {
       style = ,
       options = list(
         # autoWidth = TRUE,
+        searching = FALSE,
+        paging = FALSE,
         pageLegth = 15,
         lengthMenu = c(15, 20, 25),
         lengthChange = FALSE,
         scrollX = TRUE,
-        # scrollY = "500px",
-        fixedColumns = list(LeftColumns = 3 ),
-        paging = TRUE,
+        rownames = FALSE,
         fixedHeader = TRUE,
-        columnDefs = list(list(className = "dt-center", targets = 0:26),
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = 0:25),
                           list(width = '100px', targets = 1)),
+        headerCallback = JS(headerCallback),
         initComplete = JS(
           "function(settings, json) {",
           "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -651,7 +657,7 @@ Server = function(input, output) {
         `3b` = as.numeric(`3b`)
       ) %>% 
       summarise(
-        years = 'Totales',
+        years = 'Temporadas',
         jugador = last(jugador),
         edad = NROW(edad),
         g = sum(g, na.rm = T),
@@ -712,12 +718,11 @@ Server = function(input, output) {
       )
     
     df <-  rbind(player_summarise, batting_player) %>%
-      select(years, jugador, refuerzo, 2:27) %>% 
+      select(years, 3:27, refuerzo) %>% 
       rename(
-        `Season` = years,
-        `Player  ` = jugador,
-        `Signing` = refuerzo,
-        `Age` = edad,
+        `Temporada` = years,
+        `Refuerzo` = refuerzo,
+        `Edad` = edad,
         `G` = g,
         `PA` = X5,
         `AB` = ab,
@@ -742,30 +747,39 @@ Server = function(input, output) {
         `SH` = sh,
         `SF` = sf
       ) %>% 
-      arrange(Season)  
+      arrange(Temporada)  
     
     # Datatable ----
+    
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+    
     DT::datatable(
       df,
+      class = 'display', # To remove lines horizontal in table
       extensions = "ColReorder",
       rownames = FALSE,
       options = list(
         # autoWidth = TRUE,
-        pageLegth = 10,
-        lengthMenu = c(10, 15, 20),
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 15,
+        lengthMenu = c(15, 20, 25),
         lengthChange = FALSE,
         scrollX = TRUE,
-        # scrollY = "500px",
-        fixedColumns = list(LeftColumns = 3 ),
-        paging = TRUE,
-        fixedHeader = TRUE,
-        columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '100px', targets = 1)),
         rownames = FALSE,
+        fixedHeader = TRUE,
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = 0:25),
+                          list(width = '100px', targets = 1)),
+        headerCallback = JS(headerCallback),
         initComplete = JS(
           "function(settings, json) {",
           "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-          "$(this.api().table().body()).css({'font-size': '10px'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
           "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
           "}"
         )
@@ -808,9 +822,9 @@ Server = function(input, output) {
         `3b` = as.numeric(`3b`)
       ) %>% 
       summarise(
-        years = 'Totales',
+        years = 'Temporadas',
         resultado = '',
-        jugador = last(jugador),
+        jugador = '-',
         edad = NROW(edad),
         refuerzo = '',
         g = sum(g, na.rm = T),
@@ -873,10 +887,9 @@ Server = function(input, output) {
     
 
     df <- rbind(batting_player, player_summarise) %>%
-      select(years, jugador, 5:28, refuerzo, resultado) %>% 
+      select(years, 5:28, refuerzo, resultado) %>% 
       rename(
         `Temporada` = years,
-        `Jugador` = jugador,
         `Edad` = edad,
         `G` = g,
         `PA` = X5,
@@ -909,7 +922,7 @@ Server = function(input, output) {
         trimws(PA) != ''  # To filter a empty value in colum AB
       ) %>% 
       mutate(Logro = if_else(Logro == 'campeon', 'Campeon', Logro),
-             Logro = if_else(Logro == 'subcampeon', 'Sub-Campeon', Logro)
+             Logro = if_else(Logro == 'subcampeon', 'SubCampeon', Logro)
              ) %>% 
       replace(., is.na(.), 0)
     
@@ -918,11 +931,11 @@ Server = function(input, output) {
       "function(thead, data, start, end, display){",
       "  $('th', thead).css('border-bottom', 'none');",
       "}"
-    ) # To deleate header line horizontal
+    ) # To deleate header line horizontal in bottom of colums name
     
     DT::datatable(
       df,
-      class = 'stripe', # To remove lines horizontal in table
+      class = 'display', # To remove lines horizontal in table
       extensions = "ColReorder",
       rownames = FALSE,
       options = list(
@@ -934,18 +947,17 @@ Server = function(input, output) {
         lengthChange = FALSE,
         scrollX = TRUE,
         rownames = FALSE,
-        fixedColumns = list(LeftColumns = 3 ),
+        fixedColumns = list(LeftColumns = 3),
         fixedHeader = TRUE,
-        columnDefs = list(list(className = "dt-center", targets = 0:27),
-                          list(width = '20px', targets = 2:25)
+        columnDefs = list(list(className = "dt-center", targets = 0:26),
+                          list(width = '50px', targets = 26)
                                ),
-        
         headerCallback = JS(headerCallback),
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-          "$(this.api().table().body()).css({'font-size': '10px'});",
-          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "$(this.api().table().body()).css({'font-family': 'Rajdhani'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Rajdhani'});",
           "}"
         )
       )
@@ -1113,7 +1125,7 @@ Server = function(input, output) {
       unique() %>% 
       pull()
     
-    paste('Posición :', df, sep = '  ')
+    paste('Posición :', df, sep = ' ')
     
   })
   

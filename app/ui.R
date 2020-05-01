@@ -37,15 +37,38 @@ ui = dashboardPagePlus(
   # Sidebar ----
   sidebar = dashboardSidebar(
     sidebarMenuOutput('collapsible_sidebar')),
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
   # Body ----
   body = dashboardBody(
-    includeCSS("www/style.css"),
     tabItems(
+      
+      # tabitem Inicio ----
       tabItem(
         tabName = 'inicio',
-        h1('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
+        h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center'),
+        fluidRow(
+          column(12,
+                 bs4Dash::bs4Carousel(
+                   id = "mycarousel",
+                   width = 12,
+                   bs4Dash::bs4CarouselItem(
+                     active = TRUE,
+                     src = "wash.png"
+                   ),
+                   bs4Dash::bs4CarouselItem(
+                     active = FALSE,
+                     src = "market.png"
+                   ),
+                   bs4Dash::bs4CarouselItem(
+                     active = FALSE,
+                     src = "steps.png"
+                     # http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap
+                   )
+                 )
+          )
+        )
       ),
-      
+
       # tabItem for Picheo, Bateo and Fildeo of Regular season ----
       tabItem(
         h1('Temporada Regular', align = 'center'),
@@ -140,6 +163,7 @@ ui = dashboardPagePlus(
             title = 'Picheo',
             # Input ----
               fluidRow(
+                br(),
                 column(3,
                        selectInput(
                          inputId = 'select_jugador_pit',
@@ -169,21 +193,19 @@ ui = dashboardPagePlus(
                 )
               ),
             # Table  ----
-              fluidRow(
-                column(12,
-                       DT::dataTableOutput('picheo_jugador')
-                )
-              )
+            DT::dataTableOutput('picheo_jugador')
+
             ),
           # Bateo ----
           tabPanel(
             title = 'Bateo',
             # Input ----
             fluidRow(
+              br(),
               column(3,
                      selectInput(
                        inputId = 'select_jugador',
-                       label = 'Selecciona un jugador',
+                       label = 'Seleccione un jugador',
                        choices = distinct_bats
                      )
               )
@@ -191,10 +213,9 @@ ui = dashboardPagePlus(
             # Image ----
             fluidRow(
               column(7,
-                     boxPlus(
+                     bs4Dash::bs4Box(
                        width = NULL,
                        collapsible = TRUE,
-                       status = 'warning',
                        title = h3(textOutput('jugador_bat'), align = 'center'),
                        column(8,
                               fluidRow(
@@ -223,40 +244,34 @@ ui = dashboardPagePlus(
                        )
               ),
               column(5,
-                     boxPlus(
+                     bs4Dash::bs4Box(
                        width = NULL,
                        collapsible = TRUE,
-                       status = 'warning',
+                       # status = 'warning',
                        title = 'Radarchart'
                      )
               )
             ),
+            br(),
             # Table  ----
             fluidRow(
               column(12,
-                     boxPlus(
+                     bs4Dash::bs4Box(
                        width = NULL,
-                       title = 'Temporada Regular',
-                       collapsible = TRUE,
-                       closable = FALSE,
-                       status = 'warning',
+                       title = h4("Temporada Regular", style = "color: black", align = 'center'),
                        DT::dataTableOutput('bat_rs')
                        ),
-                     boxPlus(
+                     br(),
+                     bs4Dash::bs4Box(
                        width = NULL,
-                       title = 'Round Robin',
-                       collapsible = TRUE,
-                       closable = FALSE,
-                       status = 'warning',
+                       title = h4("Round Robin", style = "color: black", align = 'center'),
+                       # status = 'warning',
                        DT::dataTableOutput('bat_rr')
                        ),
-                     boxPlus(
+                     br(),
+                     bs4Dash::bs4Box(
                        width = NULL,
-                       title = 'Finales',
-                       align = 'center',
-                       collapsible = TRUE,
-                       closable = FALSE,
-                       status = 'warning',
+                       title = h4("Finales", style = "color: black", align = 'center'),
                        DT::dataTableOutput('bat_final')
                        ) 
                 )
