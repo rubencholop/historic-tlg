@@ -140,10 +140,10 @@ ui = dashboardPagePlus(
             title = 'Picheo',
             # Input ----
               fluidRow(
-                column(10,
+                column(3,
                        selectInput(
                          inputId = 'select_jugador_pit',
-                         label = 'Elige un jugador',
+                         label = 'Seleccione un jugador',
                          choices = distinct_lan
                        )
                 )
@@ -154,8 +154,9 @@ ui = dashboardPagePlus(
                        boxPlus(
                          width = NULL,
                          title = 'Lanzador',
-                         collapsible = TRUE,
-                         status = 'warning'
+                         collapsible = FALSE,
+                         status = 'warning',
+                         closable = FALSE
                        )
                 ),
                 column(5,
@@ -179,10 +180,10 @@ ui = dashboardPagePlus(
             title = 'Bateo',
             # Input ----
             fluidRow(
-              column(10,
+              column(3,
                      selectInput(
                        inputId = 'select_jugador',
-                       label = 'Elige un jugador',
+                       label = 'Selecciona un jugador',
                        choices = distinct_bats
                      )
               )
@@ -235,7 +236,7 @@ ui = dashboardPagePlus(
               column(12,
                      boxPlus(
                        width = NULL,
-                       title = 'Bateo en Temporada',
+                       title = 'Temporada Regular',
                        collapsible = TRUE,
                        closable = FALSE,
                        status = 'warning',
@@ -243,7 +244,7 @@ ui = dashboardPagePlus(
                        ),
                      boxPlus(
                        width = NULL,
-                       title = 'Bateo en Round Robin',
+                       title = 'Round Robin',
                        collapsible = TRUE,
                        closable = FALSE,
                        status = 'warning',
@@ -251,7 +252,7 @@ ui = dashboardPagePlus(
                        ),
                      boxPlus(
                        width = NULL,
-                       title = 'Bateo en Finales',
+                       title = 'Finales',
                        align = 'center',
                        collapsible = TRUE,
                        closable = FALSE,

@@ -23,7 +23,7 @@ Server = function(input, output) {
     ),
     # menuItem  Estadisticas ----
     menuItem(
-      'Estadísticas',
+      'Datos',
       tabName = 'estadisticas',
       icon = icon('chart-line', lib = 'font-awesome'),
       menuSubItem('Temporada Regular', tabName = 'tem_reg'),
@@ -458,7 +458,7 @@ Server = function(input, output) {
   
   
   
-  # Table por  Bat_rs  by jugador ----
+  # Table por Bat_rs  by jugador ----
   output$bat_rs <- DT::renderDataTable({
     req(input$select_jugador)
     
@@ -617,7 +617,7 @@ Server = function(input, output) {
   })
   
   
-  # Table por  Bat_rr  by jugador ----
+  # Table por Bat_rr  by jugador ----
   output$bat_rr <- DT::renderDataTable({
     req(input$select_jugador)
 
@@ -774,7 +774,7 @@ Server = function(input, output) {
     )
   })
   
-  # Table por  Bat_finals  by jugador ----
+  # Table por Bat_finals  by jugador ----
   output$bat_final <- DT::renderDataTable({
     req(input$select_jugador)
     
@@ -873,12 +873,10 @@ Server = function(input, output) {
     
 
     df <- rbind(batting_player, player_summarise) %>%
-      select(years, jugador, resultado, refuerzo, 2:28) %>% 
+      select(years, jugador, 5:28, refuerzo, resultado) %>% 
       rename(
         `Temporada` = years,
         `Jugador` = jugador,
-        `Campeonato` = resultado,
-        `Refuerzo` = refuerzo,
         `Edad` = edad,
         `G` = g,
         `PA` = X5,
@@ -902,41 +900,60 @@ Server = function(input, output) {
         `XB` = xb,
         `HBP` = hbp,
         `SH` = sh,
-        `SF` = sf
+        `SF` = sf,
+        `Refuerzo` = refuerzo,
+        `Logro` = resultado
       ) %>% 
       arrange(Temporada)  %>% 
       filter(
         trimws(PA) != ''  # To filter a empty value in colum AB
-      ) 
+      ) %>% 
+      mutate(Logro = if_else(Logro == 'campeon', 'Campeon', Logro),
+             Logro = if_else(Logro == 'subcampeon', 'Sub-Campeon', Logro)
+             ) %>% 
+      replace(., is.na(.), 0)
     
     # Datatable ----
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    ) # To deleate header line horizontal
+    
     DT::datatable(
       df,
+      class = 'stripe', # To remove lines horizontal in table
       extensions = "ColReorder",
       rownames = FALSE,
       options = list(
         # autoWidth = TRUE,
-        pageLegth = 10,
-        lengthMenu = c(10, 15, 20),
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 15,
+        lengthMenu = c(15, 20, 25),
         lengthChange = FALSE,
         scrollX = TRUE,
-        # scrollY = "500px",
-        fixedColumns = list(LeftColumns = 3 ),
-        paging = TRUE,
-        fixedHeader = TRUE,
-        columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '25px', targets = 5:26)),
         rownames = FALSE,
+        fixedColumns = list(LeftColumns = 3 ),
+        fixedHeader = TRUE,
+        columnDefs = list(list(className = "dt-center", targets = 0:27),
+                          list(width = '20px', targets = 2:25)
+                               ),
+        
+        headerCallback = JS(headerCallback),
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().body()).css({'font-family': 'Arial'});",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
           "$(this.api().table().body()).css({'font-size': '10px'});",
-          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Calibri'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
           "}"
         )
       )
-      
-    )
+    ) 
+    # %>% 
+    #   formatStyle('PA', fontWeight = styleInterval( 20, c('bold', 'weight')))
+
+    
   })
   
   
@@ -1062,9 +1079,9 @@ Server = function(input, output) {
     if (input$select_jugador == input$select_jugador) {
       return(list(
         src = player,
-        contentType = "image/jpg"
-        # width = 400,
-        # height = 300
+        contentType = "image/jpg",
+        width = 300,
+        height = 300
         # alt = 'Selecciona un jugador'
       ))
     }
