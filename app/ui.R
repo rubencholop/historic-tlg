@@ -193,8 +193,25 @@ ui = dashboardPagePlus(
                 )
               ),
             # Table  ----
-            DT::dataTableOutput('picheo_jugador')
-
+            fluidRow(
+                column(12,
+                   bs4Dash::bs4Box(
+                     width = NULL,
+                     title = h4("Temporada Regular", style = "color: black", align = 'center'),
+                     DT::dataTableOutput('picheo_jugador')
+                     ),
+                   br(),
+                   bs4Dash::bs4Box(
+                     width = NULL,
+                     title = h4("Round Robin", style = "color: black", align = 'center')
+                     ),
+                   br(),
+                   bs4Dash::bs4Box(
+                     width = NULL,
+                     title = h4("Finales", style = "color: black", align = 'center')
+                     ) 
+                   )
+                 )
             ),
           # Bateo ----
           tabPanel(
