@@ -3,3 +3,15 @@
   border-bottom: none;
   line-height : 0.5;
 }
+
+.dataTables_scrollBody {
+  border-bottom: none;
+}
+
+.dataTables_scrollHead {
+  background-color: #011C51;
+}
+
+table.dataTable thead .sorting {
+  color: #fff;
+}

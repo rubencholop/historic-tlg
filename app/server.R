@@ -1010,7 +1010,7 @@ Server = function(input, output) {
         edad = NROW(edad),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
-        era = mean(er, na.rm = T),
+        era = round(mean(er, na.rm = T), 2),
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
         cg = sum(cg, na.rm = T),
@@ -1094,19 +1094,28 @@ Server = function(input, output) {
       arrange(Temporada) 
     
     # Datatable ----
-    headerCallback <- c(
-      "function(thead, data, start, end, display){",
-      "  $('th', thead).css('border-bottom', 'none');",
-      "}"
-    )  # To deleate header line horizontal in bottom of colums name
-    
+    # headerCallback <- c(
+    #   "function(thead, data, start, end, display){",
+    #   "  $('th', thead).css('border-bottom', 'none');",
+    #   "}"
+    # )  # To deleate header line horizontal in bottom of colums name
+
+    # footerCallback <- c(
+    #   "function(tfoot, data, start, end, display){",
+    #   "  $('th', tfoot).css('border-bottom', 'none');",
+    #   "}"
+    # )
+
     DT::datatable(
       df,
       extensions = "ColReorder",
       rownames = FALSE,
       style = ,
+      # callback = JS(c("$('table.dataTable thead th').css('border-bottom', 'none');",
+      #                 "$('table.dataTable.no-footer').css('border-top', 'none');")),
       options = list(
-        # autoWidth = TRUE,
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        autoWidth = TRUE,
         searching = FALSE,
         paging = FALSE,
         pageLegth = 15,
@@ -1116,9 +1125,9 @@ Server = function(input, output) {
         rownames = FALSE,
         fixedHeader = TRUE,
         fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = 0:23),
-                          list(width = '100px', targets = 1)),
-        headerCallback = JS(headerCallback),
+        columnDefs = list(list(className = "dt-center", targets = 0:23)),
+        # headerCallback = JS(headerCallback),
+        # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
         initComplete = JS(
           "function(settings, json) {",
           "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -1127,8 +1136,12 @@ Server = function(input, output) {
           "}"
         )
       )
-    )
-    
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Temporadas'), "bold")
+      )
   })
   
   
@@ -1246,10 +1259,13 @@ Server = function(input, output) {
   
   
   # Images
-  # image jugador ----
+  
+  # -----IMAGE ----
+  # image Battingplayer ----
   output$jugador_ <- renderImage({
     req(input$select_jugador)
-    player <- paste('www/', input$select_jugador, '.jpg', sep = '')
+    
+    player <- paste('www/batting/', input$select_jugador, '.jpg', sep = '')
     
     if (is.null(input$select_jugador))
       return(cat('Not image'))
@@ -1268,6 +1284,26 @@ Server = function(input, output) {
   
   # Text Outputs
   
+  
+  # image PitchingPlayer ----
+  output$jugador_pit <- renderImage({
+    req(input$select_jugador_pit)
+    
+    player <- paste('www/pitching/',input$select_jugador_pit, '.jpg', sep = '')
+    
+    if (is.null(input$select_jugador_pit))
+      return(cat('Not image'))
+    
+    if (input$select_jugador_pit == input$select_jugador_pit) {
+      return(list(
+        src = player,
+        contentType = "image/jpg"
+        # width = 300,
+        # height = 300
+        # alt = 'Selecciona un jugador'
+      ))
+    }
+  }, deleteFile = FALSE)
   
   # ----TEXT OUTPUT -----
   # Text output Jugador bat ----
