@@ -25,8 +25,8 @@ ui = dashboardPagePlus(
     #   href = "https://guidetoiceland.is/image/389003/x/0/the-beautiful-waterfalls-of-south-iceland-seljalandsfoss-skogafoss-amp-gljufrabui-1.jpg"
     # ),
     title = tagList(
-      span(class = "logo-lg", "Tiburones de la Guaira"), 
-      img(src = "tiburones-de-la-guaira-bbc.eps")),
+      span(class = "logo-lg", "Tiburones de la Guaira")
+      ),
     # (title = span(tagList(icon("calendar"), "Example"))
     # fixed = TRUE,
     titleWidth = 233,
@@ -37,7 +37,7 @@ ui = dashboardPagePlus(
     userOutput("user")
   ),
   
-  # Sidebar ----
+  # Sidebar ----  
   sidebar = dashboardSidebar(
     sidebarMenuOutput('collapsible_sidebar'),
     # tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
@@ -60,7 +60,11 @@ ui = dashboardPagePlus(
       HTML('
             .main-footer {
               background-color: #C20B10;
-                }'
+                }
+           .img {
+              max-width: 50%;
+           }
+           '
            )
       )
     ),
