@@ -13,11 +13,12 @@ library(DT)
 ui = dashboardPagePlus(
   
   # Tittle ----
-  title = 'Tiburones de la Guaira',
+  title = 'Tiburones de la Guaira B.B.C',
   # collapse_sidebar = TRUE, 
   
   # Header  ----
   header = dashboardHeaderPlus(
+    
     # titlePanel(
     #   rel = "icon",
     #   type = "image/gif",
@@ -25,13 +26,15 @@ ui = dashboardPagePlus(
     # ),
     title = tagList(
       span(class = "logo-lg", "Tiburones de la Guaira"), 
-      img(src = "logo_tiburones.svg")),
+      img(src = "tiburones-de-la-guaira-bbc.eps")),
     # (title = span(tagList(icon("calendar"), "Example"))
     # fixed = TRUE,
-    titleWidth = 250,
+    titleWidth = 233,
     enable_rightsidebar = TRUE,
     rightSidebarIcon = "bars",
-      userOutput("user")
+    
+    # User Ruben Lopez
+    userOutput("user")
   ),
   
   # Sidebar ----
@@ -228,7 +231,8 @@ ui = dashboardPagePlus(
                               text-transform: uppercase;
                               font-size: 1.2em;
                               text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                align = 'center')
+                                align = 'center'),
+                     DT::dataTableOutput('picheo_jugador_rr')
                      ),
                    br(),
                    bs4Dash::bs4Box(
