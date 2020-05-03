@@ -14,7 +14,7 @@ ui = dashboardPagePlus(
   
   # Tittle ----
   title = 'Tiburones de la Guaira B.B.C',
-  # collapse_sidebar = TRUE, 
+  collapse_sidebar = TRUE,
   
   # Header  ----
   header = dashboardHeaderPlus(
@@ -39,8 +39,41 @@ ui = dashboardPagePlus(
   
   # Sidebar ----
   sidebar = dashboardSidebar(
-    sidebarMenuOutput('collapsible_sidebar')),
-  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
+    sidebarMenuOutput('collapsible_sidebar'),
+    # tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
+    tags$head(
+      tags$style(
+        HTML('
+            .main-sidebar .skin-blue .left-side {
+              background-color: #C20B10;
+                }'
+             )
+        )
+      )
+    ),
+  
+  
+  # Footer ----
+  footer = bs4Dash::bs4DashFooter(
+  tags$head(
+    tags$style(
+      HTML('
+            .main-footer {
+              background-color: #C20B10;
+                }'
+           )
+      )
+    ),
+  img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png'),
+  span(
+    style = "font-size: 1em",
+    span("Created by "),
+    a("Ruben Lopez", 
+      href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/', 
+      target = "_blank"),
+    )
+  ),
+  
   # Body ----
   body = dashboardBody(
     tabItems(
@@ -242,7 +275,8 @@ ui = dashboardPagePlus(
                               text-transform: uppercase;
                               font-size: 1.2em;
                               text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                align = 'center')
+                                align = 'center'),
+                     DT::dataTableOutput('picheo_jugador_final')
                      ) 
                    )
                  )
@@ -344,7 +378,7 @@ ui = dashboardPagePlus(
               )
             )
           ),
-        # ----
+        # -----
       )
     )
   )

@@ -1010,7 +1010,7 @@ Server = function(input, output) {
         edad = NROW(edad),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
-        era = round(mean(er, na.rm = T), 2),
+        era = round(mean(era, na.rm = T), 2),
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
         cg = sum(cg, na.rm = T),
@@ -1185,7 +1185,7 @@ Server = function(input, output) {
         edad = NROW(edad),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
-        era = round(mean(er, na.rm = T), 2),
+        era = round(mean(era, na.rm = T), 2),
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
         cg = sum(cg, na.rm = T),
@@ -1301,6 +1301,184 @@ Server = function(input, output) {
         fixedHeader = TRUE,
         fixedColumns = list(LeftColumns = 3),
         columnDefs = list(list(className = "dt-center", targets = 0:23)),
+        # headerCallback = JS(headerCallback),
+        # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Temporadas'), "bold")
+      )
+  })
+  
+  
+  
+  
+  
+  # Table por Pit_finals by jugador ----
+  output$picheo_jugador_final <- DT::renderDataTable({
+    req(input$select_jugador_pit)
+    
+    player_summarise <- Hpf %>%
+      filter(jugador == input$select_jugador_pit) %>%
+      select(-jugador, -key, -`w-l%`) %>%
+      mutate(
+        edad = as.numeric(edad),
+        w = as.numeric(w),
+        l = as.numeric(l),
+        era = as.numeric(era),
+        g = as.numeric(g),
+        gs = as.numeric(gs),
+        cg = as.numeric(cg),
+        sho = as.numeric(sho),
+        sv = as.numeric(sv),
+        ip = as.numeric(ip),
+        h = as.numeric(h),
+        r = as.numeric(r),
+        er = as.numeric(er),
+        hr = as.numeric(hr),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        whip = as.numeric(whip),
+        `h/9` = as.numeric(`h/9`),
+        `hr/9` = as.numeric(`hr/9`),
+        `bb/9` = as.numeric(`bb/9`),
+        `so/9` = as.numeric(`so/9`),
+        `so/bb` = as.numeric(`so/bb`),
+        bk = as.numeric(bk)
+      ) %>%
+      summarise(
+        years = 'Temporadas',
+        edad = NROW(edad),
+        w = sum(w, na.rm = T),
+        l = sum(l, na.rm = T),
+        era = round(mean(era, na.rm = T), 2),
+        g = sum(g, na.rm = T),
+        gs = sum(gs, na.rm = T),
+        cg = sum(cg, na.rm = T),
+        sho = sum(sho, na.rm = T),
+        sv = sum(sv, na.rm = T),
+        ip = sum(ip, na.rm = T),
+        h = sum(h, na.rm = T),
+        r = sum(r, na.rm = T),
+        er = sum(er, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        whip = round(mean(whip, na.rm = T), 2),
+        `h/9` = round(mean(`h/9`, na.rm = T), 2),
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+        bk = sum(bk, na.rm = T),
+        refuerzo = '-',
+        resultado = '-'
+      )
+    
+    
+    pitching_player <- Hpf %>%
+      filter(jugador == input$select_jugador_pit) %>%
+      select(-jugador, -key, -`w-l%`) %>%
+      mutate(
+        edad = as.numeric(edad),
+        w = as.numeric(w),
+        l = as.numeric(l),
+        era = as.numeric(era),
+        g = as.numeric(g),
+        gs = as.numeric(gs),
+        cg = as.numeric(cg),
+        sho = as.numeric(sho),
+        sv = as.numeric(sv),
+        ip = as.numeric(ip),
+        h = as.numeric(h),
+        r = as.numeric(r),
+        er = as.numeric(er),
+        hr = as.numeric(hr),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        whip = round(as.numeric(whip), 2),
+        `h/9` = round(as.numeric(`h/9`), 2), 
+        `hr/9` = round(as.numeric(`hr/9`), 2),
+        `bb/9` = round(as.numeric(`bb/9`), 2),
+        `so/9` = round(as.numeric(`so/9`), 2),
+        `so/bb` = round(as.numeric(`so/bb`), 2),
+        bk = as.numeric(bk),
+        refuerzo = refuerzo,
+        resultado = resultado
+      ) 
+    
+    df <- rbind(pitching_player, player_summarise) %>% 
+      select(-bk) %>% 
+      rename(
+        `Temporada` = years,
+        `Edad` = edad,
+        Refuerzo = refuerzo,
+        Resultado = resultado,
+        `W` = w,
+        `L` = l,
+        `ERA` = era,
+        `G` = g,
+        `GS` = gs,
+        `CG` = cg,
+        `SHO` = sho,
+        `SV` = sv,
+        `IP` = ip,
+        `H` = h,
+        `R` = r,
+        `ER` = er,
+        `HR` = hr,
+        `BB` = bb,
+        `SO` = so,
+        `WHIP` = whip,
+        `H/9` = `h/9`,
+        `HR/9` = `hr/9`,
+        `BB/9` = `bb/9`,
+        `SO/9` = `so/9`,
+        `SO/BB` = `so/bb`) %>% 
+      arrange(Temporada) 
+    
+    # Datatable ----
+    # headerCallback <- c(
+    #   "function(thead, data, start, end, display){",
+    #   "  $('th', thead).css('border-bottom', 'none');",
+    #   "}"
+    # )  # To deleate header line horizontal in bottom of colums name
+
+    # footerCallback <- c(
+    #   "function(tfoot, data, start, end, display){",
+    #   "  $('th', tfoot).css('border-bottom', 'none');",
+    #   "}"
+    # )
+
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      style = ,
+      # callback = JS(c("$('table.dataTable thead th').css('border-bottom', 'none');",
+      #                 "$('table.dataTable.no-footer').css('border-top', 'none');")),
+      options = list(
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        autoWidth = TRUE,
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 15,
+        lengthMenu = c(15, 20, 25),
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        rownames = FALSE,
+        fixedHeader = TRUE,
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = 0:24)),
         # headerCallback = JS(headerCallback),
         # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
         initComplete = JS(
