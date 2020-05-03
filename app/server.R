@@ -1152,7 +1152,7 @@ Server = function(input, output) {
   output$picheo_jugador_rr <- DT::renderDataTable({
     req(input$select_jugador_pit)
     
-    player_summarise <- Hprs %>%
+    player_summarise <- Hprr %>%
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -1172,7 +1172,6 @@ Server = function(input, output) {
         hr = as.numeric(hr),
         bb = as.numeric(bb),
         so = as.numeric(so),
-        ir = as.numeric(ir),
         whip = as.numeric(whip),
         `h/9` = as.numeric(`h/9`),
         `hr/9` = as.numeric(`hr/9`),
@@ -1199,18 +1198,18 @@ Server = function(input, output) {
         hr = sum(hr, na.rm = T),
         bb = sum(bb, na.rm = T),
         so = sum(so, na.rm = T),
-        ir = sum(ir, na.rm = T),
         whip = round(mean(whip, na.rm = T), 2),
         `h/9` = round(mean(`h/9`, na.rm = T), 2),
         `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
         `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
         `so/9` = round(mean(`so/9`, na.rm = T), 2),
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-        bk = sum(bk, na.rm = T)
+        bk = sum(bk, na.rm = T),
+        refuerzo = '-'
       )
     
     
-    pitching_player <- Hprs %>%
+    pitching_player <- Hprr %>%
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -1230,14 +1229,14 @@ Server = function(input, output) {
         hr = as.numeric(hr),
         bb = as.numeric(bb),
         so = as.numeric(so),
-        ir = as.numeric(ir),
         whip = round(as.numeric(whip), 2),
         `h/9` = round(as.numeric(`h/9`), 2), 
         `hr/9` = round(as.numeric(`hr/9`), 2),
         `bb/9` = round(as.numeric(`bb/9`), 2),
         `so/9` = round(as.numeric(`so/9`), 2),
         `so/bb` = round(as.numeric(`so/bb`), 2),
-        bk = as.numeric(bk)
+        bk = as.numeric(bk),
+        refuerzo = refuerzo
       ) 
     
     df <- rbind(pitching_player, player_summarise) %>% 
@@ -1245,6 +1244,7 @@ Server = function(input, output) {
       rename(
         `Temporada` = years,
         `Edad` = edad,
+        Refuerzo = refuerzo,
         `W` = w,
         `L` = l,
         `ERA` = era,
@@ -1260,7 +1260,6 @@ Server = function(input, output) {
         `HR` = hr,
         `BB` = bb,
         `SO` = so,
-        `IR` = ir,
         `WHIP` = whip,
         `H/9` = `h/9`,
         `HR/9` = `hr/9`,
