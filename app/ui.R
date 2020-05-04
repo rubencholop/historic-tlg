@@ -137,7 +137,7 @@ ui = dashboardPagePlus(
         h2('Temporada Regular', align = 'center'),
         tabName = 'temporada',
         tabsetPanel(
-          # tabPanel Picheo
+          # tabPanel Picheo ----
           tabPanel('Picheo', 
                    # Input ----
                    fluidRow(
@@ -150,7 +150,7 @@ ui = dashboardPagePlus(
                               )
                             )
                    ),
-                   # Picheo ----
+                   # Tables Picheo ----
                    fluidRow(
                      column(12,
                             bs4Dash::bs4Box(
@@ -167,12 +167,30 @@ ui = dashboardPagePlus(
                      ),
                    fluidRow(
                      column(12,
-                            DT::dataTableOutput('picheo_rr_sm')
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Round Robin", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('picheo_rr_sm')
+                              )
                             )
                      ),
                    fluidRow(
                      column(12,
-                            DT::dataTableOutput('picheo_finals')
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Finales", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('picheo_finals')
+                              )
                             )
                      )
                   ),
@@ -189,7 +207,7 @@ ui = dashboardPagePlus(
                             )
                      )
                    ),
-                   # Bateo ----
+                   # Tables Bateo ----
                    fluidRow(
                      column(12,
                             DT::dataTableOutput('bateo_rs')
@@ -205,9 +223,9 @@ ui = dashboardPagePlus(
                             DT::dataTableOutput('bateo_finals')
                             )
                      )
-                   ),
-          # tabPanel Fildeo
-          tabPanel('Fildeo', tableOutput('fildeo_rs'))
+                   )
+          # # tabPanel Fildeo ----
+          # tabPanel('Fildeo', tableOutput('fildeo_rs'))
         )
       ),
       # tabItem for Jugador ----
