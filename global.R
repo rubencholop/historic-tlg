@@ -24,7 +24,7 @@ years <- c('1962-63')
 from <- 1962
 to <- lubridate::year(Sys.Date()) 
 range_ <- c(from:to)
-pages <- c(1:(to - (from )))
+pages <- c(1:(to - (from)))
 
 take_years <-  function(x){
   df <- paste(
@@ -34,12 +34,27 @@ take_years <-  function(x){
   data.frame(df)
 }
 
+
+season <-  function(x){
+  df <- paste(range_[x], "-", substring(range_[x + 1], 3), sep="")
+  data.frame(df)
+}
+
+seasons <- rbindlist(
+  lapply(pages, season), fill = TRUE
+) %>% 
+  arrange(desc(df)) %>% 
+  rename(temporadas = df) %>% 
+  pull()
+  
+
 # Getting Roster hictoric ----
 URLs <- rbindlist(
   lapply(
     pages, take_years),
   fill = TRUE
 ) 
+
 URLs <- as.character(URLs$df[pages])
 all_rosters <- map(URLs, get_roster) %>% 
   keep(function(x) nrow(x) > 0)

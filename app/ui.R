@@ -7,11 +7,34 @@ library(lubridate)
 library(plotly)
 library(dplyr)
 library(DT)
+library(stringr)
 
-# Ui main
+# Data select ----
+.st <- as.Date("2020-01-22")
+.en <- as.Date(today())
+.dates <- seq(.en, .st, by = "-1 day")
+year(today()) -1
 
+# List seasons ----
+from <- 1962
+to <- lubridate::year(Sys.Date()) 
+range_ <- c(from:to)
+pages <- c(1:(to - (from)))
+
+season <-  function(x){
+  df <- paste(range_[x], "-", substring(range_[x + 1], 3), sep="")
+  data.frame(df)
+}
+
+temporadas <- rbindlist(
+  lapply(pages, season), fill = TRUE
+) %>% 
+  arrange(desc(df)) %>% 
+  rename(temporadas = df) %>% 
+  pull()
+
+# APP ----
 ui = dashboardPagePlus(
-  
   # Tittle ----
   title = 'Tiburones de la Guaira B.B.C',
   collapse_sidebar = TRUE,
@@ -40,7 +63,7 @@ ui = dashboardPagePlus(
   # Sidebar ----  
   sidebar = dashboardSidebar(
     sidebarMenuOutput('collapsible_sidebar'),
-    # tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
+    tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
     tags$head(
       tags$style(
         HTML('
@@ -111,87 +134,80 @@ ui = dashboardPagePlus(
 
       # tabItem for Picheo, Bateo and Fildeo of Regular season ----
       tabItem(
-        h1('Temporada Regular', align = 'center'),
-        tabName = 'tem_reg',
+        h2('Temporada Regular', align = 'center'),
+        tabName = 'temporada',
         tabsetPanel(
           # tabPanel Picheo
           tabPanel('Picheo', 
-                   # fluidRow(
-                   #   column(9),
-                   #   column(3,
-                   #          box(
-                   #            tittle = 'Información',
-                   #            solidHeader = TRUE,
-                   #            status = 'info',
-                   #            collapsible = TRUE,
-                   #            width = 12,
-                   #            p('Filtre la tabla por cualquier variable', align = 'center')
-                   #            )
-                   #          ),
-                   #   ),
+                   # Input ----
+                   fluidRow(
+                     br(),
+                     column(3,
+                            selectInput(
+                              inputId = 'select_temporada',
+                              label = 'Seleccione una temporada',
+                              choices = temporadas
+                              )
+                            )
+                   ),
+                   # Picheo ----
                    fluidRow(
                      column(12,
-                            DT::dataTableOutput('picheo_rs')
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Temporada Regular", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('picheo_rs')
+                              )
+                            )
+                     ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('picheo_rr_sm')
+                            )
+                     ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('picheo_finals')
                             )
                      )
                   ),
           # tabPanel Bateo
           tabPanel('Bateo',
+                   # Input ----
+                   fluidRow(
+                     br(),
+                     column(3,
+                            selectInput(
+                              inputId = 'select_temporada',
+                              label = 'Seleccione una temporada',
+                              choices = temporadas
+                            )
+                     )
+                   ),
+                   # Bateo ----
                    fluidRow(
                      column(12,
                             DT::dataTableOutput('bateo_rs')
+                            )
+                     ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('bateo_rr_sm')
+                            )
+                   ),
+                   fluidRow(
+                     column(12,
+                            DT::dataTableOutput('bateo_finals')
                             )
                      )
                    ),
           # tabPanel Fildeo
           tabPanel('Fildeo', tableOutput('fildeo_rs'))
-        )
-      ),
-      
-      # tabItem for Picheo, Bateo in Round robin / semi finals ----
-      tabItem(
-        h1('Round Robin - Semi Final', align = 'center'),
-        tabName = 'rr_sm',
-        tabsetPanel(
-          # tabPanel Picheo
-          tabPanel('Picheo', 
-                   fluidRow(
-                     column(12,
-                            DT::dataTableOutput('picheo_rr_sm')
-                     )
-                   )
-          ),
-          # tabPanel Bateo
-          tabPanel('Bateo',
-                   fluidRow(
-                     column(12,
-                            DT::dataTableOutput('bateo_rr_sm')
-                     )
-                   )
-          )
-        )
-      ),
-      # tabItem for Picheo, Bateo in  finals ---- 
-      tabItem(
-        h1('Finales', align = 'center'),
-        tabName = 'finals',
-        tabsetPanel(
-          # tabPanel Picheo
-          tabPanel('Picheo', 
-                   fluidRow(
-                     column(12,
-                            DT::dataTableOutput('picheo_finals')
-                     )
-                   )
-          ),
-          # tabPanel Bateo
-          tabPanel('Bateo',
-                   fluidRow(
-                     column(12,
-                            DT::dataTableOutput('bateo_finals')
-                     )
-                   )
-          )
         )
       ),
       # tabItem for Jugador ----
