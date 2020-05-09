@@ -15,7 +15,7 @@ library(stringr)
 .dates <- seq(.en, .st, by = "-1 day")
 year(today()) -1
 
-# List seasons ----
+# List seasons ---- 
 from <- 1962
 to <- lubridate::year(Sys.Date()) 
 range_ <- c(from:to)
@@ -26,7 +26,7 @@ season <-  function(x){
   data.frame(df)
 }
 
-temporadas <- rbindlist(
+temporadas <- data.table::rbindlist(
   lapply(pages, season), fill = TRUE
 ) %>% 
   arrange(desc(df)) %>% 
