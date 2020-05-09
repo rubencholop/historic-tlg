@@ -134,7 +134,7 @@ ui = dashboardPagePlus(
 
       # tabItem for Picheo, Bateo and Fildeo of Regular season ----
       tabItem(
-        h2('Temporada Regular', align = 'center'),
+        h2('Datos por temporada', align = 'center'),
         tabName = 'temporada',
         tabsetPanel(
           # tabPanel Picheo ----
@@ -165,6 +165,7 @@ ui = dashboardPagePlus(
                               )
                             )
                      ),
+                   br(),
                    fluidRow(
                      column(12,
                             bs4Dash::bs4Box(
@@ -179,6 +180,7 @@ ui = dashboardPagePlus(
                               )
                             )
                      ),
+                   br(),
                    fluidRow(
                      column(12,
                             bs4Dash::bs4Box(
@@ -210,17 +212,44 @@ ui = dashboardPagePlus(
                    # Tables Bateo ----
                    fluidRow(
                      column(12,
-                            DT::dataTableOutput('bateo_rs')
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Temporada Regular", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('bateo_rs')
+                              )
                             )
                      ),
                    fluidRow(
                      column(12,
-                            DT::dataTableOutput('bateo_rr_sm')
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Raound Robin", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('bateo_rr_sm')
+                              )
                             )
                    ),
                    fluidRow(
                      column(12,
-                            DT::dataTableOutput('bateo_finals')
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Finales", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('bateo_finals')
+                              )
                             )
                      )
                    )

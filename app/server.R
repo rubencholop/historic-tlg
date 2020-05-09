@@ -26,6 +26,7 @@ Server = function(input, output) {
       'Datos',
       tabName = 'datos',
       icon = icon('chart-line', lib = 'font-awesome'),
+      menuSubItem('Equipo', tabName = 'equipo'),
       menuSubItem('Temporada', tabName = 'temporada'),
       menuSubItem('Por Jugador', tabName = 'jugador')
     ),
@@ -1860,6 +1861,7 @@ Server = function(input, output) {
         fontWeight = styleEqual(c('Temporadas'), "bold")
       )
   })
+  
   
   
   
