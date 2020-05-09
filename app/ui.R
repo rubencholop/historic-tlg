@@ -244,7 +244,7 @@ ui = dashboardPagePlus(
                      column(12,
                             bs4Dash::bs4Box(
                               width = NULL,
-                              title = h4("Finales", 
+                              title = h4("Final", 
                                          style = "color: #b90e13;
                                         text-transform: uppercase;
                                         font-size: 1.2em;

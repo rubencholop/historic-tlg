@@ -256,7 +256,7 @@ Server = function(input, output) {
     
   })
   
-  # Table picheo round robin / semi - finals ----
+  # Table picheo round robin ----
   output$picheo_rr_sm <- DT::renderDataTable({
     
     player_summarise <- Hprr %>%
@@ -785,16 +785,110 @@ Server = function(input, output) {
     
   })
   
-  # Table bateo round robin / semi - finals   ----
+  # Table bateo round robin  ----
   output$bateo_rr_sm <- DT::renderDataTable({
+    req(input$select_temporada_bat)
     
-    df <-  Hbrr %>%
-      select(years, refuerzo, 2:28) %>% 
+    player_summarise <- Hbrr %>%
+      filter(years == input$select_temporada_bat,
+             trimws(X5) != '' 
+             ) %>%
+      select(-key) %>% 
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        X5 = as.numeric(X5),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) %>% 
+      summarise(
+        years = 'Jugadores',
+        jugador = NROW(jugador),
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = ''
+      )
+    
+    
+    batting_player <- Hbrr %>%
+      filter(years == input$select_temporada_bat,
+             trimws(X5) != '' ) %>%
+      select(-key) %>% 
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        X5 = as.numeric(X5),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) 
+    
+    df <-  rbind(player_summarise, batting_player) %>%
+      # select(years, 3:27, refuerzo) %>% 
       rename(
-        `TEMPORADA` = years,
-        `JUGADOR` = jugador,
-        `EDAD` = edad,
-        `REFUERZO` = refuerzo,
+        `Temporada` = years,
+        `Refuerzo` = refuerzo,
+        Jugador = jugador,
+        `Edad` = edad,
         `G` = g,
         `PA` = X5,
         `AB` = ab,
@@ -819,40 +913,54 @@ Server = function(input, output) {
         `SH` = sh,
         `SF` = sf
       ) %>% 
-      arrange(TEMPORADA) %>% 
-      filter(
-        trimws(PA) != ''  # To filter a empty value in colum AB
-      )
+      arrange(Temporada)  
+    
+    # Datatable ----
+    
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
     
     DT::datatable(
       df,
+      class = 'display', # To remove lines horizontal in table
       extensions = "ColReorder",
       rownames = FALSE,
       options = list(
         # autoWidth = TRUE,
-        pageLegth = 50,
-        lengthMenu = c(50, 75, 100),
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 25,
+        lengthMenu = c(25, 30, 35),
+        lengthChange = FALSE,
         scrollX = TRUE,
-        scrollY = "500px",
-        fixedColumns = list(LeftColumns = 3 ),
-        paging = TRUE,
+        rownames = FALSE,
         fixedHeader = TRUE,
-        columnDefs = list(list(className = "dt-center", targets = 0:26),
-                          list(width = '100px', targets = 2))
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+                          list(width = '100px', targets = 1)),
+        headerCallback = JS(headerCallback),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
       )
-      
-    )
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Jugadores'), "bold")
+      )
+    
   })
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   # Table bateo finals ----
   output$bateo_finals <- DT::renderDataTable({
     
