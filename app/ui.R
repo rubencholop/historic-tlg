@@ -203,7 +203,7 @@ ui = dashboardPagePlus(
                      br(),
                      column(3,
                             selectInput(
-                              inputId = 'select_temporada',
+                              inputId = 'select_temporada_bat',
                               label = 'Seleccione una temporada',
                               choices = temporadas
                             )
@@ -224,6 +224,7 @@ ui = dashboardPagePlus(
                               )
                             )
                      ),
+                   br(),
                    fluidRow(
                      column(12,
                             bs4Dash::bs4Box(
@@ -238,6 +239,7 @@ ui = dashboardPagePlus(
                               )
                             )
                    ),
+                   br(),
                    fluidRow(
                      column(12,
                             bs4Dash::bs4Box(
