@@ -15,3 +15,7 @@
 table.dataTable thead .sorting {
   color: #fff;
 }
+
+.skin-blue .left-side, .skin-blue .main-sidebar, .skin-blue .wrapper {
+    background-color: #C20B10;
+}

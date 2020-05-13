@@ -1,4 +1,4 @@
-#libraries
+# libraries ----
 library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
@@ -8,6 +8,7 @@ library(plotly)
 library(dplyr)
 library(DT)
 library(stringr)
+# library(bs4Dash)
 
 # Data select ----
 .st <- as.Date("2020-01-22")
@@ -110,24 +111,23 @@ ui = dashboardPagePlus(
         tabName = 'inicio',
         h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center'),
         fluidRow(
-          column(12,
-                 bs4Dash::bs4Carousel(
-                   id = "mycarousel",
-                   width = 12,
-                   bs4Dash::bs4CarouselItem(
-                     active = TRUE,
-                     src = "wash.png"
-                   ),
-                   bs4Dash::bs4CarouselItem(
-                     active = FALSE,
-                     src = "market.png"
-                   ),
-                   bs4Dash::bs4CarouselItem(
-                     active = FALSE,
-                     src = "steps.png"
-                     # http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap
-                   )
-                 )
+          column(12
+                 # bs4Dash::bs4Carousel(
+                 #   id = "mycarousel",
+                 #   width = 6,
+                 #   bs4CarouselItem(
+                 #     active = TRUE,
+                 #     src = "http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap"
+                 #   ),
+                 #   bs4CarouselItem(
+                 #     active = FALSE,
+                 #     src = "http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap"
+                 #   ),
+                 #   bs4CarouselItem(
+                 #     active = FALSE,
+                 #     src = "http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap"
+                 #   )
+                 # )
           )
         )
       ),
@@ -455,6 +455,7 @@ ui = dashboardPagePlus(
 
 # End Body ----
 
-
+# Run app ----
+shinyApp(ui, server)
 
 

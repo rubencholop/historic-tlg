@@ -1,14 +1,18 @@
-# #libraries
+# libraries ----
 library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinydashboardPlus)
 
-# Run app
-  shinyApp(ui, server)
+
+
+
+# Run app ----
+shinyApp(ui, server)
+
 
 # Server ----
-Server = function(input, output) {
+server = function(input, output) {
   # Sidebar collapsible ----
   output$collapsible_sidebar = renderMenu({
     sidebarMenu(
@@ -30,14 +34,14 @@ Server = function(input, output) {
       menuSubItem('Temporada', tabName = 'temporada'),
       menuSubItem('Por Jugador', tabName = 'jugador')
     ),
-    # menuItem Geo Estadisticas ----
+    # menuItem Estadisticas ----
     menuItem(
-      'Geo Estadísticas',
+      'Estadísticas',
       startExpanded = FALSE,
       tabName = 'geo_estadisticas',
       icon =  icon('globe-americas', lib = 'font-awesome'),
       menuSubItem('Geograficas', tabName = 'geo'),
-      menuSubItem('Caracateristicas', tabName = 'hab')
+      menuSubItem('', tabName = 'hab')
     ),
     # menuItem Records ----
     menuItem(
@@ -2486,4 +2490,6 @@ Server = function(input, output) {
   
 # Ends of server ----  
 } 
+
+
 
