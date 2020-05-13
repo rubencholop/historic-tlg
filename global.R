@@ -42,7 +42,7 @@ Unique_Rosters <- Rosters %>%
   filter(pos == 'P') %>% 
   arrange(jugador, years) %>% 
   group_by(ID) %>% 
-  summarise(jugador = last(jugador)) %>% 
+  summarize(jugador = last(jugador)) %>% 
   arrange(jugador) %>% 
   select(jugador)
 
@@ -50,7 +50,7 @@ Unique_Rosters <- Rosters %>%
   filter(!pos == 'P') %>% 
   arrange(jugador, years) %>% 
   group_by(ID) %>% 
-  summarise(jugador = last(jugador)) %>% 
+  summarize(jugador = last(jugador)) %>% 
   arrange(jugador) %>% 
   select(jugador)
 
@@ -130,4 +130,96 @@ list_years <- c("2019-20",
 
 # Df by seasons ----
 
-Pby_season <- Hprs
+Pby_season <- Hprs %>% 
+  arrange(years, jugador) %>% 
+  select(-key, bk) %>% 
+  group_by(years) %>% 
+  summarise(
+    edad = round(mean(edad, na.rm = T), 1),
+    w = sum(w, na.rm = T),
+    l = sum(l, na.rm = T),
+    era = round(mean(era, na.rm = T), 2),
+    g = sum(g, na.rm = T),
+    gs = sum(gs, na.rm = T),
+    gp = w + l,
+    cg = sum(cg, na.rm = T),
+    sho = sum(sho, na.rm = T),
+    sv = sum(sv, na.rm = T),
+    ip = sum(ip, na.rm = T),
+    h = sum(h, na.rm = T),
+    r = sum(r, na.rm = T),
+    er = sum(er, na.rm = T),
+    hr = sum(hr, na.rm = T),
+    bb = sum(bb, na.rm = T),
+    so = sum(so, na.rm = T),
+    ir = sum(ir, na.rm = T),
+    whip = round(mean(whip, na.rm = T), 2),
+    `h/9` = round(mean(`h/9`, na.rm = T), 2),
+    `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+    `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+    `so/9` = round(mean(`so/9`, na.rm = T), 2),
+    `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+  )
+
+
+Pby_rr <- Hprr %>% 
+  arrange(years, jugador) %>% 
+  select(-key, bk) %>% 
+  group_by(years) %>% 
+  summarise(
+    edad = round(mean(edad), 1),
+    w = sum(w, na.rm = T),
+    l = sum(l, na.rm = T),
+    era = round(mean(era, na.rm = T), 2),
+    g = sum(g, na.rm = T),
+    gs = sum(gs, na.rm = T),
+    gp = w + l,
+    cg = sum(cg, na.rm = T),
+    sho = sum(sho, na.rm = T),
+    sv = sum(sv, na.rm = T),
+    ip = sum(ip, na.rm = T),
+    h = sum(h, na.rm = T),
+    r = sum(r, na.rm = T),
+    er = sum(er, na.rm = T),
+    hr = sum(hr, na.rm = T),
+    bb = sum(bb, na.rm = T),
+    so = sum(so, na.rm = T),
+    whip = round(mean(whip, na.rm = T), 2),
+    `h/9` = round(mean(`h/9`, na.rm = T), 2),
+    `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+    `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+    `so/9` = round(mean(`so/9`, na.rm = T), 2),
+    `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+  )
+
+
+Pby_final <-  Hpf %>% 
+  arrange(years, jugador) %>% 
+  select(-key, bk) %>% 
+  group_by(years) %>% 
+  summarise(
+    edad = round(mean(edad), 1),
+    w = sum(w, na.rm = T),
+    l = sum(l, na.rm = T),
+    era = round(mean(era, na.rm = T), 2),
+    g = sum(g, na.rm = T),
+    gs = sum(gs, na.rm = T),
+    gp = w + l,
+    cg = sum(cg, na.rm = T),
+    sho = sum(sho, na.rm = T),
+    sv = sum(sv, na.rm = T),
+    ip = round(sum(ip, na.rm = T), 1),
+    h = sum(h, na.rm = T),
+    r = sum(r, na.rm = T),
+    er = sum(er, na.rm = T),
+    hr = sum(hr, na.rm = T),
+    bb = sum(bb, na.rm = T),
+    so = sum(so, na.rm = T),
+    whip = round(mean(whip, na.rm = T), 2),
+    `h/9` = round(mean(`h/9`, na.rm = T), 2),
+    `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+    `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+    `so/9` = round(mean(`so/9`, na.rm = T), 2),
+    `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+  )
+
