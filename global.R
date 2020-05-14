@@ -128,7 +128,7 @@ list_years <- c("2019-20",
                 "2009-10"
 )
 
-# Df by seasons ----
+# Df by seasons by pitching ----
 
 Pby_season <- Hprs %>% 
   arrange(years, jugador) %>% 
@@ -220,6 +220,41 @@ Pby_final <-  Hpf %>%
     `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
     `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
     `so/9` = round(mean(`so/9`, na.rm = T), 2),
-    `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+    `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+    resultado = last(resultado)
   )
 
+
+# Df by seasons by batting ----
+
+Bby_season <- Hbrs %>% 
+  arrange(years, jugador) %>% 
+  select(-key) %>% 
+  group_by(years) %>% 
+  summarise(
+    edad = round(mean(edad), 1),
+    g = sum(g, na.rm = T),
+    pa = sum(pa, na.rm = T),
+    ab = sum(ab, na.rm = T),
+    r = sum(r, na.rm = T),
+    h = sum(h, na.rm = T),
+    `2b` = sum(`2b`, na.rm = T),
+    `3b` = sum(`3b`, na.rm = T),
+    hr = sum(hr, na.rm = T),
+    rbi = sum(rbi, na.rm = T),
+    sb = sum(sb, na.rm = T),
+    cs = sum(cs, na.rm = T),
+    bb = sum(bb, na.rm = T),
+    so = sum(so, na.rm = T),
+    avg = round(mean(avg, na.rm = T), 3),
+    obp = round(mean(obp, na.rm = T), 3),
+    slg = round(mean(slg, na.rm = T), 3),
+    ops = round(mean(ops, na.rm = T), 3),
+    ir = sum(ir, na.rm = T),
+    rc = sum(rc, na.rm = T),
+    tb = sum(tb, na.rm = T),
+    xb = sum(xb, na.rm = T),
+    hbp = sum(hbp, na.rm = T),
+    sh = sum(sh, na.rm = T),
+    sf = sum(sf, na.rm = T)
+  )

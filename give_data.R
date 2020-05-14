@@ -59,7 +59,7 @@ URLs <- as.character(URLs$df[pages])
 all_rosters <- map(URLs, get_roster) %>% 
   keep(function(x) nrow(x) > 0)
 
-#Historic roster df
+# Historic roster df ----
 Rosters <- data.table::rbindlist(all_rosters,
                                               fill = TRUE) %>% 
   select(years, jugador, name, pos, bat, lan, exp, pais, estado, ciudad)
@@ -68,12 +68,12 @@ write.csv(Rosters, file = 'data/rosters.csv')
 
 # Getting batting regular season ----
 batting_reseason <- map(URLs, get_batting) 
-Hbatting_reseason <- data.table::rbindlist(batting_reseason,
+  Hbatting_reseason <- data.table::rbindlist(batting_reseason,
                                          fill = TRUE) %>% 
   select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, 
          sb, cs, bb, so, avg, obp, slg, ops, ir, rc, tb, xb, hbp,
          sh, sf)
-write.csv(Hbatting_reseason, file = 'data/batting_reseason.csv')
+# write.csv(Hbatting_reseason, file = 'data/batting_reseason.csv')
 
 # Historic batting df in Round robin ----
 years_rr <- c(4:5, 8:11, 13, 15:16, 18:25, 27:28, 30, 39, 42, 46:48, 50, 52:55)

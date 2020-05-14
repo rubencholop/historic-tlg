@@ -4,12 +4,8 @@ library(shinydashboard)
 library(shinyWidgets)
 library(shinydashboardPlus)
 
-
-
-
 # Run app ----
 shinyApp(ui, server)
-
 
 # Server ----
 server = function(input, output) {
@@ -97,7 +93,8 @@ server = function(input, output) {
     req(input$select_temporada)
     
     player_summarise <- Hprs %>%
-      filter(years == input$select_temporada) %>%
+      filter(years == '2011-12') %>% 
+      # filter(years == input$select_temporada) %>%
       select(-key, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
@@ -156,7 +153,8 @@ server = function(input, output) {
     
     
     pitching_player <- Hprs %>%
-      filter(years == input$select_temporada) %>%
+      filter(years == '2011-12') %>%
+      # filter(years == input$select_temporada) %>%
       select(-key, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
