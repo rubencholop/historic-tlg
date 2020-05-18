@@ -85,7 +85,6 @@ server = function(input, output) {
   })
   
   
-  # Boards  
   
   # -----TABLES ----
   # Table picheo regular season ----
@@ -2204,6 +2203,7 @@ server = function(input, output) {
   
   
   
+  
   # ------ INFOBOX -----
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
@@ -2361,6 +2361,7 @@ server = function(input, output) {
     }
   }, deleteFile = FALSE)
   
+  
   # ----TEXT OUTPUT -----
   # Text output Jugador bat ----
   output$jugador_bat <- renderText({
@@ -2486,7 +2487,6 @@ server = function(input, output) {
            )
         })
   
-# Ends of server ----  
 } 
 
 
