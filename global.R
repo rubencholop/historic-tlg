@@ -22,6 +22,7 @@ Rosters <- Rosters %>%
   arrange(jugador, years) %>% 
   left_join(.rosters, by = 'name')
 
+# unique roster
 Unique_Rosters <- Rosters %>% 
   group_by(ID) %>% 
   summarize(
@@ -129,7 +130,6 @@ list_years <- c("2019-20",
 )
 
 # Df by seasons by pitching ----
-
 Pby_season <- Hprs %>% 
   arrange(years, jugador) %>% 
   select(-key, bk) %>% 
@@ -258,3 +258,71 @@ Bby_season <- Hbrs %>%
     sh = sum(sh, na.rm = T),
     sf = sum(sf, na.rm = T)
   )
+
+
+Bby_rr <- Hbrr %>% 
+  arrange(years, jugador) %>% 
+  select(-key) %>% 
+  group_by(years) %>% 
+  summarise(
+    edad = round(mean(edad), 1),
+    g = sum(g, na.rm = T),
+    X5 = sum(X5, na.rm = T),
+    ab = sum(ab, na.rm = T),
+    r = sum(r, na.rm = T),
+    h = sum(h, na.rm = T),
+    `2b` = sum(`2b`, na.rm = T),
+    `3b` = sum(`3b`, na.rm = T),
+    hr = sum(hr, na.rm = T),
+    rbi = sum(rbi, na.rm = T),
+    sb = sum(sb, na.rm = T),
+    cs = sum(cs, na.rm = T),
+    bb = sum(bb, na.rm = T),
+    so = sum(so, na.rm = T),
+    avg = round(mean(avg, na.rm = T), 3),
+    obp = round(mean(obp, na.rm = T), 3),
+    slg = round(mean(slg, na.rm = T), 3),
+    ops = round(mean(ops, na.rm = T), 3),
+    rc = sum(rc, na.rm = T),
+    tb = sum(tb, na.rm = T),
+    xb = sum(xb, na.rm = T),
+    hbp = sum(hbp, na.rm = T),
+    sh = sum(sh, na.rm = T),
+    sf = sum(sf, na.rm = T),
+    refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+  )
+
+
+Bby_final <- Hbf %>% 
+  arrange(years, jugador) %>% 
+  select(-key) %>% 
+  group_by(years) %>% 
+  summarise(
+    edad = round(mean(edad), 1),
+    g = sum(g, na.rm = T),
+    X5 = sum(X5, na.rm = T),
+    ab = sum(ab, na.rm = T),
+    r = sum(r, na.rm = T),
+    h = sum(h, na.rm = T),
+    `2b` = sum(`2b`, na.rm = T),
+    `3b` = sum(`3b`, na.rm = T),
+    hr = sum(hr, na.rm = T),
+    rbi = sum(rbi, na.rm = T),
+    sb = sum(sb, na.rm = T),
+    cs = sum(cs, na.rm = T),
+    bb = sum(bb, na.rm = T),
+    so = sum(so, na.rm = T),
+    avg = round(mean(avg, na.rm = T), 3),
+    obp = round(mean(obp, na.rm = T), 3),
+    slg = round(mean(slg, na.rm = T), 3),
+    ops = round(mean(ops, na.rm = T), 3),
+    rc = sum(rc, na.rm = T),
+    tb = sum(tb, na.rm = T),
+    xb = sum(xb, na.rm = T),
+    hbp = sum(hbp, na.rm = T),
+    sh = sum(sh, na.rm = T),
+    sf = sum(sf, na.rm = T),
+    refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+    resultado = last(resultado)
+  ) %>% 
+  select(years, resultado)

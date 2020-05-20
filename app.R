@@ -16,14 +16,14 @@ library(stringr)
 .dates <- seq(.en, .st, by = "-1 day")
 year(today()) -1
 
-# List seasons ---- 
+
 from <- 1962
 to <- lubridate::year(Sys.Date()) 
 range_ <- c(from:to)
 pages <- c(1:(to - (from)))
 
 season <-  function(x){
-  df <- paste(range_[x], "-", substring(range_[x + 1], 3), sep="")
+  df <- paste(range_[x], "-", substring(range_[x + 1], 3), sep = "")
   data.frame(df)
 }
 
