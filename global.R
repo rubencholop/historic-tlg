@@ -189,7 +189,8 @@ Pby_rr <- Hprr %>%
     `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
     `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
     `so/9` = round(mean(`so/9`, na.rm = T), 2),
-    `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+    `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+    refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
   )
 
 
