@@ -1482,6 +1482,178 @@ server = function(input, output) {
   
   
   # Table bateo regular season ----
+  output$ <- DT::renderDataTable({
+    
+    player_summarise <- Bby_season %>%
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        pa = as.numeric(pa),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = as.numeric(avg),
+        obp = as.numeric(obp),
+        slg = as.numeric(slg),
+        ops = as.numeric(ops),
+        ir = as.numeric(ir),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) %>%
+      summarise(
+        years = 'Jugadores',
+        jugador = NROW(jugador),
+        edad = mean(edad),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      ) 
+    
+    
+    batting_player <- Hbrs %>%
+      filter(years == input$select_temporada_bat) %>%
+      select(-key) %>%
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        pa = as.numeric(pa),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = round(as.numeric(avg), 3), 
+        obp = round(as.numeric(obp), 3),
+        slg = round(as.numeric(slg), 3),
+        ops = round(as.numeric(ops), 3),
+        ir = as.numeric(ir),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      ) %>% 
+      filter(
+        trimws(pa) != ''  # To filter a empty value in colum AB
+      )
+    
+    df <- rbind(batting_player, player_summarise) %>% 
+      rename(
+        Temporada = years,
+        Jugador = jugador,
+        `Edad` = edad,
+        `G` = g,
+        `PA` = pa,
+        `AB` = ab,
+        `R` = r,
+        `H` = h,
+        `2B` = '2b',
+        `3B` = '3b',
+        `HR` = hr,
+        `RBI` = rbi,
+        `SB` = sb,
+        `CS` = cs,
+        `BB` = bb,
+        `SO` = so,
+        `AVG` = avg,
+        `OBP` = obp,
+        `SLG` = slg,
+        `OPS` = ops,
+        `RC` = rc,
+        `TB` = tb,
+        `XB` = xb,
+        `IR` = ir,
+        `HBP` = hbp,
+        `SH` = sh,
+        `SF` = sf
+      ) %>% 
+      arrange(Temporada)
+    
+    # Datatable ----
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+    
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      style = ,
+      options = list(
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        # autoWidth = TRUE,
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 40,
+        # lengthMenu = c(15, 20, 25),
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        rownames = FALSE,
+        fixedHeader = TRUE,
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+                          list(width = '100px', targets = 1)),
+        headerCallback = JS(headerCallback),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Jugadores'), "bold")
+      )
+    
+  })
+  
+  # Table bateo regular season ----
   output$bateo_rs <- DT::renderDataTable({
     req(input$select_temporada_bat)
     

@@ -130,9 +130,9 @@ list_years <- c("2019-20",
 )
 
 # Df by seasons by pitching ----
-Pby_season <- Hprs %>% 
+Pby_season <- prs %>% 
   arrange(years, jugador) %>% 
-  select(-key, bk) %>% 
+  select(-bk) %>% 
   group_by(years) %>% 
   summarise(
     edad = round(mean(edad, na.rm = T), 1),
@@ -162,9 +162,9 @@ Pby_season <- Hprs %>%
   )
 
 
-Pby_rr <- Hprr %>% 
+Pby_rr <- prr %>% 
   arrange(years, jugador) %>% 
-  select(-key, bk) %>% 
+  select(-bk) %>% 
   group_by(years) %>% 
   summarise(
     edad = round(mean(edad), 1),
@@ -194,9 +194,9 @@ Pby_rr <- Hprr %>%
   )
 
 
-Pby_final <-  Hpf %>% 
+Pby_final <-  pf %>% 
   arrange(years, jugador) %>% 
-  select(-key, bk) %>% 
+  select(-bk) %>% 
   group_by(years) %>% 
   summarise(
     edad = round(mean(edad), 1),
@@ -229,9 +229,8 @@ Pby_final <-  Hpf %>%
 
 # Df by seasons by batting ----
 
-Bby_season <- Hbrs %>% 
+Bby_season <- brs %>% 
   arrange(years, jugador) %>% 
-  select(-key) %>% 
   group_by(years) %>% 
   summarise(
     edad = round(mean(edad), 1),
@@ -262,9 +261,8 @@ Bby_season <- Hbrs %>%
   )
 
 
-Bby_rr <- Hbrr %>% 
+Bby_rr <- brr %>% 
   arrange(years, jugador) %>% 
-  select(-key) %>% 
   group_by(years) %>% 
   summarise(
     edad = round(mean(edad), 1),
@@ -295,9 +293,8 @@ Bby_rr <- Hbrr %>%
   )
 
 
-Bby_final <- Hbf %>% 
+Bby_final <- bf %>% 
   arrange(years, jugador) %>% 
-  select(-key) %>% 
   group_by(years) %>% 
   summarise(
     edad = round(mean(edad), 1),
@@ -326,5 +323,4 @@ Bby_final <- Hbf %>%
     sf = sum(sf, na.rm = T),
     refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
     resultado = last(resultado)
-  ) %>% 
-  select(years, resultado)
+  ) 
