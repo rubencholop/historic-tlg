@@ -131,10 +131,10 @@ ui <-  dashboardPagePlus(
           )
         )
       ),
-      # tabitem by tema ----
+      # tabitem by team ----
       tabItem(
-        h2('Datos por temporada', align = 'center'),
-        tabName = 'temporada',
+        h2('Datos por Equipo', align = 'center'),
+        tabName = 'equipo',
         tabsetPanel(
           tabPanel('Picheo',
                    fluidRow(
@@ -147,7 +147,7 @@ ui <-  dashboardPagePlus(
                                         font-size: 1.2em;
                                         text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                                          align = 'center'),
-                              DT::dataTableOutput('')
+                              DT::dataTableOutput('Preseason_team')
                               )
                       )
                    ),
@@ -587,7 +587,115 @@ server = function(input, output) {
   
   
   
+  
   # -----TABLES ----
+  # Table picheo regular season by team ----
+  output$Preseason_team <- DT::renderDataTable({
+    
+    player_summarise <- Pby_season %>%
+      summarise(
+        years = 'Jugadores',
+        edad = round(mean(edad, na.rm = T), 1),
+        w = sum(w, na.rm = T),
+        l = sum(l, na.rm = T),
+        era = round(mean(era, na.rm = T), 2),
+        g = sum(g, na.rm = T),
+        gs = sum(gs, na.rm = T),
+        gp = sum(gs, na.rm = T),
+        cg = sum(cg, na.rm = T),
+        sho = sum(sho, na.rm = T),
+        sv = sum(sv, na.rm = T),
+        ip = sum(ip, na.rm = T),
+        h = sum(h, na.rm = T),
+        r = sum(r, na.rm = T),
+        er = sum(er, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        ir = sum(ir, na.rm = T),
+        whip = round(mean(whip, na.rm = T), 2),
+        `h/9` = round(mean(`h/9`, na.rm = T), 2),
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+      )
+    
+    pitching_player <- Pby_season
+    
+    df <- rbind(pitching_player, player_summarise) %>% 
+      rename(
+        `Temporada` = years,
+        `Edad` = edad,
+        `W` = w,
+        `L` = l,
+        `ERA` = era,
+        `G` = g,
+        `GS` = gs,
+        `GP` = gp,
+        `CG` = cg,
+        `SHO` = sho,
+        `SV` = sv,
+        `IP` = ip,
+        `H` = h,
+        `R` = r,
+        `ER` = er,
+        `HR` = hr,
+        `BB` = bb,
+        `SO` = so,
+        `IR` = ir,
+        `WHIP` = whip,
+        `H/9` = `h/9`,
+        `HR/9` = `hr/9`,
+        `BB/9` = `bb/9`,
+        `SO/9` = `so/9`,
+        `SO/BB` = `so/bb`) %>% 
+      arrange(Temporada) 
+    
+    # Datatable ----
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+    
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      style = ,
+      options = list(
+        autoWidth = TRUE,
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 30,
+        # lengthMenu = c(15, 20, 25),
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        rownames = FALSE,
+        fixedHeader = TRUE,
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = c(0:24))
+                          # list(width = '100px', targets = 1)
+        ),
+        headerCallback = JS(headerCallback),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Jugadores'), "bold")
+      )
+    
+  })
   # Table picheo regular season ----
   output$picheo_rs <- DT::renderDataTable({
     req(input$select_temporada)
@@ -2701,6 +2809,7 @@ server = function(input, output) {
   
 
   
+  
   # ------ INFOBOX -----
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
@@ -2813,6 +2922,7 @@ server = function(input, output) {
   
   # Images
   
+  
   # -----IMAGE ----
   # image Battingplayer ----
   output$jugador_ <- renderImage({
@@ -2857,6 +2967,7 @@ server = function(input, output) {
       ))
     }
   }, deleteFile = FALSE)
+  
   
   
   # ----TEXT OUTPUT -----
