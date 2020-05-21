@@ -182,8 +182,52 @@ ui <-  dashboardPagePlus(
                             )
                      )
                    ),
-          tabPanel('Bateo')
-          
+          tabPanel('Bateo',
+                   fluidRow(
+                     column(12,
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Temporada Regular", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('Breseason_team')
+                              )
+                            )
+                    ),
+                   br(),
+                   fluidRow(
+                     column(12,
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Round Robin", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('Brr_team')
+                            )
+                          )
+                    ),
+                   br(),
+                   fluidRow(
+                     column(12,
+                            bs4Dash::bs4Box(
+                              width = NULL,
+                              title = h4("Final", 
+                                         style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('Bfinal_team')
+                              )
+                            )
+                     )
+                  )
         )
       ),
       
@@ -1653,7 +1697,7 @@ server = function(input, output) {
     
   })
   
-  # Table bateo regular season ----
+  # Table bateo regular season by team ----
   output$bateo_rs <- DT::renderDataTable({
     req(input$select_temporada_bat)
     
