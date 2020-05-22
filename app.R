@@ -619,6 +619,42 @@ server = function(input, output) {
   # Reactive 
   
   
+  #Data 
+  # Reactive Rosters ----
+  Rosters <- reactive({
+    Rosters <- read_csv('data/rosters.csv')
+  })
+  
+  # Reactive Batting regular season ----
+  brs <- reactive({
+    brs <- read_csv('data/batting_reseason.csv')
+  })
+  
+  # Reactive Batting round robin ----
+  brs <- reactive({
+    brr <- read_csv('data/batting_rr.csv')
+  })
+  
+  # Reactive Batting finals ----
+  bf <- reactive({
+    bf <- read_csv('data/batting_finals.csv')
+  })
+
+  # Reactive Pitching regular season ----
+  prs <- reactive({
+    prs <- read_csv('data/pitching_reseason.csv')
+  })
+  
+  # Reactive Pitching round robin ----
+  prr <- reactive({
+    prr <- read_csv('data/pitching_rrobin.csv')
+  })
+  
+  # Reactive Pitching final ----
+  pf <- reactive({
+    pf <- read_csv('data/pitching_finals.csv')
+  })
+
   # Reactive info player ----
   info_player <- reactive({
     req(input$select_jugador)
@@ -1370,6 +1406,7 @@ server = function(input, output) {
   #By Season
   
   
+  #By season
   # Table picheo regular season ----
   output$picheo_rs <- DT::renderDataTable({
     req(input$select_temporada)
@@ -1890,7 +1927,8 @@ server = function(input, output) {
   output$bateo_rs <- DT::renderDataTable({
     
     player_summarise <- Hbrs %>%
-      filter(years == input$select_temporada_bat,
+      filter(years == '2011-12')
+    ,
              trimws(pa) != '' ) %>%  # To filter a empty value in colum AB
       select(-key) %>%
       mutate(
@@ -2424,6 +2462,7 @@ server = function(input, output) {
   #By player
   
   
+  #By player
   # Table por Bat_rs  by jugador ----
   output$bat_rs <- DT::renderDataTable({
     req(input$select_jugador)

@@ -116,6 +116,7 @@ Hpf <- pf %>%
   mutate(key = paste(as.character(years), jugador)) %>%
   select(key, 1:29)
 
+# List of years ----  
 list_years <- c("2019-20",
                 "2018-19",
                 "2017-18",
@@ -126,7 +127,11 @@ list_years <- c("2019-20",
                 "2012-13",
                 "2011-12",
                 "2010-11",
-                "2009-10"
+                "2009-10",
+                "2008-09",
+                "2007-08",
+                "2006-07",
+                "2005-06"
 )
 
 # Df by seasons by pitching ----
