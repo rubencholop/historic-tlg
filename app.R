@@ -233,7 +233,7 @@ ui <-  dashboardPagePlus(
         )
       ),
       
-      # tabItem for Picheo, Bateo and Fildeo of Regular season ----
+      # tabItem by season ----
       tabItem(
         h2('Datos por temporada', align = 'center'),
         tabName = 'temporada',
@@ -356,11 +356,11 @@ ui <-  dashboardPagePlus(
                      )
                    )
           )
-          # # tabPanel Fildeo ----
+          # tabPanel Fildeo ----
           # tabPanel('Fildeo', tableOutput('fildeo_rs'))
         )
       ),
-      # tabItem for Jugador ----
+      # tabItem by player ----
       tabItem(
         tabName = 'jugador',
         tabsetPanel(
@@ -615,10 +615,7 @@ server = function(input, output) {
     )
     
   })
-  
-  
-  
-  
+
   # Reactive 
   
   
@@ -630,11 +627,9 @@ server = function(input, output) {
       filter(jugador %in% input$select_jugador) 
     
   })
-  
-  
-  
-  
+
   # -----TABLES ----
+  #By Team
   # Table picheo regular season by team ----
   output$Preseason_team <- DT::renderDataTable({
     
@@ -1005,6 +1000,376 @@ server = function(input, output) {
   })
   
   
+  # Table bateo regular season by team ----
+  output$Breseason_team <- DT::renderDataTable({
+    
+    player_summarise <- Bby_season %>%
+      summarise(
+        years = 'Jugadores',
+        edad = round(mean(edad), 2),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      ) 
+    
+    
+    batting_player <- Bby_season %>%
+      mutate(
+        edad = as.numeric(edad),
+        g = as.numeric(g),
+        pa = as.numeric(pa),
+        ab = as.numeric(ab),
+        r = as.numeric(r),
+        h = as.numeric(h),
+        hr = as.numeric(hr),
+        rbi = as.numeric(rbi),
+        sb = as.numeric(sb),
+        cs = as.numeric(cs),
+        bb = as.numeric(bb),
+        so = as.numeric(so),
+        avg = round(as.numeric(avg), 3), 
+        obp = round(as.numeric(obp), 3),
+        slg = round(as.numeric(slg), 3),
+        ops = round(as.numeric(ops), 3),
+        ir = as.numeric(ir),
+        rc = as.numeric(rc),
+        tb = as.numeric(tb),
+        xb = as.numeric(xb),
+        hbp = as.numeric(hbp),
+        sh = as.numeric(sh),
+        sf = as.numeric(sf),
+        `2b` = as.numeric(`2b`),
+        `3b` = as.numeric(`3b`)
+      )
+    
+    df <- rbind(batting_player, player_summarise) %>% 
+      rename(
+        Temporada = years,
+        `Edad` = edad,
+        `G` = g,
+        `PA` = pa,
+        `AB` = ab,
+        `R` = r,
+        `H` = h,
+        `2B` = '2b',
+        `3B` = '3b',
+        `HR` = hr,
+        `RBI` = rbi,
+        `SB` = sb,
+        `CS` = cs,
+        `BB` = bb,
+        `SO` = so,
+        `AVG` = avg,
+        `OBP` = obp,
+        `SLG` = slg,
+        `OPS` = ops,
+        `RC` = rc,
+        `TB` = tb,
+        `XB` = xb,
+        `IR` = ir,
+        `HBP` = hbp,
+        `SH` = sh,
+        `SF` = sf
+      ) %>% 
+      arrange(Temporada)
+    
+    # Datatable ----
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+    
+    DT::datatable(
+      df,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      style = ,
+      options = list(
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        # autoWidth = TRUE,
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 40,
+        # lengthMenu = c(15, 20, 25),
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        rownames = FALSE,
+        fixedHeader = TRUE,
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = 0:25)),
+        headerCallback = JS(headerCallback),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Jugadores'), "bold")
+      )
+  })
+  
+  # Table bateo round robin by team ----
+  output$Brr_team <- DT::renderDataTable({
+    
+    player_summarise <- Bby_rr %>%
+      summarise(
+        years = 'Jugadores',
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = sum(refuerzo, na.rm = T)
+      )
+    
+    
+    batting_player <- Bby_rr 
+    
+    df <-  rbind(player_summarise, batting_player) %>%
+      rename(
+        `Temporada` = years,
+        `Refuerzo` = refuerzo,
+        `Edad` = edad,
+        `G` = g,
+        `PA` = X5,
+        `AB` = ab,
+        `R` = r,
+        `H` = h,
+        `2B` = '2b',
+        `3B` = '3b',
+        `HR` = hr,
+        `RBI` = rbi,
+        `SB` = sb,
+        `CS` = cs,
+        `BB` = bb,
+        `SO` = so,
+        `AVG` = avg,
+        `OBP` = obp,
+        `SLG` = slg,
+        `OPS` = ops,
+        `RC` = rc,
+        `TB` = tb,
+        `XB` = xb,
+        `HBP` = hbp,
+        `SH` = sh,
+        `SF` = sf
+      ) %>% 
+      arrange(Temporada)  
+    
+    # Datatable ----
+    
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+    
+    DT::datatable(
+      df,
+      class = 'display', # To remove lines horizontal in table
+      extensions = "ColReorder",
+      rownames = FALSE,
+      options = list(
+        # autoWidth = TRUE,
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 25,
+        lengthMenu = c(25, 30, 35),
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        rownames = FALSE,
+        fixedHeader = TRUE,
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = 0:25)),
+        headerCallback = JS(headerCallback),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Jugadores'), "bold")
+      )
+    
+  })
+  
+  
+  # Table bateo final by team ----
+  output$Bfinal_team <- DT::renderDataTable({
+    
+    player_summarise <- Bby_final %>% 
+      summarise(
+        years = 'Jugadores',
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = sum(refuerzo, na.rm = T),
+        resultado = sum(ifelse(resultado == 'Campeon', 1, 0))
+      )
+    
+    
+    batting_player <- Bby_final 
+    
+    df <- rbind(batting_player, player_summarise) %>%
+      rename(
+        `Temporada` = years,
+        `Edad` = edad,
+        `G` = g,
+        `PA` = X5,
+        `AB` = ab,
+        `R` = r,
+        `H` = h,
+        `2B` = '2b',
+        `3B` = '3b',
+        `HR` = hr,
+        `RBI` = rbi,
+        `SB` = sb,
+        `CS` = cs,
+        `BB` = bb,
+        `SO` = so,
+        `AVG` = avg,
+        `OBP` = obp,
+        `SLG` = slg,
+        `OPS` = ops,
+        `RC` = rc,
+        `TB` = tb,
+        `XB` = xb,
+        `HBP` = hbp,
+        `SH` = sh,
+        `SF` = sf,
+        `Refuerzo` = refuerzo,
+        `Logro` = resultado
+      ) %>% 
+      arrange(Temporada)  %>% 
+      mutate(Logro = if_else(Logro == 'campeon', 'Campeon', Logro),
+             Logro = if_else(Logro == 'subcampeon', 'SubCampeon', Logro)
+      ) %>% 
+      replace(., is.na(.), 0)
+    
+    # Datatable ----
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    ) # To deleate header line horizontal in bottom of colums name
+    
+    DT::datatable(
+      df,
+      class = 'display', # To remove lines horizontal in table
+      extensions = "ColReorder",
+      rownames = FALSE,
+      options = list(
+        # autoWidth = TRUE,
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        searching = FALSE,
+        paging = FALSE,
+        pageLegth = 25,
+        lengthMenu = c(25, 30, 35),
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        rownames = FALSE,
+        fixedColumns = list(LeftColumns = 3),
+        fixedHeader = TRUE,
+        columnDefs = list(list(className = "dt-center", targets = 0:26),
+                          list(width = '80px', targets = 26)
+        ),
+        headerCallback = JS(headerCallback),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Rajdhani'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Rajdhani'});",
+          "}"
+        )
+      )
+    ) %>% 
+      formatStyle(
+        'Temporada',
+        target = "row",
+        fontWeight = styleEqual(c('Jugadores'), "bold")
+      )
+    
+  })
+  
+  
+  #By Season
+  
+  
   # Table picheo regular season ----
   output$picheo_rs <- DT::renderDataTable({
     req(input$select_temporada)
@@ -1303,12 +1668,6 @@ server = function(input, output) {
       "}"
     )  # To deleate header line horizontal in bottom of colums name
     
-    # footerCallback <- c(
-    #   "function(tfoot, data, start, end, display){",
-    #   "  $('th', tfoot).css('border-bottom', 'none');",
-    #   "}"
-    # )
-    
     DT::datatable(
       df,
       extensions = "ColReorder",
@@ -1527,9 +1886,8 @@ server = function(input, output) {
   })
   
   
-  # Table bateo regular season by team ----
+  # Table bateo regular season  ----
   output$bateo_rs <- DT::renderDataTable({
-    req(input$select_temporada_bat)
     
     player_summarise <- Hbrs %>%
       filter(years == input$select_temporada_bat,
@@ -1702,257 +2060,6 @@ server = function(input, output) {
       )
     
   })
-  
-  # Table bateo round robin  - by team ----
-  output$bateo_rr_sm <- DT::renderDataTable({
-    
-    player_summarise <- Bby_rr %>%
-      summarise(
-        years = 'Jugadores',
-        edad = round(mean(edad), 1),
-        g = sum(g, na.rm = T),
-        X5 = sum(X5, na.rm = T),
-        ab = sum(ab, na.rm = T),
-        r = sum(r, na.rm = T),
-        h = sum(h, na.rm = T),
-        `2b` = sum(`2b`, na.rm = T),
-        `3b` = sum(`3b`, na.rm = T),
-        hr = sum(hr, na.rm = T),
-        rbi = sum(rbi, na.rm = T),
-        sb = sum(sb, na.rm = T),
-        cs = sum(cs, na.rm = T),
-        bb = sum(bb, na.rm = T),
-        so = sum(so, na.rm = T),
-        avg = round(mean(avg, na.rm = T), 3),
-        obp = round(mean(obp, na.rm = T), 3),
-        slg = round(mean(slg, na.rm = T), 3),
-        ops = round(mean(ops, na.rm = T), 3),
-        rc = sum(rc, na.rm = T),
-        tb = sum(tb, na.rm = T),
-        xb = sum(xb, na.rm = T),
-        hbp = sum(hbp, na.rm = T),
-        sh = sum(sh, na.rm = T),
-        sf = sum(sf, na.rm = T),
-        refuerzo = sum(refuerzo, na.rm = T)
-      )
-    
-    
-    batting_player <- Bby_rr 
-    
-    df <-  rbind(player_summarise, batting_player) %>%
-      # select(years, 3:27, refuerzo) %>% 
-      rename(
-        `Temporada` = years,
-        `Refuerzo` = refuerzo,
-        Jugador = jugador,
-        `Edad` = edad,
-        `G` = g,
-        `PA` = X5,
-        `AB` = ab,
-        `R` = r,
-        `H` = h,
-        `2B` = '2b',
-        `3B` = '3b',
-        `HR` = hr,
-        `RBI` = rbi,
-        `SB` = sb,
-        `CS` = cs,
-        `BB` = bb,
-        `SO` = so,
-        `AVG` = avg,
-        `OBP` = obp,
-        `SLG` = slg,
-        `OPS` = ops,
-        `RC` = rc,
-        `TB` = tb,
-        `XB` = xb,
-        `HBP` = hbp,
-        `SH` = sh,
-        `SF` = sf
-      ) %>% 
-      arrange(Temporada)  
-    
-    # Datatable ----
-    
-    headerCallback <- c(
-      "function(thead, data, start, end, display){",
-      "  $('th', thead).css('border-bottom', 'none');",
-      "}"
-    )  # To deleate header line horizontal in bottom of colums name
-    
-    DT::datatable(
-      df,
-      class = 'display', # To remove lines horizontal in table
-      extensions = "ColReorder",
-      rownames = FALSE,
-      options = list(
-        # autoWidth = TRUE,
-        dom = 'ft',  # To remove showing 1 to n of entries fields
-        searching = FALSE,
-        paging = FALSE,
-        pageLegth = 25,
-        lengthMenu = c(25, 30, 35),
-        lengthChange = FALSE,
-        scrollX = TRUE,
-        rownames = FALSE,
-        fixedHeader = TRUE,
-        fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
-                          list(width = '100px', targets = 1)),
-        headerCallback = JS(headerCallback),
-        initComplete = JS(
-          "function(settings, json) {",
-          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-          "$(this.api().table().body()).css({'font-size': '12px'});",
-          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-          "}"
-        )
-      )
-    ) %>% 
-      formatStyle(
-        'Temporada',
-        target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
-      )
-    
-  })
-  
-  
-  # Table bateo regular season ----
-  output$Breseason_team <- DT::renderDataTable({
-    
-    player_summarise <- Bby_season %>%
-      summarise(
-        years = 'Jugadores',
-        edad = round(mean(edad), 2),
-        g = sum(g, na.rm = T),
-        pa = sum(pa, na.rm = T),
-        ab = sum(ab, na.rm = T),
-        r = sum(r, na.rm = T),
-        h = sum(h, na.rm = T),
-        `2b` = sum(`2b`, na.rm = T),
-        `3b` = sum(`3b`, na.rm = T),
-        hr = sum(hr, na.rm = T),
-        rbi = sum(rbi, na.rm = T),
-        sb = sum(sb, na.rm = T),
-        cs = sum(cs, na.rm = T),
-        bb = sum(bb, na.rm = T),
-        so = sum(so, na.rm = T),
-        avg = round(mean(avg, na.rm = T), 3),
-        obp = round(mean(obp, na.rm = T), 3),
-        slg = round(mean(slg, na.rm = T), 3),
-        ops = round(mean(ops, na.rm = T), 3),
-        ir = sum(ir, na.rm = T),
-        rc = sum(rc, na.rm = T),
-        tb = sum(tb, na.rm = T),
-        xb = sum(xb, na.rm = T),
-        hbp = sum(hbp, na.rm = T),
-        sh = sum(sh, na.rm = T),
-        sf = sum(sf, na.rm = T)
-      ) 
-    
-    
-    batting_player <- Bby_season %>%
-      mutate(
-        edad = as.numeric(edad),
-        g = as.numeric(g),
-        pa = as.numeric(pa),
-        ab = as.numeric(ab),
-        r = as.numeric(r),
-        h = as.numeric(h),
-        hr = as.numeric(hr),
-        rbi = as.numeric(rbi),
-        sb = as.numeric(sb),
-        cs = as.numeric(cs),
-        bb = as.numeric(bb),
-        so = as.numeric(so),
-        avg = round(as.numeric(avg), 3), 
-        obp = round(as.numeric(obp), 3),
-        slg = round(as.numeric(slg), 3),
-        ops = round(as.numeric(ops), 3),
-        ir = as.numeric(ir),
-        rc = as.numeric(rc),
-        tb = as.numeric(tb),
-        xb = as.numeric(xb),
-        hbp = as.numeric(hbp),
-        sh = as.numeric(sh),
-        sf = as.numeric(sf),
-        `2b` = as.numeric(`2b`),
-        `3b` = as.numeric(`3b`)
-      )
-    
-    df <- rbind(batting_player, player_summarise) %>% 
-      rename(
-        Temporada = years,
-        `Edad` = edad,
-        `G` = g,
-        `PA` = pa,
-        `AB` = ab,
-        `R` = r,
-        `H` = h,
-        `2B` = '2b',
-        `3B` = '3b',
-        `HR` = hr,
-        `RBI` = rbi,
-        `SB` = sb,
-        `CS` = cs,
-        `BB` = bb,
-        `SO` = so,
-        `AVG` = avg,
-        `OBP` = obp,
-        `SLG` = slg,
-        `OPS` = ops,
-        `RC` = rc,
-        `TB` = tb,
-        `XB` = xb,
-        `IR` = ir,
-        `HBP` = hbp,
-        `SH` = sh,
-        `SF` = sf
-      ) %>% 
-      arrange(Temporada)
-    
-    # Datatable ----
-    headerCallback <- c(
-      "function(thead, data, start, end, display){",
-      "  $('th', thead).css('border-bottom', 'none');",
-      "}"
-    )  # To deleate header line horizontal in bottom of colums name
-    
-    DT::datatable(
-      df,
-      extensions = "ColReorder",
-      rownames = FALSE,
-      style = ,
-      options = list(
-        dom = 'ft',  # To remove showing 1 to n of entries fields
-        # autoWidth = TRUE,
-        searching = FALSE,
-        paging = FALSE,
-        pageLegth = 40,
-        # lengthMenu = c(15, 20, 25),
-        lengthChange = FALSE,
-        scrollX = TRUE,
-        rownames = FALSE,
-        fixedHeader = TRUE,
-        fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = 0:25)),
-        headerCallback = JS(headerCallback),
-        initComplete = JS(
-          "function(settings, json) {",
-          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-          "$(this.api().table().body()).css({'font-size': '12px'});",
-          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-          "}"
-        )
-      )
-    ) %>% 
-      formatStyle(
-        'Temporada',
-        target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
-      )
-    })
   
   # Table bateo round robin  ----
   output$bateo_rr_sm <- DT::renderDataTable({
@@ -2311,6 +2418,10 @@ server = function(input, output) {
       )
     
   })
+  
+  
+  
+  #By player
   
   
   # Table por Bat_rs  by jugador ----
