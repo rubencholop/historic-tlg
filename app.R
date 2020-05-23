@@ -10,7 +10,54 @@ library(DT)
 library(stringr)
 # library(bs4Dash)
 
-# Data select ----
+# Choices ----
+
+Rosters <- read_csv('data/rosters.csv')
+
+.rosters <- Rosters %>% 
+  arrange(jugador, years) %>% 
+  distinct(name) %>% 
+  mutate(ID =  paste(substr(name, 1, 1), seq(1, length(name), 1) , sep = '')
+  )
+
+Rosters <- Rosters %>% 
+  arrange(jugador, years) %>% 
+  left_join(.rosters, by = 'name')
+
+# unique roster
+Unique_Rosters <- Rosters %>% 
+  group_by(ID) %>% 
+  summarize(
+    jugador = last(jugador),
+    name = last(name),
+    pos = last(pos),
+    bat = last(bat),
+    lan = last(lan),
+    exp = last(exp),
+    pais = last(pais),
+    estado = last(estado),
+    ciudad = last(ciudad)
+  ) %>% 
+  arrange(jugador)
+
+.pitchers <- Rosters %>% 
+  filter(pos == 'P') %>% 
+  arrange(jugador, years) %>% 
+  group_by(ID) %>% 
+  summarize(jugador = last(jugador)) %>% 
+  arrange(jugador) %>% 
+  select(jugador)
+
+.bateadores <- Rosters %>% 
+  filter(!pos == 'P') %>% 
+  arrange(jugador, years) %>% 
+  group_by(ID) %>% 
+  summarize(jugador = last(jugador)) %>% 
+  arrange(jugador) %>% 
+  select(jugador)
+
+
+
 .st <- as.Date("2020-01-22")
 .en <- as.Date(today())
 .dates <- seq(.en, .st, by = "-1 day")
@@ -133,7 +180,7 @@ ui <-  dashboardPagePlus(
       ),
       # tabitem by team ----
       tabItem(
-        h2('Datos por Equipo', align = 'center'),
+        h2('Datos historicos por equipo', align = 'center'),
         tabName = 'equipo',
         tabsetPanel(
           # Picheo -----
@@ -235,7 +282,7 @@ ui <-  dashboardPagePlus(
       
       # tabItem by season ----
       tabItem(
-        h2('Datos por temporada', align = 'center'),
+        h2('Datos historicos por temporada', align = 'center'),
         tabName = 'temporada',
         tabsetPanel(
           # tabPanel Picheo ----
@@ -374,7 +421,7 @@ ui <-  dashboardPagePlus(
                      selectInput(
                        inputId = 'select_jugador_pit',
                        label = 'Seleccione un jugador',
-                       choices = distinct_lan
+                       choices = .pitchers
                      )
               )
             ),
@@ -461,7 +508,7 @@ ui <-  dashboardPagePlus(
                      selectInput(
                        inputId = 'select_jugador',
                        label = 'Seleccione un jugador',
-                       choices = distinct_bats
+                       choices = .bateadores
                      )
               )
             ),
@@ -620,11 +667,22 @@ server = function(input, output) {
   
   
   #Data 
-  # Reactive Rosters ----
-  Rosters <- reactive({
-    Rosters <- read_csv('data/rosters.csv')
-  })
-  
+  # # Reactive Rosters ----
+  # Rosters <- reactive({
+  #   Rosters <- read_csv('data/rosters.csv')
+  #   
+  #   .rosters <- Rosters %>% 
+  #     arrange(jugador, years) %>% 
+  #     distinct(name) %>% 
+  #     mutate(ID =  paste(substr(name, 1, 1), seq(1, length(name), 1) , sep = '')
+  #     )
+  #   
+  #   Rosters <- Rosters %>% 
+  #     arrange(jugador, years) %>% 
+  #     left_join(.rosters, by = 'name')
+  #   
+  # })
+  # 
   # Reactive Batting regular season ----
   brs <- reactive({
     brs <- read_csv('data/batting_reseason.csv')
@@ -1412,8 +1470,7 @@ server = function(input, output) {
     req(input$select_temporada)
     
     player_summarise <- Hprs %>%
-      filter(years == '2011-12') %>% 
-      # filter(years == input$select_temporada) %>%
+      filter(years == input$select_temporada) %>% 
       select(-key, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
@@ -1472,8 +1529,7 @@ server = function(input, output) {
     
     
     pitching_player <- Hprs %>%
-      filter(years == '2011-12') %>%
-      # filter(years == input$select_temporada) %>%
+      filter(years == input$select_temporada) %>%
       select(-key, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
@@ -1925,11 +1981,10 @@ server = function(input, output) {
   
   # Table bateo regular season  ----
   output$bateo_rs <- DT::renderDataTable({
+    req(input$select_temporada_bat)
     
     player_summarise <- Hbrs %>%
-      filter(years == '2011-12')
-    ,
-             trimws(pa) != '' ) %>%  # To filter a empty value in colum AB
+      filter(years == input$select_temporada_bat) %>% 
       select(-key) %>%
       mutate(
         edad = as.numeric(edad),
@@ -2018,10 +2073,7 @@ server = function(input, output) {
         sf = as.numeric(sf),
         `2b` = as.numeric(`2b`),
         `3b` = as.numeric(`3b`)
-      ) %>% 
-      filter(
-        trimws(pa) != ''  # To filter a empty value in colum AB
-      )
+      ) 
     
     df <- rbind(batting_player, player_summarise) %>% 
       rename(
@@ -3680,6 +3732,16 @@ server = function(input, output) {
   
   
   # ----TEXT OUTPUT -----
+  # Text output season ----
+  output$year <- renderText({
+    req(input$select_jugador)
+    
+    df <- Rosters %>% 
+      filter(years == input$select_temporada) %>% 
+      select(years) %>% 
+      unique() %>% 
+      pull()
+  })
   # Text output Jugador bat ----
   output$jugador_bat <- renderText({
     req(input$select_jugador)

@@ -90,12 +90,6 @@ distinct_lan <- Rosters %>%
   distinct(jugador)
 
 # Df all info ----
-Hbf <- bf %>% 
-  mutate(key = paste(as.character(years), jugador)) %>% 
-  select(key, 1:28) %>% 
-  left_join(distinct_players, by = c('key')) %>%
-  select(key, years, jugador, name, 4:30) 
-
 
 Hbrs <- brs %>% 
   mutate(key = paste(as.character(years), jugador))
@@ -103,6 +97,12 @@ Hbrs <- brs %>%
 Hbrr  <- brr %>% 
   mutate(key = paste(as.character(years), jugador)) %>% 
   select(key, 1:28)
+
+Hbf <- bf %>% 
+  mutate(key = paste(as.character(years), jugador)) %>% 
+  select(key, 1:28) %>% 
+  left_join(distinct_players, by = c('key')) %>%
+  select(key, years, jugador, name, 4:30) 
 
 Hprs <- prs %>% 
   mutate(key = paste(as.character(years), jugador)) %>% 
