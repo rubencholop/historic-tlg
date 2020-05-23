@@ -8,6 +8,7 @@ library(plotly)
 library(dplyr)
 library(DT)
 library(stringr)
+library(readr)
 # library(bs4Dash)
 
 # Choices ----

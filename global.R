@@ -1,9 +1,25 @@
 # Libraries ----
 library(readr)
 library(dplyr)
+library(xml2)
+library(readxl)
+library(rvest)
 
 
 # Data ----
+url <- 'https://es.wikipedia.org/wiki/Tiburones_de_La_Guaira'
+
+Records <- url %>% 
+  read_html() %>% 
+  html_nodes(css = 'table') %>% 
+  .[i] %>% 
+  html_table(fill = TRUE) %>%
+  as.data.frame()
+  
+  
+  
+  
+  
 Rosters <- read_csv('data/rosters.csv')
 brs <- read_csv('data/batting_reseason.csv')
 brr <- read_csv('data/batting_rr.csv')
