@@ -595,9 +595,58 @@ ui <-  dashboardPagePlus(
               )
             )
           )
-        ),
-        # -----
+        )
+      ),
+      # Estadísticas ----
+      tabItem(
+        tabName = '',
+        tabsetPanel(
+          tabPanel(
+            title = 'Picheo'
+          ),
+          tabPanel(
+            title = 'Bateo'
+          )
+        )
+      ),
+      
+      # Records ----
+      tabItem(
+        tabName = 'deporvida',
+        tabsetPanel(
+          tabPanel(
+            title = 'Picheo'
+            ),
+          tabPanel(
+            title = 'Bateo',
+            fluidRow(
+              column(6,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       collapsible = TRUE,
+                       title = h3('Average de por vida', align = 'center'),
+                       column(8,
+                              fluidRow(
+                                column(12,
+                                       imageOutput('imagen_1')
+                                       )
+                                )
+                              )
+                       )
+              ),
+              column(6,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = 'Hits de por vida'
+                       )
+                     )
+              )
+            )
+          )
       )
+      # end ----
     )
   )
 )
@@ -631,16 +680,16 @@ server = function(input, output) {
         startExpanded = FALSE,
         tabName = 'geo_estadisticas',
         icon =  icon('globe-americas', lib = 'font-awesome'),
-        menuSubItem('Geograficas', tabName = 'geo'),
-        menuSubItem('', tabName = 'hab')
+        menuSubItem('Geograficas', tabName = 'geograficas'),
+        menuSubItem('Historicas', tabName = 'istoricas')
       ),
       # menuItem Records ----
       menuItem(
         'Records',
         tabName = 'records',
         icon = icon('edit', lib = 'font-awesome'),
-        menuSubItem('Historicos', tabName = 'historicos'),
-        menuSubItem('Por temporadas', tabName = 'p_tem'),
+        menuSubItem('De por vida', tabName = 'deporvida'),
+        menuSubItem('Por temporadas', tabName = 'por_temporadas'),
         menuSubItem('Records en LVBP', tabName = 'lvbp'),
         menuSubItem('Sabermetria', tabName = 'saberm')
       ),
@@ -649,7 +698,7 @@ server = function(input, output) {
         'Historia',
         tabName = 'historia',
         icon = icon('search-location', lib = 'font-awesome'),
-        menuSubItem('En números', tabName = 'en_num'),
+        menuSubItem('Tiburones de la Guaira', tabName = 'en_num'),
         menuSubItem('Estadio', tabName = 'rr_sm')
       ),
       # menuItem Glosario ----

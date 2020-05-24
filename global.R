@@ -7,20 +7,9 @@ library(rvest)
 
 
 # Data ----
-url <- 'https://es.wikipedia.org/wiki/Tiburones_de_La_Guaira'
-
-Records <- url %>% 
-  read_html() %>% 
-  html_nodes(css = 'table') %>% 
-  .[i] %>% 
-  html_table(fill = TRUE) %>%
-  as.data.frame()
-  
-  
-  
-  
-  
-Rosters <- read_csv('data/rosters.csv')
+Palmares <- read_csv('data/Palmares.csv')
+Numeros_retirado <- read_csv('data/numeros_retirados.csv')
+Records <- read_csv('data/records.csv')
 brs <- read_csv('data/batting_reseason.csv')
 brr <- read_csv('data/batting_rr.csv')
 bf <- read_csv('data/batting_finals.csv')
