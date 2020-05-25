@@ -181,7 +181,7 @@ ui <-  dashboardPagePlus(
       ),
       # tabitem by team ----
       tabItem(
-        h2('Datos historicos por equipo', align = 'center'),
+        h4('Datos historicos por equipo', align = 'center'),
         tabName = 'equipo',
         tabsetPanel(
           # Picheo -----
@@ -613,6 +613,7 @@ ui <-  dashboardPagePlus(
       # Records ----
       tabItem(
         tabName = 'deporvida',
+        h4('Lideres historicos', align = 'center'),
         tabsetPanel(
           tabPanel(
             title = 'Picheo'
@@ -623,12 +624,20 @@ ui <-  dashboardPagePlus(
               column(6,
                      bs4Dash::bs4Box(
                        width = NULL,
+                       higth = '100px',
                        collapsible = TRUE,
-                       title = h3('Average de por vida', align = 'center'),
-                       column(8,
+                       title = h3('Average', align = 'center'),
+                       column(6,
                               fluidRow(
                                 column(12,
-                                       imageOutput('imagen_1')
+                                       imageOutput('record_avg')
+                                       )
+                                )
+                              ),
+                       column(6,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_average')
                                        )
                                 )
                               )
@@ -637,9 +646,10 @@ ui <-  dashboardPagePlus(
               column(6,
                      bs4Dash::bs4Box(
                        width = NULL,
+                       higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = 'Hits de por vida'
+                       title = h3('Hits',  align = 'center')
                        )
                      )
               )
@@ -2565,6 +2575,7 @@ server = function(input, output) {
   
   
   #By player
+  #By player
   # Table por Bat_rs  by jugador ----
   output$bat_rs <- DT::renderDataTable({
     req(input$select_jugador)
@@ -3621,6 +3632,111 @@ server = function(input, output) {
 
   
   
+  #Records
+  #Records
+  # Table bateo lideres average ----
+  output$b_average <- renderDataTable({
+    
+    .df <- Hbrs %>% 
+      select(key, 1:27) %>% 
+      left_join(Unique_Rosters %>% 
+                  mutate(key = paste(as.character(years), jugador)) %>% 
+                  select(key, ID, name)
+                , by = 'key') %>% 
+      select(ID,name, 1:28, -key) %>% 
+      group_by(ID) %>% 
+      summarise(
+        name = last(name),
+        years = NROW(years),
+        jugador = last(jugador),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      ) %>% 
+      filter(ab >= 1500) %>% 
+      arrange(desc(avg)) %>% 
+      select(1:17) %>% 
+      mutate(avg = round(((h)/ ab), 3)) %>% 
+      top_n(5, avg) %>% 
+      select(jugador, avg) %>% 
+      rename(
+        Jugador = jugador,
+        AVG = avg
+      ) %>% 
+      arrange(desc(AVG)) %>% 
+      mutate(Order = seq(1, NROW(Jugador), 1)) %>% 
+      select(Jugador, AVG) 
+    
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+
+    DT::datatable(
+      .df,
+      escape = FALSE,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      style = ,
+      # callback = JS(c("$('table.dataTable thead th').css('border-bottom', 'none');",
+      #                 "$('table.dataTable.no-footer').css('border-top', 'none');")),
+      options = list(
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        autoWidth = TRUE,
+        searching = FALSE,
+        paging = FALSE,
+        # pageLegth = 15,
+        # lengthMenu = c(15, 20, 25),
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        rownames = FALSE,
+        fixedHeader = TRUE,
+        fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = 0:1)),
+        headerCallback = JS(headerCallback),
+        # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) 
+    # %>% 
+    #   formatStyle(
+    #     'Temporada',
+    #     target = "row",
+    #     fontWeight = styleEqual(c('Temporadas'), "bold")
+    #   )
+    
+      
+      
+    
+  })
   # ------ INFOBOX -----
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
@@ -3735,7 +3851,7 @@ server = function(input, output) {
   
   
   # -----IMAGE ----
-  # image Battingplayer ----
+  # image Batting player ----
   output$jugador_ <- renderImage({
     req(input$select_jugador)
     
@@ -3759,7 +3875,7 @@ server = function(input, output) {
   # Text Outputs
   
   
-  # image PitchingPlayer ----
+  # image Pitching Player ----
   output$jugador_pit <- renderImage({
     req(input$select_jugador_pit)
     
@@ -3780,6 +3896,23 @@ server = function(input, output) {
   }, deleteFile = FALSE)
   
   
+  
+  # image Record AVG ----
+  output$record_avg <- renderImage({
+    req(input$select_jugador)
+    
+    player <- 'www/batting/C. Suarez.jpg'
+    
+    if (1 > 0) {
+      return(list(
+        src = player,
+        contentType = "image/jpg",
+        width = 150,
+        height = 150
+        # alt = 'Selecciona un jugador'
+      ))
+    }
+  }, deleteFile = FALSE)
   
   # ----TEXT OUTPUT -----
   # Text output season ----
