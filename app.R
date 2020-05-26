@@ -620,6 +620,7 @@ ui <-  dashboardPagePlus(
             ),
           tabPanel(
             title = 'Bateo',
+            #1 ----
             fluidRow(
               column(6,
                      bs4Dash::bs4Box(
@@ -652,7 +653,42 @@ ui <-  dashboardPagePlus(
                        title = h3('Hits',  align = 'center')
                        )
                      )
+              ),
+            #2 ----
+            fluidRow(
+              column(6,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h3('Average', align = 'center'),
+                       column(6,
+                              fluidRow(
+                                column(12,
+                                       imageOutput('sdasd')
+                                )
+                              )
+                       ),
+                       column(6,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('ddd')
+                                )
+                              )
+                       )
+                     )
+              ),
+              column(6,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('Hits',  align = 'center')
+                     )
               )
+            )
+            
             )
           )
       )
@@ -3637,18 +3673,16 @@ server = function(input, output) {
   # Table bateo lideres average ----
   output$b_average <- renderDataTable({
     
-    .df <- Hbrs %>% 
+    avg <- Hbrs %>% 
+      mutate(key = paste(as.character(years), jugador)) %>% 
       select(key, 1:27) %>% 
-      left_join(Unique_Rosters %>% 
-                  mutate(key = paste(as.character(years), jugador)) %>% 
-                  select(key, ID, name)
-                , by = 'key') %>% 
-      select(ID,name, 1:28, -key) %>% 
-      group_by(ID) %>% 
+      # left_join(Unique_Rosters %>% 
+      #             mutate(key = paste(as.character(years), jugador)) %>% 
+      #             select(key, ID, name), by = 'key') %>% 
+      # select(ID,name, 1:28, -key) %>% 
+      group_by(jugador) %>% 
       summarise(
-        name = last(name),
         years = NROW(years),
-        jugador = last(jugador),
         g = sum(g, na.rm = T),
         pa = sum(pa, na.rm = T),
         ab = sum(ab, na.rm = T),
@@ -3676,7 +3710,7 @@ server = function(input, output) {
       ) %>% 
       filter(ab >= 1500) %>% 
       arrange(desc(avg)) %>% 
-      select(1:17) %>% 
+      select(jugador, h, ab, avg) %>% 
       mutate(avg = round(((h)/ ab), 3)) %>% 
       top_n(5, avg) %>% 
       select(jugador, avg) %>% 
@@ -3688,6 +3722,7 @@ server = function(input, output) {
       mutate(Order = seq(1, NROW(Jugador), 1)) %>% 
       select(Jugador, AVG) 
     
+    
     headerCallback <- c(
       "function(thead, data, start, end, display){",
       "  $('th', thead).css('border-bottom', 'none');",
@@ -3695,7 +3730,7 @@ server = function(input, output) {
     )  # To deleate header line horizontal in bottom of colums name
 
     DT::datatable(
-      .df,
+      avg,
       escape = FALSE,
       extensions = "ColReorder",
       rownames = FALSE,
@@ -3707,14 +3742,12 @@ server = function(input, output) {
         autoWidth = TRUE,
         searching = FALSE,
         paging = FALSE,
-        # pageLegth = 15,
-        # lengthMenu = c(15, 20, 25),
         lengthChange = FALSE,
         scrollX = TRUE,
         rownames = FALSE,
         fixedHeader = TRUE,
-        fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = 0:1)),
+        # fixedColumns = list(LeftColumns = 3),
+        columnDefs = list(list(className = "dt-center", targets = 1)),
         headerCallback = JS(headerCallback),
         # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
         initComplete = JS(
@@ -3905,7 +3938,7 @@ server = function(input, output) {
     
     if (1 > 0) {
       return(list(
-        src = player,
+        src = 'http://www.milb.com/images/500235/t442/180x270/500235.jpg',
         contentType = "image/jpg",
         width = 150,
         height = 150
