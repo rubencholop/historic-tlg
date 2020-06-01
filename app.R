@@ -764,28 +764,28 @@ server = function(input, output) {
   
   #Data 
   # # Reactive Rosters ----
-  # Rosters <- reactive({
-  #   Rosters <- read_csv('data/rosters.csv')
-  #   
-  #   .rosters <- Rosters %>% 
-  #     arrange(jugador, years) %>% 
-  #     distinct(name) %>% 
-  #     mutate(ID =  paste(substr(name, 1, 1), seq(1, length(name), 1) , sep = '')
-  #     )
-  #   
-  #   Rosters <- Rosters %>% 
-  #     arrange(jugador, years) %>% 
-  #     left_join(.rosters, by = 'name')
-  #   
-  # })
-  # 
+  Rosters <- reactive({
+    .Rosters <- read_csv('data/rosters.csv')
+
+    .rosters <- Rosters %>%
+      arrange(jugador, years) %>%
+      distinct(name) %>%
+      mutate(ID =  paste(substr(name, 1, 1), seq(1, length(name), 1) , sep = '')
+      )
+
+    Rosters <- .Rosters %>%
+      arrange(jugador, years) %>%
+      left_join(.rosters, by = 'name')
+
+  })
+
   # Reactive Batting regular season ----
   brs <- reactive({
     brs <- read_csv('data/batting_reseason.csv')
   })
   
   # Reactive Batting round robin ----
-  brs <- reactive({
+  brr <- reactive({
     brr <- read_csv('data/batting_rr.csv')
   })
   
@@ -1561,13 +1561,14 @@ server = function(input, output) {
   
   
   #By season
+  # By Season
   # Table picheo regular season ----
   output$picheo_rs <- DT::renderDataTable({
     req(input$select_temporada)
     
-    player_summarise <- Hprs %>%
+    player_summarise <- prs() %>% 
       filter(years == input$select_temporada) %>% 
-      select(-key, -`w-l%`) %>%
+      select(-`w-l%`, -bk) %>%
       mutate(
         edad = as.numeric(edad),
         w = as.numeric(w),
@@ -1591,8 +1592,7 @@ server = function(input, output) {
         `hr/9` = as.numeric(`hr/9`),
         `bb/9` = as.numeric(`bb/9`),
         `so/9` = as.numeric(`so/9`),
-        `so/bb` = as.numeric(`so/bb`),
-        bk = as.numeric(bk)
+        `so/bb` = as.numeric(`so/bb`)
       ) %>%
       summarise(
         years = 'Jugadores',
@@ -1600,7 +1600,7 @@ server = function(input, output) {
         edad = round(mean(edad, na.rm = T), 1),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
-        era = round(mean(era, na.rm = T), 2),
+        era = round(mean(era, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
         cg = sum(cg, na.rm = T),
@@ -1614,19 +1614,18 @@ server = function(input, output) {
         bb = sum(bb, na.rm = T),
         so = sum(so, na.rm = T),
         ir = sum(ir, na.rm = T),
-        whip = round(mean(whip, na.rm = T), 2),
-        `h/9` = round(mean(`h/9`, na.rm = T), 2),
-        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-        `so/9` = round(mean(`so/9`, na.rm = T), 2),
-        `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-        bk = sum(bk, na.rm = T)
+        whip = round(mean(whip, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
+        `h/9` = round(mean(`h/9`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
+        `so/9` = round(mean(`so/9`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2) # Debe calsularse y no el promedio IMPORTANTE
       )
     
     
-    pitching_player <- Hprs %>%
+    pitching_player <- prs() %>%
       filter(years == input$select_temporada) %>%
-      select(-key, -`w-l%`) %>%
+      select(-`w-l%`, -bk) %>%
       mutate(
         edad = as.numeric(edad),
         w = as.numeric(w),
@@ -1650,12 +1649,10 @@ server = function(input, output) {
         `hr/9` = round(as.numeric(`hr/9`), 2),
         `bb/9` = round(as.numeric(`bb/9`), 2),
         `so/9` = round(as.numeric(`so/9`), 2),
-        `so/bb` = round(as.numeric(`so/bb`), 2),
-        bk = as.numeric(bk)
+        `so/bb` = round(as.numeric(`so/bb`), 2)
       ) 
     
     df <- rbind(pitching_player, player_summarise) %>% 
-      select(-bk) %>% 
       rename(
         `Temporada` = years,
         Jugador = jugador,  
@@ -1708,7 +1705,7 @@ server = function(input, output) {
         rownames = FALSE,
         fixedHeader = TRUE,
         fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = c(0, 2:24))
+        columnDefs = list(list(className = "dt-center", targets = c(0:24))
                           # list(width = '100px', targets = 1)
         ),
         headerCallback = JS(headerCallback),
@@ -1731,10 +1728,11 @@ server = function(input, output) {
   
   # Table picheo round robin ----
   output$picheo_rr_sm <- DT::renderDataTable({
+    req(input$select_temporada)
     
-    player_summarise <- Hprr %>%
+    player_summarise <- prr() %>%
       filter(years == input$select_temporada) %>%
-      select(-key, -`w-l%`) %>%
+      select(-bk, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
         w = as.numeric(w),
@@ -1757,8 +1755,7 @@ server = function(input, output) {
         `hr/9` = as.numeric(`hr/9`),
         `bb/9` = as.numeric(`bb/9`),
         `so/9` = as.numeric(`so/9`),
-        `so/bb` = as.numeric(`so/bb`),
-        bk = as.numeric(bk)
+        `so/bb` = as.numeric(`so/bb`)
       ) %>%
       summarise(
         years = 'Jugadores',
@@ -1785,14 +1782,13 @@ server = function(input, output) {
         `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
         `so/9` = round(mean(`so/9`, na.rm = T), 2),
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-        bk = sum(bk, na.rm = T),
         refuerzo = '-'
       )
     
     
-    pitching_player <- Hprr %>%
+    pitching_player <- prr() %>%
       filter(years == input$select_temporada) %>%
-      select(-key, -`w-l%`) %>%
+      select(-bk, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
         w = as.numeric(w),
@@ -1816,12 +1812,10 @@ server = function(input, output) {
         `bb/9` = round(as.numeric(`bb/9`), 2),
         `so/9` = round(as.numeric(`so/9`), 2),
         `so/bb` = round(as.numeric(`so/bb`), 2),
-        bk = as.numeric(bk),
         refuerzo = refuerzo
       ) 
     
     df <- rbind(pitching_player, player_summarise) %>% 
-      select(-bk) %>% 
       rename(
         `Temporada` = years,
         `Edad` = edad,
@@ -1876,7 +1870,7 @@ server = function(input, output) {
         rownames = FALSE,
         fixedHeader = TRUE,
         fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = c(0, 2:24))),
+        columnDefs = list(list(className = "dt-center", targets = c(0:24))),
         headerCallback = JS(headerCallback),
         # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
         initComplete = JS(
@@ -1901,9 +1895,9 @@ server = function(input, output) {
   output$picheo_finals <- DT::renderDataTable({
     req(input$select_temporada)
     
-    player_summarise <- Hpf %>%
+    player_summarise <- pf() %>%
       filter(years == input$select_temporada) %>%
-      select(-key, -`w-l%`) %>%
+      select(-bk, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
         w = as.numeric(w),
@@ -1926,8 +1920,7 @@ server = function(input, output) {
         `hr/9` = as.numeric(`hr/9`),
         `bb/9` = as.numeric(`bb/9`),
         `so/9` = as.numeric(`so/9`),
-        `so/bb` = as.numeric(`so/bb`),
-        bk = as.numeric(bk)
+        `so/bb` = as.numeric(`so/bb`)
       ) %>%
       summarise(
         years = 'Jugadores',
@@ -1954,15 +1947,14 @@ server = function(input, output) {
         `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
         `so/9` = round(mean(`so/9`, na.rm = T), 2),
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-        bk = sum(bk, na.rm = T),
         refuerzo = '-',
         resultado = '-'
       )
     
     
-    pitching_player <- Hpf %>%
+    pitching_player <- pf() %>%
       filter(years == input$select_temporada) %>%
-      select(-key, -`w-l%`) %>%
+      select(-bk, -`w-l%`) %>%
       mutate(
         edad = as.numeric(edad),
         w = as.numeric(w),
@@ -1986,13 +1978,11 @@ server = function(input, output) {
         `bb/9` = round(as.numeric(`bb/9`), 2),
         `so/9` = round(as.numeric(`so/9`), 2),
         `so/bb` = round(as.numeric(`so/bb`), 2),
-        bk = as.numeric(bk),
         refuerzo = refuerzo,
         resultado = resultado
       ) 
     
     df <- rbind(pitching_player, player_summarise) %>% 
-      select(-bk) %>% 
       rename(
         `Temporada` = years,
         `Edad` = edad,
@@ -2079,9 +2069,8 @@ server = function(input, output) {
   output$bateo_rs <- DT::renderDataTable({
     req(input$select_temporada_bat)
     
-    player_summarise <- Hbrs %>%
+    player_summarise <- brs() %>%
       filter(years == input$select_temporada_bat) %>% 
-      select(-key) %>%
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -2112,7 +2101,7 @@ server = function(input, output) {
       summarise(
         years = 'Jugadores',
         jugador = NROW(jugador),
-        edad = mean(edad),
+        edad = round(mean(edad), 1),
         g = sum(g, na.rm = T),
         pa = sum(pa, na.rm = T),
         ab = sum(ab, na.rm = T),
@@ -2140,9 +2129,8 @@ server = function(input, output) {
       ) 
     
     
-    batting_player <- Hbrs %>%
+    batting_player <- brs() %>%
       filter(years == input$select_temporada_bat) %>%
-      select(-key) %>%
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -2227,8 +2215,8 @@ server = function(input, output) {
         rownames = FALSE,
         fixedHeader = TRUE,
         fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
-                          list(width = '100px', targets = 1)),
+        columnDefs = list(list(className = "dt-center", targets = c(0:26))),
+                          # list(width = '100px', targets = 1)),
         headerCallback = JS(headerCallback),
         initComplete = JS(
           "function(settings, json) {",
@@ -2251,11 +2239,10 @@ server = function(input, output) {
   output$bateo_rr_sm <- DT::renderDataTable({
     req(input$select_temporada_bat)
     
-    player_summarise <- Hbrr %>%
+    player_summarise <- brr() %>%
       filter(years == input$select_temporada_bat,
              trimws(X5) != '' 
       ) %>%
-      select(-key) %>% 
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -2299,10 +2286,10 @@ server = function(input, output) {
         cs = sum(cs, na.rm = T),
         bb = sum(bb, na.rm = T),
         so = sum(so, na.rm = T),
-        avg = round(mean(avg, na.rm = T), 3),
-        obp = round(mean(obp, na.rm = T), 3),
-        slg = round(mean(slg, na.rm = T), 3),
-        ops = round(mean(ops, na.rm = T), 3),
+        avg = round(mean(avg, na.rm = T), 3), # Importante debe calcularse y no em promedio
+        obp = round(mean(obp, na.rm = T), 3), # Importante debe calcularse y no em promedio
+        slg = round(mean(slg, na.rm = T), 3), # Importante debe calcularse y no em promedio
+        ops = round(mean(ops, na.rm = T), 3), # Importante debe calcularse y no em promedio
         rc = sum(rc, na.rm = T),
         tb = sum(tb, na.rm = T),
         xb = sum(xb, na.rm = T),
@@ -2313,10 +2300,9 @@ server = function(input, output) {
       )
     
     
-    batting_player <- Hbrr %>%
+    batting_player <- brr() %>%
       filter(years == input$select_temporada_bat,
              trimws(X5) != '' ) %>%
-      select(-key) %>% 
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -2345,7 +2331,6 @@ server = function(input, output) {
       ) 
     
     df <-  rbind(player_summarise, batting_player) %>%
-      # select(years, 3:27, refuerzo) %>% 
       rename(
         `Temporada` = years,
         `Refuerzo` = refuerzo,
@@ -2402,8 +2387,7 @@ server = function(input, output) {
         rownames = FALSE,
         fixedHeader = TRUE,
         fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
-                          list(width = '100px', targets = 1)),
+        columnDefs = list(list(className = "dt-center", targets = c(0:26))),
         headerCallback = JS(headerCallback),
         initComplete = JS(
           "function(settings, json) {",
@@ -2612,6 +2596,7 @@ server = function(input, output) {
   
   #By player
   #By player
+  #By Player
   # Table por Bat_rs  by jugador ----
   output$bat_rs <- DT::renderDataTable({
     req(input$select_jugador)
