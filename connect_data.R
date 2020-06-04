@@ -13,6 +13,7 @@ library(tidyselect)
 # Connect to Pelota binaria ----
 #P age year 1962-1963
 .url <- 'http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=1962-63'
+str_extract(.url, '(?<=TIB&TE=).*')
 
 # Vector of years statistics baseball 
 years <- c('1962-63')
@@ -40,7 +41,7 @@ season <-  function(x){
   data.frame(df)
 }
 
-seasons <- rbindlist(
+seasons <- data.table::rbindlist(
   lapply(pages, season), fill = TRUE
 ) %>% 
   arrange(desc(df)) %>% 
@@ -49,7 +50,7 @@ seasons <- rbindlist(
   
 
 # Getting Roster hictoric ----
-URLs <- rbindlist(
+URLs <- data.table::rbindlist(
   lapply(
     pages, take_years),
   fill = TRUE

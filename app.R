@@ -13,7 +13,7 @@ library(readr)
 
 # Choices ----
 
-Rosters <- read_csv('data/rosters.csv')
+Rosters <- read_csv('data/rosters_clean.csv')
 
 .rosters <- Rosters %>% 
   arrange(jugador, years) %>% 
@@ -823,16 +823,45 @@ server = function(input, output) {
   # Table picheo regular season by team ----
   output$Preseason_team <- DT::renderDataTable({
     
-    player_summarise <- Pby_season %>%
+    player_summarise <- prs() %>% 
+      arrange(years, jugador) %>% 
+      select(-bk) %>% 
+      group_by(years) %>% 
       summarise(
-        years = 'Jugadores',
         edad = round(mean(edad, na.rm = T), 1),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
         era = round(mean(era, na.rm = T), 2),
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
-        gp = sum(gs, na.rm = T),
+        gp = w + l,
+        cg = sum(cg, na.rm = T),
+        sho = sum(sho, na.rm = T),
+        sv = sum(sv, na.rm = T),
+        ip = sum(ip, na.rm = T),
+        h = sum(h, na.rm = T),
+        r = sum(r, na.rm = T),
+        er = sum(er, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        ir = sum(ir, na.rm = T),
+        whip = round(mean(whip, na.rm = T), 2),
+        `h/9` = round(mean(`h/9`, na.rm = T), 2),
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+      ) %>% 
+      summarise(
+        years = 'Total',
+        edad = round(mean(edad, na.rm = T), 1),
+        w = sum(w, na.rm = T),
+        l = sum(l, na.rm = T),
+        era = round(mean(era, na.rm = T), 2),
+        g = sum(g, na.rm = T),
+        gs = sum(gs, na.rm = T),
+        gp = w + l,
         cg = sum(cg, na.rm = T),
         sho = sum(sho, na.rm = T),
         sv = sum(sv, na.rm = T),
@@ -852,37 +881,68 @@ server = function(input, output) {
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
       )
     
-    pitching_player <- Pby_season
+  pitching_player <- prs() %>% 
+    arrange(years, jugador) %>% 
+    select(-bk) %>% 
+    group_by(years) %>% 
+    summarise(
+      edad = round(mean(edad, na.rm = T), 1),
+      w = sum(w, na.rm = T),
+      l = sum(l, na.rm = T),
+      era = round(mean(era, na.rm = T), 2),
+      g = sum(g, na.rm = T),
+      gs = sum(gs, na.rm = T),
+      gp = w + l,
+      cg = sum(cg, na.rm = T),
+      sho = sum(sho, na.rm = T),
+      sv = sum(sv, na.rm = T),
+      ip = sum(ip, na.rm = T),
+      h = sum(h, na.rm = T),
+      r = sum(r, na.rm = T),
+      er = sum(er, na.rm = T),
+      hr = sum(hr, na.rm = T),
+      bb = sum(bb, na.rm = T),
+      so = sum(so, na.rm = T),
+      ir = sum(ir, na.rm = T),
+      whip = round(mean(whip, na.rm = T), 2),
+      `h/9` = round(mean(`h/9`, na.rm = T), 2),
+      `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+      `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+      `so/9` = round(mean(`so/9`, na.rm = T), 2),
+      `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
+    )
+  
     
-    df <- rbind(pitching_player, player_summarise) %>% 
-      rename(
-        `Temporada` = years,
-        `Edad` = edad,
-        `W` = w,
-        `L` = l,
-        `ERA` = era,
-        `G` = g,
-        `GS` = gs,
-        `GP` = gp,
-        `CG` = cg,
-        `SHO` = sho,
-        `SV` = sv,
-        `IP` = ip,
-        `H` = h,
-        `R` = r,
-        `ER` = er,
-        `HR` = hr,
-        `BB` = bb,
-        `SO` = so,
-        `IR` = ir,
-        `WHIP` = whip,
-        `H/9` = `h/9`,
-        `HR/9` = `hr/9`,
-        `BB/9` = `bb/9`,
-        `SO/9` = `so/9`,
-        `SO/BB` = `so/bb`) %>% 
-      arrange(Temporada) 
-    
+  df <- rbind(pitching_player, player_summarise) %>% 
+    rename(
+      `Temporada` = years,
+      `Edad` = edad,
+      `W` = w,
+      `L` = l,
+      `ERA` = era,
+      `G` = g,
+      `GS` = gs,
+      `CG` = cg,
+      `GP` = gp,
+      `SHO` = sho,
+      `SV` = sv,
+      `IP` = ip,
+      `H` = h,
+      `R` = r,
+      IR = ir,
+      `ER` = er,
+      `HR` = hr,
+      `BB` = bb,
+      `SO` = so,
+      `WHIP` = whip,
+      `H/9` = `h/9`,
+      `HR/9` = `hr/9`,
+      `BB/9` = `bb/9`,
+      `SO/9` = `so/9`,
+      `SO/BB` = `so/bb`
+    ) %>% 
+    arrange(Temporada) 
+  
     # Datatable ----
     headerCallback <- c(
       "function(thead, data, start, end, display){",
@@ -923,16 +983,46 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
     
   })
+  
   # Table picheo round robin by team ----
   output$Prr_team <- DT::renderDataTable({
     
-    player_summarise <- Pby_rr %>%
+    player_summarise <- prr() %>% 
+      arrange(years, jugador) %>% 
+      select(-bk) %>% 
+      group_by(years) %>% 
       summarise(
-        years = 'Jugadores',
+        edad = round(mean(edad), 1),
+        w = sum(w, na.rm = T),
+        l = sum(l, na.rm = T),
+        era = round(mean(era, na.rm = T), 2),
+        g = sum(g, na.rm = T),
+        gs = sum(gs, na.rm = T),
+        gp = w + l,
+        cg = sum(cg, na.rm = T),
+        sho = sum(sho, na.rm = T),
+        sv = sum(sv, na.rm = T),
+        ip = sum(ip, na.rm = T),
+        h = sum(h, na.rm = T),
+        r = sum(r, na.rm = T),
+        er = sum(er, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        whip = round(mean(whip, na.rm = T), 2),
+        `h/9` = round(mean(`h/9`, na.rm = T), 2),
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+      ) %>% 
+      summarise(
+        years = 'Total',
         edad = round(mean(edad), 1),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
@@ -956,22 +1046,51 @@ server = function(input, output) {
         `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
         `so/9` = round(mean(`so/9`, na.rm = T), 2),
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-        refuerzo = sum(refuerzo, na.rm = T),
+        refuerzo = sum(refuerzo, na.rm = T)
       )
     
-    pitching_player <- Pby_rr
+    pitching_player <- prr() %>% 
+      arrange(years, jugador) %>% 
+      select(-bk) %>% 
+      group_by(years) %>% 
+      summarise(
+        edad = round(mean(edad), 1),
+        w = sum(w, na.rm = T),
+        l = sum(l, na.rm = T),
+        era = round(mean(era, na.rm = T), 2),
+        g = sum(g, na.rm = T),
+        gs = sum(gs, na.rm = T),
+        gp = w + l,
+        cg = sum(cg, na.rm = T),
+        sho = sum(sho, na.rm = T),
+        sv = sum(sv, na.rm = T),
+        ip = sum(ip, na.rm = T),
+        h = sum(h, na.rm = T),
+        r = sum(r, na.rm = T),
+        er = sum(er, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        whip = round(mean(whip, na.rm = T), 2),
+        `h/9` = round(mean(`h/9`, na.rm = T), 2),
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+      )
     
     df <- rbind(pitching_player, player_summarise) %>% 
       rename(
         `Temporada` = years,
         `Edad` = edad,
-        Refuerzo = refuerzo,
         `W` = w,
         `L` = l,
         `ERA` = era,
         `G` = g,
         `GS` = gs,
         `CG` = cg,
+        `GP` = gp,
         `SHO` = sho,
         `SV` = sv,
         `IP` = ip,
@@ -987,7 +1106,7 @@ server = function(input, output) {
         `BB/9` = `bb/9`,
         `SO/9` = `so/9`,
         `SO/BB` = `so/bb`,
-        `Refuerzo` = `refuerzo`
+        `REFUERZO` = `refuerzo`
         ) %>% 
       arrange(Temporada) 
     
@@ -1038,7 +1157,7 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
     
     })
@@ -1047,9 +1166,39 @@ server = function(input, output) {
   # Table picheo final by team ----
   output$Pfinal_team <- DT::renderDataTable({
     
-    player_summarise <- Pby_final %>%
+    player_summarise <- pf() %>% 
+      arrange(years, jugador) %>% 
+      select(-bk) %>% 
+      group_by(years) %>% 
       summarise(
-        years = 'Jugadores',
+        edad = round(mean(edad), 1),
+        w = sum(w, na.rm = T),
+        l = sum(l, na.rm = T),
+        era = round(mean(era, na.rm = T), 2),
+        g = sum(g, na.rm = T),
+        gs = sum(gs, na.rm = T),
+        gp = w + l,
+        cg = sum(cg, na.rm = T),
+        sho = sum(sho, na.rm = T),
+        sv = sum(sv, na.rm = T),
+        ip = round(sum(ip, na.rm = T), 1),
+        h = sum(h, na.rm = T),
+        r = sum(r, na.rm = T),
+        er = sum(er, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        whip = round(mean(whip, na.rm = T), 2),
+        `h/9` = round(mean(`h/9`, na.rm = T), 2),
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+        resultado = last(resultado)
+      ) %>% 
+      summarise(
+        years = 'Total',
         edad = round(mean(edad), 1),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
@@ -1078,7 +1227,37 @@ server = function(input, output) {
       )
     
     
-    pitching_player <- Pby_final %>%
+    pitching_player <- pf() %>% 
+      arrange(years, jugador) %>% 
+      select(-bk) %>% 
+      group_by(years) %>% 
+      summarise(
+        edad = round(mean(edad), 1),
+        w = sum(w, na.rm = T),
+        l = sum(l, na.rm = T),
+        era = round(mean(era, na.rm = T), 2),
+        g = sum(g, na.rm = T),
+        gs = sum(gs, na.rm = T),
+        gp = w + l,
+        cg = sum(cg, na.rm = T),
+        sho = sum(sho, na.rm = T),
+        sv = sum(sv, na.rm = T),
+        ip = round(sum(ip, na.rm = T), 1),
+        h = sum(h, na.rm = T),
+        r = sum(r, na.rm = T),
+        er = sum(er, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        whip = round(mean(whip, na.rm = T), 2),
+        `h/9` = round(mean(`h/9`, na.rm = T), 2),
+        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+        resultado = last(resultado)
+      ) %>% 
       mutate(
         edad = as.numeric(edad),
         w = as.numeric(w),
@@ -1111,8 +1290,8 @@ server = function(input, output) {
       rename(
         `Temporada` = years,
         `Edad` = edad,
-        Refuerzo = refuerzo,
-        Resultado = resultado,
+        REFUERZO = refuerzo,
+        RESULTADO = resultado,
         `W` = w,
         `L` = l,
         `ERA` = era,
@@ -1184,7 +1363,7 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
     
   })
@@ -1193,9 +1372,38 @@ server = function(input, output) {
   # Table bateo regular season by team ----
   output$Breseason_team <- DT::renderDataTable({
     
-    player_summarise <- Bby_season %>%
+    player_summarise <- brs() %>% 
+      arrange(years, jugador) %>% 
+      group_by(years) %>% 
       summarise(
-        years = 'Jugadores',
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      ) %>% 
+      summarise(
+        years = 'Total',
         edad = round(mean(edad), 2),
         g = sum(g, na.rm = T),
         pa = sum(pa, na.rm = T),
@@ -1224,7 +1432,36 @@ server = function(input, output) {
       ) 
     
     
-    batting_player <- Bby_season %>%
+    batting_player <- brs() %>% 
+      arrange(years, jugador) %>% 
+      group_by(years) %>% 
+      summarise(
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      ) %>% 
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -1322,16 +1559,45 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
   })
   
   # Table bateo round robin by team ----
   output$Brr_team <- DT::renderDataTable({
     
-    player_summarise <- Bby_rr %>%
+    player_summarise <- brr() %>% 
+      arrange(years, jugador) %>% 
+      group_by(years) %>% 
       summarise(
-        years = 'Jugadores',
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+      ) %>% 
+      summarise(
+        years = 'Total',
         edad = round(mean(edad), 1),
         g = sum(g, na.rm = T),
         X5 = sum(X5, na.rm = T),
@@ -1360,7 +1626,36 @@ server = function(input, output) {
       )
     
     
-    batting_player <- Bby_rr 
+    batting_player <- brr() %>% 
+      arrange(years, jugador) %>% 
+      group_by(years) %>% 
+      summarise(
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+      )
     
     df <-  rbind(player_summarise, batting_player) %>%
       rename(
@@ -1432,7 +1727,7 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
     
   })
@@ -1441,9 +1736,39 @@ server = function(input, output) {
   # Table bateo final by team ----
   output$Bfinal_team <- DT::renderDataTable({
     
-    player_summarise <- Bby_final %>% 
+    player_summarise <-  bf()%>% 
+      arrange(years, jugador) %>% 
+      group_by(years) %>% 
       summarise(
-        years = 'Jugadores',
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+        resultado = last(resultado)
+      ) %>% 
+      summarise(
+        years = 'Total',
         edad = round(mean(edad), 1),
         g = sum(g, na.rm = T),
         X5 = sum(X5, na.rm = T),
@@ -1473,7 +1798,37 @@ server = function(input, output) {
       )
     
     
-    batting_player <- Bby_final 
+    batting_player <-  bf() %>% 
+      arrange(years, jugador) %>% 
+      group_by(years) %>% 
+      summarise(
+        edad = round(mean(edad), 1),
+        g = sum(g, na.rm = T),
+        X5 = sum(X5, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T),
+        refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+        resultado = last(resultado)
+      )
     
     df <- rbind(batting_player, player_summarise) %>%
       rename(
@@ -1551,17 +1906,12 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Jugadores'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
     
   })
-  
-  
-  #By Season
-  
-  
-  #By season
-  # By Season
+
+  #By season -----
   # Table picheo regular season ----
   output$picheo_rs <- DT::renderDataTable({
     req(input$select_temporada)
@@ -2411,11 +2761,10 @@ server = function(input, output) {
   output$bateo_finals <- DT::renderDataTable({
     req(input$select_temporada_bat)
     
-    player_summarise <- Hbf %>% 
+    player_summarise <- bf() %>% 
       filter(years == input$select_temporada_bat,
              trimws(X5) != '' 
       ) %>% 
-      select(-key, -name) %>% 
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -2474,10 +2823,9 @@ server = function(input, output) {
       )
     
     
-    batting_player <- Hbf %>% 
+    batting_player <- bf() %>% 
       filter(years == input$select_temporada_bat,
              trimws(X5) != '' ) %>% 
-      select(-key, -name) %>% 
       mutate(
         edad = as.numeric(edad),
         g = as.numeric(g),
@@ -2568,9 +2916,8 @@ server = function(input, output) {
         rownames = FALSE,
         fixedColumns = list(LeftColumns = 3),
         fixedHeader = TRUE,
-        columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
-                          list(width = '50px', targets = 26)
-        ),
+        columnDefs = list(list(className = "dt-center", targets = c(0:26))),
+
         headerCallback = JS(headerCallback),
         initComplete = JS(
           "function(settings, json) {",
@@ -2597,6 +2944,7 @@ server = function(input, output) {
   #By player
   #By player
   #By Player
+  #By player ----
   # Table por Bat_rs  by jugador ----
   output$bat_rs <- DT::renderDataTable({
     req(input$select_jugador)
