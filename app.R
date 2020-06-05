@@ -667,13 +667,6 @@ ui <-  dashboardPagePlus(
                        higth = '100px',
                        collapsible = TRUE,
                        title = h3('AVG', align = 'center'),
-                       # column(6,
-                       #        fluidRow(
-                       #          column(12,
-                       #                 imageOutput('record_avg')
-                       #                 )
-                       #          )
-                       #        ),
                        column(12,
                               fluidRow(
                                 column(12,
@@ -721,7 +714,7 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_average')
+                                       DT::dataTableOutput('')
                                        )
                                 )
                               )
@@ -4136,9 +4129,9 @@ server = function(input, output) {
       escape = FALSE,
       extensions = "ColReorder",
       rownames = FALSE,
-      style = ,
-      # callback = JS(c("$('table.dataTable thead th').css('border-bottom', 'none');",
-      #                 "$('table.dataTable.no-footer').css('border-top', 'none');")),
+      caption = htmltools::tags$caption(
+        style = 'caption-side: bottom; text-align: center;'
+        , htmltools::em('Con mas de 2000 BA')),
       options = list(
         dom = 'ft',  # To remove showing 1 to n of entries fields
         autoWidth = TRUE,
