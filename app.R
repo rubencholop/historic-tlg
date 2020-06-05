@@ -666,7 +666,7 @@ ui <-  dashboardPagePlus(
                        width = NULL,
                        higth = '100px',
                        collapsible = TRUE,
-                       title = h3('Average', align = 'center'),
+                       title = h3('AVG', align = 'center'),
                        # column(6,
                        #        fluidRow(
                        #          column(12,
@@ -678,9 +678,9 @@ ui <-  dashboardPagePlus(
                               fluidRow(
                                 column(12,
                                        DT::dataTableOutput('b_average')
+                                       )
                                 )
                               )
-                       )
                      )
               ),
               column(3,
@@ -688,22 +688,8 @@ ui <-  dashboardPagePlus(
                        width = NULL,
                        higth = '100px',
                        collapsible = TRUE,
-                       title = h3('Average', align = 'center'),
-                       column(6,
-                              fluidRow(
-                                column(12,
-                                       imageOutput('sdasd')
-                                )
-                              )
-                       ),
-                       column(6,
-                              fluidRow(
-                                column(12,
-                                       DT::dataTableOutput('ddd')
-                                )
-                              )
+                       title = h3('OBP', align = 'center')
                        )
-                     )
               ),
               column(3,
                      bs4Dash::bs4Box(
@@ -711,11 +697,63 @@ ui <-  dashboardPagePlus(
                        higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = h3('Hits',  align = 'center')
+                       title = h3('SLG',  align = 'center')
+                       )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('OPS',  align = 'center')
+                       )
+                     )
+              ),
+            # 3 ----
+            fluidRow(
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h3('RBI', align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_average')
+                                       )
+                                )
+                              )
+                       )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h3('AB', align = 'center')
+                       )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('SB',  align = 'center')
+                       )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('XB',  align = 'center')
+                       )
                      )
               )
-            )
-            
             )
           )
       )
