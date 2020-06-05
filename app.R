@@ -622,7 +622,46 @@ ui <-  dashboardPagePlus(
             title = 'Bateo',
             #1 ----
             fluidRow(
-              column(4,
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('Hits',  align = 'center')
+                       )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('2B',  align = 'center')
+                     )
+                    ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('3B',  align = 'center')
+                     )
+                    ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('HR',  align = 'center')
+                     )
+                    )
+              ),
+            #2 ----
+            fluidRow(
+              column(3,
                      bs4Dash::bs4Box(
                        width = NULL,
                        higth = '100px',
@@ -639,33 +678,12 @@ ui <-  dashboardPagePlus(
                               fluidRow(
                                 column(12,
                                        DT::dataTableOutput('b_average')
-                                       )
                                 )
                               )
                        )
-                    ),
-              column(4,
-                     bs4Dash::bs4Box(
-                       width = NULL,
-                       higth = '300px',
-                       collapsible = TRUE,
-                       # status = 'warning',
-                       title = h3('Hits',  align = 'center')
-                       )
-                     ),
-              column(4,
-                     bs4Dash::bs4Box(
-                       width = NULL,
-                       higth = '300px',
-                       collapsible = TRUE,
-                       # status = 'warning',
-                       title = h3('BB',  align = 'center')
                      )
-                    )
               ),
-            #2 ----
-            fluidRow(
-              column(6,
+              column(3,
                      bs4Dash::bs4Box(
                        width = NULL,
                        higth = '100px',
@@ -687,7 +705,7 @@ ui <-  dashboardPagePlus(
                        )
                      )
               ),
-              column(6,
+              column(3,
                      bs4Dash::bs4Box(
                        width = NULL,
                        higth = '300px',
@@ -774,9 +792,9 @@ server = function(input, output) {
   #Data 
   # # Reactive Rosters ----
   Rosters <- reactive({
-    .Rosters <- read_csv('data/rosters.csv')
+    .Rosters <- read_csv('data/rosters_clean.csv')
 
-    .rosters <- Rosters %>%
+    .rosters <- .Rosters %>%
       arrange(jugador, years) %>%
       distinct(name) %>%
       mutate(ID =  paste(substr(name, 1, 1), seq(1, length(name), 1) , sep = '')
@@ -4016,16 +4034,18 @@ server = function(input, output) {
   # Table bateo lideres average ----
   output$b_average <- renderDataTable({
     
-    avg <- brs %>% 
+    avg <- brs() %>% 
       mutate(key = paste(as.character(years), jugador)) %>% 
       select(key, 1:27) %>% 
-      # left_join(Unique_Rosters %>% 
-      #             mutate(key = paste(as.character(years), jugador)) %>% 
-      #             select(key, ID, name), by = 'key') %>% 
-      # select(ID,name, 1:28, -key) %>% 
-      group_by(jugador) %>% 
+      left_join(Rosters() %>%
+                  mutate(key = paste(as.character(years), jugador)) %>%
+                  select(key, ID, first_name, last_name), by = 'key') %>%
+      select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+      group_by(ID) %>% 
       summarise(
         years = NROW(years),
+        first_name = last(first_name),
+        last_name = last(last_name),
         g = sum(g, na.rm = T),
         pa = sum(pa, na.rm = T),
         ab = sum(ab, na.rm = T),
@@ -4051,10 +4071,11 @@ server = function(input, output) {
         sh = sum(sh, na.rm = T),
         sf = sum(sf, na.rm = T)
       ) %>% 
-      filter(ab >= 1500) %>% 
+      filter(ab >= 2000) %>% 
       arrange(desc(avg)) %>% 
-      select(jugador, h, ab, avg) %>% 
+      select(first_name, last_name, h, ab, avg) %>% 
       mutate(avg = round(((h)/ ab), 3)) %>% 
+      tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
       top_n(5, avg) %>% 
       select(jugador, avg) %>% 
       rename(
@@ -4087,10 +4108,10 @@ server = function(input, output) {
         paging = FALSE,
         lengthChange = FALSE,
         scrollX = TRUE,
-        rownames = FALSE,
+        # rownames = FALSE,
         fixedHeader = TRUE,
         # fixedColumns = list(LeftColumns = 3),
-        columnDefs = list(list(className = "dt-center", targets = 1)),
+        # columnDefs = list(list(className = "dt-center", targets = 0)),
         headerCallback = JS(headerCallback),
         # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
         initComplete = JS(
