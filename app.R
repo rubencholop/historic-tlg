@@ -626,7 +626,7 @@ ui <-  dashboardPagePlus(
                        higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = h2("H",
+                       title = h2("W",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
@@ -635,11 +635,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_hits')
+                                       DT::dataTableOutput('p_w')
+                                       )
                                 )
                               )
                        )
-                     )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -647,7 +647,7 @@ ui <-  dashboardPagePlus(
                        higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = h2("2B",
+                       title = h2("L",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
@@ -656,11 +656,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_2b')
+                                       DT::dataTableOutput('p_l')
+                                       )
                                 )
                               )
                        )
-                     )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -668,7 +668,7 @@ ui <-  dashboardPagePlus(
                        higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = h2("3B",
+                       title = h2("G",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
@@ -677,11 +677,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_3b')
+                                       DT::dataTableOutput('p_g')
+                                       )
                                 )
                               )
                        )
-                     )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -689,7 +689,7 @@ ui <-  dashboardPagePlus(
                        higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = h2("HR",
+                       title = h2("GS",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
@@ -698,11 +698,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_hr')
+                                       DT::dataTableOutput('g_gs')
+                                       )
                                 )
                               )
                        )
-                     )
                      )
             ),
             #2 ----
@@ -712,7 +712,7 @@ ui <-  dashboardPagePlus(
                        width = NULL,
                        higth = '100px',
                        collapsible = TRUE,
-                       title = h2("AVG",
+                       title = h2("IP",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
@@ -721,24 +721,31 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_average')
+                                       DT::dataTableOutput('p_ip')
                                 )
                               )
-                       )
-                     )
+                          )
+                        )
                      ),
               column(3,
                      bs4Dash::bs4Box(
                        width = NULL,
                        higth = '100px',
                        collapsible = TRUE,
-                       title = h2("OBP",
+                       title = h2("SO",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
                                   text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                  align = 'center')
-                     )
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('p_so')
+                                       )
+                                )
+                              )
+                        )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -746,13 +753,20 @@ ui <-  dashboardPagePlus(
                        higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = h2("SLG",
+                       title = h2("H",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
                                   text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                  align = 'center')
-                     )
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('p_h')
+                                       )
+                                )
+                              )
+                       )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -760,15 +774,22 @@ ui <-  dashboardPagePlus(
                        higth = '300px',
                        collapsible = TRUE,
                        # status = 'warning',
-                       title = h2("OPS",
+                       title = h2("BB",
                                   style = "color: #b90e13;
                                   text-transform: uppercase;
                                   font-size: 1.2em;
                                   text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                  align = 'center')
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('p_bb')
+                                       )
+                                )
+                              )
+                       )
                      )
-                     )
-                     ),
+                  ),
             #3 ----
             fluidRow(
               column(3,
@@ -785,11 +806,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_rbi')
+                                       DT::dataTableOutput('p')
+                                       )
                                 )
                               )
                        )
-                     )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -805,11 +826,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_ab')
+                                       DT::dataTableOutput('p_ab')
+                                       )
                                 )
                               )
                        )
-                     )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -826,11 +847,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_sb')
+                                       DT::dataTableOutput('p_sb')
+                                       )
                                 )
                               )
                        )
-                     )
                      ),
               column(3,
                      bs4Dash::bs4Box(
@@ -847,11 +868,11 @@ ui <-  dashboardPagePlus(
                        column(12,
                               fluidRow(
                                 column(12,
-                                       DT::dataTableOutput('b_xb')
+                                       DT::dataTableOutput('p_xb')
+                                       )
                                 )
                               )
                        )
-                     )
                   )
                 )
             ),
@@ -1168,7 +1189,7 @@ server = function(input, output) {
   
   
   #Data 
-  # # Reactive Rosters ----
+  # Reactive Rosters ----
   Rosters <- reactive({
     .Rosters <- read_csv('data/rosters_clean.csv')
 
@@ -5292,6 +5313,93 @@ server = function(input, output) {
     ) 
   })
   # Pitching Record ----
+  # Table picheo lideres w ----
+    output$p_w <- renderDataTable({
+      
+      w <- prs() %>% 
+        mutate(key = paste(as.character(years), jugador)) %>% 
+        select(key, 1:27) %>% 
+        left_join(Rosters() %>%
+                    mutate(key = paste(as.character(years), jugador)) %>%
+                    select(key, ID, first_name, last_name), by = 'key') %>%
+        select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+        group_by(ID) %>% 
+        summarise(
+          first_name = last(first_name),
+          last_name = last(last_name),
+          jugador= last(jugador),
+          w = sum(w, na.rm = T),
+          l = sum(l, na.rm = T),
+          era = round(mean(era, na.rm = T), 2),
+          g = sum(g, na.rm = T),
+          gs = sum(gs, na.rm = T),
+          cg = sum(cg, na.rm = T),
+          sho = sum(sho, na.rm = T),
+          sv = sum(sv, na.rm = T),
+          ip = sum(ip, na.rm = T),
+          h = sum(h, na.rm = T),
+          r = sum(r, na.rm = T),
+          er = sum(er, na.rm = T),
+          hr = sum(hr, na.rm = T),
+          bb = sum(bb, na.rm = T),
+          so = sum(so, na.rm = T),
+          ir = sum(ir, na.rm = T),
+          whip = round(mean(whip, na.rm = T), 2),
+          `h/9` = round(mean(`h/9`, na.rm = T), 2),
+          `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+          `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+          `so/9` = round(mean(`so/9`, na.rm = T), 2),
+          `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+          bk = sum(bk, na.rm = T)
+        ) %>% 
+        arrange(desc(w)) %>%
+        select(first_name, last_name, w) %>% 
+        tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+        top_n(5, w) %>% 
+        rename(
+          Jugador = jugador,
+          W = w
+        ) 
+      
+      
+      headerCallback <- c(
+        "function(thead, data, start, end, display){",
+        "  $('th', thead).css('border-bottom', 'none');",
+        "}"
+      )  # To deleate header line horizontal in bottom of colums name
+      
+      DT::datatable(
+        w,
+        escape = FALSE,
+        extensions = "ColReorder",
+        rownames = FALSE,
+        caption = htmltools::tags$caption(
+          style = 'caption-side: bottom; text-align: center;'
+          , htmltools::em('Top 5 historico')),
+        options = list(
+          dom = 'ft',  # To remove showing 1 to n of entries fields
+          autoWidth = TRUE,
+          searching = FALSE,
+          paging = FALSE,
+          lengthChange = FALSE,
+          scrollX = TRUE,
+          # rownames = FALSE,
+          fixedHeader = TRUE,
+          # fixedColumns = list(LeftColumns = 3),
+          # columnDefs = list(list(className = "dt-center", targets = 0)),
+          headerCallback = JS(headerCallback),
+          # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+          initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+            "$(this.api().table().body()).css({'font-size': '12px'});",
+            "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+            "}"
+          )
+        )
+      ) 
+    })
+  
   # ------ INFOBOX -----
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
