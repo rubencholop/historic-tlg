@@ -616,8 +616,246 @@ ui <-  dashboardPagePlus(
         h4('Lideres historicos', align = 'center'),
         tabsetPanel(
           tabPanel(
-            title = 'Picheo'
+          # Picheo ----
+            title = 'Picheo',
+            #1 ----
+            fluidRow(
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("H",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_hits')
+                                )
+                              )
+                       )
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("2B",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_2b')
+                                )
+                              )
+                       )
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("3B",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_3b')
+                                )
+                              )
+                       )
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("HR",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_hr')
+                                )
+                              )
+                       )
+                     )
+                     )
             ),
+            #2 ----
+            fluidRow(
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h2("AVG",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_average')
+                                )
+                              )
+                       )
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h2("OBP",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center')
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("SLG",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center')
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("OPS",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center')
+                     )
+                     )
+                     ),
+            #3 ----
+            fluidRow(
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h2("RBI",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_rbi')
+                                )
+                              )
+                       )
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h2("AB",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_ab')
+                                )
+                              )
+                       )
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("SB",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_sb')
+                                )
+                              )
+                       )
+                     )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("XB",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('b_xb')
+                                )
+                              )
+                       )
+                     )
+                  )
+                )
+            ),
+          # Bateo ----
           tabPanel(
             title = 'Bateo',
             #1 ----
@@ -4171,7 +4409,6 @@ server = function(input, output) {
   #Records
   #Records
   #Batting Recors ----
-  
   # Table bateo lideres H ----
   output$b_hits <- renderDataTable({
     
@@ -4613,6 +4850,99 @@ server = function(input, output) {
       )
     ) 
   })
+  # Table bateo lideres OBP ----
+  output$b_obp <- renderDataTable({
+    
+    obp <- brs() %>% 
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:27) %>% 
+      left_join(Rosters() %>%
+                  mutate(key = paste(as.character(years), jugador)) %>%
+                  select(key, ID, first_name, last_name), by = 'key') %>%
+      select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+      group_by(ID) %>% 
+      summarise(
+        years = NROW(years),
+        first_name = last(first_name),
+        last_name = last(last_name),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      ) %>% 
+      filter(ab >= 2000) %>% 
+      arrange(desc(avg)) %>% 
+      select(first_name, last_name, h, ab, avg) %>% 
+      mutate(avg = round(((h)/ ab), 3)) %>% 
+      tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+      top_n(5, avg) %>% 
+      select(jugador, avg) %>% 
+      rename(
+        Jugador = jugador,
+        AVG = avg
+      ) %>% 
+      arrange(desc(AVG)) %>% 
+      mutate(Order = seq(1, NROW(Jugador), 1)) %>% 
+      select(Jugador, AVG) 
+    
+    
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+    
+    DT::datatable(
+      avg,
+      escape = FALSE,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      caption = htmltools::tags$caption(
+        style = 'caption-side: bottom; text-align: center;'
+        , htmltools::em('Con mas de 2000 BA')),
+      options = list(
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        autoWidth = TRUE,
+        searching = FALSE,
+        paging = FALSE,
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        # rownames = FALSE,
+        fixedHeader = TRUE,
+        # fixedColumns = list(LeftColumns = 3),
+        # columnDefs = list(list(className = "dt-center", targets = 0)),
+        headerCallback = JS(headerCallback),
+        # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) 
+  })
   # Table bateo lideres RBI ----
   output$b_rbi <- renderDataTable({
     
@@ -4874,7 +5204,7 @@ server = function(input, output) {
       )
     ) 
   })
-  # Table bateo lideres SB ----
+  # Table bateo lideres XB ----
   output$b_xb <- renderDataTable({
     
     xb <- brs() %>% 
@@ -4961,6 +5291,7 @@ server = function(input, output) {
       )
     ) 
   })
+  # Pitching Record ----
   # ------ INFOBOX -----
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
