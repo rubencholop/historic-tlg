@@ -4357,6 +4357,93 @@ server = function(input, output) {
       )
     ) 
   })
+  # Table bateo lideres 3b ----
+  output$b_3b <- renderDataTable({
+    
+    triples <- brs() %>% 
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:27) %>% 
+      left_join(Rosters() %>%
+                  mutate(key = paste(as.character(years), jugador)) %>%
+                  select(key, ID, first_name, last_name), by = 'key') %>%
+      select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+      group_by(ID) %>% 
+      summarise(
+        years = NROW(years),
+        first_name = last(first_name),
+        last_name = last(last_name),
+        g = sum(g, na.rm = T),
+        pa = sum(pa, na.rm = T),
+        ab = sum(ab, na.rm = T),
+        r = sum(r, na.rm = T),
+        h = sum(h, na.rm = T),
+        `2b` = sum(`2b`, na.rm = T),
+        `3b` = sum(`3b`, na.rm = T),
+        hr = sum(hr, na.rm = T),
+        rbi = sum(rbi, na.rm = T),
+        sb = sum(sb, na.rm = T),
+        cs = sum(cs, na.rm = T),
+        bb = sum(bb, na.rm = T),
+        so = sum(so, na.rm = T),
+        avg = round(mean(avg, na.rm = T), 3),
+        obp = round(mean(obp, na.rm = T), 3),
+        slg = round(mean(slg, na.rm = T), 3),
+        ops = round(mean(ops, na.rm = T), 3),
+        ir = sum(ir, na.rm = T),
+        rc = sum(rc, na.rm = T),
+        tb = sum(tb, na.rm = T),
+        xb = sum(xb, na.rm = T),
+        hbp = sum(hbp, na.rm = T),
+        sh = sum(sh, na.rm = T),
+        sf = sum(sf, na.rm = T)
+      ) %>% 
+      arrange(desc(`3b`)) %>%
+      select(first_name, last_name, `3b`) %>% 
+      tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+      top_n(5, `3b`) %>% 
+      rename(
+        Jugador = jugador,
+        `3B` = `3b`
+      ) 
+    
+    
+    headerCallback <- c(
+      "function(thead, data, start, end, display){",
+      "  $('th', thead).css('border-bottom', 'none');",
+      "}"
+    )  # To deleate header line horizontal in bottom of colums name
+
+    DT::datatable(
+      triples,
+      escape = FALSE,
+      extensions = "ColReorder",
+      rownames = FALSE,
+      caption = htmltools::tags$caption(
+        style = 'caption-side: bottom; text-align: center;'
+        , htmltools::em('Top 5 historico')),
+      options = list(
+        dom = 'ft',  # To remove showing 1 to n of entries fields
+        autoWidth = TRUE,
+        searching = FALSE,
+        paging = FALSE,
+        lengthChange = FALSE,
+        scrollX = TRUE,
+        # rownames = FALSE,
+        fixedHeader = TRUE,
+        # fixedColumns = list(LeftColumns = 3),
+        # columnDefs = list(list(className = "dt-center", targets = 0)),
+        headerCallback = JS(headerCallback),
+        # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+        initComplete = JS(
+          "function(settings, json) {",
+          "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+          "$(this.api().table().body()).css({'font-size': '12px'});",
+          "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+          "}"
+        )
+      )
+    ) 
+  })
   # ------ INFOBOX -----
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
