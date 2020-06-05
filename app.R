@@ -622,20 +622,20 @@ ui <-  dashboardPagePlus(
             title = 'Bateo',
             #1 ----
             fluidRow(
-              column(6,
+              column(4,
                      bs4Dash::bs4Box(
                        width = NULL,
                        higth = '100px',
                        collapsible = TRUE,
                        title = h3('Average', align = 'center'),
-                       column(6,
-                              fluidRow(
-                                column(12,
-                                       imageOutput('record_avg')
-                                       )
-                                )
-                              ),
-                       column(6,
+                       # column(6,
+                       #        fluidRow(
+                       #          column(12,
+                       #                 imageOutput('record_avg')
+                       #                 )
+                       #          )
+                       #        ),
+                       column(12,
                               fluidRow(
                                 column(12,
                                        DT::dataTableOutput('b_average')
@@ -643,8 +643,8 @@ ui <-  dashboardPagePlus(
                                 )
                               )
                        )
-              ),
-              column(6,
+                    ),
+              column(4,
                      bs4Dash::bs4Box(
                        width = NULL,
                        higth = '300px',
@@ -652,7 +652,16 @@ ui <-  dashboardPagePlus(
                        # status = 'warning',
                        title = h3('Hits',  align = 'center')
                        )
+                     ),
+              column(4,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h3('BB',  align = 'center')
                      )
+                    )
               ),
             #2 ----
             fluidRow(
@@ -4003,10 +4012,11 @@ server = function(input, output) {
   
   #Records
   #Records
+  #Records ----
   # Table bateo lideres average ----
   output$b_average <- renderDataTable({
     
-    avg <- Hbrs %>% 
+    avg <- brs %>% 
       mutate(key = paste(as.character(years), jugador)) %>% 
       select(key, 1:27) %>% 
       # left_join(Unique_Rosters %>% 

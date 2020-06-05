@@ -16,23 +16,23 @@ bf <- read_csv('data/batting_finals.csv')
 prs <- read_csv('data/pitching_reseason.csv')
 prr <- read_csv('data/pitching_rrobin.csv')
 pf <- read_csv('data/pitching_finals.csv')
+Roster_clean <- read_csv('data/rosters_clean.csv')
 
-.rosters <- Rosters %>% 
+.rosters <- Roster_clean %>% 
   arrange(jugador, years) %>% 
   distinct(name) %>% 
   mutate(ID =  paste(substr(name, 1, 1), seq(1, length(name), 1) , sep = '')
   )
 
-Rosters <- Rosters %>% 
+Roster_clean <- Roster_clean %>% 
   arrange(jugador, years) %>% 
-  left_join(.rosters, by = 'name')
-
-# unique roster
-Unique_Rosters <- Rosters %>% 
+  left_join(.rosters, by = 'name') %>% 
   group_by(ID) %>% 
   summarize(
     jugador = last(jugador),
     name = last(name),
+    first_name = last(first_name),
+    last_name = last(last_name),
     pos = last(pos),
     bat = last(bat),
     lan = last(lan),
@@ -42,6 +42,9 @@ Unique_Rosters <- Rosters %>%
     ciudad = last(ciudad)
   ) %>% 
   arrange(jugador)
+
+
+  
 
 # Data wrangling ----
 .pitchers <- Rosters %>% 
