@@ -5662,7 +5662,7 @@ server = function(input, output) {
       ) 
     })
     
-  # Table picheo lideres gs ----
+  # Table picheo lideres ip ----
     output$p_ip <- renderDataTable({
       
       ip <- prs() %>% 
@@ -5720,6 +5720,181 @@ server = function(input, output) {
       
       DT::datatable(
         ip,
+        escape = FALSE,
+        extensions = "ColReorder",
+        rownames = FALSE,
+        caption = htmltools::tags$caption(
+          style = 'caption-side: bottom; text-align: center;'
+          , htmltools::em('Top 5 historico')),
+        options = list(
+          dom = 'ft',  # To remove showing 1 to n of entries fields
+          autoWidth = TRUE,
+          searching = FALSE,
+          paging = FALSE,
+          lengthChange = FALSE,
+          scrollX = TRUE,
+          # rownames = FALSE,
+          fixedHeader = TRUE,
+          # fixedColumns = list(LeftColumns = 3),
+          # columnDefs = list(list(className = "dt-center", targets = 0)),
+          headerCallback = JS(headerCallback),
+          # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+          initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+            "$(this.api().table().body()).css({'font-size': '12px'});",
+            "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+            "}"
+          )
+        )
+      ) 
+    })
+    
+  # Table picheo lideres so ----
+    output$p_so <- renderDataTable({
+      
+      so <- prs() %>% 
+        mutate(key = paste(as.character(years), jugador)) %>% 
+        select(key, 1:27) %>% 
+        left_join(Rosters() %>%
+                    mutate(key = paste(as.character(years), jugador)) %>%
+                    select(key, ID, first_name, last_name), by = 'key') %>%
+        select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+        group_by(ID) %>% 
+        summarise(
+          first_name = last(first_name),
+          last_name = last(last_name),
+          jugador= last(jugador),
+          w = sum(w, na.rm = T),
+          l = sum(l, na.rm = T),
+          era = round(mean(era, na.rm = T), 2),
+          g = sum(g, na.rm = T),
+          gs = sum(gs, na.rm = T),
+          cg = sum(cg, na.rm = T),
+          sho = sum(sho, na.rm = T),
+          sv = sum(sv, na.rm = T),
+          ip = sum(ip, na.rm = T),
+          h = sum(h, na.rm = T),
+          r = sum(r, na.rm = T),
+          er = sum(er, na.rm = T),
+          hr = sum(hr, na.rm = T),
+          bb = sum(bb, na.rm = T),
+          so = sum(so, na.rm = T),
+          ir = sum(ir, na.rm = T),
+          whip = round(mean(whip, na.rm = T), 2),
+          `h/9` = round(mean(`h/9`, na.rm = T), 2),
+          `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+          `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+          `so/9` = round(mean(`so/9`, na.rm = T), 2),
+          `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+          bk = sum(bk, na.rm = T)
+        ) %>% 
+        arrange(desc(so)) %>%
+        select(first_name, last_name, so) %>% 
+        tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+        top_n(5, so) %>% 
+        rename(
+          Jugador = jugador,
+          SO = so
+        ) %>% 
+        slice(1:(n()-1))
+      
+      
+      headerCallback <- c(
+        "function(thead, data, start, end, display){",
+        "  $('th', thead).css('border-bottom', 'none');",
+        "}"
+      )  # To deleate header line horizontal in bottom of colums name
+      
+      DT::datatable(
+        so,
+        escape = FALSE,
+        extensions = "ColReorder",
+        rownames = FALSE,
+        caption = htmltools::tags$caption(
+          style = 'caption-side: bottom; text-align: center;'
+          , htmltools::em('Top 5 historico')),
+        options = list(
+          dom = 'ft',  # To remove showing 1 to n of entries fields
+          autoWidth = TRUE,
+          searching = FALSE,
+          paging = FALSE,
+          lengthChange = FALSE,
+          scrollX = TRUE,
+          # rownames = FALSE,
+          fixedHeader = TRUE,
+          # fixedColumns = list(LeftColumns = 3),
+          # columnDefs = list(list(className = "dt-center", targets = 0)),
+          headerCallback = JS(headerCallback),
+          # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+          initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+            "$(this.api().table().body()).css({'font-size': '12px'});",
+            "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+            "}"
+          )
+        )
+      ) 
+    })
+    
+    # Table picheo lideres so ----
+    output$p_so <- renderDataTable({
+      
+      so <- prs() %>% 
+        mutate(key = paste(as.character(years), jugador)) %>% 
+        select(key, 1:27) %>% 
+        left_join(Rosters() %>%
+                    mutate(key = paste(as.character(years), jugador)) %>%
+                    select(key, ID, first_name, last_name), by = 'key') %>%
+        select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+        group_by(ID) %>% 
+        summarise(
+          first_name = last(first_name),
+          last_name = last(last_name),
+          jugador= last(jugador),
+          w = sum(w, na.rm = T),
+          l = sum(l, na.rm = T),
+          era = round(mean(era, na.rm = T), 2),
+          g = sum(g, na.rm = T),
+          gs = sum(gs, na.rm = T),
+          cg = sum(cg, na.rm = T),
+          sho = sum(sho, na.rm = T),
+          sv = sum(sv, na.rm = T),
+          ip = sum(ip, na.rm = T),
+          h = sum(h, na.rm = T),
+          r = sum(r, na.rm = T),
+          er = sum(er, na.rm = T),
+          hr = sum(hr, na.rm = T),
+          bb = sum(bb, na.rm = T),
+          so = sum(so, na.rm = T),
+          ir = sum(ir, na.rm = T),
+          whip = round(mean(whip, na.rm = T), 2),
+          `h/9` = round(mean(`h/9`, na.rm = T), 2),
+          `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+          `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+          `so/9` = round(mean(`so/9`, na.rm = T), 2),
+          `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+          bk = sum(bk, na.rm = T)
+        ) %>% 
+        arrange(desc(so)) %>%
+        select(first_name, last_name, so) %>% 
+        tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+        top_n(5, so) %>% 
+        rename(
+          Jugador = jugador,
+          SO = h
+        ) 
+      
+      
+      headerCallback <- c(
+        "function(thead, data, start, end, display){",
+        "  $('th', thead).css('border-bottom', 'none');",
+        "}"
+      )  # To deleate header line horizontal in bottom of colums name
+      
+      DT::datatable(
+        h,
         escape = FALSE,
         extensions = "ColReorder",
         rownames = FALSE,
