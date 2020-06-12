@@ -680,3 +680,28 @@ get_fielding <- function(.URL){
 
 
 
+
+
+
+
+# Fuction to sum innings -----
+IP <- function(x){
+  
+  x <- as.data.frame(x) %>%
+  tidyr::separate(x, c('episodio', 'tercio')) %>% 
+  mutate(episodio = episodio %>% as.numeric(),
+         tercio = tercio %>% as.numeric()) %>% 
+  replace(., is.na(.), 0) %>%
+  summarise(episodio = sum(episodio, na.rm = T),
+            tercio = sum(tercio, na.rm = T)) %>% 
+  mutate(ip = sum(episodio, 
+                  trunc(tercio / 3), 
+                  (tercio %% 3) / 10)
+         ) %>% 
+    select(ip)
+}
+
+  
+  
+  
+str(.df)

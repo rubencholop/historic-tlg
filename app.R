@@ -5660,6 +5660,22 @@ server = function(input, output) {
   # Table picheo lideres ip ----
     output$p_ip <- renderDataTable({
       
+      IP <- function(x){
+        x <- x %>%
+          tidyr::separate(x, c('episodio', 'tercio')) %>% 
+          mutate(episodio = episodio %>% as.numeric(),
+                 tercio = tercio %>% as.numeric()) %>% 
+          replace(., is.na(.), 0) %>%
+          summarise(episodio = sum(episodio, na.rm = T),
+                    tercio = sum(tercio, na.rm = T)) %>% 
+          mutate(ip = sum(episodio, 
+                          trunc(tercio / 3), 
+                          (tercio %% 3) / 10)
+          ) %>% 
+          select(ip) %>% 
+          pull
+      }
+      
       ip <- prs() %>% 
         mutate(key = paste(as.character(years), jugador)) %>% 
         select(key, 1:27) %>% 
@@ -5680,7 +5696,7 @@ server = function(input, output) {
           cg = sum(cg, na.rm = T),
           sho = sum(sho, na.rm = T),
           sv = sum(sv, na.rm = T),
-          ip = sum(ip, na.rm = T),
+          ip = IP(ip),
           h = sum(h, na.rm = T),
           r = sum(r, na.rm = T),
           er = sum(er, na.rm = T),
