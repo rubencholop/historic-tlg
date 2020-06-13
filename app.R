@@ -6129,7 +6129,7 @@ server = function(input, output) {
           cg = sum(cg, na.rm = T),
           sho = sum(sho, na.rm = T),
           sv = sum(sv, na.rm = T),
-          ip = sum(ip, na.rm = T),
+          ip = IP(ip),
           h = sum(h, na.rm = T),
           r = sum(r, na.rm = T),
           er = sum(er, na.rm = T),
@@ -6137,7 +6137,7 @@ server = function(input, output) {
           bb = sum(bb, na.rm = T),
           so = sum(so, na.rm = T),
           ir = sum(ir, na.rm = T),
-          whip = round(mean(whip, na.rm = T), 2),
+          whip = round(sum(h, bb) / ip, 2),
           `h/9` = round(mean(`h/9`, na.rm = T), 2),
           `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
           `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
@@ -6145,14 +6145,16 @@ server = function(input, output) {
           `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
           bk = sum(bk, na.rm = T)
         ) %>% 
-        arrange(desc(whip)) %>%
+        filter(ip > 400) %>% 
+        arrange(whip) %>%
         select(first_name, last_name, whip) %>% 
         tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-        top_n(5, whip) %>% 
+        # top_n(5, whip) %>% 
         rename(
           Jugador = jugador,
           WHIP = whip
-        ) 
+        ) %>% 
+        slice(1:n()-1)
       
       
       headerCallback <- c(
@@ -6168,7 +6170,7 @@ server = function(input, output) {
         rownames = FALSE,
         caption = htmltools::tags$caption(
           style = 'caption-side: bottom; text-align: center;'
-          , htmltools::em('Con mas de 200 ip')),
+          , htmltools::em('Con mas de 400 ip')),
         options = list(
           dom = 'ft',  # To remove showing 1 to n of entries fields
           autoWidth = TRUE,
