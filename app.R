@@ -82,6 +82,21 @@ temporadas <- data.table::rbindlist(
   rename(temporadas = df) %>% 
   pull()
 
+# Functions ----
+
+IP <- function(x){
+  x <- x %>%
+    sum() %>% 
+    as.character()
+  
+  episodio <-  as.numeric(sub("\\..*", "", x))
+  tercio <-  as.numeric(str_sub(x, -1, -1))
+  
+  x <-  episodio + trunc(tercio / 3) + (tercio %% 3) / 10
+  
+  return(x)
+}
+
 # UI ----
 ui <-  dashboardPagePlus(
   # Tittle ----
@@ -874,7 +889,92 @@ ui <-  dashboardPagePlus(
                               )
                        )
                   )
-                )
+                ),
+            #4 ----
+            fluidRow(
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h2("H/9",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('p_h9')
+                                       )
+                                )
+                              )
+                       )
+                   ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = h2("HR/9",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('p_hr9')
+                                       )
+                                )
+                              )
+                       )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("SO/9",
+                                  style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('p_so9')
+                                       )
+                                )
+                              )
+                       )
+                     ),
+              column(3,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = h2("BB/9",
+                                  style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                  align = 'center'),
+                       column(12,
+                              fluidRow(
+                                column(12,
+                                       DT::dataTableOutput('p_bb9')
+                                       )
+                                )
+                              )
+                       )
+                     )
+              )
             ),
           # Bateo ----
           tabPanel(
@@ -6345,6 +6445,95 @@ server = function(input, output) {
         caption = htmltools::tags$caption(
           style = 'caption-side: bottom; text-align: center;'
           , htmltools::em('Top 5 historico')),
+        options = list(
+          dom = 'ft',  # To remove showing 1 to n of entries fields
+          autoWidth = TRUE,
+          searching = FALSE,
+          paging = FALSE,
+          lengthChange = FALSE,
+          scrollX = TRUE,
+          # rownames = FALSE,
+          fixedHeader = TRUE,
+          # fixedColumns = list(LeftColumns = 3),
+          # columnDefs = list(list(className = "dt-center", targets = 0)),
+          headerCallback = JS(headerCallback),
+          # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+          initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+            "$(this.api().table().body()).css({'font-size': '12px'});",
+            "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+            "}"
+          )
+        )
+      ) 
+    })
+    
+  # Table picheo lideres h/9 ----
+    output$p_h9 <- renderDataTable({
+      
+      h_9 <- prs() %>% 
+        mutate(key = paste(as.character(years), jugador)) %>% 
+        select(key, 1:27) %>% 
+        left_join(Rosters() %>%
+                    mutate(key = paste(as.character(years), jugador)) %>%
+                    select(key, ID, first_name, last_name), by = 'key') %>%
+        select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+        group_by(ID) %>% 
+        summarise(
+          first_name = last(first_name),
+          last_name = last(last_name),
+          jugador= last(jugador),
+          w = sum(w, na.rm = T),
+          l = sum(l, na.rm = T),
+          era = round(mean(era, na.rm = T), 2),
+          g = sum(g, na.rm = T),
+          gs = sum(gs, na.rm = T),
+          cg = sum(cg, na.rm = T),
+          sho = sum(sho, na.rm = T),
+          sv = sum(sv, na.rm = T),
+          ip = IP(ip),
+          h = sum(h, na.rm = T),
+          r = sum(r, na.rm = T),
+          er = sum(er, na.rm = T),
+          hr = sum(hr, na.rm = T),
+          bb = sum(bb, na.rm = T),
+          so = sum(so, na.rm = T),
+          ir = sum(ir, na.rm = T),
+          whip = round(mean(whip, na.rm = T), 2),
+          `h/9` = round((h/ip)*9, 2),
+          `hr/9` = round((hr/ip)*9, 2),
+          `bb/9` = round((bb/ip)*9, 2),
+          `so/9` = round((so/ip)*9, 2),
+          `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+          bk = sum(bk, na.rm = T)
+        ) %>% 
+        filter(ip > 400) %>% 
+        arrange(`h/9`) %>%
+        select(first_name, last_name, `h/9`) %>% 
+        tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+        # top_n(5, `h/9`) %>% 
+        rename(
+          Jugador = jugador,
+          `H/9` = `h/9`
+        ) %>% 
+        slice(1:n()-1)
+      
+      
+      headerCallback <- c(
+        "function(thead, data, start, end, display){",
+        "  $('th', thead).css('border-bottom', 'none');",
+        "}"
+      )  # To deleate header line horizontal in bottom of colums name
+      
+      DT::datatable(
+        h_9,
+        escape = FALSE,
+        extensions = "ColReorder",
+        rownames = FALSE,
+        caption = htmltools::tags$caption(
+          style = 'caption-side: bottom; text-align: center;'
+          , htmltools::em('Con mas de 400 ip')),
         options = list(
           dom = 'ft',  # To remove showing 1 to n of entries fields
           autoWidth = TRUE,
