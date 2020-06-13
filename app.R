@@ -6558,6 +6558,184 @@ server = function(input, output) {
       ) 
     })
     
+  # Table picheo lideres hr/9 ----
+    output$p_hr9 <- renderDataTable({
+      
+      hr_9 <- prs() %>% 
+        mutate(key = paste(as.character(years), jugador)) %>% 
+        select(key, 1:27) %>% 
+        left_join(Rosters() %>%
+                    mutate(key = paste(as.character(years), jugador)) %>%
+                    select(key, ID, first_name, last_name), by = 'key') %>%
+        select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+        group_by(ID) %>% 
+        summarise(
+          first_name = last(first_name),
+          last_name = last(last_name),
+          jugador= last(jugador),
+          w = sum(w, na.rm = T),
+          l = sum(l, na.rm = T),
+          era = round(mean(era, na.rm = T), 2),
+          g = sum(g, na.rm = T),
+          gs = sum(gs, na.rm = T),
+          cg = sum(cg, na.rm = T),
+          sho = sum(sho, na.rm = T),
+          sv = sum(sv, na.rm = T),
+          ip = IP(ip),
+          h = sum(h, na.rm = T),
+          r = sum(r, na.rm = T),
+          er = sum(er, na.rm = T),
+          hr = sum(hr, na.rm = T),
+          bb = sum(bb, na.rm = T),
+          so = sum(so, na.rm = T),
+          ir = sum(ir, na.rm = T),
+          whip = round(mean(whip, na.rm = T), 2),
+          `h/9` = round((h/ip)*9, 2),
+          `hr/9` = round((hr/ip)*9, 2),
+          `bb/9` = round((bb/ip)*9, 2),
+          `so/9` = round((so/ip)*9, 2),
+          `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+          bk = sum(bk, na.rm = T)
+        ) %>% 
+        filter(ip > 400) %>% 
+        arrange(`hr/9`) %>%
+        select(first_name, last_name, `hr/9`) %>% 
+        tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+        # top_n(5, `h/9`) %>% 
+        rename(
+          Jugador = jugador,
+          `HR/9` = `hr/9`
+        ) %>% 
+        slice(1:5)
+      
+      
+      headerCallback <- c(
+        "function(thead, data, start, end, display){",
+        "  $('th', thead).css('border-bottom', 'none');",
+        "}"
+      )  # To deleate header line horizontal in bottom of colums name
+      
+      DT::datatable(
+        hr_9,
+        escape = FALSE,
+        extensions = "ColReorder",
+        rownames = FALSE,
+        caption = htmltools::tags$caption(
+          style = 'caption-side: bottom; text-align: center;'
+          , htmltools::em('Con mas de 400 ip')),
+        options = list(
+          dom = 'ft',  # To remove showing 1 to n of entries fields
+          autoWidth = TRUE,
+          searching = FALSE,
+          paging = FALSE,
+          lengthChange = FALSE,
+          scrollX = TRUE,
+          # rownames = FALSE,
+          fixedHeader = TRUE,
+          # fixedColumns = list(LeftColumns = 3),
+          # columnDefs = list(list(className = "dt-center", targets = 0)),
+          headerCallback = JS(headerCallback),
+          # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+          initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+            "$(this.api().table().body()).css({'font-size': '12px'});",
+            "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+            "}"
+          )
+        )
+      ) 
+    })
+    
+  # Table picheo lideres so/9 ----
+    output$p_so9 <- renderDataTable({
+      
+      so_9 <- prs() %>% 
+        mutate(key = paste(as.character(years), jugador)) %>% 
+        select(key, 1:27) %>% 
+        left_join(Rosters() %>%
+                    mutate(key = paste(as.character(years), jugador)) %>%
+                    select(key, ID, first_name, last_name), by = 'key') %>%
+        select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+        group_by(ID) %>% 
+        summarise(
+          first_name = last(first_name),
+          last_name = last(last_name),
+          jugador= last(jugador),
+          w = sum(w, na.rm = T),
+          l = sum(l, na.rm = T),
+          era = round(mean(era, na.rm = T), 2),
+          g = sum(g, na.rm = T),
+          gs = sum(gs, na.rm = T),
+          cg = sum(cg, na.rm = T),
+          sho = sum(sho, na.rm = T),
+          sv = sum(sv, na.rm = T),
+          ip = IP(ip),
+          h = sum(h, na.rm = T),
+          r = sum(r, na.rm = T),
+          er = sum(er, na.rm = T),
+          hr = sum(hr, na.rm = T),
+          bb = sum(bb, na.rm = T),
+          so = sum(so, na.rm = T),
+          ir = sum(ir, na.rm = T),
+          whip = round(mean(whip, na.rm = T), 2),
+          `h/9` = round((h/ip)*9, 2),
+          `hr/9` = round((hr/ip)*9, 2),
+          `bb/9` = round((bb/ip)*9, 2),
+          `so/9` = round((so/ip)*9, 2),
+          `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+          bk = sum(bk, na.rm = T)
+        ) %>% 
+        filter(ip > 400) %>% 
+        arrange(`so/9`) %>%
+        select(first_name, last_name, `so/9`) %>% 
+        tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+        # top_n(5, `h/9`) %>% 
+        rename(
+          Jugador = jugador,
+          `SO/9` = `so/9`
+        ) %>% 
+        slice(1:5)
+      
+      
+      headerCallback <- c(
+        "function(thead, data, start, end, display){",
+        "  $('th', thead).css('border-bottom', 'none');",
+        "}"
+      )  # To deleate header line horizontal in bottom of colums name
+      
+      DT::datatable(
+        hr_9,
+        escape = FALSE,
+        extensions = "ColReorder",
+        rownames = FALSE,
+        caption = htmltools::tags$caption(
+          style = 'caption-side: bottom; text-align: center;'
+          , htmltools::em('Con mas de 400 ip')),
+        options = list(
+          dom = 'ft',  # To remove showing 1 to n of entries fields
+          autoWidth = TRUE,
+          searching = FALSE,
+          paging = FALSE,
+          lengthChange = FALSE,
+          scrollX = TRUE,
+          # rownames = FALSE,
+          fixedHeader = TRUE,
+          # fixedColumns = list(LeftColumns = 3),
+          # columnDefs = list(list(className = "dt-center", targets = 0)),
+          headerCallback = JS(headerCallback),
+          # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+          initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+            "$(this.api().table().body()).css({'font-size': '12px'});",
+            "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+            "}"
+          )
+        )
+      ) 
+    })
+    
   # ------ INFOBOX -----
   # InfoBox Position player ----
   output$pos <- renderInfoBox({
