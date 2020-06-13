@@ -5673,22 +5673,6 @@ server = function(input, output) {
         return(x)
       }
              
-              
-# 
-#           df <- df %>% 
-#           tidyr::separate(x, c('episodio', 'tercio')) %>% 
-#           mutate(episodio = episodio %>% as.numeric(),
-#                  tercio = tercio %>% as.numeric()) %>% 
-#           replace(., is.na(.), 0) %>%
-#           summarise(episodio = sum(episodio, na.rm = T),
-#                     tercio = sum(tercio, na.rm = T)) %>% 
-#           mutate(ip = sum(episodio, 
-#                           trunc(tercio / 3), 
-#                           (tercio %% 3) / 10)
-#           ) %>% 
-#           select(ip)
-      
-      
       ip <- prs() %>% 
         mutate(key = paste(as.character(years), jugador)) %>% 
         select(key, 1:27) %>% 
@@ -6050,16 +6034,16 @@ server = function(input, output) {
           jugador= last(jugador),
           w = sum(w, na.rm = T),
           l = sum(l, na.rm = T),
-          era = round(mean(era, na.rm = T), 2),
           g = sum(g, na.rm = T),
           gs = sum(gs, na.rm = T),
           cg = sum(cg, na.rm = T),
           sho = sum(sho, na.rm = T),
           sv = sum(sv, na.rm = T),
-          ip = sum(ip, na.rm = T),
+          ip = IP(ip),
           h = sum(h, na.rm = T),
           r = sum(r, na.rm = T),
           er = sum(er, na.rm = T),
+          era = round((er * 9) / ip, 2),
           hr = sum(hr, na.rm = T),
           bb = sum(bb, na.rm = T),
           so = sum(so, na.rm = T),
@@ -6072,14 +6056,16 @@ server = function(input, output) {
           `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
           bk = sum(bk, na.rm = T)
         ) %>% 
-        arrange(desc(era)) %>%
+        filter(ip > 400) %>% 
+        arrange(era) %>%
         select(first_name, last_name, era) %>% 
         tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-        top_n(5, era) %>% 
+        top_frac(5, era) %>% 
         rename(
           Jugador = jugador,
           ERA = era
-        ) 
+        ) %>% 
+        slice(1: n()-1)
       
       
       headerCallback <- c(
@@ -6095,7 +6081,7 @@ server = function(input, output) {
         rownames = FALSE,
         caption = htmltools::tags$caption(
           style = 'caption-side: bottom; text-align: center;'
-          , htmltools::em('Con mas de 200 ip')),
+          , htmltools::em('Con mas de 400 ip')),
         options = list(
           dom = 'ft',  # To remove showing 1 to n of entries fields
           autoWidth = TRUE,
@@ -6339,7 +6325,7 @@ server = function(input, output) {
         top_n(5, ir) %>% 
         rename(
           Jugador = jugador,
-          Ir = ir
+          IR = ir
         ) 
       
       
