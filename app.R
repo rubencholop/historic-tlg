@@ -6776,7 +6776,7 @@ server = function(input, output) {
           bk = sum(bk, na.rm = T)
         ) %>% 
         filter(ip > 400) %>% 
-        arrange(`so/bb`) %>%
+        arrange(desc(`so/bb`)) %>%
         select(first_name, last_name, `so/bb`) %>% 
         tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
         # top_n(5, `h/9`) %>% 
@@ -6795,8 +6795,14 @@ server = function(input, output) {
       
       DT::datatable(
         so_bb,
+        # style = 'bootstrap',
+        # class = 'table-bordered stripe table-condensed',
         escape = FALSE,
-        extensions = "ColReorder",
+        extensions = c('Buttons', 
+                       #'Autofill', 
+                       'ColReorder',
+                       'Responsive',
+                       'Scroller'),
         rownames = FALSE,
         caption = htmltools::tags$caption(
           style = 'caption-side: bottom; text-align: center;'
@@ -6812,6 +6818,7 @@ server = function(input, output) {
           fixedHeader = TRUE,
           # fixedColumns = list(LeftColumns = 3),
           # columnDefs = list(list(className = "dt-center", targets = 0)),
+          # columnDefs = list(list(className = 'dt-center', targets = '_all')),
           headerCallback = JS(headerCallback),
           # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
           initComplete = JS(
