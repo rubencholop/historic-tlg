@@ -443,7 +443,7 @@ ui <-  dashboardPagePlus(
             ),
             # Image ----
             fluidRow(
-              column(12,
+              column(6,
                      widgetUserBox(
                        title = "Elizabeth Pierce",
                        subtitle = "Web Designer",
@@ -4003,7 +4003,9 @@ server = function(input, output) {
   output$picheo_jugador <- DT::renderDataTable({
     req(input$select_jugador_pit)
     
-    player_summarise <- Hprs %>%
+    player_summarise <- prs() %>%
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:28) %>% 
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -4033,35 +4035,39 @@ server = function(input, output) {
         bk = as.numeric(bk)
       ) %>%
       summarise(
-        years = 'Temporadas',
+        years = 'Total',
         edad = NROW(edad),
+        edad = as.numeric(edad),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
-        era = round(mean(era, na.rm = T), 2),
+        er = sum(er, na.rm = T),
+        ip = IP(ip),
+        era = round((er * 9) / ip, 2),
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
         cg = sum(cg, na.rm = T),
         sho = sum(sho, na.rm = T),
         sv = sum(sv, na.rm = T),
-        ip = sum(ip, na.rm = T),
         h = sum(h, na.rm = T),
         r = sum(r, na.rm = T),
-        er = sum(er, na.rm = T),
+        
         hr = sum(hr, na.rm = T),
         bb = sum(bb, na.rm = T),
         so = sum(so, na.rm = T),
         ir = sum(ir, na.rm = T),
         whip = round(mean(whip, na.rm = T), 2),
-        `h/9` = round(mean(`h/9`, na.rm = T), 2),
-        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `h/9` = round((h/ip)*9, 2),
+        `hr/9` = round((hr/ip)*9, 2),
+        `bb/9` = round((bb/ip)*9, 2),
+        `so/9` = round((so/ip)*9, 2),
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
         bk = sum(bk, na.rm = T)
       )
     
     
-    pitching_player <- Hprs %>%
+    pitching_player <- prs() %>%
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:28) %>%
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -4167,7 +4173,7 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Temporadas'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
   })
   
@@ -6687,13 +6693,13 @@ server = function(input, output) {
           bk = sum(bk, na.rm = T)
         ) %>% 
         filter(ip > 400) %>% 
-        arrange(desc(`bb/9`)) %>%
+        arrange(`bb/9`) %>%
         select(first_name, last_name, `bb/9`) %>% 
         tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
         # top_n(5, `h/9`) %>% 
         rename(
           Jugador = jugador,
-          `SO/9` = `bb/9`
+          `BB/9` = `bb/9`
         ) %>% 
         slice(1:5)
       
@@ -6795,14 +6801,8 @@ server = function(input, output) {
       
       DT::datatable(
         so_bb,
-        # style = 'bootstrap',
-        # class = 'table-bordered stripe table-condensed',
         escape = FALSE,
-        extensions = c('Buttons', 
-                       #'Autofill', 
-                       'ColReorder',
-                       'Responsive',
-                       'Scroller'),
+        extensions = "ColReorder",
         rownames = FALSE,
         caption = htmltools::tags$caption(
           style = 'caption-side: bottom; text-align: center;'
@@ -6818,7 +6818,6 @@ server = function(input, output) {
           fixedHeader = TRUE,
           # fixedColumns = list(LeftColumns = 3),
           # columnDefs = list(list(className = "dt-center", targets = 0)),
-          # columnDefs = list(list(className = 'dt-center', targets = '_all')),
           headerCallback = JS(headerCallback),
           # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
           initComplete = JS(
@@ -6829,7 +6828,7 @@ server = function(input, output) {
             "}"
           )
         )
-      ) 
+      )
     })
     
   # ------ INFOBOX -----
