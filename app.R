@@ -4185,7 +4185,9 @@ server = function(input, output) {
   output$picheo_jugador_rr <- DT::renderDataTable({
     req(input$select_jugador_pit)
     
-    player_summarise <- Hprr %>%
+    player_summarise <- prr() %>%
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:28) %>%
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -4214,35 +4216,38 @@ server = function(input, output) {
         bk = as.numeric(bk)
       ) %>%
       summarise(
-        years = 'Temporadas',
+        years = 'Total',
         edad = NROW(edad),
+        edad = as.numeric(edad),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
-        era = round(mean(era, na.rm = T), 2),
+        er = sum(er, na.rm = T),
+        ip = IP(ip),
+        era = round((er * 9) / ip, 2),
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
         cg = sum(cg, na.rm = T),
         sho = sum(sho, na.rm = T),
         sv = sum(sv, na.rm = T),
-        ip = sum(ip, na.rm = T),
         h = sum(h, na.rm = T),
         r = sum(r, na.rm = T),
-        er = sum(er, na.rm = T),
         hr = sum(hr, na.rm = T),
         bb = sum(bb, na.rm = T),
         so = sum(so, na.rm = T),
         whip = round(mean(whip, na.rm = T), 2),
-        `h/9` = round(mean(`h/9`, na.rm = T), 2),
-        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `h/9` = round((h/ip)*9, 2),
+        `hr/9` = round((hr/ip)*9, 2),
+        `bb/9` = round((bb/ip)*9, 2),
+        `so/9` = round((so/ip)*9, 2),
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
         bk = sum(bk, na.rm = T),
         refuerzo = '-'
       )
     
     
-    pitching_player <- Hprr %>%
+    pitching_player <- prr() %>%
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:28) %>%
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -4348,7 +4353,7 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Temporadas'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
   })
   
@@ -4360,7 +4365,9 @@ server = function(input, output) {
   output$picheo_jugador_final <- DT::renderDataTable({
     req(input$select_jugador_pit)
     
-    player_summarise <- Hpf %>%
+    player_summarise <- pf() %>%
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:28) %>%
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -4389,28 +4396,28 @@ server = function(input, output) {
         bk = as.numeric(bk)
       ) %>%
       summarise(
-        years = 'Temporadas',
+        years = 'Total',
         edad = NROW(edad),
         w = sum(w, na.rm = T),
         l = sum(l, na.rm = T),
-        era = round(mean(era, na.rm = T), 2),
+        er = sum(er, na.rm = T),
+        ip = IP(ip),
+        era = round((er * 9) / ip, 2),
         g = sum(g, na.rm = T),
         gs = sum(gs, na.rm = T),
         cg = sum(cg, na.rm = T),
         sho = sum(sho, na.rm = T),
         sv = sum(sv, na.rm = T),
-        ip = sum(ip, na.rm = T),
         h = sum(h, na.rm = T),
         r = sum(r, na.rm = T),
-        er = sum(er, na.rm = T),
         hr = sum(hr, na.rm = T),
         bb = sum(bb, na.rm = T),
         so = sum(so, na.rm = T),
         whip = round(mean(whip, na.rm = T), 2),
-        `h/9` = round(mean(`h/9`, na.rm = T), 2),
-        `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-        `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-        `so/9` = round(mean(`so/9`, na.rm = T), 2),
+        `h/9` = round((h/ip)*9, 2),
+        `hr/9` = round((hr/ip)*9, 2),
+        `bb/9` = round((bb/ip)*9, 2),
+        `so/9` = round((so/ip)*9, 2),
         `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
         bk = sum(bk, na.rm = T),
         refuerzo = '-',
@@ -4418,7 +4425,9 @@ server = function(input, output) {
       )
     
     
-    pitching_player <- Hpf %>%
+    pitching_player <- pf() %>%
+      mutate(key = paste(as.character(years), jugador)) %>% 
+      select(key, 1:28) %>%
       filter(jugador == input$select_jugador_pit) %>%
       select(-jugador, -key, -`w-l%`) %>%
       mutate(
@@ -4526,7 +4535,7 @@ server = function(input, output) {
       formatStyle(
         'Temporada',
         target = "row",
-        fontWeight = styleEqual(c('Temporadas'), "bold")
+        fontWeight = styleEqual(c('Total'), "bold")
       )
   })
 
