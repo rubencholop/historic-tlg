@@ -92,7 +92,29 @@ if(interactive()){
       # control bar ----
       controlbar = bs4DashControlbar(),
       # footer ----
-      footer = bs4DashFooter(),
+      footer = bs4DashFooter(
+        tags$head(
+          tags$style(
+            HTML('
+            .main-footer {
+              background-color: #C20B10;
+                }
+           .img {
+              max-width: 50%;
+           }
+           '
+            )
+          )
+        ),
+        img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png'),
+        span(
+          style = "font-size: 1em",
+          span("Created by "),
+          a("Ruben Lopez", 
+            href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/', 
+            target = "_blank")
+        )
+      ),
       # Title ----
       title = 'Tiburones de la Guaira B.B.C',
       # body ----
