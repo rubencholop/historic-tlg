@@ -141,36 +141,35 @@ ui <-  dashboardPagePlus(
   
   
   # Footer ----
-  footer = bs4Dash::bs4DashFooter(
-    tags$head(
-      tags$style(
-        HTML('
-            .main-footer {
-              background-color: #C20B10;
-                }
-           .img {
-              max-width: 50%;
-           }
-           '
-        )
-      )
-    ),
-    img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png'),
-    span(
-      style = "font-size: 1em",
-      span("Created by "),
-      a("Ruben Lopez", 
-        href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/', 
-        target = "_blank")
-    )
-  ),
+  # footer = bs4Dash::bs4DashFooter(
+  #   tags$head(
+  #     tags$style(
+  #       HTML('
+  #           .main-footer {
+  #             background-color: #C20B10;
+  #               }
+  #          .img {
+  #             max-width: 50%;
+  #          }
+  #          '
+  #       )
+  #     )
+  #   ),
+  #   img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png'),
+  #   span(
+  #     style = "font-size: 1em",
+  #     span("Created by "),
+  #     a("Ruben Lopez", 
+  #       href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/', 
+  #       target = "_blank")
+  #   )
+  # ),
   
   # Body ----
   body = dashboardBody(
-    tabItems(
-      
+    bs4tabItems(
       # tabitem Inicio ----
-      tabItem(
+      bs4tabItem(
         tabName = 'inicio',
         h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center'),
         fluidRow(
@@ -195,7 +194,7 @@ ui <-  dashboardPagePlus(
         )
       ),
       # tabitem by team ----
-      tabItem(
+      bs4tabItem(
         h4('Datos historicos por equipo', align = 'center'),
         tabName = 'equipo',
         tabsetPanel(

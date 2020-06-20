@@ -1,5 +1,4 @@
 
-if(interactive()){
   library(shiny)
   library(bs4Dash)
   
@@ -23,6 +22,17 @@ if(interactive()){
       ),
       # sidebar ----
       sidebar = bs4DashSidebar(
+        disable = FALSE,
+        title = "Pa Encima",
+        skin = "dark",
+        status = "primary",
+        brandColor = 'dark',
+        url = NULL,
+        src = NULL,
+        elevation = 4,
+        opacity = 0.8,
+        expand_on_hover = TRUE,
+        fixed = FALSE,
         sidebarMenu(
           # br(),
           # meniItem Tiburones de la Guaira ----
@@ -118,13 +128,126 @@ if(interactive()){
       # Title ----
       title = 'Tiburones de la Guaira B.B.C',
       # body ----
-      body = bs4DashBody()
+      body = bs4DashBody(
+        tabItems(
+        # TabItem Inicio ----
+          tabItem(
+            tabName = 'inicio',
+            h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
+            ),
+        # TabItem Data ----
+        tabItem(
+          h4('Datos historicos por equipo', align = 'center'),
+          tabName = 'equipo',
+          bs4TabSetPanel(
+            id = "tabset",
+            side = "left",
+            tabPanel(
+              tabName = 'Picheo',
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Temporada Regular", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('Preseason_team')
+                              )
+                              )
+                       ),
+                     br(),
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Round Robin", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('Prr_team')
+                              )
+                              )
+                       ),
+                     br(),
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Final", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('Pfinal_team')
+                              )
+                              )
+                       )
+                       ),
+            # Bateo ----
+            tabPanel(
+              tabName = 'Bateo',
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Temporada Regular", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('Breseason_team')
+                              )
+                              )
+                       ),
+                     br(),
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Round Robin", 
+                                           style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('Brr_team')
+                              )
+                       )
+                     ),
+                     br(),
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Final", 
+                                           style = "color: #b90e13;
+                                        text-transform: uppercase;
+                                        font-size: 1.2em;
+                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('Bfinal_team')
+                              )
+                           )
+                        )
+                      )
+            )
+          )
+        )
+        # End body ----
+      )
     ),
     
     # Server ----
     server = function(input, output) {
     }
   )
-}
+
 
 
