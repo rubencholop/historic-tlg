@@ -143,53 +143,54 @@
             id = "tabset",
             side = "left",
             tabPanel(
+            # Picheo ----
               tabName = 'Picheo',
-                     fluidRow(
-                       column(12,
-                              bs4Box(
-                                width = NULL,
-                                title = h4("Temporada Regular", 
-                                           style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Temporada Regular", 
+                                  style = "color: #b90e13;
+                                          text-transform: uppercase;
+                                          font-size: 1.2em;
+                                          text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           lign = 'center'),
                                 DT::dataTableOutput('Preseason_team')
-                              )
-                              )
-                       ),
-                     br(),
-                     fluidRow(
-                       column(12,
-                              bs4Box(
-                                width = NULL,
-                                title = h4("Round Robin", 
-                                           style = "color: #b90e13;
+                         )
+                       )
+                ),
+              br(),
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Round Robin", 
+                                    style = "color: #b90e13;
                                            text-transform: uppercase;
                                            font-size: 1.2em;
                                            text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                                            align = 'center'),
                                 DT::dataTableOutput('Prr_team')
-                              )
-                              )
-                       ),
-                     br(),
-                     fluidRow(
-                       column(12,
-                              bs4Box(
-                                width = NULL,
-                                title = h4("Final", 
-                                           style = "color: #b90e13;
+                         )
+                      )
+                ),
+              br(),
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Final", 
+                                    style = "color: #b90e13;
                                            text-transform: uppercase;
                                            font-size: 1.2em;
                                            text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                                            align = 'center'),
                                 DT::dataTableOutput('Pfinal_team')
-                              )
-                              )
-                       )
-                       ),
-            # Bateo ----
+                         )
+                      )
+                )
+              ),
+            # Bateo ----  
             tabPanel(
               tabName = 'Bateo',
                      fluidRow(
@@ -203,7 +204,7 @@
                                            text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                                            align = 'center'),
                                 DT::dataTableOutput('Breseason_team')
-                              )
+                                )
                               )
                        ),
                      br(),
@@ -219,7 +220,7 @@
                                            align = 'center'),
                                 DT::dataTableOutput('Brr_team')
                               )
-                       )
+                            )
                      ),
                      br(),
                      fluidRow(
@@ -237,6 +238,137 @@
                            )
                         )
                       )
+            )
+          ),
+        # TabItem by season ----
+        tabItem(
+          h2('Datos historicos por temporada', align = 'center'),
+          tabName = 'temporada',
+          tabsetPanel(
+            id = "tabset1",
+            side = "left",
+            # TabPanel Picheo ----
+            tabPanel(
+              tabName = 'Picheo', 
+                     # Input ----
+                     fluidRow(
+                       br(),
+                       column(3,
+                              selectInput(
+                                inputId = 'select_temporada',
+                                label = 'Seleccione una temporada',
+                                choices = temporadas
+                              )
+                       )
+                     ),
+                     # Tables Picheo ----
+                     fluidRow(
+                       column(12,
+                              bs4Dash::bs4Box(
+                                width = NULL,
+                                title = h4("Temporada Regular", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('picheo_rs')
+                              )
+                              )
+                       ),
+                     br(),
+                     fluidRow(
+                       column(12,
+                              bs4Dash::bs4Box(
+                                width = NULL,
+                                title = h4("Round Robin", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('picheo_rr_sm')
+                              )
+                              )
+                       ),
+                     br(),
+                     fluidRow(
+                       column(12,
+                              bs4Dash::bs4Box(
+                                width = NULL,
+                                title = h4("Final", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('picheo_finals')
+                              )
+                              )
+                       )
+                       ),
+            # TabPanel Bateo ----
+            tabPanel(
+              tabName = 'Bateo',
+                     # Input ----
+                     fluidRow(
+                       br(),
+                       column(3,
+                              selectInput(
+                                inputId = 'select_temporada_bat',
+                                label = 'Seleccione una temporada',
+                                choices = temporadas
+                              )
+                       )
+                     ),
+                     # Tables Bateo ----
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Temporada Regular", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                           align = 'center'),
+                                DT::dataTableOutput('bateo_rs')
+                              )
+                              )
+                       ),
+                     br(),
+                     fluidRow(
+                       column(12,
+                              bs4Box(
+                                width = NULL,
+                                title = h4("Raound Robin", 
+                                           style = "color: #b90e13;
+                                           text-transform: uppercase;
+                                           font-size: 1.2em;
+                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('bateo_rr_sm')
+                            )
+                     )
+                   ),
+                   br(),
+                   fluidRow(
+                     column(12,
+                            bs4Box(
+                              width = NULL,
+                              title = h4("Final", 
+                                         style = "color: #b90e13;
+                                         text-transform: uppercase;
+                                         font-size: 1.2em;
+                                         text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                         align = 'center'),
+                              DT::dataTableOutput('bateo_finals')
+                                )
+                         )
+                       )
+              )
+              # tabPanel Fildeo ----
+              # tabPanel('Fildeo', tableOutput('fildeo_rs'))
             )
           )
         )
