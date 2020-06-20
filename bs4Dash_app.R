@@ -402,7 +402,7 @@
               # Image ----
               fluidRow(
                 column(6,
-                       widgetUserBox(
+                       shinydashboardPlus::widgetUserBox(
                          title = "Elizabeth Pierce",
                          subtitle = "Web Designer",
                          type = NULL,
@@ -550,6 +550,615 @@
                     )
                   )
               )
+            )
+          ),
+        # Estadísticas ----
+        tabItem(
+          tabName = '',
+          tabsetPanel(
+            id = "tabpanel5",
+            side = "left",
+            tabPanel(
+              tabName = 'Picheo'
+            ),
+            tabPanel(
+              tabName  = 'Bateo'
+            )
+          )
+        ),
+        # Records ----
+        tabItem(
+          tabName = 'deporvida',
+          h4('Lideres historicos', align = 'center'),
+          tabsetPanel(
+            id = "tabpanel4",
+            side = "left",
+            tabPanel(
+              # Picheo ----
+              tabName = 'Picheo',
+              #1 ----
+              fluidRow(
+                column(3,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("W",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_w')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("L",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_l')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("G",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_g')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("GS",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_gs')
+                                  )
+                                )
+                         )
+                       )
+                     )
+              ),
+              #2 ----
+              fluidRow(
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("IP",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_ip')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("SO",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_so')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("H",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_h')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("BB",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_bb')
+                                  )
+                                )
+                         )
+                       )
+                   )
+              ),
+              #3 ----
+              fluidRow(
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("ERA",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_era')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("WHIP",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_whip')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("SV",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_sv')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("IR",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_ir')
+                                  )
+                                )
+                         )
+                       )
+                    )
+              ),
+              #4 ----
+              fluidRow(
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("H/9",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_h9')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("SO/9",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_so9')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("BB/9",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_bb9')
+                                  )
+                                )
+                           )
+                         )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("SO/BB",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('p_sobb')
+                                  )
+                                )
+                         )
+                       )
+                    )
+                  )
+              ),
+            # Bateo ----
+            tabPanel(
+              tabName = 'Bateo',
+              #1 ----
+              fluidRow(
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("H",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_hits')
+                                  )
+                                )
+                              )
+                          )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("2B",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_2b')
+                                  )
+                                )
+                            )
+                          )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("3B",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_3b')
+                                  )
+                                )
+                              )
+                          )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("HR",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_hr')
+                                  )
+                                )
+                            )
+                          )
+                       )
+              ),
+              #2 ----
+              fluidRow(
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("AVG",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_average')
+                                  )
+                                )
+                            )
+                          )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("OBP",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center')
+                          )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("SLG",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center')
+                          )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("OPS",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center')
+                              )
+                          )
+                       ),
+              #3 ----
+              fluidRow(
+                column(3,
+                      bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("RBI",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_rbi')
+                                  )
+                                )
+                          )
+                        )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("AB",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_ab')
+                                  )
+                                )
+                          )
+                        )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("SB",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_sb')
+                                  )
+                                )
+                          )
+                        )
+                       ),
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("XB",
+                                    style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_xb')
+                                  )
+                                )
+                          )
+                       )
+                    )
+                  )
+                )
             )
           )
         )
