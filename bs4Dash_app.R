@@ -1,6 +1,14 @@
-
+# Libraries ----
   library(shiny)
   library(bs4Dash)
+  library(shinyWidgets)
+  library(lubridate)
+  library(plotly)
+  library(dplyr)
+  library(DT)
+  library(stringr)
+  library(readr)
+
   
   shiny::shinyApp(
     # Page ----
@@ -367,8 +375,181 @@
                          )
                        )
               )
-              # tabPanel Fildeo ----
-              # tabPanel('Fildeo', tableOutput('fildeo_rs'))
+            # TabPanel Fildeo ----
+              # tabPanel(tabName = 'Fildeo', tableOutput('fildeo_rs'))
+            )
+          ),
+        # tabItem by player ----
+        tabItem(
+          tabName = 'jugador',
+          tabsetPanel(
+            id = "tabset2",
+            side = "left",
+            # Picheo ----
+            tabPanel(
+              tabName = 'Picheo',
+              # Input ----
+              fluidRow(
+                br(),
+                column(3,
+                       selectInput(
+                         inputId = 'select_jugador_pit',
+                         label = 'Seleccione un jugador',
+                         choices = .pitchers
+                       )
+                )
+              ),
+              # Image ----
+              fluidRow(
+                column(6,
+                       widgetUserBox(
+                         title = "Elizabeth Pierce",
+                         subtitle = "Web Designer",
+                         type = NULL,
+                         width = 12,
+                         src = imageOutput('jugador_pit'),
+                         background = TRUE,
+                         backgroundUrl = "tibu.jpeg",
+                         closable = FALSE,
+                         "Some text here!",
+                         footer = "The footer here!"
+                       )
+                )
+              ),
+              # Table  ----
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Temporada Regular", 
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         DT::dataTableOutput('picheo_jugador')
+                       ),
+                       br(),
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Round Robin", 
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         DT::dataTableOutput('picheo_jugador_rr')
+                       ),
+                       br(),
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Finales",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         DT::dataTableOutput('picheo_jugador_final')
+                       ) 
+                    )
+                  )
+                ),
+            # Bateo ----
+            tabPanel(
+              tabName = 'Bateo',
+              # Input ----
+              fluidRow(
+                br(),
+                column(3,
+                       selectInput(
+                         inputId = 'select_jugador',
+                         label = 'Seleccione un jugador',
+                         choices = .bateadores
+                       )
+                )
+              ),
+              # Image ----
+              fluidRow(
+                column(7,
+                       bs4Box(
+                         width = NULL,
+                         collapsible = TRUE,
+                         title = h3(textOutput('jugador_bat'), align = 'center'),
+                         column(8,
+                                fluidRow(
+                                  column(12,
+                                         imageOutput('jugador_')
+                                  )
+                                )
+                         ),
+                         column(4,
+                                fluidRow(
+                                  column(12,
+                                         h3(textOutput('pos_jugador'),  align = 'rigth')
+                                  )
+                                ),
+                                fluidRow(
+                                  column(12,
+                                         h3(textOutput('bl_jugador'), align = 'rigth')
+                                  )
+                                ),
+                                fluidRow(
+                                  column(12,
+                                         h3(textOutput('pais_jugador'),  align = 'rigth')
+                                  )
+                                )
+                         )
+                       )
+                ),
+                column(5,
+                       bs4Box(
+                         width = NULL,
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = 'Radarchart'
+                       )
+                )
+              ),
+              br(),
+              # Table  ----
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Temporada Regular", 
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);", 
+                                    align = 'center'),
+                         DT::dataTableOutput('bat_rs')
+                       ),
+                       br(),
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Round Robin", 
+                                    style = "color: #b90e13;
+                                          text-transform: uppercase;
+                                          font-size: 1.2em;
+                                          text-shadow:1px 1px 2px rgba(150, 150, 150, 1);", 
+                                    align = 'center'),
+                         # status = 'warning',
+                         DT::dataTableOutput('bat_rr')
+                       ),
+                       br(),
+                       bs4Box(
+                         width = NULL,
+                         title = h4("Finales", 
+                                    style = "color: #b90e13;
+                                          text-transform: uppercase;
+                                          font-size: 1.2em;
+                                          text-shadow:1px 1px 2px rgba(150, 150, 150, 1);", 
+                                    align = 'center'),
+                         DT::dataTableOutput('bat_final')
+                       ) 
+                    )
+                  )
+              )
             )
           )
         )
