@@ -102,6 +102,24 @@ IP <- function(x){
       enable_preloader = TRUE,
       # Navbar ----
       navbar = bs4DashNavbar(
+        tags$head(
+          tags$style(
+            HTML('
+            .main-sidebar{
+              background-color: #0473cb;
+            }
+
+            .brand-link{
+            border bottom; none;
+            }
+
+            .bg-dark{
+            background-color: #0473cb;
+            }
+
+           ')
+          )
+        ),
         title = tagList(
           span(class = "logo-lg", "Tiburones de la Guaira")
         ),
@@ -114,7 +132,7 @@ IP <- function(x){
         # User Ruben Lopez
         # userOutput("user")
       ),
-      # sidebar ----
+      # Sidebar ----
       sidebar = bs4DashSidebar(
         disable = FALSE,
         title = "Pa Encima",
@@ -201,10 +219,12 @@ IP <- function(x){
           tags$style(
             HTML('
             .main-footer {
-              background-color: #C20B10;
+              background-color: #f4f6f9;
+              border-top: none;
                 }
            .img {
-              max-width: 50%;
+              max-width: 15%;
+              vertical-align: bottom;
            }
            '
             )
