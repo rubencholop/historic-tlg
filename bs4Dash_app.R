@@ -684,7 +684,7 @@ IP <- function(x){
               tabName = 'Picheo',
               #1 ----
               fluidRow(
-                column(3,
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -705,7 +705,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -726,7 +726,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -746,8 +746,11 @@ IP <- function(x){
                                 )
                            )
                          )
-                       ),
-                column(3,
+                       )
+              ),
+              #2 ----
+              fluidRow(
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -767,11 +770,8 @@ IP <- function(x){
                                 )
                          )
                        )
-                     )
-              ),
-              #2 ----
-              fluidRow(
-                column(3,
+                ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -791,7 +791,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -810,8 +810,11 @@ IP <- function(x){
                                 )
                            )
                          )
-                       ),
-                column(3,
+                       )
+              ),
+              #3 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -832,7 +835,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -852,11 +855,8 @@ IP <- function(x){
                                 )
                          )
                        )
-                   )
-              ),
-              #3 ----
-              fluidRow(
-                column(3,
+                ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -875,8 +875,11 @@ IP <- function(x){
                                 )
                            )
                          )
-                       ),
-                column(3,
+                       )
+              ),
+              #4 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -896,7 +899,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -917,7 +920,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -937,11 +940,11 @@ IP <- function(x){
                                 )
                          )
                        )
-                    )
+                )
               ),
-              #4 ----
+              #5 ----
               fluidRow(
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -961,7 +964,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -982,7 +985,7 @@ IP <- function(x){
                            )
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1002,8 +1005,11 @@ IP <- function(x){
                                 )
                            )
                          )
-                       ),
-                column(3,
+                       )
+                ),
+              #6 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1022,8 +1028,8 @@ IP <- function(x){
                                 )
                          )
                        )
-                    )
                   )
+                )
               ),
             # Bateo ----
             tabPanel(
@@ -4524,7 +4530,7 @@ IP <- function(x){
           )
       })
       
-      #Batting Recors ----
+      #Batting Records ----
       # Table bateo lideres H ----
       output$b_hits <- renderDataTable({
         
