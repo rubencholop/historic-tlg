@@ -148,21 +148,34 @@ IP <- function(x){
         sidebarMenu(
           # br(),
           # meniItem Tiburones de la Guaira ----
-          menuItem(
+          bs4SidebarMenu(
+            bs4SidebarMenuItem(
             text = 'Inicio',
             tabName = 'inicio',
             badgeLabel = "new", 
             badgeColor = "green",
             icon = icon('text-height', lib = 'font-awesome')
           ),
-          # menuItem  Datos ----
-          menuItem(
-            'Datos',
+          # MenuSubItem  Datos ----
+          bs4SidebarMenuItem(
+            text = 'Datos',
             tabName = 'datos',
-            icon = icon('chart-line', lib = 'font-awesome'),
-            menuSubItem('Equipo', tabName = 'equipo'),
-            menuSubItem('Temporada', tabName = 'temporada'),
-            menuSubItem('Por Jugador', tabName = 'jugador')
+            icon = "bars",
+            startExpanded = FALSE,
+            bs4SidebarMenuSubItem(
+              text = 'Equipo', 
+              tabName = 'equipo',
+              icon = "circle-thin"
+              ),
+            bs4SidebarMenuSubItem(
+              text = 'Temporada', 
+              tabName = 'temporada',
+              icon = "circle-thin"),
+            bs4SidebarMenuSubItem(
+              text = 'Por Jugador',
+              tabName = 'jugador',
+              icon = "circle-thin")
+            )
           ),
           # menuItem Estadisticas ----
           menuItem(
@@ -211,9 +224,9 @@ IP <- function(x){
           )
         )
       ),
-      # control bar ----
+      # Control bar ----
       controlbar = bs4DashControlbar(),
-      # footer ----
+      # Footer ----
       footer = bs4DashFooter(
         tags$head(
           tags$style(
@@ -234,16 +247,22 @@ IP <- function(x){
         span(
           style = "font-size: 1em",
           span("Created by "),
-          a("Ruben Lopez", 
-            href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/', 
+          a("Ruben Lopez",
+            href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/',
             target = "_blank")
-        )
+        ),
+        copyrights = a(
+          href = "https://twitter.com/divadnojnarg", 
+          target = "_blank", "@DivadNojnarg"
+        ),
+        right_text = "2018"
       ),
       # Title ----
       title = 'Tiburones de la Guaira B.B.C',
-      # body ----
+      # Body ----
       body = bs4DashBody(
         tabItems(
+          
         # TabItem Inicio ----
           tabItem(
             tabName = 'inicio',
@@ -1036,7 +1055,7 @@ IP <- function(x){
               tabName = 'Bateo',
               #1 ----
               fluidRow(
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1057,7 +1076,7 @@ IP <- function(x){
                               )
                           )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1078,7 +1097,7 @@ IP <- function(x){
                             )
                           )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1098,8 +1117,11 @@ IP <- function(x){
                                 )
                               )
                           )
-                       ),
-                column(3,
+                       )
+              ),
+              #2 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1117,13 +1139,10 @@ IP <- function(x){
                                          DT::dataTableOutput('b_hr')
                                   )
                                 )
-                            )
-                          )
+                         )
                        )
-              ),
-              #2 ----
-              fluidRow(
-                column(3,
+                ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1143,7 +1162,7 @@ IP <- function(x){
                             )
                           )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1155,8 +1174,11 @@ IP <- function(x){
                                     text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                                     align = 'center')
                           )
-                       ),
-                column(3,
+                       )
+                  ),
+              #3 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1168,9 +1190,9 @@ IP <- function(x){
                                     font-size: 1.2em;
                                     text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                                     align = 'center')
-                          )
-                       ),
-                column(3,
+                       )
+                ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1182,12 +1204,9 @@ IP <- function(x){
                                     font-size: 1.2em;
                                     text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                                     align = 'center')
-                              )
-                          )
-                       ),
-              #3 ----
-              fluidRow(
-                column(3,
+                       )
+                ),
+                column(4,
                       bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1206,8 +1225,11 @@ IP <- function(x){
                                 )
                           )
                         )
-                       ),
-                column(3,
+                       )
+                  ),
+              #4 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1224,10 +1246,10 @@ IP <- function(x){
                                          DT::dataTableOutput('b_ab')
                                   )
                                 )
-                          )
-                        )
+                           )
+                         )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1245,10 +1267,10 @@ IP <- function(x){
                                          DT::dataTableOutput('b_sb')
                                   )
                                 )
-                          )
-                        )
+                             )
+                           )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1266,10 +1288,10 @@ IP <- function(x){
                                          DT::dataTableOutput('b_xb')
                                   )
                                 )
-                          )
-                       )
+                           )
+                         )
+                      )
                     )
-                  )
                 )
             )
           )
