@@ -12,7 +12,7 @@
   background-color: #011C51;
 }
 
-table.dataTable thead .sorting {
+.table.dataTable thead .sorting {
   color: #fff;
 }
 
@@ -22,5 +22,16 @@ table.dataTable thead .sorting {
 
 thead, th {
   text-align: center;
-  
+}
+
+.font-weight-ligh {
+  font-family: "Georgia", Times, "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 24px;
+} 
+
+.font-weight-light {
+  font-family: "Georgia", Times, "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 24px;
 }

@@ -120,13 +120,28 @@ IP <- function(x){
            ')
           )
         ),
-        title = tagList(
-          span(class = "logo-lg", "Tiburones de la Guaira")
+        div(
+            id = "header",
+            h2(
+                "Tiburones de la Guaira", style = "color:red",
+                HTML(
+                    "<span style='color:#8bd5d2;
+                      font-size:30px;
+                      font-family:Segoe Script;
+                      font-style: italic;'> Pa Encima!<span>"
+                ), align = 'center'
+            ),
+            tags$style(
+                HTML('.card {box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);}')
+            )
         ),
+        # title = tagList(
+        #   span(class = "logo-lg", "Tiburones de la Guaira")
+        # ),
         # (title = span(tagList(icon("calendar"), "Example"))
         # fixed = TRUE,
-        titleWidth = 233,
-        enable_rightsidebar = TRUE,
+        titleWidth = 250,
+        enable_rightsidebar = FALSE,
         rightSidebarIcon = "bars"
         
         # User Ruben Lopez
@@ -135,7 +150,12 @@ IP <- function(x){
       # Sidebar ----
       sidebar = bs4DashSidebar(
         disable = FALSE,
-        title = "Pa Encima",
+        title = h4("Pa encima!", 
+                   style = "color: #FFFF;
+                            text-transform: uppercase;
+                            font-size: 1.2em;
+                            text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                   align = 'center'),
         skin = "dark",
         status = "primary",
         brandColor = 'dark',
@@ -254,8 +274,15 @@ IP <- function(x){
       title = 'Tiburones de la Guaira B.B.C',
       # Body ----
       body = bs4DashBody(
+        tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")),
+        # tags$head(tags$style(HTML(
+        #   '.font-weight-light {
+        #     font-family: "Georgia", Times, "Times New Roman", serif;
+        #     font-weight: bold;
+        #     font-size: 24px;
+        #   }'
+        # ))),
         tabItems(
-          
         # TabItem Inicio ----
           tabItem(
             tabName = 'inicio',
