@@ -154,63 +154,56 @@ IP <- function(x){
             tabName = 'inicio',
             badgeLabel = "new", 
             badgeColor = "green",
-            icon = icon('text-height', lib = 'font-awesome')
+            icon = "home",
+            startExpanded = TRUE
           ),
           # MenuSubItem  Datos ----
           bs4SidebarMenuItem(
             text = 'Datos',
             tabName = 'datos',
-            icon = "bars",
+            icon = "database",
             startExpanded = FALSE,
-            bs4SidebarMenuSubItem(
-              text = 'Equipo', 
-              tabName = 'equipo',
-              icon = "circle-thin"
-              ),
-            bs4SidebarMenuSubItem(
-              text = 'Temporada', 
-              tabName = 'temporada',
-              icon = "circle-thin"),
-            bs4SidebarMenuSubItem(
-              text = 'Por Jugador',
-              tabName = 'jugador',
-              icon = "circle-thin")
+            bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "circle"),
+            bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "circle"),
+            bs4SidebarMenuSubItem(text = 'Por Jugador', tabName = 'jugador', icon = "circle")
             )
           ),
           # menuItem Estadisticas ----
-          menuItem(
-            'Estadísticas',
+          bs4SidebarMenuItem(
+            text = HTML(paste('Estadísticas', 
+                          bs4Badge("New", position = "left", status = "success"))
+                        ),
             startExpanded = FALSE,
             tabName = 'geo_estadisticas',
-            icon =  icon('globe-americas', lib = 'font-awesome'),
-            menuSubItem('Geograficas', tabName = 'geograficas'),
-            menuSubItem('Historicas', tabName = 'istoricas')
+            icon = "tasks",
+            bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "circle"),
+            bs4SidebarMenuSubItem('Historicas', tabName = 'istoricas', icon = "circle")
           ),
           # menuItem Records ----
-          menuItem(
-            'Records',
+          bs4SidebarMenuItem(
+            text = 'Records',
             tabName = 'records',
-            icon = icon('edit', lib = 'font-awesome'),
-            menuSubItem('De por vida', tabName = 'deporvida'),
-            menuSubItem('Por temporadas', tabName = 'por_temporadas'),
-            menuSubItem('Records en LVBP', tabName = 'lvbp'),
-            menuSubItem('Sabermetria', tabName = 'saberm')
+            icon = "medal",
+            bs4SidebarMenuSubItem('De por vida', tabName = 'deporvida', icon = "circle"),
+            bs4SidebarMenuSubItem('Por temporadas', tabName = 'por_temporadas', icon = "circle"),
+            bs4SidebarMenuSubItem('LVBP', tabName = 'lvbp', icon = "circle"),
+            bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "circle")
           ),
           # menuItem Historia ----
-          menuItem(
-            'Historia',
+          bs4SidebarMenuItem(
+            text ='Historia',
             tabName = 'historia',
-            icon = icon('search-location', lib = 'font-awesome'),
-            menuSubItem('Tiburones de la Guaira', tabName = 'en_num'),
-            menuSubItem('Estadio', tabName = 'rr_sm')
+            icon = "hourglass",
+            bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "circle"),
+            bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "circle")
           ),
           # menuItem Glosario ----
-          menuItem(
-            'Glosario',
+          bs4SidebarMenuItem(
+            text = 'Glosario',
             tabName = 'glosario',
-            icon = icon('google', lib = 'font-awesome'),
-            menuSubItem('Glosario Sabermetrico', tabName = 'g_saberm'),
-            menuSubItem('Cálculos', tabName = 'calc')
+            icon = "book",
+            bs4SidebarMenuSubItem('Glosario Sabermetrico', tabName = 'g_saberm', icon = "circle"),
+            bs4SidebarMenuSubItem('Cálculos', tabName = 'calc', icon = "circle")
           )
         ),
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
