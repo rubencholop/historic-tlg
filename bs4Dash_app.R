@@ -55,6 +55,28 @@ Unique_Rosters <- Rosters %>%
   arrange(jugador) %>% 
   select(jugador)
 
+posiciones <- Rosters %>% 
+  select(pos, lan) %>% 
+  mutate(posicion = case_when(
+    (pos == "p") ~ "P",
+    (pos == "P" & lan == "Z") ~ "LHP",
+    (pos == "P" & lan == "D") ~ "RHP",
+    (pos == "P" & is.na(lan)) ~ "P")
+    # (pos == "C") ~ "C",
+    # (pos == "1B") ~ "1B",
+    # (pos == "2B") ~ "2B",
+    # (pos == "3B") ~ "3B",
+    # (pos == "SS") ~ "SS",
+    # (pos == "IF") ~ "IF",
+    # (pos == "BD") ~ "BD",
+    # (pos == "BE") ~ "BE",
+    # (pos == "LF") ~ "LF",
+    # (pos == "CF") ~ "CF",
+    # (pos == "RF") ~ "FF"
+    ) %>% 
+  tidyr::unite(pos2, c(pos, posicion), sep = "", remove = FALSE)
+  distinct(pos)
+
 
 
 .st <- as.Date("2020-01-22")
@@ -175,17 +197,18 @@ IP <- function(x){
             badgeLabel = "new", 
             badgeColor = "green",
             icon = "home",
-            startExpanded = TRUE
+            startExpanded = FALSE
           ),
           # MenuSubItem  Datos ----
           bs4SidebarMenuItem(
             text = 'Datos',
             tabName = 'datos',
             icon = "database",
-            startExpanded = FALSE,
+            startExpanded = TRUE,
             bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Por Jugador', tabName = 'jugador', icon = "circle")
+            bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "circle"),
+            bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "circle")
             )
           ),
           # menuItem Estadisticas ----
@@ -274,14 +297,13 @@ IP <- function(x){
       title = 'Tiburones de la Guaira B.B.C',
       # Body ----
       body = bs4DashBody(
-        tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")),
-        # tags$head(tags$style(HTML(
-        #   '.font-weight-light {
-        #     font-family: "Georgia", Times, "Times New Roman", serif;
-        #     font-weight: bold;
-        #     font-size: 24px;
-        #   }'
-        # ))),
+        tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
+        tags$head(tags$style(HTML(
+          'thead, th {
+          text-align: center;
+          color: #FFF;
+          }'
+        ))),
         tabItems(
         # TabItem Inicio ----
           tabItem(
@@ -697,6 +719,24 @@ IP <- function(x){
               )
             )
           ),
+        # tabItem by position ----
+        bs4TabItem(
+          h4('Datos historicos por posicion', align = 'center'),
+          tabName = 'posicion',
+          fluidRow(
+            br(),
+            column(3,
+                   selectInput(
+                     inputId = 'select_posicion',
+                     label = 'Posiciones',
+                     choices = posiciones
+                   )
+            )
+          ),
+          fluidRow()
+          
+          
+        ),
         # Estadísticas ----
         tabItem(
           tabName = '',

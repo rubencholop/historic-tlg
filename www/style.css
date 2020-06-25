@@ -12,7 +12,7 @@
   background-color: #011C51;
 }
 
-.table.dataTable thead .sorting {
+table.dataTable thead .sorting {
   color: #fff;
 }
 
@@ -22,6 +22,7 @@
 
 thead, th {
   text-align: center;
+  color: #FFF;
 }
 
 .font-weight-ligh {
