@@ -4606,20 +4606,20 @@ IP <- function(x){
       })
       
       #By position ----
-      # Table bateo regular season by team ----
-      output$Breseason_team <- DT::renderDataTable({
-        req(input$posicione)
+      # Table bateo regular season by position ----
+      output$info_position <- DT::renderDataTable({
+        req(input$select_posicion)
 
-        batting_player <- brs() %>%
+        batting_player <- brs %>%
           mutate(key = paste(as.character(years), jugador)) %>% 
           select(key, 1:28) %>% 
-          left_join(Roster_clean() %>% 
+          left_join(Rosters %>% 
                       mutate(key = paste(as.character(years), jugador)) %>% 
                       select(key, pos, first_name, last_name), by = "key"
                       ) %>% 
           select(2:3, pos,first_name, last_name, 3:31) %>% 
           arrange(years, jugador)  %>% 
-          filter(pos == input$posicione) %>% 
+          filter(pos == "C") %>% 
           select(-years, -edad) %>% 
           group_by(jugador)  %>% 
           summarise(
@@ -4723,7 +4723,7 @@ IP <- function(x){
           style = ,
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             pageLegth = 40,
@@ -4732,8 +4732,14 @@ IP <- function(x){
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
-            fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 0:24)),
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(
+              list(
+                width = '120px', targets = 0,
+                width = '10px', targets = c(1:24))),
+                # className = "left", targets = c(1:24))),
+                                   # width = "200px", targets = 1)),
+                              # list(width = '200px', targets = "_all")),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -4743,7 +4749,8 @@ IP <- function(x){
               "}"
             )
           )
-        ) 
+        )  
+
       })
       
       
