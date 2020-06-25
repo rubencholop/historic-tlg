@@ -56,26 +56,10 @@ Unique_Rosters <- Rosters %>%
   select(jugador)
 
 posiciones <- Rosters %>% 
-  select(pos, lan) %>% 
-  mutate(posicion = case_when(
-    (pos == "p") ~ "P",
-    (pos == "P" & lan == "Z") ~ "LHP",
-    (pos == "P" & lan == "D") ~ "RHP",
-    (pos == "P" & is.na(lan)) ~ "P")
-    # (pos == "C") ~ "C",
-    # (pos == "1B") ~ "1B",
-    # (pos == "2B") ~ "2B",
-    # (pos == "3B") ~ "3B",
-    # (pos == "SS") ~ "SS",
-    # (pos == "IF") ~ "IF",
-    # (pos == "BD") ~ "BD",
-    # (pos == "BE") ~ "BE",
-    # (pos == "LF") ~ "LF",
-    # (pos == "CF") ~ "CF",
-    # (pos == "RF") ~ "FF"
-    ) %>% 
-  tidyr::unite(pos2, c(pos, posicion), sep = "", remove = FALSE)
-  distinct(pos)
+  select(pos) %>% 
+  mutate(pos = if_else(pos == "p", "P", pos)) %>% 
+  unique() %>% 
+  pull()
 
 
 
@@ -142,20 +126,15 @@ IP <- function(x){
            ')
           )
         ),
-        div(
-            id = "header",
-            h2(
-                "Tiburones de la Guaira", style = "color:red",
-                HTML(
-                    "<span style='color:#8bd5d2;
-                      font-size:30px;
-                      font-family:Segoe Script;
-                      font-style: italic;'> Pa Encima!<span>"
-                ), align = 'center'
-            ),
-            tags$style(
-                HTML('.card {box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);}')
-            )
+        div(id = "tiburones",
+            h2("Tiburones de la Guaira", style = "color:red", align = 'center'),
+                # HTML(
+                #     "<span style='color:#8bd5d2;
+                #       font-size:30px;
+                #       font-family:Segoe Script;
+                #       font-style: italic;'> Pa Encima!<span>"
+                # ),
+            tags$style(HTML('#tiburones {align-left: auto;}'))
         ),
         # title = tagList(
         #   span(class = "logo-lg", "Tiburones de la Guaira")
@@ -310,7 +289,7 @@ IP <- function(x){
             tabName = 'inicio',
             h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
             ),
-        # TabItem Data ----
+        # TabItem by tema ----
         tabItem(
           h4('Datos historicos por equipo', align = 'center'),
           tabName = 'equipo',
@@ -417,7 +396,7 @@ IP <- function(x){
           ),
         # TabItem by season ----
         tabItem(
-          h2('Datos historicos por temporada', align = 'center'),
+          h4('Datos historicos por temporada', align = 'center'),
           tabName = 'temporada',
           tabsetPanel(
             id = "tabset1",
@@ -548,6 +527,7 @@ IP <- function(x){
           ),
         # tabItem by player ----
         tabItem(
+          h4('Datos historicos por jugador', align = 'center'),
           tabName = 'jugador',
           tabsetPanel(
             id = "tabset2",
