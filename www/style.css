@@ -31,8 +31,6 @@ thead, th {
   font-size: 24px;
 } 
 
-.font-weight-light {
-  font-family: "Georgia", Times, "Times New Roman", serif;
-  font-weight: bold;
-  font-size: 24px;
-}
+.brand-link {
+  border-bottom: none; 
+ }
