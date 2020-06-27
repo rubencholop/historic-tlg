@@ -151,7 +151,11 @@ IP <- function(x){
       # Sidebar ----
       sidebar = bs4DashSidebar(
         disable = FALSE,
-        title = h4("Pa encima!", 
+        title = 
+          # tagList(
+          # # span(class = "logo-mini", "shiny"),
+          # img(src = "andreas_Bureau_de_change.svg")),
+          h4("Pa encima!",
                    style = "color: #FFFF;
                             text-transform: uppercase;
                             font-size: 1.2em;
@@ -161,7 +165,7 @@ IP <- function(x){
         status = "primary",
         brandColor = 'dark',
         url = NULL,
-        src = NULL,
+        src = "logo_top.png",
         elevation = 4,
         opacity = 0.8,
         expand_on_hover = TRUE,
@@ -178,12 +182,12 @@ IP <- function(x){
             icon = "home",
             startExpanded = FALSE
           ),
-          # MenuSubItem  Datos ----
+          # MenuSubItem Datos ----
           bs4SidebarMenuItem(
             text = 'Datos',
             tabName = 'datos',
             icon = "database",
-            startExpanded = TRUE,
+            startExpanded = FALSE,
             bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "circle"),
@@ -4610,16 +4614,16 @@ IP <- function(x){
       output$info_position <- DT::renderDataTable({
         req(input$select_posicion)
 
-        batting_player <- brs %>%
+        batting_player <- brs() %>%
           mutate(key = paste(as.character(years), jugador)) %>% 
           select(key, 1:28) %>% 
-          left_join(Rosters %>% 
+          left_join(Rosters() %>% 
                       mutate(key = paste(as.character(years), jugador)) %>% 
                       select(key, pos, first_name, last_name), by = "key"
                       ) %>% 
           select(2:3, pos,first_name, last_name, 3:31) %>% 
           arrange(years, jugador)  %>% 
-          filter(pos == "C") %>% 
+          filter(pos == input$select_posicion) %>% 
           select(-years, -edad) %>% 
           group_by(jugador)  %>% 
           summarise(
@@ -4722,17 +4726,17 @@ IP <- function(x){
           rownames = FALSE,
           style = ,
           options = list(
-            dom = 'ft',  # To remove showing 1 to n of entries fields
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
-            paging = FALSE,
-            pageLegth = 40,
-            # lengthMenu = c(15, 20, 25),
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
+            fixedColumns = list(LeftColumns = 3),
             columnDefs = list(
               list(
                 width = '120px', targets = 0,
