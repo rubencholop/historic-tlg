@@ -127,7 +127,8 @@ IP <- function(x){
           )
         ),
         div(id = "tiburones",
-            h2("Tiburones de la Guaira", style = "color:red", align = 'center'),
+            h2("Registro historico de Tiburones de la Guaira", 
+               style = "color:red", align = 'center'),
                 # HTML(
                 #     "<span style='color:#8bd5d2;
                 #       font-size:30px;
@@ -151,11 +152,7 @@ IP <- function(x){
       # Sidebar ----
       sidebar = bs4DashSidebar(
         disable = FALSE,
-        title = 
-          # tagList(
-          # # span(class = "logo-mini", "shiny"),
-          # img(src = "andreas_Bureau_de_change.svg")),
-          h4("Pa encima!",
+        title = h4("Pa encima!",
                    style = "color: #FFFF;
                             text-transform: uppercase;
                             font-size: 1.2em;
@@ -163,7 +160,7 @@ IP <- function(x){
                    align = 'center'),
         skin = "dark",
         status = "primary",
-        brandColor = 'dark',
+        brandColor = '#011C51',
         url = NULL,
         src = "logo_top.png",
         elevation = 4,
@@ -191,7 +188,8 @@ IP <- function(x){
             bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "circle")
+            bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "circle"),
+            bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "circle")
             )
           ),
           # menuItem Estadisticas ----
@@ -288,12 +286,12 @@ IP <- function(x){
           }'
         ))),
         tabItems(
-        # TabItem Inicio ----
+        # TabItem Home ----
           tabItem(
-            tabName = 'inicio',
-            h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
+            tabName = 'inicio'
+            # h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
             ),
-        # TabItem by tema ----
+        # TabItem by Team ----
         tabItem(
           h4('Datos historicos por equipo', align = 'center'),
           tabName = 'equipo',
@@ -398,7 +396,7 @@ IP <- function(x){
                       )
             )
           ),
-        # TabItem by season ----
+        # TabItem by Season ----
         tabItem(
           h4('Datos historicos por temporada', align = 'center'),
           tabName = 'temporada',
@@ -529,7 +527,7 @@ IP <- function(x){
               # tabPanel(tabName = 'Fildeo', tableOutput('fildeo_rs'))
             )
           ),
-        # tabItem by player ----
+        # TabItem by Player ----
         tabItem(
           h4('Datos historicos por jugador', align = 'center'),
           tabName = 'jugador',
@@ -703,7 +701,7 @@ IP <- function(x){
               )
             )
           ),
-        # tabItem by position ----
+        # TabItem by Position ----
         bs4TabItem(
           h4('Datos historicos por posicion', align = 'center'),
           tabName = 'posicion',
@@ -734,7 +732,38 @@ IP <- function(x){
                   )
               )
         ),
-        # Estadísticas ----
+        # TabItem by Roster ----
+        bs4TabItem(
+          h4('Rosters historicos por posicion', align = 'center'),
+          tabName = 'roster',
+          # input roster ----
+          fluidRow(
+            br(),
+            column(3,
+                   selectInput(
+                     inputId = 'select_rosters',
+                     label = 'Posiciones',
+                     choices = temporadas
+                   )
+            )
+          ),
+          # Stats by roster ----
+          fluidRow(
+            column(12,
+                   bs4Box(
+                     width = NULL,
+                     title = h4("Temporada Regular", 
+                                style = "color: #b90e13;
+                                  text-transform: uppercase;
+                                  font-size: 1.2em;
+                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                lign = 'center'),
+                     DT::dataTableOutput('info_roster')
+                   )
+            )
+          )
+        ),
+        # Tabitem Estadísticas ----
         tabItem(
           tabName = '',
           tabsetPanel(
@@ -748,7 +777,7 @@ IP <- function(x){
             )
           )
         ),
-        # Records ----
+        # Tabitem Records ----
         tabItem(
           tabName = 'deporvida',
           h4('Lideres historicos', align = 'center'),
@@ -4755,6 +4784,155 @@ IP <- function(x){
           )
         )  
 
+      })
+      
+      
+      #By Rosters ----
+      # Table bateo regular season by position ----
+      output$info_position <- DT::renderDataTable({
+        req(input$select_rosters)
+        
+        roster <- brs() %>%
+          mutate(key = paste(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      mutate(key = paste(as.character(years), jugador)) %>% 
+                      select(key, pos, first_name, last_name), by = "key"
+          ) %>% 
+          select(2:3, pos,first_name, last_name, 3:31) %>% 
+          arrange(years, jugador)  %>% 
+          filter(pos == input$select_posicion) %>% 
+          select(-years, -edad) %>% 
+          group_by(jugador)  %>% 
+          summarise(
+            pos  = last(pos),
+            first_name = last(first_name),
+            last_name = last(last_name),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(mean(avg, na.rm = T), 3),
+            obp = round(mean(obp, na.rm = T), 3),
+            slg = round(mean(slg, na.rm = T), 3),
+            ops = round(mean(ops, na.rm = T), 3),
+            ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T)
+          ) %>% 
+          mutate(
+            g = as.numeric(g),
+            pa = as.numeric(pa),
+            ab = as.numeric(ab),
+            r = as.numeric(r),
+            h = as.numeric(h),
+            hr = as.numeric(hr),
+            rbi = as.numeric(rbi),
+            sb = as.numeric(sb),
+            cs = as.numeric(cs),
+            bb = as.numeric(bb),
+            so = as.numeric(so),
+            avg = round(as.numeric(avg), 3), 
+            obp = round(as.numeric(obp), 3),
+            slg = round(as.numeric(slg), 3),
+            ops = round(as.numeric(ops), 3),
+            ir = as.numeric(ir),
+            rc = as.numeric(rc),
+            tb = as.numeric(tb),
+            xb = as.numeric(xb),
+            hbp = as.numeric(hbp),
+            sh = as.numeric(sh),
+            sf = as.numeric(sf),
+            `2b` = as.numeric(`2b`),
+            `3b` = as.numeric(`3b`)
+          ) %>% 
+          select(-jugador) %>% 
+          mutate(jugador = paste0(first_name, " ", last_name, sep = " ")) %>% 
+          select(jugador, 4:28) %>% 
+          arrange(desc(g)) %>% 
+          rename(
+            Jugador = jugador,
+            `G` = g,
+            `PA` = pa,
+            `AB` = ab,
+            `R` = r,
+            `H` = h,
+            `2B` = '2b',
+            `3B` = '3b',
+            `HR` = hr,
+            `RBI` = rbi,
+            `SB` = sb,
+            `CS` = cs,
+            `BB` = bb,
+            `SO` = so,
+            `AVG` = avg,
+            `OBP` = obp,
+            `SLG` = slg,
+            `OPS` = ops,
+            `RC` = rc,
+            `TB` = tb,
+            `XB` = xb,
+            `IR` = ir,
+            `HBP` = hbp,
+            `SH` = sh,
+            `SF` = sf
+          ) 
+        
+        # Datatable ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          batting_player,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          style = ,
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(
+              list(
+                width = '120px', targets = 0,
+                width = '10px', targets = c(1:24))),
+            # className = "left", targets = c(1:24))),
+            # width = "200px", targets = 1)),
+            # list(width = '200px', targets = "_all")),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )  
+        
       })
       
       
