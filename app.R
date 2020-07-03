@@ -1488,14 +1488,13 @@ IP <- function(x){
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round((h/ip)*9, 2),
-            `hr/9` = round((hr/ip)*9, 2),
-            `bb/9` = round((bb/ip)*9, 2),
-            `so/9` = round((so/ip)*9, 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2)
-          ) %>% 
-          mutate_if(as.numeric, as.character)
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2))
+            ) 
         
         pitching_player <- prs() %>% 
           arrange(years, jugador) %>% 
