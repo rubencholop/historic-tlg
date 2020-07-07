@@ -90,18 +90,21 @@ temporadas <- data.table::rbindlist(
 
 IP <- function(x){
   x <- x %>%
-    sum() %>% 
     as.character()
   
-  episodio <-  as.numeric(sub("\\..*", "", x))
-  tercio <-  as.numeric(str_sub(x, -1, -1))
+  episodio <-  as.numeric(sub("\\..*", "", x)) %>% 
+    sum()
   
-  x <-  episodio + trunc(tercio / 3) + (tercio %% 3) / 10
+  tercio <- case_when(str_detect(x,"\\.") ~ str_sub(x, -1, -1),
+                      TRUE ~ "0") %>% 
+    as.numeric() %>% 
+    sum()
   
+  x <-  episodio + trunc(tercio / 3) + ((tercio %% 3) / 10)
+
   return(x)
 }
 
-  
   shiny::shinyApp(
     # Page ----
     ui = bs4DashPage(
