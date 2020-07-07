@@ -3479,9 +3479,9 @@ IP <- function(x){
       output$bat_rs <- DT::renderDataTable({
         req(input$select_jugador)
         
-        player_summarise <- Hbrs %>%
+        player_summarise <- brs() %>%
           filter(jugador == input$select_jugador) %>%
-          select(-jugador, -key) %>%
+          select(-jugador) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3525,7 +3525,7 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
+            avg = round(h/ab, 3),
             obp = round(mean(obp, na.rm = T), 3),
             slg = round(mean(slg, na.rm = T), 3),
             ops = round(mean(ops, na.rm = T), 3),
@@ -3539,9 +3539,9 @@ IP <- function(x){
           )
         
         
-        batting_player <- Hbrs %>%
+        batting_player <- brs() %>%
           filter(jugador == input$select_jugador) %>%
-          select(-jugador, -key) %>%
+          select(-jugador) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3651,7 +3651,7 @@ IP <- function(x){
       output$bat_rr <- DT::renderDataTable({
         req(input$select_jugador)
         
-        player_summarise <- Hbrr %>%
+        player_summarise <- brr()%>%
           filter(jugador == input$select_jugador) %>%
           select(2:28) %>% 
           mutate(
@@ -3711,7 +3711,7 @@ IP <- function(x){
           )
         
         
-        batting_player <- Hbrr %>%
+        batting_player <- brr() %>%
           filter(jugador == input$select_jugador) %>%
           select(2:28) %>% 
           mutate(
