@@ -303,6 +303,9 @@ IP <- function(x){
           justify-content: center;
           }
          /*
+          img {
+            border-radius: 10px;
+          }
           
           '
         ))),
@@ -572,18 +575,36 @@ IP <- function(x){
               # Image ----
               fluidRow(
                 column(6,
-                       shinydashboardPlus::widgetUserBox(
-                         title = "Elizabeth Pierce",
-                         subtitle = "Web Designer",
-                         type = NULL,
-                         width = 12,
+                       bs4UserCard(
                          src = imageOutput('jugador_pit'),
-                         background = TRUE,
-                         backgroundUrl = "tibu.jpeg",
-                         closable = FALSE,
-                         "Some text here!",
-                         footer = "The footer here!"
+                         # src = "pitching/logo_lg.jpg",
+                         backgroundUrl = "pitching/logo_lg.jpg",
+                         status = "primary",
+                         title = "Adonys Cardona",
+                         # subtitle = "a subtitle here",
+                         elevation = 4,
+                         width = 12,
+                         "Any content here"
                        )
+                       # shinydashboardPlus::widgetUserBox(
+                       #   title = textOutput("pitcher"),
+                       #   subtitle = "Web Designer",
+                       #   type = NULL,
+                       #   width = 12,
+                       #   src = imageOutput('jugador_pit'),
+                       #   background = TRUE,
+                       #   backgroundUrl = "tibu.jpeg",
+                       #   closable = FALSE,
+                       #   "Some text here!",
+                       #   footer = "The footer here!"
+                       # )
+                ),
+                column(6,
+                       box(
+                         # imageOutput('jugador_pit'),
+                         width = 12
+                       )
+                  
                 )
               ),
               # Table  ----
@@ -640,35 +661,25 @@ IP <- function(x){
               ),
               # Image ----
               fluidRow(
-                column(7,
+                column(4,
                        bs4Box(
                          width = NULL,
+                         height = "200px",
                          collapsible = TRUE,
-                         title = h3(textOutput('jugador_bat'), align = 'center'),
-                         column(8,
-                                fluidRow(
+                         # title = h4(textOutput('jugador_bat'), align = 'center'),
+                         title = ,
+                         fluidRow(
+                           column(5,
                                   column(12,
                                          imageOutput('jugador_')
                                   )
+                           ),
+                           column(7,
+                                fluidRow(h6(textOutput('pos_jugador'),  align = 'rigth')),
+                                fluidRow(h6(textOutput('bl_jugador'), align = 'rigth')),
+                                fluidRow(h6(textOutput('pais_jugador'),  align = 'rigth'))
                                 )
-                         ),
-                         column(4,
-                                fluidRow(
-                                  column(12,
-                                         h3(textOutput('pos_jugador'),  align = 'rigth')
-                                  )
-                                ),
-                                fluidRow(
-                                  column(12,
-                                         h3(textOutput('bl_jugador'), align = 'rigth')
-                                  )
-                                ),
-                                fluidRow(
-                                  column(12,
-                                         h3(textOutput('pais_jugador'),  align = 'rigth')
-                                  )
-                                )
-                         )
+                           )
                        )
                 ),
                 column(5,
@@ -7179,8 +7190,8 @@ IP <- function(x){
           return(list(
             src = player,
             contentType = "image/jpg",
-            width = 300,
-            height = 300
+            width = 150,
+            height = 150
             # alt = 'Selecciona un jugador'
           ))
         }
@@ -7194,19 +7205,28 @@ IP <- function(x){
       output$jugador_pit <- renderImage({
         req(input$select_jugador_pit)
         
-        player <- paste('www/pitching/',input$select_jugador_pit, '.jpg', sep = '')
+        player <- paste('pitching/',"A. Cardona",'.jpg', sep = '')
+        logo <- "pitching/logo_lg.jpg"
         
-        if (is.null(input$select_jugador_pit))
-          return(cat('Not image'))
+        if (is.null(input$select_jugador_pit)) {
+          return(
+            list(
+              src = logo,
+              contenType = "image/jpg"
+                )
+              )
+        }
         
-        if (input$select_jugador_pit == input$select_jugador_pit) {
-          return(list(
-            src = player,
-            contentType = "image/jpg"
+        else {
+          return(
+            list(
+              src = player,
+              contentType = "image/jpg"
             # width = 300,
             # height = 300
             # alt = 'Selecciona un jugador'
-          ))
+                )
+              )
         }
       }, deleteFile = FALSE)
       
@@ -7230,11 +7250,21 @@ IP <- function(x){
       }, deleteFile = FALSE)
       
       # ----TEXT OUTPUT -----
+      # Text output pitching player ----
+      output$pitcher <- renderText({
+        req(input$select_jugador_pit)
+        
+        df <- Rosters() %>% 
+          filter(jugador == input$select_jugador_pit) %>% 
+          select(jugador) %>% 
+          unique() %>% 
+          pull()
+      })
       # Text output season ----
       output$year <- renderText({
         req(input$select_jugador)
         
-        df <- Rosters %>% 
+        df <- Rosters() %>% 
           filter(years == input$select_temporada) %>% 
           select(years) %>% 
           unique() %>% 
@@ -7244,7 +7274,7 @@ IP <- function(x){
       output$jugador_bat <- renderText({
         req(input$select_jugador)
         
-        df <- Rosters %>% 
+        df <- Rosters()%>% 
           filter( jugador == input$select_jugador) %>% 
           select(name) %>% 
           unique() %>% 
@@ -7254,7 +7284,7 @@ IP <- function(x){
       output$pos_jugador <- renderText({
         req(input$select_jugador)
         
-        df <- Rosters %>% 
+        df <- Rosters() %>% 
           filter( jugador == input$select_jugador) %>% 
           select(pos) %>% 
           summarise(
@@ -7271,7 +7301,7 @@ IP <- function(x){
       output$bl_jugador <- renderText({
         req(input$select_jugador)
         
-        df <- Rosters %>% 
+        df <- Rosters() %>% 
           filter( jugador == input$select_jugador) %>% 
           select(bat) %>% 
           summarise(
@@ -7280,7 +7310,7 @@ IP <- function(x){
           unique() %>% 
           pull()
         
-        df1 <- Rosters %>% 
+        df1 <- Rosters() %>% 
           filter( jugador == input$select_jugador) %>% 
           select(lan) %>% 
           summarise(
@@ -7300,7 +7330,7 @@ IP <- function(x){
         req(input$select_jugador_pit)
         
         
-        df <- Rosters %>% 
+        df <- Rosters() %>% 
           filter( jugador == input$select_jugador) %>% 
           select(pais) %>% 
           summarise(
@@ -7309,7 +7339,7 @@ IP <- function(x){
           unique() %>% 
           pull()
         
-        df1 <- Rosters %>% 
+        df1 <- Rosters() %>% 
           filter( jugador == input$select_jugador) %>% 
           select(estado) %>% 
           summarise(
@@ -7318,7 +7348,7 @@ IP <- function(x){
           unique() %>% 
           pull()
         
-        df2 <- Rosters %>% 
+        df2 <- Rosters() %>% 
           filter( jugador == input$select_jugador) %>% 
           select(ciudad) %>% 
           summarise(
