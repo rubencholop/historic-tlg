@@ -3526,9 +3526,9 @@ IP <- function(x){
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             avg = round(h/ab, 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
             ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
@@ -3555,10 +3555,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = as.numeric(avg),
+            avg = round(h/ab, 3),
             obp = as.numeric(obp),
             slg = as.numeric(slg),
-            ops = as.numeric(ops),
+            ops = as.numeric(slg),
             ir = as.numeric(ir),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
@@ -3653,7 +3653,7 @@ IP <- function(x){
         
         player_summarise <- brr()%>%
           filter(jugador == input$select_jugador) %>%
-          select(2:28) %>% 
+          select(-jugador) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3682,7 +3682,6 @@ IP <- function(x){
           ) %>% 
           summarise(
             years = 'Temporadas',
-            jugador = last(jugador),
             edad = NROW(edad),
             g = sum(g, na.rm = T),
             X5 = sum(X5, na.rm = T),
@@ -3697,10 +3696,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/`X5`, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -3713,7 +3712,7 @@ IP <- function(x){
         
         batting_player <- brr() %>%
           filter(jugador == input$select_jugador) %>%
-          select(2:28) %>% 
+          select(-jugador) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3742,7 +3741,6 @@ IP <- function(x){
           )
         
         df <-  rbind(player_summarise, batting_player) %>%
-          select(years, 3:27, refuerzo) %>% 
           rename(
             `Temporada` = years,
             `Refuerzo` = refuerzo,
@@ -3822,9 +3820,9 @@ IP <- function(x){
       output$bat_final <- DT::renderDataTable({
         req(input$select_jugador)
         
-        player_summarise <- Hbf %>% 
+        player_summarise <- bf() %>% 
           filter(jugador == input$select_jugador) %>% 
-          select(years, resultado, refuerzo, 2:29) %>% 
+          select(-jugador) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3854,7 +3852,6 @@ IP <- function(x){
           summarise(
             years = 'Temporadas',
             resultado = '',
-            jugador = '-',
             edad = NROW(edad),
             refuerzo = '',
             g = sum(g, na.rm = T),
@@ -3870,10 +3867,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/`X5`, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -3883,9 +3880,9 @@ IP <- function(x){
           )
         
         
-        batting_player <- Hbf %>% 
+        batting_player <- bf() %>% 
           filter(jugador == input$select_jugador) %>% 
-          select(years, resultado, refuerzo, 2:29) %>% 
+          select(-jugador) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3911,13 +3908,12 @@ IP <- function(x){
             sf = as.numeric(sf),
             `2b` = as.numeric(`2b`),
             `3b` = as.numeric(`3b`)
-          ) %>%
-          select(-name)
+          )
         
         
         
         df <- rbind(batting_player, player_summarise) %>%
-          select(years, 5:28, refuerzo, resultado) %>% 
+          select(years, 2:27, refuerzo, resultado) %>% 
           rename(
             `Temporada` = years,
             `Edad` = edad,
@@ -3953,8 +3949,8 @@ IP <- function(x){
           ) %>% 
           mutate(Logro = if_else(Logro == 'campeon', 'Campeon', Logro),
                  Logro = if_else(Logro == 'subcampeon', 'SubCampeon', Logro)
-          ) %>% 
-          replace(., is.na(.), 0)
+          ) 
+          # replace(., is.na(.), 0)
         
         # Datatable ----
         headerCallback <- c(
