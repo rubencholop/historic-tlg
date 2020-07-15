@@ -108,14 +108,14 @@ IP <- function(x){
   shiny::shinyApp(
     # Page ----
     ui = bs4DashPage(
-      enable_preloader = TRUE,
+      enable_preloader = FALSE, # Icon before preloader
       # Navbar ----
       navbar = bs4DashNavbar(
         tags$head(
           tags$style(
             HTML('
             .main-sidebar{
-              background-color: #0473cb;
+              background-color: #011C51;
             }
 
             .brand-link{
@@ -124,6 +124,10 @@ IP <- function(x){
 
             .bg-dark{
             background-color: #0473cb;
+            }
+            
+            .navbar-light {
+            background-color: #f4f6f9;
             }
 
            ')
@@ -181,7 +185,6 @@ IP <- function(x){
         expand_on_hover = TRUE,
         fixed = FALSE,
         sidebarMenu(
-          # br(),
           # meniItem Tiburones de la Guaira ----
           bs4SidebarMenu(
             bs4SidebarMenuItem(
@@ -273,40 +276,60 @@ IP <- function(x){
             )
           )
         ),
-        img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png'),
-        span(
-          style = "font-size: 1em",
-          span("Created by "),
-          a("Ruben Lopez",
-            href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/',
-            target = "_blank")
+        div( 
+          id = "logo",
+          img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
         ),
-        copyrights = a(
-          href = "https://twitter.com/divadnojnarg", 
-          target = "_blank", "@DivadNojnarg"
-        ),
-        right_text = "2018"
-      ),
+        
+        # span(
+        #   style = "font-size: 1em",
+        #   span("Created by "),
+        #   a("Ruben Lopez",
+        #     href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/',
+        #     target = "_blank")
+        # ),
+      #   copyrights = a(
+      #     href = "https://twitter.com/divadnojnarg", 
+      #     target = "_blank", "@DivadNojnarg"
+      #   ),
+      #   right_text = "2020"
+      # ),
+      copyrights = 
+        span("Created by "),
+        a(href = "https://twitter.com/divadnojnarg", target = "_blank", "@DivadNojnarg"),
+      right_text = "2020"
+    ),
       # Title ----
       title = 'Tiburones de la Guaira B.B.C',
       # Body ----
       body = bs4DashBody(
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
         tags$head(tags$style(HTML(
-          'thead, th {
-          text-align: center;
-          color: #FFF;
+          '
+          thead, th {
+            text-align: center;
+            color: #FFF;
           }
           
          /* Jistify center title of table
           .justify-content-between {
-          justify-content: center;
+              justify-content: center;
           }
+
          /*
           img {
             border-radius: 10px;
           }
-          
+
+          h3 {
+            float: left;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin: 0;
+            color: #b90e13;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+           }
           '
         ))),
         tabItems(
@@ -329,12 +352,12 @@ IP <- function(x){
                 column(12,
                        bs4Box(
                          width = NULL,
-                         title = h4("Temporada Regular", 
-                                  style = "color: #b90e13;
-                                          text-transform: uppercase;
-                                          font-size: 1.2em;
-                                          text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           lign = 'center'),
+                         title = "Temporada Regular",
+                           # h4("Temporada Regular", 
+                           #        style = "color: #b90e13;
+                           #                text-transform: uppercase;
+                           #                font-size: 1.2em;
+                           #                text-shadow:1px 1px 2px rgba(150, 150, 150, 1);"),
                                 DT::dataTableOutput('Preseason_team')
                          )
                        )
@@ -1586,11 +1609,11 @@ IP <- function(x){
           style = ,
           options = list(
             autoWidth = TRUE,
-            dom = 'ft',  # To remove showing 1 to n of entries fields
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
-            paging = FALSE,
+            paging = TRUE,
             pageLegth = 30,
-            # lengthMenu = c(15, 20, 25),
+            lengthMenu = c(30, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
@@ -4735,8 +4758,8 @@ IP <- function(x){
             autoWidth = TRUE,
             searching = FALSE,
             paging = TRUE,
-            pageLegth = 25,
-            lengthMenu = c(25, 20, 100),
+            pageLegth = 30,
+            lengthMenu = c(30, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
