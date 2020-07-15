@@ -109,6 +109,8 @@ IP <- function(x){
     # Page ----
     ui = bs4DashPage(
       enable_preloader = FALSE, # Icon before preloader
+      controlbar_overlay = TRUE,
+      sidebar_collapsed = TRUE,
       # Navbar ----
       navbar = bs4DashNavbar(
         tags$head(
@@ -1019,9 +1021,10 @@ IP <- function(x){
                 column(4,
                        bs4Box(
                          width = NULL,
-                         higth = '100px',
+                         higth = '300px',
                          collapsible = TRUE,
-                         title = h2("ERA",
+                         # status = 'warning',
+                         title = h2("SV",
                                     style = "color: #b90e13;
                                     text-transform: uppercase;
                                     font-size: 1.2em;
@@ -1030,9 +1033,9 @@ IP <- function(x){
                          column(12,
                                 fluidRow(
                                   column(12,
-                                         DT::dataTableOutput('p_era')
+                                         DT::dataTableOutput('p_sv')
+                                    )
                                   )
-                                )
                            )
                          )
                        )
@@ -1062,10 +1065,9 @@ IP <- function(x){
                 column(4,
                        bs4Box(
                          width = NULL,
-                         higth = '300px',
+                         higth = '100px',
                          collapsible = TRUE,
-                         # status = 'warning',
-                         title = h2("SV",
+                         title = h2("ERA",
                                     style = "color: #b90e13;
                                     text-transform: uppercase;
                                     font-size: 1.2em;
@@ -1074,19 +1076,18 @@ IP <- function(x){
                          column(12,
                                 fluidRow(
                                   column(12,
-                                         DT::dataTableOutput('p_sv')
+                                         DT::dataTableOutput('p_era')
+                                    )
                                   )
-                                )
                            )
                          )
                        ),
                 column(4,
                        bs4Box(
                          width = NULL,
-                         higth = '300px',
+                         higth = '100px',
                          collapsible = TRUE,
-                         # status = 'warning',
-                         title = h2("IR",
+                         title = h2("SO/BB",
                                     style = "color: #b90e13;
                                     text-transform: uppercase;
                                     font-size: 1.2em;
@@ -1095,7 +1096,7 @@ IP <- function(x){
                          column(12,
                                 fluidRow(
                                   column(12,
-                                         DT::dataTableOutput('p_ir')
+                                         DT::dataTableOutput('p_sobb')
                                   )
                                 )
                          )
@@ -1166,29 +1167,6 @@ IP <- function(x){
                            )
                          )
                        )
-                ),
-              #6 ----
-              fluidRow(
-                column(4,
-                       bs4Box(
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = h2("SO/BB",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_sobb')
-                                  )
-                                )
-                         )
-                       )
-                  )
                 )
               ),
             # Bateo ----
@@ -4830,7 +4808,7 @@ IP <- function(x){
           arrange(desc(h)) %>%
           select(first_name, last_name, h) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, h) %>% 
+          top_n(10, h) %>% 
           rename(
             Jugador = jugador,
             H = h
@@ -4850,7 +4828,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -4917,7 +4895,7 @@ IP <- function(x){
           arrange(desc(`2b`)) %>%
           select(first_name, last_name, `2b`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, `2b`) %>% 
+          top_n(10, `2b`) %>% 
           rename(
             Jugador = jugador,
             `2B` = `2b`
@@ -4937,7 +4915,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5004,7 +4982,7 @@ IP <- function(x){
           arrange(desc(`3b`)) %>%
           select(first_name, last_name, `3b`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, `3b`) %>% 
+          top_n(10, `3b`) %>% 
           rename(
             Jugador = jugador,
             `3B` = `3b`
@@ -5024,7 +5002,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5091,7 +5069,7 @@ IP <- function(x){
           arrange(desc(hr)) %>%
           select(first_name, last_name, hr) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, hr) %>% 
+          top_n(10, hr) %>% 
           rename(
             Jugador = jugador,
             HR = hr
@@ -5111,7 +5089,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5180,7 +5158,7 @@ IP <- function(x){
           select(first_name, last_name, h, ab, avg) %>% 
           mutate(avg = round(((h)/ ab), 3)) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, avg) %>% 
+          top_n(10, avg) %>% 
           select(jugador, avg) %>% 
           rename(
             Jugador = jugador,
@@ -5273,7 +5251,7 @@ IP <- function(x){
           select(first_name, last_name, h, ab, avg) %>% 
           mutate(avg = round(((h)/ ab), 3)) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, avg) %>% 
+          top_n(10, avg) %>% 
           select(jugador, avg) %>% 
           rename(
             Jugador = jugador,
@@ -5364,7 +5342,7 @@ IP <- function(x){
           arrange(desc(rbi)) %>%
           select(first_name, last_name, rbi) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, rbi) %>% 
+          top_n(10, rbi) %>% 
           rename(
             Jugador = jugador,
             RBI = rbi
@@ -5384,7 +5362,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5451,7 +5429,7 @@ IP <- function(x){
           arrange(desc(ab)) %>%
           select(first_name, last_name, ab) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, ab) %>% 
+          top_n(10, ab) %>% 
           rename(
             Jugador = jugador,
             AB = ab
@@ -5471,7 +5449,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5538,7 +5516,7 @@ IP <- function(x){
           arrange(desc(sb)) %>%
           select(first_name, last_name, sb) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, sb) %>% 
+          top_n(10, sb) %>% 
           rename(
             Jugador = jugador,
             SB = sb
@@ -5558,7 +5536,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5625,7 +5603,7 @@ IP <- function(x){
           arrange(desc(xb)) %>%
           select(first_name, last_name, xb) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, xb) %>% 
+          top_n(10, xb) %>% 
           rename(
             Jugador = jugador,
             XB = xb
@@ -5645,7 +5623,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5712,11 +5690,12 @@ IP <- function(x){
           arrange(desc(w)) %>%
           select(first_name, last_name, w) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, w) %>% 
+          top_n(10, w) %>% 
           rename(
             Jugador = jugador,
             W = w
-          ) 
+          ) %>% 
+          slice(1:(n()-1))
         
         
         headerCallback <- c(
@@ -5732,7 +5711,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5796,10 +5775,10 @@ IP <- function(x){
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
             bk = sum(bk, na.rm = T)
           ) %>% 
-          arrange(desc(w)) %>%
+          arrange(desc(l)) %>%
           select(first_name, last_name, l) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, l) %>% 
+          top_n(10, l) %>% 
           rename(
             Jugador = jugador,
             L = l
@@ -5819,7 +5798,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5886,7 +5865,7 @@ IP <- function(x){
           arrange(desc(g)) %>%
           select(first_name, last_name, g) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, g) %>% 
+          top_n(10, g) %>% 
           rename(
             Jugador = jugador,
             G = g
@@ -5906,7 +5885,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5973,12 +5952,11 @@ IP <- function(x){
           arrange(desc(gs)) %>%
           select(first_name, last_name, gs) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, gs) %>% 
+          top_n(10, gs) %>% 
           rename(
             Jugador = jugador,
             GS = gs
-          ) %>% 
-          slice(1:(n()-1))
+          ) 
         
         
         headerCallback <- c(
@@ -5994,7 +5972,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -6021,18 +5999,6 @@ IP <- function(x){
       
       # Table picheo lideres ip ----
       output$p_ip <- renderDataTable({
-        IP <- function(x){
-          x <- x %>%
-            sum() %>% 
-            as.character()
-          
-          episodio <-  as.numeric(sub("\\..*", "", x))
-          tercio <-  as.numeric(str_sub(x, -1, -1))
-          
-          x <-  episodio + trunc(tercio / 3) + (tercio %% 3) / 10
-          
-          return(x)
-        }
         
         ip <- prs() %>% 
           mutate(key = paste(as.character(years), jugador)) %>% 
@@ -6074,7 +6040,7 @@ IP <- function(x){
           arrange(desc(ip)) %>%
           select(first_name, last_name, ip) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, ip) %>% 
+          top_n(10, ip) %>% 
           rename(
             Jugador = jugador,
             IP = ip
@@ -6094,7 +6060,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -6161,7 +6127,7 @@ IP <- function(x){
           arrange(desc(so)) %>%
           select(first_name, last_name, so) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, so) %>% 
+          top_n(10, so) %>% 
           rename(
             Jugador = jugador,
             SO = so
@@ -6181,7 +6147,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -6248,7 +6214,7 @@ IP <- function(x){
           arrange(desc(h)) %>%
           select(first_name, last_name, h) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, h) %>% 
+          top_n(10, h) %>% 
           rename(
             Jugador = jugador,
             H = h
@@ -6268,7 +6234,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -6334,7 +6300,7 @@ IP <- function(x){
           arrange(desc(bb)) %>%
           select(first_name, last_name, bb) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, bb) %>% 
+          top_n(10, bb) %>% 
           rename(
             Jugador = jugador,
             BB = bb
@@ -6354,7 +6320,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -6395,33 +6361,33 @@ IP <- function(x){
             jugador= last(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
             g = sum(g, na.rm = T),
             gs = sum(gs, na.rm = T),
             cg = sum(cg, na.rm = T),
             sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            ip = IP(ip),
             h = sum(h, na.rm = T),
             r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
-            era = round((er * 9) / ip, 2),
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T)
           ) %>% 
           filter(ip > 400) %>% 
           arrange(era) %>%
           select(first_name, last_name, era) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_frac(5, era) %>% 
+          top_frac(10, era) %>% 
           rename(
             Jugador = jugador,
             ERA = era
@@ -6484,33 +6450,33 @@ IP <- function(x){
             jugador= last(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
             g = sum(g, na.rm = T),
             gs = sum(gs, na.rm = T),
             cg = sum(cg, na.rm = T),
             sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            ip = IP(ip),
             h = sum(h, na.rm = T),
             r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(sum(h, bb) / ip, 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T)
           ) %>% 
           filter(ip > 400) %>% 
           arrange(whip) %>%
           select(first_name, last_name, whip) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          # top_n(5, whip) %>% 
+          top_n(10, whip) %>%
           rename(
             Jugador = jugador,
             WHIP = whip
@@ -6573,32 +6539,32 @@ IP <- function(x){
             jugador= last(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
             g = sum(g, na.rm = T),
             gs = sum(gs, na.rm = T),
             cg = sum(cg, na.rm = T),
             sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            ip = sum(ip, na.rm = T),
             h = sum(h, na.rm = T),
             r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T)
           ) %>% 
           arrange(desc(sv)) %>%
           select(first_name, last_name, sv) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, sv) %>% 
+          top_n(10, sv) %>% 
           rename(
             Jugador = jugador,
             SV = sv
@@ -6613,93 +6579,6 @@ IP <- function(x){
         
         DT::datatable(
           sv,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
-          options = list(
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      
-      # Table picheo lideres ir ----
-      output$p_ir <- renderDataTable({
-        
-        ir <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
-          group_by(ID) %>% 
-          summarise(
-            first_name = last(first_name),
-            last_name = last(last_name),
-            jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            ip = sum(ip, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
-          ) %>% 
-          arrange(desc(ir)) %>%
-          select(first_name, last_name, ir) %>% 
-          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, ir) %>% 
-          rename(
-            Jugador = jugador,
-            IR = ir
-          ) 
-        
-        
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          ir,
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -6747,38 +6626,38 @@ IP <- function(x){
             jugador= last(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
             g = sum(g, na.rm = T),
             gs = sum(gs, na.rm = T),
             cg = sum(cg, na.rm = T),
             sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            ip = IP(ip),
             h = sum(h, na.rm = T),
             r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round((h/ip)*9, 2),
-            `hr/9` = round((hr/ip)*9, 2),
-            `bb/9` = round((bb/ip)*9, 2),
-            `so/9` = round((so/ip)*9, 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T)
           ) %>% 
           filter(ip > 400) %>% 
           arrange(`h/9`) %>%
           select(first_name, last_name, `h/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          # top_n(5, `h/9`) %>% 
+          top_n(10, `h/9`) %>%
           rename(
             Jugador = jugador,
             `H/9` = `h/9`
           ) %>% 
-          slice(1:n()-1)
+          slice(1:(n()-1))
         
         
         headerCallback <- c(
@@ -6836,38 +6715,38 @@ IP <- function(x){
             jugador= last(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
             g = sum(g, na.rm = T),
             gs = sum(gs, na.rm = T),
             cg = sum(cg, na.rm = T),
             sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            ip = IP(ip),
             h = sum(h, na.rm = T),
             r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round((h/ip)*9, 2),
-            `hr/9` = round((hr/ip)*9, 2),
-            `bb/9` = round((bb/ip)*9, 2),
-            `so/9` = round((so/ip)*9, 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T)
           ) %>% 
           filter(ip > 400) %>% 
           arrange(desc(`so/9`)) %>%
           select(first_name, last_name, `so/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          # top_n(5, `h/9`) %>% 
+          top_n(10, `so/9`) %>%
           rename(
             Jugador = jugador,
             `SO/9` = `so/9`
           ) %>% 
-          slice(1:5)
+          slice(1:(n()-1))
         
         
         headerCallback <- c(
@@ -6925,38 +6804,37 @@ IP <- function(x){
             jugador= last(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
             g = sum(g, na.rm = T),
             gs = sum(gs, na.rm = T),
             cg = sum(cg, na.rm = T),
             sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            ip = IP(ip),
             h = sum(h, na.rm = T),
             r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round((h/ip)*9, 2),
-            `hr/9` = round((hr/ip)*9, 2),
-            `bb/9` = round((bb/ip)*9, 2),
-            `so/9` = round((so/ip)*9, 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T)
           ) %>% 
           filter(ip > 400) %>% 
           arrange(`bb/9`) %>%
           select(first_name, last_name, `bb/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          # top_n(5, `h/9`) %>% 
+          top_n(10, `bb/9`) %>%
           rename(
             Jugador = jugador,
             `BB/9` = `bb/9`
-          ) %>% 
-          slice(1:5)
+          ) 
         
         
         headerCallback <- c(
@@ -7014,38 +6892,37 @@ IP <- function(x){
             jugador= last(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
             g = sum(g, na.rm = T),
             gs = sum(gs, na.rm = T),
             cg = sum(cg, na.rm = T),
             sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            ip = IP(ip),
             h = sum(h, na.rm = T),
             r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round((h/ip)*9, 2),
-            `hr/9` = round((hr/ip)*9, 2),
-            `bb/9` = round((bb/ip)*9, 2),
-            `so/9` = round((so/ip)*9, 2),
-            `so/bb` = round(`so/9` / `bb/9`, 2),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T)
           ) %>% 
           filter(ip > 400) %>% 
           arrange(desc(`so/bb`)) %>%
           select(first_name, last_name, `so/bb`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          # top_n(5, `h/9`) %>% 
+          top_n(5, `so/bb`) %>%
           rename(
             Jugador = jugador,
             `SO/BB` = `so/bb`
-          ) %>% 
-          slice(1:5)
+          ) 
         
         
         headerCallback <- c(
