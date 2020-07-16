@@ -1286,13 +1286,20 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("OBP",
+                         title = h2("RBI",
                                     style = "color: #b90e13;
                                     text-transform: uppercase;
                                     font-size: 1.2em;
                                     text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center')
-                          )
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('b_rbi')
+                                    )
+                                  )
+                           )
+                         )
                        )
                   ),
               #3 ----
@@ -1326,24 +1333,17 @@ IP <- function(x){
                        )
                 ),
                 column(4,
-                      bs4Box(
+                       bs4Box(
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("RBI",
+                         title = h2("OBP",
                                     style = "color: #b90e13;
                                     text-transform: uppercase;
                                     font-size: 1.2em;
                                     text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_rbi')
-                                  )
-                                )
+                                    align = 'center')
                           )
-                        )
                        )
                   ),
               #4 ----
@@ -1412,6 +1412,347 @@ IP <- function(x){
                       )
                     )
                 )
+            )
+          ),
+        # Records by season ----
+        tabItem(
+          tabName = 'por_temporadas',
+          h4('Lideres por temporadas ', align = 'center'),
+          tabsetPanel(
+            id = "tabpanel5",
+            side = "left",
+            tabPanel(
+              # Picheo ----
+              tabName = 'Picheo',
+              #1 ----
+              fluidRow(
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("W",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_w')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("L",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_l')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("G",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_g')
+                                  )
+                                )
+                         )
+                       )
+                       )
+              ),
+              #2 ----
+              fluidRow(
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("GS",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_gs')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("IP",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_ip')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("SO",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_so')
+                                  )
+                                )
+                         )
+                       )
+                       )
+              ),
+              #3 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("H",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_h')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("BB",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_bb')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("SV",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_sv')
+                                  )
+                                )
+                         )
+                       )
+                       )
+              ),
+              #4 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("WHIP",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_whip')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("ERA",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_era')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("SO/BB",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_sobb')
+                                  )
+                                )
+                         )
+                       )
+                       )
+              ),
+              #5 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = h2("H/9",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_h9')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("SO/9",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_so9')
+                                  )
+                                )
+                         )
+                       )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = h2("BB/9",
+                                    style = "color: #b90e13;
+                                    text-transform: uppercase;
+                                    font-size: 1.2em;
+                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
+                                    align = 'center'),
+                         column(12,
+                                fluidRow(
+                                  column(12,
+                                         DT::dataTableOutput('pt_p_bb9')
+                                         )
+                                  )
+                                )
+                         )
+                       )
+                )
+              ),
+            # Bateo ----
+            tabPanel(
+              tabName = 'Bateo'
+              )
             )
           )
         )
@@ -4768,10 +5109,10 @@ IP <- function(x){
       # Table bateo lideres H ----
       output$b_hits <- renderDataTable({
         
-        hits <- brs %>% 
+        hits <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
@@ -4856,12 +5197,12 @@ IP <- function(x){
       output$b_2b <- renderDataTable({
         
         dobles <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -4943,12 +5284,12 @@ IP <- function(x){
       output$b_3b <- renderDataTable({
         
         triples <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5031,12 +5372,12 @@ IP <- function(x){
       output$b_hr <- renderDataTable({
         
         hr <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5074,7 +5415,8 @@ IP <- function(x){
           rename(
             Jugador = jugador,
             HR = hr
-          ) 
+          ) %>% 
+          slice(1:(n()-3))
         
         
         headerCallback <- c(
@@ -5118,12 +5460,12 @@ IP <- function(x){
       output$b_average <- renderDataTable({
         
         avg <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5154,7 +5496,7 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T)
           ) %>% 
-          filter(ab >= 2000) %>% 
+          filter(ab >= 1500) %>% 
           arrange(desc(avg)) %>% 
           select(first_name, last_name, h, ab, avg) %>% 
           mutate(avg = round(((h)/ ab), 3)) %>% 
@@ -5183,7 +5525,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 2000 BA')),
+            , htmltools::em('Con mas de 1500 AB')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5211,12 +5553,12 @@ IP <- function(x){
       output$b_obp <- renderDataTable({
         
         obp <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5304,12 +5646,12 @@ IP <- function(x){
       output$b_rbi <- renderDataTable({
         
         rbi <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5391,12 +5733,12 @@ IP <- function(x){
       output$b_ab <- renderDataTable({
         
         ab <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5478,12 +5820,12 @@ IP <- function(x){
       output$b_sb <- renderDataTable({
         
         sb <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5564,13 +5906,13 @@ IP <- function(x){
       # Table bateo lideres XB ----
       output$b_xb <- renderDataTable({
         
-        xb <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+        xb <-brs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5653,12 +5995,12 @@ IP <- function(x){
       output$p_w <- renderDataTable({
         
         w <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -5741,12 +6083,12 @@ IP <- function(x){
       output$p_l <- renderDataTable({
         
         l <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -5828,12 +6170,12 @@ IP <- function(x){
       output$p_g <- renderDataTable({
         
         g <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -5915,12 +6257,12 @@ IP <- function(x){
       output$p_gs <- renderDataTable({
         
         gs <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6002,12 +6344,12 @@ IP <- function(x){
       output$p_ip <- renderDataTable({
         
         ip <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6090,12 +6432,12 @@ IP <- function(x){
       output$p_so <- renderDataTable({
         
         so <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6177,12 +6519,12 @@ IP <- function(x){
       output$p_h <- renderDataTable({
         
         h <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6263,12 +6605,12 @@ IP <- function(x){
       output$p_bb <- renderDataTable({
         
         bb <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6349,12 +6691,12 @@ IP <- function(x){
       output$p_era <- renderDataTable({
         
         era <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6438,12 +6780,12 @@ IP <- function(x){
       output$p_whip <- renderDataTable({
         
         whip <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6527,12 +6869,12 @@ IP <- function(x){
       output$p_sv <- renderDataTable({
         
         sv <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6614,12 +6956,12 @@ IP <- function(x){
       output$p_h9 <- renderDataTable({
         
         h_9 <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6703,12 +7045,12 @@ IP <- function(x){
       output$p_so9 <- renderDataTable({
         
         so_9 <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6792,12 +7134,12 @@ IP <- function(x){
       output$p_bb9 <- renderDataTable({
         
         bb_9 <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
@@ -6880,12 +7222,12 @@ IP <- function(x){
       output$p_sobb <- renderDataTable({
         
         so_bb <- prs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             first_name = last(first_name),
