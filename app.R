@@ -4768,13 +4768,13 @@ IP <- function(x){
       # Table bateo lideres H ----
       output$b_hits <- renderDataTable({
         
-        hits <- brs() %>% 
-          mutate(key = paste(as.character(years), jugador)) %>% 
+        hits <- brs %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste(as.character(years), jugador)) %>%
-                      select(key, ID, first_name, last_name), by = 'key') %>%
-          select(ID, first_name,last_name, jugador, 2:29, -key) %>%
+          left_join(Rosters %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -4986,7 +4986,8 @@ IP <- function(x){
           rename(
             Jugador = jugador,
             `3B` = `3b`
-          ) 
+          ) %>% 
+          slice(1:(n()-2))
         
         
         headerCallback <- c(
