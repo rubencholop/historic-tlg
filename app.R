@@ -1448,8 +1448,83 @@ IP <- function(x){
                          # status = 'warning',
                          title = "L",
                          DT::dataTableOutput('pt_p_l')
+                         )
+                       ),
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "G",
+                         DT::dataTableOutput('pt_p_g')
                        )
-                    )
+                  )
+                ),
+              #2 ----
+              fluidRow(
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "GS",
+                         DT::dataTableOutput('pt_p_gs')
+                         )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "IP",
+                         DT::dataTableOutput('pt_p_ip')
+                         )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "SO",
+                         DT::dataTableOutput('pt_p_so')
+                         )
+                       )
+                ),
+              #3 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "H",
+                         DT::dataTableOutput('pt_p_h')
+                         )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "BB",
+                         DT::dataTableOutput('pt_p_bb')
+               
+                         )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "SV",
+                         DT::dataTableOutput('pt_p_sv')
+                       )
+                  )
                 )
               )
             )
@@ -4808,6 +4883,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -4896,6 +4972,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -4985,6 +5062,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5074,6 +5152,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5168,6 +5247,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 1500 AB')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5262,6 +5342,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 2000 BA')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5350,6 +5431,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5438,6 +5520,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5526,6 +5609,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5614,6 +5698,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5704,6 +5789,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5792,6 +5878,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5880,6 +5967,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -5968,6 +6056,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6057,6 +6146,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6145,6 +6235,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6233,6 +6324,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6302,7 +6394,8 @@ IP <- function(x){
           rename(
             Jugador = jugador,
             BB = bb
-          ) 
+          ) %>% 
+          slice(1:(n()-3))
         
         
         headerCallback <- c(
@@ -6320,6 +6413,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6409,6 +6503,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 400 ip')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6499,6 +6594,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 400 ip')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6587,6 +6683,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 5 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6677,6 +6774,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 400 ip')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6767,6 +6865,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 400 ip')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6856,6 +6955,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 400 ip')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6945,6 +7045,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 400 ip')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -6984,6 +7085,7 @@ IP <- function(x){
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, w) %>% 
           rename(
+            Año = years,
             Jugador = jugador,
             W = w
           ) %>% 
@@ -7006,6 +7108,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -7044,6 +7147,7 @@ IP <- function(x){
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, l) %>% 
           rename(
+            Año = years,
             Jugador = jugador,
             L = l
           ) %>% 
@@ -7066,6 +7170,7 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
+            ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
             searching = FALSE,
@@ -7087,6 +7192,795 @@ IP <- function(x){
             )
           )
         ) 
+      })
+      
+      # Table picheo lideres g ----
+      output$pt_p_g <- renderDataTable({
+        
+        g <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(g)) %>%
+          select(years,first_name, last_name, g) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, g) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            G = g
+          ) 
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          g,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres gs ----
+      output$pt_p_gs <- renderDataTable({
+        
+        gs <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(gs)) %>%
+          select(years, first_name, last_name, gs) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, gs) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            GS = gs
+          ) %>% 
+          slice(1:(n()-9)) %>% 
+          ungroup()
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          gs,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres ip ----
+      output$pt_p_ip <- renderDataTable({
+        
+        ip <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(ip)) %>%
+          select(years, first_name, last_name, ip) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, ip) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            IP = ip
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          ip,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = "100px")),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres so ----
+      output$pt_p_so <- renderDataTable({
+        
+        so <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(so)) %>%
+          select(years, first_name, last_name, so) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, so) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            SO = so
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          so,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres h ----
+      output$pt_p_h <- renderDataTable({
+        
+        h <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(h)) %>%
+          select(years, first_name, last_name, h) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, h) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            H = h
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          h,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      # Table picheo lideres bb ----
+      output$pt_p_bb <- renderDataTable({
+        
+        bb <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(bb)) %>%
+          select(years, first_name, last_name, bb) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, bb) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            BB = bb
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          bb,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      # Table picheo lideres era ----
+      output$pt_p_era <- renderDataTable({
+        
+        era <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(ip > 400) %>% 
+          arrange(era) %>%
+          select(years, first_name, last_name, era) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_frac(10, era) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            ERA = era
+          ) %>% 
+          slice(1: n()-1)
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          era,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 400 ip')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres whip ----
+      output$pt_p_whip <- renderDataTable({
+        
+        whip <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(ip > 400) %>% 
+          arrange(whip) %>%
+          select(years, first_name, last_name, whip) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, whip) %>%
+          rename(
+            Año = years,
+            Jugador = jugador,
+            WHIP = whip
+          ) %>% 
+          slice(1:n()-1)
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          whip,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 400 ip')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres sv ----
+      output$pt_p_sv <- renderDataTable({
+        
+        sv <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(sv)) %>%
+          select(years, first_name, last_name, sv) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, sv) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            SV = sv
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          sv,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 5 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres h/9 ----
+      output$pt_p_h9 <- renderDataTable({
+        
+        h_9 <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(ip > 400) %>% 
+          arrange(`h/9`) %>%
+          select(years, first_name, last_name, `h/9`) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, `h/9`) %>%
+          rename(
+            Año = years,
+            Jugador = jugador,
+            `H/9` = `h/9`
+          ) %>% 
+          slice(1:(n()-1))
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          h_9,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 400 ip')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres so/9 ----
+      output$pt_p_so9 <- renderDataTable({
+        
+        so_9 <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(ip > 400) %>% 
+          arrange(desc(`so/9`)) %>%
+          select(years, first_name, last_name, `so/9`) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, `so/9`) %>%
+          rename(
+            Año = years,
+            Jugador = jugador,
+            `SO/9` = `so/9`
+          ) %>% 
+          slice(1:(n()-1))
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          so_9,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 400 ip')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres bb/9 ----
+      output$pt_p_bb9 <- renderDataTable({
+        
+        bb_9 <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(ip > 400) %>% 
+          arrange(`bb/9`) %>%
+          select(years, first_name, last_name, `bb/9`) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, `bb/9`) %>%
+          rename(
+            Año = years,
+            Jugador = jugador,
+            `BB/9` = `bb/9`
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          bb_9,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 400 ip')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres so/bb ----
+      output$pt_p_sobb <- renderDataTable({
+        
+        so_bb <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(ip > 400) %>% 
+          arrange(desc(`so/bb`)) %>%
+          select(years, first_name, last_name, `so/bb`) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(5, `so/bb`) %>%
+          rename(
+            Año = years,
+            Jugador = jugador,
+            `SO/BB` = `so/bb`
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          so_bb,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 400 ip')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
       })
       
       # ------ INFOBOX -----
