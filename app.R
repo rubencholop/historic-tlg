@@ -856,19 +856,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("W",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_w')
-                                  )
-                                )
-                           )
+                         title = "W",
+                         DT::dataTableOutput('p_w')
                          )
                        ),
                 column(4,
@@ -877,19 +866,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("L",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_l')
-                                  )
-                                )
-                           )
+                         title = "L",
+                         DT::dataTableOutput('p_l')
                          )
                        ),
                 column(4,
@@ -898,19 +876,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("G",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_g')
-                                  )
-                                )
-                           )
+                         title = "G",
+                         DT::dataTableOutput('p_g')
                          )
                        )
               ),
@@ -922,39 +889,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("GS",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_gs')
-                                  )
-                                )
-                         )
-                       )
-                ),
-                column(4,
-                       bs4Box(
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = h2("IP",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_ip')
-                                  )
-                                )
-                           )
+                         title = "GS",
+                         DT::dataTableOutput('p_gs')
                          )
                        ),
                 column(4,
@@ -962,19 +898,17 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("SO",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_so')
-                                  )
-                                )
-                           )
+                         title = "IP",
+                         DT::dataTableOutput('p_ip')
+                         )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "SO",
+                         DT::dataTableOutput('p_so')
                          )
                        )
               ),
@@ -986,19 +920,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("H",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_h')
-                                  )
-                                )
-                           )
+                         title = "H",
+                         DT::dataTableOutput('p_h')
                          )
                        ),
                 column(4,
@@ -1007,40 +930,18 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("BB",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_bb')
-                                  )
-                                )
+                         title = "BB",
+                         DT::dataTableOutput('p_bb')
                          )
-                       )
-                ),
+                       ),
                 column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("SV",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_sv')
-                                    )
-                                  )
-                           )
+                         title = "SV",
+                         DT::dataTableOutput('p_sv')
                          )
                        )
               ),
@@ -1051,19 +952,8 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("WHIP",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_whip')
-                                  )
-                                )
-                           )
+                         title = "WHIP",
+                         DT::dataTableOutput('p_whip')
                          )
                        ),
                 column(4,
@@ -1071,19 +961,8 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("ERA",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_era')
-                                    )
-                                  )
-                           )
+                         title = "ERA",
+                         DT::dataTableOutput('p_era')
                          )
                        ),
                 column(4,
@@ -1091,19 +970,8 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("SO/BB",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_sobb')
-                                  )
-                                )
-                         )
+                         title = "SO/BB",
+                         DT::dataTableOutput('p_sobb')
                        )
                 )
               ),
@@ -1114,19 +982,8 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("H/9",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_h9')
-                                  )
-                                )
-                           )
+                         title = "H/9",
+                         DT::dataTableOutput('p_h9')
                          )
                        ),
                 column(4,
@@ -1135,19 +992,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("SO/9",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_so9')
-                                  )
-                                )
-                           )
+                         title = "SO/9",
+                         DT::dataTableOutput('p_so9')
                          )
                        ),
                 column(4,
@@ -1156,19 +1002,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("BB/9",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('p_bb9')
-                                  )
-                                )
-                           )
+                         title = "BB/9",
+                         DT::dataTableOutput('p_bb9')
                          )
                        )
                 )
@@ -1184,19 +1019,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("H",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_hits')
-                                  )
-                                )
-                              )
+                         title = "H",
+                         DT::dataTableOutput('b_hits')
                           )
                        ),
                 column(4,
@@ -1205,19 +1029,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("2B",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_2b')
-                                  )
-                                )
-                            )
+                         title = "2B",
+                         DT::dataTableOutput('b_2b')
                           )
                        ),
                 column(4,
@@ -1226,19 +1039,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("3B",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_3b')
-                                  )
-                                )
-                              )
+                         title = "3B",
+                         DT::dataTableOutput('b_3b')
                           )
                        )
               ),
@@ -1250,39 +1052,17 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("HR",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_hr')
-                                  )
-                                )
+                         title = "HR",
+                         DT::dataTableOutput('b_hr')
                          )
-                       )
-                ),
+                       ),
                 column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("AVG",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_average')
-                                  )
-                                )
-                            )
+                         title = "AVG",
+                         DT::dataTableOutput('b_average')
                           )
                        ),
                 column(4,
@@ -1290,19 +1070,8 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("RBI",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_rbi')
-                                    )
-                                  )
-                           )
+                         title = "RBI",
+                         DT::dataTableOutput('b_rbi')
                          )
                        )
                   ),
@@ -1314,13 +1083,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("SLG",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center')
-                       )
+                         title = "SLG"
+                        )
                 ),
                 column(4,
                        bs4Box(
@@ -1328,25 +1092,15 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("OPS",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center')
-                       )
+                         title = "OPS"
+                         )
                 ),
                 column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("OBP",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center')
+                         title = "OBP"
                           )
                        )
                   ),
@@ -1357,19 +1111,8 @@ IP <- function(x){
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
-                         title = h2("AB",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_ab')
-                                  )
-                                )
-                           )
+                         title = "AB",
+                         DT::dataTableOutput('b_ab')
                          )
                        ),
                 column(4,
@@ -1378,19 +1121,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("SB",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_sb')
-                                  )
-                                )
-                             )
+                         title = "SB",
+                         DT::dataTableOutput('b_sb')
                            )
                        ),
                 column(4,
@@ -1399,19 +1131,8 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("XB",
-                                    style = "color: #b90e13;
-                                  text-transform: uppercase;
-                                  font-size: 1.2em;
-                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                fluidRow(
-                                  column(12,
-                                         DT::dataTableOutput('b_xb')
-                                  )
-                                )
-                           )
+                         title = "XB",
+                         DT::dataTableOutput('b_xb')
                          )
                       )
                     )
@@ -1523,6 +1244,68 @@ IP <- function(x){
                          # status = 'warning',
                          title = "SV",
                          DT::dataTableOutput('pt_p_sv')
+                       )
+                  )
+                ),
+              #4 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "WHIP",
+                         DT::dataTableOutput('pt_p_whip')
+                         )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "ERA",
+                         DT::dataTableOutput('pt_p_era')
+                         )
+                       ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "SO/BB",
+                         DT::dataTableOutput('pt_p_sobb')
+                       )
+                  )
+                ),
+              #5 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "H/9",
+                         DT::dataTableOutput('pt_p_h9')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "SO/9",
+                         DT::dataTableOutput('pt_p_so9')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "BB/9",
+                         DT::dataTableOutput('pt_p_bb9')
                        )
                   )
                 )
@@ -6394,8 +6177,9 @@ IP <- function(x){
           rename(
             Jugador = jugador,
             BB = bb
-          ) %>% 
-          slice(1:(n()-3))
+          ) 
+        # %>% 
+        #   slice(1:(n()-3))
         
         
         headerCallback <- c(
@@ -6681,7 +6465,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -6937,7 +6721,9 @@ IP <- function(x){
           rename(
             Jugador = jugador,
             `BB/9` = `bb/9`
-          ) 
+          ) %>% 
+          slice(1:(n()-1)) %>% 
+          ungroup()
         
         
         headerCallback <- c(
@@ -7512,7 +7298,9 @@ IP <- function(x){
             Año = years,
             Jugador = jugador,
             BB = bb
-          ) 
+          ) %>% 
+          slice(1:(n()-3)) %>% 
+          ungroup()
         
         
         headerCallback <- c(
@@ -7563,7 +7351,7 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          filter(ip > 400) %>% 
+          filter(ip > 50) %>% 
           arrange(era) %>%
           select(years, first_name, last_name, era) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
@@ -7573,7 +7361,9 @@ IP <- function(x){
             Jugador = jugador,
             ERA = era
           ) %>% 
-          slice(1: n()-1)
+          slice(1:10) %>% 
+          ungroup()
+          
         
         
         headerCallback <- c(
@@ -7589,7 +7379,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con mas de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -7625,7 +7415,7 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          filter(ip > 400) %>% 
+          filter(ip > 50) %>% 
           arrange(whip) %>%
           select(years, first_name, last_name, whip) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
@@ -7634,8 +7424,7 @@ IP <- function(x){
             Año = years,
             Jugador = jugador,
             WHIP = whip
-          ) %>% 
-          slice(1:n()-1)
+          ) 
         
         
         headerCallback <- c(
@@ -7651,7 +7440,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con mas de 500 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -7711,7 +7500,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 5 historico')),
+            , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -7747,7 +7536,7 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          filter(ip > 400) %>% 
+          filter(ip > 50) %>% 
           arrange(`h/9`) %>%
           select(years, first_name, last_name, `h/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
@@ -7756,8 +7545,7 @@ IP <- function(x){
             Año = years,
             Jugador = jugador,
             `H/9` = `h/9`
-          ) %>% 
-          slice(1:(n()-1))
+          ) 
         
         
         headerCallback <- c(
@@ -7773,7 +7561,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con mas de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -7809,7 +7597,7 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          filter(ip > 400) %>% 
+          filter(ip > 50) %>% 
           arrange(desc(`so/9`)) %>%
           select(years, first_name, last_name, `so/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
@@ -7818,8 +7606,7 @@ IP <- function(x){
             Año = years,
             Jugador = jugador,
             `SO/9` = `so/9`
-          ) %>% 
-          slice(1:(n()-1))
+          ) 
         
         
         headerCallback <- c(
@@ -7835,7 +7622,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con mas de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -7871,7 +7658,7 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          filter(ip > 400) %>% 
+          filter(ip > 50) %>% 
           arrange(`bb/9`) %>%
           select(years, first_name, last_name, `bb/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
@@ -7896,7 +7683,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con mas de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -7932,11 +7719,11 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          filter(ip > 400) %>% 
+          filter(ip > 50) %>% 
           arrange(desc(`so/bb`)) %>%
           select(years, first_name, last_name, `so/bb`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, `so/bb`) %>%
+          top_n(10, `so/bb`) %>%
           rename(
             Año = years,
             Jugador = jugador,
@@ -7957,7 +7744,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con mas de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
