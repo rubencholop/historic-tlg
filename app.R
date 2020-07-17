@@ -35,15 +35,18 @@ Unique_Rosters <- Rosters %>%
     exp = last(exp),
     pais = last(pais),
     estado = last(estado),
-    ciudad = last(ciudad)
+    ciudad = last(ciudad),
+    .groups = 'drop'
   ) %>% 
+  ungroup() %>% 
   arrange(jugador)
 
 .pitchers <- Rosters %>% 
   filter(pos == 'P') %>% 
   arrange(jugador, years) %>% 
   group_by(ID) %>% 
-  summarize(jugador = last(jugador)) %>% 
+  summarize(jugador = last(jugador),
+            .groups = 'drop') %>% 
   arrange(jugador) %>% 
   select(jugador)
 
@@ -51,7 +54,8 @@ Unique_Rosters <- Rosters %>%
   filter(!pos == 'P') %>% 
   arrange(jugador, years) %>% 
   group_by(ID) %>% 
-  summarize(jugador = last(jugador)) %>% 
+  summarize(jugador = last(jugador),
+            .groups = 'drop') %>% 
   arrange(jugador) %>% 
   select(jugador)
 
@@ -1419,7 +1423,7 @@ IP <- function(x){
           tabName = 'por_temporadas',
           h4('Lideres por temporadas ', align = 'center'),
           tabsetPanel(
-            id = "tabpanel5",
+            id = "tabpanel6",
             side = "left",
             tabPanel(
               # Picheo ----
@@ -1432,17 +1436,20 @@ IP <- function(x){
                          higth = '300px',
                          collapsible = TRUE,
                          # status = 'warning',
-                         title = h2("W",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
-                         column(12,
-                                DT::dataTableOutput('pt_p_w')
-                           )
+                         title = "W",
+                         DT::dataTableOutput('pt_p_w')
                          )
+                       ),
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "L",
+                         DT::dataTableOutput('pt_p_l')
                        )
+                    )
                 )
               )
             )
@@ -1541,7 +1548,8 @@ IP <- function(x){
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2))
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            .groups = 'drop'
             ) 
         
         pitching_player <- prs() %>% 
@@ -1571,7 +1579,8 @@ IP <- function(x){
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2))
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            .groups = 'drop'
           ) %>% 
           ungroup()
         
@@ -1681,7 +1690,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+            .groups = 'drop'
           )
         
         pitching_player <- prr() %>% 
@@ -1827,7 +1837,8 @@ IP <- function(x){
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
-            resultado = sum(ifelse(resultado == 'campeon', 1, 0))
+            resultado = sum(ifelse(resultado == 'campeon', 1, 0)),
+            .groups = 'drop'
           )
         
         
@@ -1949,34 +1960,6 @@ IP <- function(x){
         
         player_summarise <- brs() %>% 
           arrange(years, jugador) %>% 
-          group_by(years) %>% 
-          summarise(
-            edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
-            pa = sum(pa, na.rm = T),
-            ab = sum(ab, na.rm = T),
-            r = sum(r, na.rm = T),
-            h = sum(h, na.rm = T),
-            `2b` = sum(`2b`, na.rm = T),
-            `3b` = sum(`3b`, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            rbi = sum(rbi, na.rm = T),
-            sb = sum(sb, na.rm = T),
-            cs = sum(cs, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
-            ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
-            tb = sum(tb, na.rm = T),
-            xb = sum(xb, na.rm = T),
-            hbp = sum(hbp, na.rm = T),
-            sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
-          ) %>% 
           summarise(
             years = 'Total',
             edad = round(mean(edad), 2),
@@ -2003,7 +1986,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) 
         
         
@@ -2035,7 +2019,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           mutate(
             edad = as.numeric(edad),
@@ -2143,34 +2128,6 @@ IP <- function(x){
         
         player_summarise <- brr() %>% 
           arrange(years, jugador) %>% 
-          group_by(years) %>% 
-          summarise(
-            edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
-            ab = sum(ab, na.rm = T),
-            r = sum(r, na.rm = T),
-            h = sum(h, na.rm = T),
-            `2b` = sum(`2b`, na.rm = T),
-            `3b` = sum(`3b`, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            rbi = sum(rbi, na.rm = T),
-            sb = sum(sb, na.rm = T),
-            cs = sum(cs, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
-            rc = sum(rc, na.rm = T),
-            tb = sum(tb, na.rm = T),
-            xb = sum(xb, na.rm = T),
-            hbp = sum(hbp, na.rm = T),
-            sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T),
-            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
-          ) %>% 
           summarise(
             years = 'Total',
             edad = round(mean(edad), 1),
@@ -2197,7 +2154,8 @@ IP <- function(x){
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
-            refuerzo = sum(refuerzo, na.rm = T)
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+            .groups = 'drop'
           )
         
         
@@ -2229,7 +2187,8 @@ IP <- function(x){
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
-            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+            .groups = 'drop'
           )
         
         df <-  rbind(player_summarise, batting_player) %>%
@@ -2340,38 +2299,9 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
             refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
-            resultado = last(resultado)
-          ) %>% 
-          summarise(
-            years = 'Total',
-            edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
-            ab = sum(ab, na.rm = T),
-            r = sum(r, na.rm = T),
-            h = sum(h, na.rm = T),
-            `2b` = sum(`2b`, na.rm = T),
-            `3b` = sum(`3b`, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            rbi = sum(rbi, na.rm = T),
-            sb = sum(sb, na.rm = T),
-            cs = sum(cs, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
-            rc = sum(rc, na.rm = T),
-            tb = sum(tb, na.rm = T),
-            xb = sum(xb, na.rm = T),
-            hbp = sum(hbp, na.rm = T),
-            sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T),
-            refuerzo = sum(refuerzo, na.rm = T),
-            resultado = sum(ifelse(resultado == 'Campeon', 1, 0))
-          )
-        
+            resultado = sum(ifelse(resultado == 'Campeon', 1, 0)),
+            .groups = 'drop'
+          ) 
         
         batting_player <-  bf() %>% 
           arrange(years, jugador) %>% 
@@ -2402,7 +2332,8 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
             refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
-            resultado = last(resultado)
+            resultado = last(resultado),
+            .groups = 'drop'
           )
         
         df <- rbind(batting_player, player_summarise) %>%
@@ -2544,7 +2475,8 @@ IP <- function(x){
             `hr/9` = round(mean(`hr/9`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
             `so/9` = round(mean(`so/9`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2) # Debe calsularse y no el promedio IMPORTANTE
+            `so/bb` = round(mean(`so/bb`, na.rm = T), 2), # Debe calsularse y no el promedio IMPORTANTE
+            .groups = 'drop'
           )
         
         
@@ -2707,7 +2639,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            refuerzo = '-'
+            refuerzo = '-',
+            .groups = 'drop'
           )
         
         
@@ -2873,7 +2806,8 @@ IP <- function(x){
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
             refuerzo = '-',
-            resultado = '-'
+            resultado = '-',
+            .groups = 'drop'
           )
         
         
@@ -3050,7 +2984,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) 
         
         
@@ -3221,7 +3156,8 @@ IP <- function(x){
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
-            refuerzo = ''
+            refuerzo = '',
+            .groups = 'drop'
           )
         
         
@@ -3394,7 +3330,8 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
             refuerzo = '',
-            resultado = ''
+            resultado = '',
+            .groups = 'drop'
           )
         
         
@@ -3580,7 +3517,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           )
         
         
@@ -3751,7 +3689,8 @@ IP <- function(x){
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
-            refuerzo = ''
+            refuerzo = '',
+            .groups = 'drop'
           )
         
         
@@ -3921,7 +3860,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           )
         
         
@@ -4105,7 +4045,8 @@ IP <- function(x){
             `bb/9` = round((bb/ip)*9, 2),
             `so/9` = round((so/ip)*9, 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           )
         
         
@@ -4285,7 +4226,8 @@ IP <- function(x){
             `so/9` = round((so/ip)*9, 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
             bk = sum(bk, na.rm = T),
-            refuerzo = '-'
+            refuerzo = '-',
+            .groups = 'drop'
           )
         
         
@@ -4465,7 +4407,8 @@ IP <- function(x){
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
             bk = sum(bk, na.rm = T),
             refuerzo = '-',
-            resultado = '-'
+            resultado = '-',
+            .groups = 'drop'
           )
         
         
@@ -4627,7 +4570,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           mutate(
             g = as.numeric(g),
@@ -4836,7 +4780,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(h)) %>%
           select(first_name, last_name, h) %>% 
@@ -4923,7 +4868,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(`2b`)) %>%
           select(first_name, last_name, `2b`) %>% 
@@ -5010,7 +4956,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(`3b`)) %>%
           select(first_name, last_name, `3b`) %>% 
@@ -5098,7 +5045,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(hr)) %>%
           select(first_name, last_name, hr) %>% 
@@ -5186,7 +5134,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ab >= 1500) %>% 
           arrange(desc(avg)) %>% 
@@ -5279,7 +5228,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ab >= 2000) %>% 
           arrange(desc(avg)) %>% 
@@ -5372,7 +5322,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(rbi)) %>%
           select(first_name, last_name, rbi) %>% 
@@ -5459,7 +5410,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(ab)) %>%
           select(first_name, last_name, ab) %>% 
@@ -5546,7 +5498,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(sb)) %>%
           select(first_name, last_name, sb) %>% 
@@ -5633,7 +5586,8 @@ IP <- function(x){
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T)
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(xb)) %>%
           select(first_name, last_name, xb) %>% 
@@ -5720,8 +5674,10 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
+          ungroup() %>% 
           arrange(desc(w)) %>%
           select(first_name, last_name, w) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
@@ -5808,7 +5764,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(l)) %>%
           select(first_name, last_name, l) %>% 
@@ -5895,7 +5852,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(g)) %>%
           select(first_name, last_name, g) %>% 
@@ -5982,7 +5940,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(gs)) %>%
           select(first_name, last_name, gs) %>% 
@@ -6070,7 +6029,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(ip)) %>%
           select(first_name, last_name, ip) %>% 
@@ -6157,7 +6117,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(so)) %>%
           select(first_name, last_name, so) %>% 
@@ -6244,7 +6205,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(h)) %>%
           select(first_name, last_name, h) %>% 
@@ -6330,7 +6292,8 @@ IP <- function(x){
             `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
             `so/9` = round(mean(`so/9`, na.rm = T), 2),
             `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(bb)) %>%
           select(first_name, last_name, bb) %>% 
@@ -6416,7 +6379,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(era) %>%
@@ -6505,7 +6469,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(whip) %>%
@@ -6594,7 +6559,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           arrange(desc(sv)) %>%
           select(first_name, last_name, sv) %>% 
@@ -6681,7 +6647,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(`h/9`) %>%
@@ -6770,7 +6737,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(desc(`so/9`)) %>%
@@ -6859,7 +6827,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(`bb/9`) %>%
@@ -6947,7 +6916,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T)
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(desc(`so/bb`)) %>%
@@ -7002,10 +6972,10 @@ IP <- function(x){
       # Table picheo lideres w ----
       output$pt_p_w <- renderDataTable({
         
-        w <- prs %>% 
+        w <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
@@ -7017,7 +6987,8 @@ IP <- function(x){
             Jugador = jugador,
             W = w
           ) %>% 
-          slice(1:(n()-1))
+          slice(1:(n()-1)) %>% 
+          ungroup()
         
         
         headerCallback <- c(
@@ -7028,6 +6999,66 @@ IP <- function(x){
         
         DT::datatable(
           w,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres l ----
+      output$pt_p_l <- renderDataTable({
+        
+        l <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(l)) %>%
+          select(years,first_name, last_name, l) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, l) %>% 
+          rename(
+            Jugador = jugador,
+            L = l
+          ) %>% 
+          slice(1:(n()-11)) %>% 
+          ungroup()
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          l,
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
