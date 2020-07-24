@@ -89,9 +89,25 @@ temporadas <- data.table::rbindlist(
   arrange(desc(df)) %>% 
   rename(temporadas = df) %>% 
   pull()
+# Special datos to some metrics with OBP, OPS and SLG
+from1 <- 2005
+to1 <- lubridate::year(Sys.Date()) 
+range_1 <- c(from1:to1)
+pages1 <- c(1:(to - (from1)))
+
+season1 <-  function(x){
+  df <- paste(range_1[x], "-", substring(range_1[x + 1], 3), sep = "")
+  data.frame(df)
+}
+
+temporadas_batting <- data.table::rbindlist(
+  lapply(pages1, season1), fill = TRUE
+) %>% 
+  arrange(desc(df)) %>% 
+  rename(temporadas = df) %>% 
+  pull()
 
 # Functions ----
-
 IP <- function(x){
   x <- x %>%
     as.character()
@@ -1392,20 +1408,20 @@ IP <- function(x){
                 column(4,
                        bs4Box(
                          width = NULL,
-                         higth = '300px',
+                         higth = '100px',
                          collapsible = TRUE,
-                         # status = 'warning',
-                         title = "OPS",
-                         DT::dataTableOutput('pt_b_ops')
+                         title = "OBP",
+                         DT::dataTableOutput('pt_b_obp')
                        )
                 ),
                 column(4,
                        bs4Box(
                          width = NULL,
-                         higth = '100px',
+                         higth = '300px',
                          collapsible = TRUE,
-                         title = "OBP",
-                         DT::dataTableOutput('pt_b_obp')
+                         # status = 'warning',
+                         title = "OPS",
+                         DT::dataTableOutput('pt_b_ops')
                        )
                 )
               ),
@@ -5194,7 +5210,8 @@ IP <- function(x){
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          select(years, ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(years %in% temporadas_batting) %>% 
           group_by(ID) %>% 
           summarise(
             years = NROW(years),
@@ -5213,10 +5230,9 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
             ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
@@ -5226,21 +5242,17 @@ IP <- function(x){
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
           ) %>% 
-          filter(ab >= 2000) %>% 
-          arrange(desc(avg)) %>% 
-          select(first_name, last_name, h, ab, avg) %>% 
-          mutate(avg = round(((h)/ ab), 3)) %>% 
+          arrange(desc(obp)) %>% 
+          filter(ab >= 500) %>% 
+          select(first_name, last_name, obp) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(10, avg) %>% 
-          select(jugador, avg) %>% 
+          top_n(10, obp) %>% 
+          select(jugador, obp) %>% 
           rename(
             Jugador = jugador,
-            AVG = avg
+            OBP = obp
           ) %>% 
-          arrange(desc(AVG)) %>% 
-          mutate(Order = seq(1, NROW(Jugador), 1)) %>% 
-          select(Jugador, AVG) 
-        
+          arrange(desc(OBP)) 
         
         headerCallback <- c(
           "function(thead, data, start, end, display){",
@@ -5249,7 +5261,189 @@ IP <- function(x){
         )  # To deleate header line horizontal in bottom of colums name
         
         DT::datatable(
-          avg,
+          obp,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 2000 BA')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      # Table bateo lideres SLG ----
+      output$b_slg <- renderDataTable({
+        
+        slg <- brs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(years, ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(years %in% temporadas_batting) %>% 
+          group_by(ID) %>% 
+          summarise(
+            years = NROW(years),
+            first_name = last(first_name),
+            last_name = last(last_name),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          arrange(desc(slg)) %>% 
+          filter(ab >= 500) %>% 
+          select(first_name, last_name, slg) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, slg) %>% 
+          select(jugador, slg) %>% 
+          rename(
+            Jugador = jugador,
+            SLG = slg
+          ) %>% 
+          arrange(desc(SLG)) 
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          obp,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 2000 BA')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      # Table bateo lideres OPS ----
+      output$b_ops <- renderDataTable({
+        
+        ops <- brs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(years, ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(years %in% temporadas_batting) %>% 
+          group_by(ID) %>% 
+          summarise(
+            years = NROW(years),
+            first_name = last(first_name),
+            last_name = last(last_name),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          arrange(desc(ops)) %>% 
+          filter(ab >= 500) %>% 
+          select(first_name, last_name, ops) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, ops) %>% 
+          select(jugador, ops) %>% 
+          rename(
+            Jugador = jugador,
+            OPS = ops
+          ) %>% 
+          arrange(desc(OPS)) 
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          ops,
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -8281,9 +8475,7 @@ IP <- function(x){
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
           filter(
-            years %in% c("2005-06", "2006-07", "2007-08", "2008-09", "2009-2010", "2010-11", "2011-2012",
-                         "2012-13", "2013-14", "2014-15", "2015-16", "2016-17", "2017-18", "2018-19", 
-                         "2019-2019")) %>% 
+            years %in% temporadas_batting) %>% 
           select(years, first_name, last_name, tb, ab) %>% 
           mutate(slg = round(tb / ab, 3)) %>% 
           filter(ab >= 190) %>% 
@@ -8348,9 +8540,7 @@ IP <- function(x){
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
           filter(
-            years %in% c("2005-06", "2006-07", "2007-08", "2008-09", "2009-2010", "2010-11", "2011-2012",
-                         "2012-13", "2013-14", "2014-15", "2015-16", "2016-17", "2017-18", "2018-19", 
-                         "2019-2019")) %>% 
+            years %in% temporadas_batting) %>% 
        
           select(years, first_name, last_name, h, ab, hbp, sf, bb) %>% 
           mutate(obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3)) %>% 
@@ -8374,7 +8564,7 @@ IP <- function(x){
         )  # To deleate header line horizontal in bottom of colums name
         
         DT::datatable(
-          avg,
+          obp,
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -8416,9 +8606,7 @@ IP <- function(x){
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
           filter(
-            years %in% c("2005-06", "2006-07", "2007-08", "2008-09", "2009-2010", "2010-11", "2011-2012",
-                         "2012-13", "2013-14", "2014-15", "2015-16", "2016-17", "2017-18", "2018-19", 
-                         "2019-2019")) %>% 
+            years %in% temporadas_batting) %>% 
           mutate(obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
                  slg = round(tb / ab, 3),
                  ops = obp + slg) %>% 
@@ -8442,7 +8630,7 @@ IP <- function(x){
         )  # To deleate header line horizontal in bottom of colums name
         
         DT::datatable(
-          slg,
+          ops,
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
