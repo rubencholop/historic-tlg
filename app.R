@@ -8144,7 +8144,7 @@ IP <- function(x){
         ) 
       })
       # Table bateo lideres AVG ----
-      output$b_average <- renderDataTable({
+      output$pt_b_average <- renderDataTable({
         
         avg <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
@@ -8182,6 +8182,74 @@ IP <- function(x){
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Con mas de 1500 AB')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      # Table bateo lideres OBP ----
+      output$pt_b_obp <- renderDataTable({
+        
+        obp <- brs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          filter(
+            years %in% c("2005-06", "2006-07", "2007-08", "2008-09", "2009-2010", "2010-11", "2011-2012",
+                         "2012-13", "2013-14", "2014-15", "2015-16", "2016-17", "2017-18", "2018-19", 
+                         "2019-2019")) %>% 
+       
+          select(years, first_name, last_name, h, ab, hbp, sf, bb) %>% 
+          mutate(obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3)) %>% 
+          filter(ab >= 190) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, obp) %>% 
+          select(years, jugador, obp) %>% 
+          arrange(desc(obp)) %>%
+          rename(
+            Año = years,
+            Jugador = jugador,
+            OBP = obp
+          ) 
+
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          avg,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con mas de 190 BA')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
