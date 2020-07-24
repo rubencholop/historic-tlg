@@ -248,8 +248,8 @@ IP <- function(x){
             icon = "medal",
             bs4SidebarMenuSubItem('De por vida', tabName = 'deporvida', icon = "circle"),
             bs4SidebarMenuSubItem('Por temporadas', tabName = 'por_temporadas', icon = "circle"),
-            bs4SidebarMenuSubItem('LVBP', tabName = 'lvbp', icon = "circle"),
-            bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "circle")
+            bs4SidebarMenuSubItem('LVBP', tabName = 'lvbp', icon = "circle")
+            # bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "circle")
           ),
           # menuItem Historia ----
           bs4SidebarMenuItem(
@@ -857,7 +857,7 @@ IP <- function(x){
         # Tabitem Records ----
         tabItem(
           tabName = 'deporvida',
-          h4('Lideres historicos', align = 'center'),
+          h4('Records historicos', align = 'center'),
           tabsetPanel(
             id = "tabpanel4",
             side = "left",
@@ -1161,7 +1161,7 @@ IP <- function(x){
         # Records by season ----
         tabItem(
           tabName = 'por_temporadas',
-          h4('Lideres por temporadas ', align = 'center'),
+          h4('Records por temporadas ', align = 'center'),
           tabsetPanel(
             id = "tabpanel6",
             side = "left",
@@ -1462,6 +1462,44 @@ IP <- function(x){
                 )
               )
             )
+          ),
+        # Records LVBP ----
+        tabItem(
+          tabName = 'lvbp',
+          h4('Records en la LVBP ', align = 'center'),
+          tabsetPanel(
+            id = "tabpanel7",
+            side = "left",
+            fluidRow(
+              column(4,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       title = "Novato del año",
+                       DT::dataTableOutput('lvbp_novatos')
+                     )
+              ),
+              column(4,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       title = "MVP",
+                       DT::dataTableOutput('lvbp_mvp')
+                     )
+              ),
+              column(4,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       title = "Manager del año",
+                       DT::dataTableOutput('lvbp_manager')
+                     )
+                  )
+                )
+             )
           )
         )
         # End body ----
