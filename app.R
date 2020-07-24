@@ -8084,6 +8084,65 @@ IP <- function(x){
           )
         ) 
       })
+      # Table bateo lideres HR ----
+      output$pt_b_hr <- renderDataTable({
+        
+        hr <- brs()%>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(hr)) %>%
+          select(years, first_name, last_name, hr) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, hr) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            HR = hr
+          )
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          hr,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
       # ------ INFOBOX -----
       # InfoBox Position player ----
       output$pos <- renderInfoBox({
