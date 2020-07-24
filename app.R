@@ -1309,6 +1309,135 @@ IP <- function(x){
                        )
                   )
                 )
+              ),
+            # Bateo ----
+            tabPanel(
+              tabName = 'Bateo',
+              #1 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "H",
+                         DT::dataTableOutput('pt_b_hits')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "2B",
+                         DT::dataTableOutput('pt_b_2b')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "3B",
+                         DT::dataTableOutput('pt_b_3b')
+                       )
+                )
+              ),
+              #2 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "HR",
+                         DT::dataTableOutput('pt_b_hr')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "AVG",
+                         DT::dataTableOutput('pt_b_average')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "RBI",
+                         DT::dataTableOutput('pt_b_rbi')
+                       )
+                )
+              ),
+              #3 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "SLG"
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "OPS"
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "OBP"
+                       )
+                )
+              ),
+              #4 ----
+              fluidRow(
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "AB",
+                         DT::dataTableOutput('pt_b_ab')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "SB",
+                         DT::dataTableOutput('pt_b_sb')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "XB",
+                         DT::dataTableOutput('pt_b_xb')
+                       )
+                  )
+                )
               )
             )
           )
@@ -5504,7 +5633,7 @@ IP <- function(x){
           )
         ) 
       })
-      # Pitching Record ----
+      #Pitching Record ----
       # Table picheo lideres w ----
       output$p_w <- renderDataTable({
         
@@ -6855,7 +6984,7 @@ IP <- function(x){
         )
       })
       
-      # Pitching Record by season ----
+      #Pitching Record by season ----
       # Table picheo lideres w ----
       output$pt_p_w <- renderDataTable({
         
@@ -7768,6 +7897,158 @@ IP <- function(x){
             )
           )
         )
+      })
+      
+      #Batting Record by season ----
+      # Table bateo lideres H ----
+      output$pt_b_hits <- renderDataTable({
+        
+        hits <- brs %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          arrange(desc(h)) %>%
+          select(years, first_name, last_name, h) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, h) %>% 
+          rename(
+            Año = years,
+            Jugador = jugador,
+            H = h
+          ) %>% 
+          slice(1:(n()-3)) %>% 
+          ungroup()
+          
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          hits,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      # Table picheo lideres l ----
+      output$p_l <- renderDataTable({
+        
+        l <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          group_by(ID) %>% 
+          summarise(
+            first_name = last(first_name),
+            last_name = last(last_name),
+            jugador= last(jugador),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            era = round(mean(era, na.rm = T), 2),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            ip = sum(ip, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            er = sum(er, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            ir = sum(ir, na.rm = T),
+            whip = round(mean(whip, na.rm = T), 2),
+            `h/9` = round(mean(`h/9`, na.rm = T), 2),
+            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
+            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
+            `so/9` = round(mean(`so/9`, na.rm = T), 2),
+            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          arrange(desc(l)) %>%
+          select(first_name, last_name, l) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, l) %>% 
+          rename(
+            Jugador = jugador,
+            L = l
+          ) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          l,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
       })
       
       # ------ INFOBOX -----
