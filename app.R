@@ -7963,53 +7963,26 @@ IP <- function(x){
         ) 
       })
       # Table picheo lideres l ----
-      output$p_l <- renderDataTable({
+      output$pt_p_l <- renderDataTable({
         
-        l <- prs() %>% 
+        dobles <- brs %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters() %>%
+          left_join(Rosters %>%
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
-          summarise(
-            first_name = last(first_name),
-            last_name = last(last_name),
-            jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            ip = sum(ip, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T),
-            .groups = 'drop'
-          ) %>% 
-          arrange(desc(l)) %>%
-          select(first_name, last_name, l) %>% 
+          arrange(desc(`2b`)) %>%
+          select(years, first_name, last_name, `2b`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(10, l) %>% 
+          top_n(10, `2b`) %>% 
           rename(
+            Año = years,
             Jugador = jugador,
-            L = l
-          ) 
+            `2B` = `2b`
+          ) %>% 
+          slice(1:(n()- 2)) %>% 
+          ungroup()
         
         
         headerCallback <- c(
