@@ -248,7 +248,7 @@ IP <- function(x){
             icon = "medal",
             bs4SidebarMenuSubItem('De por vida', tabName = 'deporvida', icon = "circle"),
             bs4SidebarMenuSubItem('Por temporadas', tabName = 'por_temporadas', icon = "circle"),
-            bs4SidebarMenuSubItem('LVBP', tabName = 'lvbp', icon = "circle")
+            bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "circle")
             # bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "circle")
           ),
           # menuItem Historia ----
@@ -375,12 +375,7 @@ IP <- function(x){
                        bs4Box(
                          width = NULL,
                          title = "Temporada Regular",
-                           # h4("Temporada Regular", 
-                           #        style = "color: #b90e13;
-                           #                text-transform: uppercase;
-                           #                font-size: 1.2em;
-                           #                text-shadow:1px 1px 2px rgba(150, 150, 150, 1);"),
-                                DT::dataTableOutput('Preseason_team')
+                         DT::dataTableOutput('Preseason_team')
                          )
                        )
                 ),
@@ -389,13 +384,8 @@ IP <- function(x){
                 column(12,
                        bs4Box(
                          width = NULL,
-                         title = h4("Round Robin", 
-                                    style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
-                                DT::dataTableOutput('Prr_team')
+                         title = "Round Robin", 
+                         DT::dataTableOutput('Prr_team')
                          )
                       )
                 ),
@@ -404,13 +394,8 @@ IP <- function(x){
                 column(12,
                        bs4Box(
                          width = NULL,
-                         title = h4("Final", 
-                                    style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
-                                DT::dataTableOutput('Pfinal_team')
+                         title = "Final",
+                         DT::dataTableOutput('Pfinal_team')
                          )
                       )
                 )
@@ -422,12 +407,7 @@ IP <- function(x){
                        column(12,
                               bs4Box(
                                 width = NULL,
-                                title = h4("Temporada Regular", 
-                                           style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+                                title = "Temporada Regular",
                                 DT::dataTableOutput('Breseason_team')
                                 )
                               )
@@ -437,12 +417,7 @@ IP <- function(x){
                        column(12,
                               bs4Box(
                                 width = NULL,
-                                title = h4("Round Robin", 
-                                           style = "color: #b90e13;
-                                        text-transform: uppercase;
-                                        font-size: 1.2em;
-                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+                                title = "Round Robin",
                                 DT::dataTableOutput('Brr_team')
                               )
                             )
@@ -452,12 +427,7 @@ IP <- function(x){
                        column(12,
                               bs4Box(
                                 width = NULL,
-                                title = h4("Final", 
-                                           style = "color: #b90e13;
-                                        text-transform: uppercase;
-                                        font-size: 1.2em;
-                                        text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+                                title = "Final",
                                 DT::dataTableOutput('Bfinal_team')
                               )
                            )
@@ -467,7 +437,7 @@ IP <- function(x){
           ),
         # TabItem by Season ----
         tabItem(
-          h4('Datos historicos por temporada', align = "left"),
+          h4('Datos historicos por temporada', align = "center"),
           tabName = 'temporada',
           tabsetPanel(
             id = "tabset1",
@@ -491,14 +461,9 @@ IP <- function(x){
                        column(12,
                               bs4Dash::bs4Box(
                                 width = NULL,
-                                title = h4("Temporada Regular", 
-                                           style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+                                title = "Temporada Regular",
                                 DT::dataTableOutput('picheo_rs')
-                              )
+                                )
                               )
                        ),
                      br(),
@@ -506,14 +471,9 @@ IP <- function(x){
                        column(12,
                               bs4Dash::bs4Box(
                                 width = NULL,
-                                title = h4("Round Robin", 
-                                           style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+                                title = "Round Robin",
                                 DT::dataTableOutput('picheo_rr_sm')
-                              )
+                                )
                               )
                        ),
                      br(),
@@ -521,14 +481,9 @@ IP <- function(x){
                        column(12,
                               bs4Dash::bs4Box(
                                 width = NULL,
-                                title = h4("Final", 
-                                           style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+                                title = "Final",
                                 DT::dataTableOutput('picheo_finals')
-                              )
+                                )
                               )
                        )
                        ),
@@ -551,14 +506,9 @@ IP <- function(x){
                        column(12,
                               bs4Box(
                                 width = NULL,
-                                title = h4("Temporada Regular", 
-                                           style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                           align = 'center'),
+                                title = "Temporada Regular",
                                 DT::dataTableOutput('bateo_rs')
-                              )
+                                )
                               )
                        ),
                      br(),
@@ -566,13 +516,8 @@ IP <- function(x){
                        column(12,
                               bs4Box(
                                 width = NULL,
-                                title = h4("Raound Robin", 
-                                           style = "color: #b90e13;
-                                           text-transform: uppercase;
-                                           font-size: 1.2em;
-                                           text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                         align = 'center'),
-                              DT::dataTableOutput('bateo_rr_sm')
+                                title = "Raound Robin",
+                                DT::dataTableOutput('bateo_rr_sm')
                             )
                      )
                    ),
@@ -581,12 +526,7 @@ IP <- function(x){
                      column(12,
                             bs4Box(
                               width = NULL,
-                              title = h4("Final", 
-                                         style = "color: #b90e13;
-                                         text-transform: uppercase;
-                                         font-size: 1.2em;
-                                         text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                         align = 'center'),
+                              title = "Final",
                               DT::dataTableOutput('bateo_finals')
                                 )
                          )
@@ -657,34 +597,19 @@ IP <- function(x){
                 column(12,
                        bs4Box(
                          width = NULL,
-                         title = h4("Temporada Regular", 
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
+                         title = "Temporada Regular",
                          DT::dataTableOutput('picheo_jugador')
                        ),
                        br(),
                        bs4Box(
                          width = NULL,
-                         title = h4("Round Robin", 
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
+                         title = "Round Robin",
                          DT::dataTableOutput('picheo_jugador_rr')
                        ),
                        br(),
                        bs4Box(
                          width = NULL,
-                         title = h4("Finales",
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                    align = 'center'),
+                         title = "Finales",
                          DT::dataTableOutput('picheo_jugador_final')
                        ) 
                     )
@@ -742,35 +667,19 @@ IP <- function(x){
                 column(12,
                        bs4Box(
                          width = NULL,
-                         title = h4("Temporada Regular", 
-                                    style = "color: #b90e13;
-                                    text-transform: uppercase;
-                                    font-size: 1.2em;
-                                    text-shadow:1px 1px 2px rgba(150, 150, 150, 1);", 
-                                    align = 'center'),
+                         title = "Temporada Regular",
                          DT::dataTableOutput('bat_rs')
                        ),
                        br(),
                        bs4Box(
                          width = NULL,
-                         title = h4("Round Robin", 
-                                    style = "color: #b90e13;
-                                          text-transform: uppercase;
-                                          font-size: 1.2em;
-                                          text-shadow:1px 1px 2px rgba(150, 150, 150, 1);", 
-                                    align = 'center'),
-                         # status = 'warning',
+                         title = "Round Robin",
                          DT::dataTableOutput('bat_rr')
                        ),
                        br(),
                        bs4Box(
                          width = NULL,
-                         title = h4("Finales", 
-                                    style = "color: #b90e13;
-                                          text-transform: uppercase;
-                                          font-size: 1.2em;
-                                          text-shadow:1px 1px 2px rgba(150, 150, 150, 1);", 
-                                    align = 'center'),
+                         title = "Finales",
                          DT::dataTableOutput('bat_final')
                        ) 
                     )
@@ -798,12 +707,7 @@ IP <- function(x){
               column(12,
                      bs4Box(
                        width = NULL,
-                       title = h4("Temporada Regular", 
-                                  style = "color: #b90e13;
-                                  text-transform: uppercase;
-                                  font-size: 1.2em;
-                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                  lign = 'center'),
+                       title = "Temporada Regular",
                        DT::dataTableOutput('info_position')
                      )
                   )
@@ -826,15 +730,10 @@ IP <- function(x){
           ),
           # Stats by roster ----
           fluidRow(
-            column(12,
+            column(9,
                    bs4Box(
                      width = NULL,
-                     title = h4("Temporada Regular", 
-                                style = "color: #b90e13;
-                                  text-transform: uppercase;
-                                  font-size: 1.2em;
-                                  text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
-                                lign = 'center'),
+                     title = "Temporada Regular",
                      DT::dataTableOutput('info_roster')
                    )
             )
@@ -866,7 +765,7 @@ IP <- function(x){
               tabName = 'Picheo',
               #1 ----
               fluidRow(
-                column(4,
+                column(3,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -876,7 +775,7 @@ IP <- function(x){
                          DT::dataTableOutput('p_w')
                          )
                        ),
-                column(4,
+                column(3,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -886,7 +785,7 @@ IP <- function(x){
                          DT::dataTableOutput('p_l')
                          )
                        ),
-                column(4,
+                column(3,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1467,10 +1366,7 @@ IP <- function(x){
         tabItem(
           tabName = 'lvbp',
           h4('Records en la LVBP ', align = 'center'),
-          tabsetPanel(
-            id = "tabpanel7",
-            side = "left",
-            fluidRow(
+          fluidRow(
               column(4,
                      bs4Dash::bs4Box(
                        width = NULL,
@@ -1494,12 +1390,38 @@ IP <- function(x){
                        width = NULL,
                        higth = '300px',
                        collapsible = TRUE,
+                       title = "Productor del año",
+                       DT::dataTableOutput('lvbp_productor')
+                     )
+              ),
+              column(4,
+                     bs4Dash::bs4Box(
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
                        title = "Manager del año",
                        DT::dataTableOutput('lvbp_manager')
                      )
-                  )
-                )
-             )
+                ),
+            column(4,
+                   bs4Dash::bs4Box(
+                     width = NULL,
+                     higth = '300px',
+                     collapsible = TRUE,
+                     title = "Triple corona",
+                     DT::dataTableOutput('lvbp_triple_p')
+                   )
+            ),
+            column(4,
+                   bs4Dash::bs4Box(
+                     width = NULL,
+                     higth = '300px',
+                     collapsible = TRUE,
+                     title = "Regreso del año",
+                     DT::dataTableOutput('lvbp_regreso')
+                   )
+            )
+            )
           )
         )
         # End body ----
@@ -4610,10 +4532,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
             ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
@@ -4622,32 +4544,6 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
-          ) %>% 
-          mutate(
-            g = as.numeric(g),
-            pa = as.numeric(pa),
-            ab = as.numeric(ab),
-            r = as.numeric(r),
-            h = as.numeric(h),
-            hr = as.numeric(hr),
-            rbi = as.numeric(rbi),
-            sb = as.numeric(sb),
-            cs = as.numeric(cs),
-            bb = as.numeric(bb),
-            so = as.numeric(so),
-            avg = round(as.numeric(avg), 3), 
-            obp = round(as.numeric(obp), 3),
-            slg = round(as.numeric(slg), 3),
-            ops = round(as.numeric(ops), 3),
-            ir = as.numeric(ir),
-            rc = as.numeric(rc),
-            tb = as.numeric(tb),
-            xb = as.numeric(xb),
-            hbp = as.numeric(hbp),
-            sh = as.numeric(sh),
-            sf = as.numeric(sf),
-            `2b` = as.numeric(`2b`),
-            `3b` = as.numeric(`3b`)
           ) %>% 
           select(-jugador) %>% 
           mutate(jugador = paste0(first_name, " ", last_name, sep = " ")) %>% 
@@ -8906,9 +8802,9 @@ IP <- function(x){
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 10 historico')),
+          # caption = htmltools::tags$caption(
+          #   style = 'caption-side: bottom; text-align: center;'
+          #   , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -8952,9 +8848,9 @@ IP <- function(x){
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 10 historico')),
+          # caption = htmltools::tags$caption(
+          #   style = 'caption-side: bottom; text-align: center;'
+          #   , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -8998,9 +8894,9 @@ IP <- function(x){
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 10 historico')),
+          # caption = htmltools::tags$caption(
+          #   style = 'caption-side: bottom; text-align: center;'
+          #   , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9044,9 +8940,9 @@ IP <- function(x){
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 10 historico')),
+          # caption = htmltools::tags$caption(
+          #   style = 'caption-side: bottom; text-align: center;'
+          #   , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9072,7 +8968,7 @@ IP <- function(x){
         ) 
       })
       # Table Record LVBP regreso ----
-      output$lvbp_productor <- renderDataTable({
+      output$lvbp_regreso <- renderDataTable({
         
         regreso <- lvbp() %>% 
           janitor::clean_names() %>% 
@@ -9090,9 +8986,9 @@ IP <- function(x){
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 10 historico')),
+          # caption = htmltools::tags$caption(
+          #   style = 'caption-side: bottom; text-align: center;'
+          #   , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9122,7 +9018,7 @@ IP <- function(x){
         
         triple_p <- lvbp() %>% 
           janitor::clean_names() %>% 
-          filter(premio == "Triple corona (Picheo)")
+          filter(premio %in% c("Triple corona (Picheo)", "Triple corona (Bateo)"))
         
         
         headerCallback <- c(
@@ -9136,9 +9032,9 @@ IP <- function(x){
           escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 10 historico')),
+          # caption = htmltools::tags$caption(
+          #   style = 'caption-side: bottom; text-align: center;'
+          #   , htmltools::em('Top 10 historico')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
