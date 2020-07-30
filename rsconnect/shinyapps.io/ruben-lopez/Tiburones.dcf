@@ -1,0 +1,13 @@
+name: Tiburones
+title: Tiburones
+username:
+account: ruben-lopez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2625448
+bundleId: 3452230
+url: https://ruben-lopez.shinyapps.io/Tiburones/
+when: 1596059225.21482
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: app_tiburones.R|img_rowtable.R|script de tablas nuevas tlg

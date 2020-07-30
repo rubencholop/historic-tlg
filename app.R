@@ -39,7 +39,28 @@ Unique_Rosters <- Rosters %>%
     .groups = 'drop'
   ) %>% 
   ungroup() %>% 
-  arrange(jugador)
+  arrange(jugador) 
+
+.paises <- Rosters %>% 
+  group_by(pais) %>% 
+  summarize(pais = last(pais),
+            .groups = 'drop') %>% 
+  arrange(pais) %>% 
+  pull()
+
+.estado <- Rosters %>% 
+  group_by(estado) %>% 
+  summarize(estado = last(estado),
+            .groups = 'drop') %>% 
+  arrange(estado) %>% 
+  pull()
+
+.ciudad <- Rosters %>% 
+  group_by(ciudad) %>% 
+  summarize(ciudad = last(ciudad),
+            .groups = 'drop') %>% 
+  arrange(ciudad) %>% 
+  pull()
 
 .pitchers <- Rosters %>% 
   filter(pos == 'P') %>% 
@@ -48,7 +69,8 @@ Unique_Rosters <- Rosters %>%
   summarize(jugador = last(jugador),
             .groups = 'drop') %>% 
   arrange(jugador) %>% 
-  select(jugador)
+  select(jugador) %>% 
+  pull()
 
 .bateadores <- Rosters %>% 
   filter(!pos == 'P') %>% 
@@ -57,7 +79,8 @@ Unique_Rosters <- Rosters %>%
   summarize(jugador = last(jugador),
             .groups = 'drop') %>% 
   arrange(jugador) %>% 
-  select(jugador)
+  select(jugador) %>% 
+  pull()
 
 posiciones <- Rosters %>% 
   select(pos) %>% 
@@ -72,7 +95,7 @@ posiciones <- Rosters %>%
 .dates <- seq(.en, .st, by = "-1 day")
 year(today()) -1
 
-
+# Dates 
 from <- 1962
 to <- lubridate::year(Sys.Date()) 
 range_ <- c(from:to)
@@ -89,6 +112,7 @@ temporadas <- data.table::rbindlist(
   arrange(desc(df)) %>% 
   rename(temporadas = df) %>% 
   pull()
+
 # Special datos to some metrics with OBP, OPS and SLG
 from1 <- 2005
 to1 <- lubridate::year(Sys.Date()) 
@@ -1417,7 +1441,31 @@ IP <- function(x){
                      title = "Regreso del año",
                      DT::dataTableOutput('lvbp_regreso')
                    )
+              )
             )
+          ),
+        # Stats geographics ----
+        tabItem(
+          h4('Estadisticas historicas por paises', align = 'center'),
+          tabName = 'geograficas',
+          tabsetPanel(
+            id = "tabset8",
+            side = "left",
+            # Picheo ----
+            tabPanel(
+              tabName = 'Picheo',
+              # Input ----
+              fluidRow(
+                br(),
+                column(3,
+                       selectInput(
+                         inputId = 'select_country',
+                         label = 'Paises',
+                         choices = .paises
+                       )
+                  )
+                )
+              )
             )
           )
         )
@@ -9076,13 +9124,13 @@ IP <- function(x){
         ) 
       })
       #Geograficas
-      # Table Record LVBP Novato ----
+      # Table Geo Pitching stats by country ----
       output$country_pi <- renderDataTable({
         
-        pais_pit <- prs %>% 
+        pais_pit <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
@@ -9118,6 +9166,49 @@ IP <- function(x){
         
         
      
+      })
+      # Table Geo Pitching stats by state ----
+      output$state_pit <- renderDataTable({
+        
+        pais_pit <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          group_by(pais, estado) %>% 
+          summarise(
+            jugador = n(),
+            edad = round(mean(edad, na.rm = T), 1),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            ir = sum(ir, na.rm = T),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            .groups = "drop"
+          ) %>% 
+          arrange(pais, estado)
+        
+        
+        
       })
       # ------ INFOBOX -----
       # InfoBox Position player ----
@@ -9425,5 +9516,5 @@ IP <- function(x){
     }
   )
 
-
+#hi
 
