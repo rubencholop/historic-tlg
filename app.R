@@ -48,12 +48,6 @@ Unique_Rosters <- Rosters %>%
   arrange(pais) %>% 
   pull()
 
-.estado <- Rosters %>% 
-  group_by(estado) %>% 
-  summarize(estado = last(estado),
-            .groups = 'drop') %>% 
-  arrange(estado) %>% 
-  pull()
 
 .ciudad <- Rosters %>% 
   group_by(ciudad) %>% 
@@ -1463,8 +1457,34 @@ IP <- function(x){
                          label = 'Paises',
                          choices = .paises
                        )
+                  ),
+                column(3,
+                       selectInput(
+                         inputId = 'select_state',
+                         label = 'Estado',
+                         choices = NULL
+                       )
                   )
-                )
+                # column(3,
+                #        selectInput(
+                #          inputId = 'select_city',
+                #          label = 'Ciudad',
+                #          choices = NULL
+                #        )
+                #   )
+                ),
+              # Table ----
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "Estadisticas por ciudad",
+                         DT::dataTableOutput('country_pit')
+                        )
+                       )
+                 )
               )
             )
           )
@@ -1474,7 +1494,7 @@ IP <- function(x){
     ),
     
     # Server ----
-    server = function(input, output) {
+    server = function(input, output, session) {
       # Reactive Rosters ----
       Rosters <- reactive({
         .Rosters <- read_csv('data/rosters_clean.csv')
@@ -1532,6 +1552,48 @@ IP <- function(x){
       # Reactive Record LVBP ----
       lvbp <- reactive({
         lvbp <- read_csv('data/records.csv')
+      })
+      
+      # Reactive Geographic Stats ----
+      geographic <- reactive({
+        
+        geographic <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          group_by(pais, estado, ciudad) %>% 
+          summarise(
+            jugador = n(),
+            edad = round(mean(edad, na.rm = T), 1),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            ir = sum(ir, na.rm = T),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            .groups = "drop"
+          ) %>% 
+          arrange(desc(pais)) %>% 
+          filter(pais == input$select_country)
       })
       # -----TABLES ----
       #By Team
@@ -9124,47 +9186,72 @@ IP <- function(x){
         ) 
       })
       #Geograficas
+      # ObserveEvent Estados ----
+      observeEvent(geographic(), {
+        choices_estado <- unique(geographic()$estado)
+        
+        updateSelectInput(session, "select_state", choices = choices_estado)
+        
+      })
+      # 
+      # estado <- reactive({
+      #   req(input$select_state)
+      # 
+      #   filter(geographic(), estado == input$select_state)
+      # 
+      # })
+
+      # observeEvent(estado(),{
+      #   ciudad <- unique(estado()$ciudad)
+      # 
+      #   updateSelectInput(session, "select_city", choices = ciudad)
+      # })
+      
       # Table Geo Pitching stats by country ----
-      output$country_pi <- renderDataTable({
+      output$country_pit <- renderDataTable({
+        req(input$select_country)
         
-        pais_pit <- prs() %>% 
-          mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador)) %>%
-                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais) %>% 
-          summarise(
-            jugador = n(),
-            edad = round(mean(edad, na.rm = T), 1),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            .groups = "drop"
-          ) %>% 
-          arrange(desc(jugador))
+        geographic <- geographic() %>% 
+          filter(estado == input$select_state)
         
         
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          geographic ,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Top 10 historico')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            # autoWidth = TRUE
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = 1),
+                              list(width = '120px', targets = 0)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
      
       })
       # Table Geo Pitching stats by state ----
