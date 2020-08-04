@@ -9349,9 +9349,51 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
-          ) 
+          ) %>% 
+          arrange(desc(juga))
         
         
+        
+      })
+      # Table Geo Batting stats by country ----
+      output$cstate_bat <- renderDataTable({
+        
+        state_bat <- brs %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          group_by(pais, estado) %>% 
+          summarise(
+            jugador = n(),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          arrange(pais, desc(jugador))
         
       })
       # ------ INFOBOX -----
