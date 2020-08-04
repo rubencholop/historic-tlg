@@ -189,53 +189,53 @@ years,jugador,name,first_name,last_name,pos,bat,lan,exp,pais,estado,ciudad
 2007-08,J. Albaladejo,Jonathan Albaladejo Santana,Jonathan,Albaladejo,P,D,D,1,Puerto Rico,San Juan,
 2007-08,G. Martínez,Gabriel José Martínez,Gabriel,Martínez,1B,Z,D,1,Puerto Rico,Ponce,
 2013-14,C. Reed,Christopher William Reed,Christopher,Reed,p,Z,Z,1,Reino Unido,London,
-2018-19,Y. Asencio,Yeison Asencio,Yeison,Asencio,RF,D,D,1,Republica Dominicana,,Santo Domingo
-2017-18,W. Pérez,Wander A. Pérez,Wander,Pérez,P,Z,Z,2,Republica Dominicana,,Nizao
-2016-17,W. Pérez,Wander A. Pérez,Wander,Pérez,P,Z,Z,1,Republica Dominicana,,Nizao
-2014-15,W. Mesa,Wanel Mesa,Wanel,Mesa,P,D,D,1,Republica Dominicana,,Azua
-2018-19,W. Garcia,Willy Camilo Garcia Archivol,Willy,Garcia,RF,D,D,1,Republica Dominicana,,Santo Domingo
-2019-20,W. Beras,Wander Federico Beras,Wander,Beras,P,Z,Z,2,Republica Dominicana,,Elias Pina
-2004-05,W. Abreu,Winston Leónardo Abreu,Winston,Abreu,P,D,D,1,Republica Dominicana,,Cotui
-2018-19,U. Joaquin,Ulises Cirilo Joaquin,Ulises,Joaquin,P,D,D,1,Republica Dominicana,,Santo Domingo
-2017-18,S. Gervacio,Samuel Gervacio,Samuel,Gervacio,P,D,D,3,Republica Dominicana,,Sabana de la Mar
-2016-17,S. Gervacio,Samuel Gervacio,Samuel,Gervacio,P,D,D,2,Republica Dominicana,,Sabana de la Mar
-2007-08,R. Mateo,Ruben Mateo,Ruben,Mateo,CF,D,D,1,Republica Dominicana,,San Cristobal
-2009-10,R. Giron,Roberto Giron,Roberto,Giron,P,D,D,2,Republica Dominicana,,Villa Mella
-2008-09,R. Giron,Roberto Giron,Roberto,Giron,P,D,D,1,Republica Dominicana,,Villa Mella
-2002-03,R. Caraballo,Ramon Caraballo Sánchez,Ramon,Caraballo,P,A,D,1,Republica Dominicana,,Rio San Juan
-2004-05,R. Cabrera,Raymond Cabrera,Raymond,Cabrera,CF,D,D,6,Republica Dominicana,,Santo Domingo
-2012-13,P. Liriano,Pedro Antonio Liriano,Pedro,Liriano,P,D,D,3,Republica Dominicana,,Fantino
-2009-10,P. Liriano,Pedro Antonio Liriano,Pedro,Liriano,P,D,D,2,Republica Dominicana,,Fantino
-2016-17,O. Rosario,Olmo O Rosario,Olmo,Rosario,RF,D,D,1,Republica Dominicana,,Haina
-2013-14,M. Arias,Marlon Vladimir Arias,Marlon,Arias,P,Z,Z,1,Republica Dominicana,,Bani
+2018-19,Y. Asencio,Yeison Asencio,Yeison,Asencio,RF,D,D,1,Republica Dominicana,Santo Domingo,
+2017-18,W. Pérez,Wander A. Pérez,Wander,Pérez,P,Z,Z,2,Republica Dominicana,Nizao,
+2016-17,W. Pérez,Wander A. Pérez,Wander,Pérez,P,Z,Z,1,Republica Dominicana,Nizao,
+2014-15,W. Mesa,Wanel Mesa,Wanel,Mesa,P,D,D,1,Republica Dominicana,Azua,
+2018-19,W. Garcia,Willy Camilo Garcia Archivol,Willy,Garcia,RF,D,D,1,Republica Dominicana,Santo Domingo,
+2019-20,W. Beras,Wander Federico Beras,Wander,Beras,P,Z,Z,2,Republica Dominicana,Elias Pina,
+2004-05,W. Abreu,Winston Leónardo Abreu,Winston,Abreu,P,D,D,1,Republica Dominicana,Cotui,
+2018-19,U. Joaquin,Ulises Cirilo Joaquin,Ulises,Joaquin,P,D,D,1,Republica Dominicana,Santo Domingo,
+2017-18,S. Gervacio,Samuel Gervacio,Samuel,Gervacio,P,D,D,3,Republica Dominicana,Sabana de la Mar,
+2016-17,S. Gervacio,Samuel Gervacio,Samuel,Gervacio,P,D,D,2,Republica Dominicana,Sabana de la Mar,
+2007-08,R. Mateo,Ruben Mateo,Ruben,Mateo,CF,D,D,1,Republica Dominicana,San Cristobal,
+2009-10,R. Giron,Roberto Giron,Roberto,Giron,P,D,D,2,Republica Dominicana,Villa Mella,
+2008-09,R. Giron,Roberto Giron,Roberto,Giron,P,D,D,1,Republica Dominicana,Villa Mella,
+2002-03,R. Caraballo,Ramon Caraballo Sánchez,Ramon,Caraballo,P,A,D,1,Republica Dominicana,Rio San Juan,
+2004-05,R. Cabrera,Raymond Cabrera,Raymond,Cabrera,CF,D,D,6,Republica Dominicana,Santo Domingo,
+2012-13,P. Liriano,Pedro Antonio Liriano,Pedro,Liriano,P,D,D,3,Republica Dominicana,Fantino,
+2009-10,P. Liriano,Pedro Antonio Liriano,Pedro,Liriano,P,D,D,2,Republica Dominicana,Fantino,
+2016-17,O. Rosario,Olmo O Rosario,Olmo,Rosario,RF,D,D,1,Republica Dominicana,Haina,
+2013-14,M. Arias,Marlon Vladimir Arias,Marlon,Arias,P,Z,Z,1,Republica Dominicana,Bani,
 2009-10,L. Ortiz,Luis F. Ortiz,Luis,Ortiz,2B,A,D,1,Republica Dominicana,,
-2016-17,K. De La Cruz,Kelvin Antonio De La Cruz,Kelvin,De la Cruz,P,Z,Z,1,Republica Dominicana,,La Vega
-2015-16,J. Yan,Johan Yan,Johan,Yan,P,D,D,1,Republica Dominicana,,San Pedro de Macoris
-2008-09,J. Richardson,Juan Miguel Richardson,Juan,Richardson,1B,D,D,1,Republica Dominicana,,Bani
-2006-07,J. Mercedes,José Miguel Mercedes Santana,José,Mercedes,P,D,D,1,Republica Dominicana,,El Seibo
-2007-08,J. Matos,Josué Matos,Josué,Matos,P,D,D,1,Republica Dominicana,,Mayaguez
-2015-16,J. Grullon,Juan Grullon,Juan,Grullon,P,Z,Z,1,Republica Dominicana,,Santiago
-2010-11,J. DePaula,Jorge DePaula,Jorge,DePaula,P,D,D,2,Republica Dominicana,,Sabana Grande
-2012-13,J. DePaula,Julio César DePaula,Julio,DePaula,P,D,D,1,Republica Dominicana,,Santo Domingo
-2017-18,I. Tejeda,Isaías Tejeda,Isaías,Tejeda,1B,D,D,1,Republica Dominicana,,Santo Domingo
-2018-19,H. Brazoban,Huascar Leandro Brazoban,Huascar,Brazoban,P,D,D,2,Republica Dominicana,,Villa Mella
-2016-17,H. Brazoban,Huascar Leandro Brazoban,Huascar,Brazoban,P,D,D,1,Republica Dominicana,,Villa Mella
-2008-09,F. Romero,Félix Manuel Romero,Félix,Romero,P,D,D,1,Republica Dominicana,,San Pedro de Macoris
-2009-10,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,5,Republica Dominicana,,Nueva Esparita
-2008-09,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,4,Republica Dominicana,,Nueva Esparita
-2007-08,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,3,Republica Dominicana,,Nueva Esparita
-2005-06,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,2,Republica Dominicana,,Nueva Esparita
-2015-16,F. De La Cruz,Eulogio De La Cruz Martínez,Eulogio,De la  Cruz,P,D,D,1,Republica Dominicana,,Santo Domingo
-2013-14,E. Vázquez,Esmerling Vázquez,Esmerling,Vázquez,P,D,D,1,Republica Dominicana,,Tenares
-2009-10,E. Ramos,Eddy N. Ramos,Eddy,Ramos,P,A,D,2,Republica Dominicana,,Santo Domingo
-2008-09,E. Ramos,Eddy N. Ramos,Eddy,Ramos,P,A,D,1,Republica Dominicana,,Santo Domingo
-2016-17,E. Guerrero,Emilis R Guerrero,Emilis,Guerrero,P,D,D,1,Republica Dominicana,,La Romana
-2016-17,E. De León,Emmanuel De León,Emmanuel,De Leon,P,A,D,1,Republica Dominicana,,La Vega
-2014-15,D. Soriano,Dionis Soriano,Dionis,Soriano,P,Z,Z,1,Republica Dominicana,,San Pedro de Macoris
-2019-20,A. Ventura,Ángel M Ventura,Ángel,Ventura,P,D,D,2,Republica Dominicana,,Santo Domingo
-2010-11,A. Montero,Agustín Alcantara Montero,Agustín,Montero,P,D,D,1,Republica Dominicana,,San Pedro de Macoris
-2015-16,A. Candelario,Alexis A Candelario,Alexis,Candelario,P,D,D,1,Republica Dominicana,,Santo Domingo
-1993-94,V. Cole,Víctor Alexander Cole,Víctor,Cole,P,A,D,1,Rusia,,Leningrado
+2016-17,K. De La Cruz,Kelvin Antonio De La Cruz,Kelvin,De la Cruz,P,Z,Z,1,Republica Dominicana,La Vega,
+2015-16,J. Yan,Johan Yan,Johan,Yan,P,D,D,1,Republica Dominicana,San Pedro de Macoris,
+2008-09,J. Richardson,Juan Miguel Richardson,Juan,Richardson,1B,D,D,1,Republica Dominicana,Bani,
+2006-07,J. Mercedes,José Miguel Mercedes Santana,José,Mercedes,P,D,D,1,Republica Dominicana,El Seibo,
+2007-08,J. Matos,Josué Matos,Josué,Matos,P,D,D,1,Republica Dominicana,Mayaguez,
+2015-16,J. Grullon,Juan Grullon,Juan,Grullon,P,Z,Z,1,Republica Dominicana,Santiago,
+2010-11,J. DePaula,Jorge DePaula,Jorge,DePaula,P,D,D,2,Republica Dominicana,Sabana Grande,
+2012-13,J. DePaula,Julio César DePaula,Julio,DePaula,P,D,D,1,Republica Dominicana,Santo Domingo,
+2017-18,I. Tejeda,Isaías Tejeda,Isaías,Tejeda,1B,D,D,1,Republica Dominicana,Santo Domingo,
+2018-19,H. Brazoban,Huascar Leandro Brazoban,Huascar,Brazoban,P,D,D,2,Republica Dominicana,Villa Mella,
+2016-17,H. Brazoban,Huascar Leandro Brazoban,Huascar,Brazoban,P,D,D,1,Republica Dominicana,Villa Mella,
+2008-09,F. Romero,Félix Manuel Romero,Félix,Romero,P,D,D,1,Republica Dominicana,San Pedro de Macoris,
+2009-10,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,5,Republica Dominicana,Nueva Esparita,
+2008-09,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,4,Republica Dominicana,Nueva Esparita,
+2007-08,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,3,Republica Dominicana,Nueva Esparita,
+2005-06,F. Quijada,Fernando Antonio Quijada,Fernando,Quijada,P,D,D,2,Republica Dominicana,Nueva Esparita,
+2015-16,F. De La Cruz,Eulogio De La Cruz Martínez,Eulogio,De la  Cruz,P,D,D,1,Republica Dominicana,Santo Domingo,
+2013-14,E. Vázquez,Esmerling Vázquez,Esmerling,Vázquez,P,D,D,1,Republica Dominicana,Tenares,
+2009-10,E. Ramos,Eddy N. Ramos,Eddy,Ramos,P,A,D,2,Republica Dominicana,Santo Domingo,
+2008-09,E. Ramos,Eddy N. Ramos,Eddy,Ramos,P,A,D,1,Republica Dominicana,Santo Domingo,
+2016-17,E. Guerrero,Emilis R Guerrero,Emilis,Guerrero,P,D,D,1,Republica Dominicana,La Romana,
+2016-17,E. De León,Emmanuel De León,Emmanuel,De Leon,P,A,D,1,Republica Dominicana,La Vega,
+2014-15,D. Soriano,Dionis Soriano,Dionis,Soriano,P,Z,Z,1,Republica Dominicana,San Pedro de Macoris,
+2019-20,Á. Ventura,Ángel M Ventura,Ángel,Ventura,P,D,D,2,Republica Dominicana,Santo Domingo,
+2010-11,A. Montero,Agustín Alcantara Montero,Agustín,Montero,P,D,D,1,Republica Dominicana,San Pedro de Macoris,
+2015-16,A. Candelario,Alexis A Candelario,Alexis,Candelario,P,D,D,1,Republica Dominicana,Santo Domingo,
+1993-94,V. Cole,Víctor Alexander Cole,Víctor,Cole,P,A,D,1,Rusia,Leningrado,
 2011-12,Z. Kroenke,Zachary B. Kroenke,Zachary,Kroenke,P,D,Z,1,USA,Nebraska,Omaha
 2005-06,W. Young,Walter Earnest Young,Walter,Young,1B,Z,D,2,USA,Misisipi,Hattiesburg
 2004-05,W. Young,Walter Earnest Young,Walter,Young,1B,Z,D,1,USA,Misisipi,Hattiesburg
