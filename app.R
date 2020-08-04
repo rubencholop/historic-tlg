@@ -9147,7 +9147,7 @@ IP <- function(x){
       })
       #Geograficas
       # Table Geo Pitching stats by city ----
-      output$country_pit <- renderDataTable({
+      output$city_pit <- renderDataTable({
         req(input$select_country)
         
         geographic <- prs %>% 
@@ -9231,17 +9231,16 @@ IP <- function(x){
       # Table Geo Pitching stats by state ----
       output$state_pit <- renderDataTable({
         
-        pais_pit <- prs %>% 
+        pais_pit <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
           group_by(pais, estado) %>% 
           summarise(
             jugador = n(),
-            edad = round(mean(edad, na.rm = T), 1),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
             er = sum(er, na.rm = T),
@@ -9272,7 +9271,7 @@ IP <- function(x){
         
       })
       # Table Geo Pitching stats by country ----
-      output$state_pit <- renderDataTable({
+      output$country_pit <- renderDataTable({
         
         pais_pit <- prs %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
@@ -9281,10 +9280,9 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais, estado) %>% 
+          group_by(pais) %>% 
           summarise(
             jugador = n(),
-            edad = round(mean(edad, na.rm = T), 1),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
             er = sum(er, na.rm = T),
@@ -9309,7 +9307,49 @@ IP <- function(x){
             `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             .groups = "drop"
           ) %>% 
-          arrange(pais, estado)
+          arrange(desc(jugador))
+        
+        
+        
+      })
+      # Table Geo Batting stats by country ----
+      output$country_bat <- renderDataTable({
+        
+        country_bat <- brs %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          group_by(pais) %>% 
+          summarise(
+            jugador = n(),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) 
         
         
         
