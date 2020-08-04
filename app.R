@@ -257,7 +257,7 @@ IP <- function(x){
             tabName = 'geo_estadisticas',
             icon = "tasks",
             bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "circle"),
-            bs4SidebarMenuSubItem('Historicas', tabName = 'istoricas', icon = "circle")
+            bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "circle")
           ),
           # menuItem Records ----
           bs4SidebarMenuItem(
@@ -1448,7 +1448,18 @@ IP <- function(x){
             # Picheo ----
             tabPanel(
               tabName = 'Picheo',
-              # Input ----
+              # Valuebox ----
+              fluidRow(
+                column(9),
+                column(3,
+                       bs4ValueBoxOutput("valuebox_cpit", width = 12),
+                       bs4ValueBoxOutput("valuebox_lan", width = 12),
+                       bs4ValueBoxOutput("valuebox_right", width = 12),
+                       bs4ValueBoxOutput("valuebox_left", width = 12)
+                       )
+                
+              ),
+              # Input and table by country ----
               fluidRow(
                 br(),
                 column(3,
@@ -9399,10 +9410,10 @@ IP <- function(x){
       # Table Geo Batting stats by state ----
       output$city_bat <- renderDataTable({
         
-        city_bat <- brs %>% 
+        city_bat <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>%
@@ -9549,6 +9560,36 @@ IP <- function(x){
       
       # Images
       
+      
+      # ---- VALUEBOX ----
+      # Valuebox country pitching ----
+      output$valuebox_cpit <- renderbs4ValueBox({
+        
+        country_pit <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(pais) %>% 
+          filter(!is.na(pais),
+                 !pais == "Desconocido") %>% 
+          summarise(pais = unique(pais)) %>% 
+          pull() 
+          
+        
+        bs4ValueBox(
+          value = tags$p("Paises", style = "font-size: 100%;
+                                                   font-family:Comic Sans;"),
+          subtitle = length(country_pit),
+          # subtitle = tags$h3(, style = "font-size: 170%;
+          #                                   text-align: center;"),
+          status = "primary",
+          icon = 'check-circle'
+          # href = "https://www.worldometers.info/coronavirus/"
+        )
+        
+      })
       
       # -----IMAGE ----
       # image Batting player ----
