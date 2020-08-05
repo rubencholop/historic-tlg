@@ -9562,7 +9562,7 @@ IP <- function(x){
       
       
       # ---- VALUEBOX ----
-      # Valuebox country pitching ----
+      # Valueboxpitching # countrys ----
       output$valuebox_cpit <- renderbs4ValueBox({
         
         country_pit <- prs() %>% 
@@ -9582,6 +9582,120 @@ IP <- function(x){
           value = tags$p("Paises", style = "font-size: 100%;
                                                    font-family:Comic Sans;"),
           subtitle = length(country_pit),
+          # subtitle = tags$h3(, style = "font-size: 170%;
+          #                                   text-align: center;"),
+          status = "primary",
+          icon = 'check-circle'
+          # href = "https://www.worldometers.info/coronavirus/"
+        )
+        
+      })
+      
+      # Valuebox pitching # pitchers ----
+      output$valuebox_lan <- renderbs4ValueBox({
+        
+        country_pit <- Rosters() %>% 
+          filter(pos == "P",
+                 !is.na(lan)) %>% 
+          select(lan, ID) %>% 
+          mutate(derechos = if_else(lan == "D", 1, 0),
+                 zurdos = if_else(lan == "Z", 1, 0),
+                 lan = derechos + zurdos) %>% 
+          group_by(ID) %>% 
+          summarise(
+            .groups = "drop",
+            derechos = sum(last(derechos)),
+            zurdos = sum(last(zurdos)),
+            lan = sum(last(lan))
+          ) %>% 
+          summarise(
+            derechos = sum(derechos),
+            zurdos = sum(zurdos),
+            lan = sum(lan)
+          )
+          
+          
+        
+        bs4ValueBox(
+          value = tags$p("# Lanzadores", style = "font-size: 100%;
+                                                   font-family:Comic Sans;"),
+          subtitle = length(country_pit$lan),
+          # subtitle = tags$h3(, style = "font-size: 170%;
+          #                                   text-align: center;"),
+          status = "primary",
+          icon = 'check-circle'
+          # href = "https://www.worldometers.info/coronavirus/"
+        )
+        
+      })
+      
+      # Valuebox pitching # pitchers right----
+      output$valuebox_right <- renderbs4ValueBox({
+        
+        country_pit <- Rosters() %>% 
+          filter(pos == "P",
+                 !is.na(lan)) %>% 
+          select(lan, ID) %>% 
+          mutate(derechos = if_else(lan == "D", 1, 0),
+                 zurdos = if_else(lan == "Z", 1, 0),
+                 lan = derechos + zurdos) %>% 
+          group_by(ID) %>% 
+          summarise(
+            .groups = "drop",
+            derechos = sum(last(derechos)),
+            zurdos = sum(last(zurdos)),
+            lan = sum(last(lan))
+          ) %>% 
+          summarise(
+            derechos = sum(derechos),
+            zurdos = sum(zurdos),
+            lan = sum(lan)
+          )
+          
+          
+        
+        bs4ValueBox(
+          value = tags$p("# Lanzadores derechos", style = "font-size: 100%;
+                                                   font-family:Comic Sans;"),
+          subtitle = length(country_pit$derechos),
+          # subtitle = tags$h3(, style = "font-size: 170%;
+          #                                   text-align: center;"),
+          status = "primary",
+          icon = 'check-circle'
+          # href = "https://www.worldometers.info/coronavirus/"
+        )
+        
+      })
+      
+      # Valuebox pitching # pitchers left ----
+      output$valuebox_left <- renderbs4ValueBox({
+        
+        country_pit <- Rosters() %>% 
+          filter(pos == "P",
+                 !is.na(lan)) %>% 
+          select(lan, ID) %>% 
+          mutate(derechos = if_else(lan == "D", 1, 0),
+                 zurdos = if_else(lan == "Z", 1, 0),
+                 lan = derechos + zurdos) %>% 
+          group_by(ID) %>% 
+          summarise(
+            .groups = "drop",
+            derechos = sum(last(derechos)),
+            zurdos = sum(last(zurdos)),
+            lan = sum(last(lan))
+          ) %>% 
+          summarise(
+            derechos = sum(derechos),
+            zurdos = sum(zurdos),
+            lan = sum(lan)
+          )
+          
+          
+        
+        bs4ValueBox(
+          value = tags$p("# Lanzadores zurdos", style = "font-size: 100%;
+                                                   font-family:Comic Sans;"),
+          subtitle = length(country_pit$zurdos),
           # subtitle = tags$h3(, style = "font-size: 170%;
           #                                   text-align: center;"),
           status = "primary",
