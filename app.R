@@ -9796,7 +9796,7 @@ IP <- function(x){
             useHTML = TRUE) %>%
           hc_plotOptions(series = list(stacking = "normal")) %>% 
           hc_tooltip(sort = TRUE,
-                     pointFormat = paste('<br><b>Jugadores: {point.jugador:.1f}')) %>% 
+                     pointFormat = paste('<br><b>Jugadores: {point.jugador:1f}')) %>% 
           # hc_chart(backgroundColor = "black") %>% 
           hc_xAxis(title = list(text = "")) %>%
           hc_yAxis(title = list(text = "Jugadores")) 
@@ -9808,6 +9808,43 @@ IP <- function(x){
           #     )
           #   )
           # )
+        country_bat
+      })
+      # # Chart country evolution ----
+      output$country_evolution <- renderHighchart({
+        req(input$select_country)
+        
+        country_bat <- brs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, years, pais) %>%
+          filter(pais == input$select_country) %>% 
+          group_by(years) %>% 
+          summarise(
+            years = last(years),
+            jugadores = n(),
+            .groups = 'drop'
+          ) %>% 
+          hchart(.,
+                 type = 'line', 
+                 hcaes(x = years,
+                       y = jugadores),
+                 color = c("#011C51")) %>% 
+          hc_title(
+            text = paste0("Lanzadores de <span style=\"color:#cc0000\">", 
+                          input$select_country,
+                          "</span> por temporadas"),
+            useHTML = TRUE) %>%
+          hc_plotOptions(series = list(stacking = "normal")) %>% 
+          hc_tooltip(sort = TRUE,
+                     pointFormat = paste('<br><b>Jugadores: {point.jugadores:1f}')) %>% 
+          # hc_chart(backgroundColor = "black") %>% 
+          hc_xAxis(title = list(text = "")) %>%
+          hc_yAxis(title = list(text = "Jugadores")) 
+
         country_bat
       })
       # -----IMAGE ----
