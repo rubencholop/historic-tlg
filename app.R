@@ -1,13 +1,15 @@
 # Libraries ----
-  library(shiny)
-  library(bs4Dash)
-  library(shinyWidgets)
-  library(lubridate)
-  library(plotly)
-  library(dplyr)
-  library(DT)
-  library(stringr)
-  library(readr)
+library(shiny)
+library(bs4Dash)
+library(shinyWidgets)
+library(lubridate)
+library(plotly)
+library(dplyr)
+library(DT)
+library(stringr)
+library(readr)
+library(highcharter)
+library(shinyalert)
 
 # Choices ----
 
@@ -1450,7 +1452,9 @@ IP <- function(x){
               tabName = 'Picheo',
               # Valuebox ----
               fluidRow(
-                column(9),
+                column(9,
+                       highchartOutput('country_chart', width = '800px', height = '800px')
+                       ),
                 column(3,
                        bs4ValueBoxOutput("valuebox_cpit", width = 12),
                        bs4ValueBoxOutput("valuebox_lan", width = 12),
@@ -1495,7 +1499,13 @@ IP <- function(x){
                          DT::dataTableOutput('country_pit')
                         )
                        )
-                 )
+                 ),
+              # Line Chart pitcher evolution ----
+              fluidRow(
+                column(12,
+                       highchartOutput('country_evolution', width = '800px', height = '800px')
+                       )
+                )
               )
             )
           )
@@ -9320,6 +9330,44 @@ IP <- function(x){
           ) %>% 
           arrange(desc(jugador))
         
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          pais_pit,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('333333333')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            # rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            headerCallback = JS(headerCallback),
+            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+        
         
         
       })
@@ -9361,7 +9409,7 @@ IP <- function(x){
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
           ) %>% 
-          arrange(desc(juga))
+          arrange(desc(jugador))
         
         
         
@@ -9407,7 +9455,7 @@ IP <- function(x){
           arrange(pais, desc(jugador))
         
       })
-      # Table Geo Batting stats by state ----
+      # Table Geo Batting stats by city ----
       output$city_bat <- renderDataTable({
         
         city_bat <- brs() %>% 
@@ -9565,7 +9613,7 @@ IP <- function(x){
       # Valueboxpitching # countrys ----
       output$valuebox_cpit <- renderbs4ValueBox({
         
-        country_pit <- prs() %>% 
+        .country_pit <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
@@ -9579,13 +9627,12 @@ IP <- function(x){
           
         
         bs4ValueBox(
-          value = tags$p("Paises", style = "font-size: 100%;
+          value = tags$p("Paises", style = "font-size: 120%;
                                                    font-family:Comic Sans;"),
-          subtitle = length(country_pit),
-          # subtitle = tags$h3(, style = "font-size: 170%;
-          #                                   text-align: center;"),
-          status = "primary",
-          icon = 'check-circle'
+          # subtitle = ,
+          subtitle = tags$h2(length(.country_pit), style = "font-size: 170%;"),
+          status = "primary"
+          # icon = 'check-circle'
           # href = "https://www.worldometers.info/coronavirus/"
         )
         
@@ -9614,22 +9661,20 @@ IP <- function(x){
             lan = sum(lan)
           )
           
-          
         
         bs4ValueBox(
-          value = tags$p("# Lanzadores", style = "font-size: 100%;
+          value = tags$p("Lanzadores", style = "font-size: 120%;
                                                    font-family:Comic Sans;"),
-          subtitle = length(country_pit$lan),
-          # subtitle = tags$h3(, style = "font-size: 170%;
-          #                                   text-align: center;"),
-          status = "primary",
-          icon = 'check-circle'
+          # subtitle = ,
+          subtitle = tags$h2(country_pit$lan, style = "font-size: 170%;"),
+          status = "primary"
+          # icon = 'check-circle'
           # href = "https://www.worldometers.info/coronavirus/"
         )
         
       })
       
-      # Valuebox pitching # pitchers right----
+      # Valuebox pitching # pitchers right ----
       output$valuebox_right <- renderbs4ValueBox({
         
         country_pit <- Rosters() %>% 
@@ -9652,16 +9697,14 @@ IP <- function(x){
             lan = sum(lan)
           )
           
-          
         
         bs4ValueBox(
-          value = tags$p("# Lanzadores derechos", style = "font-size: 100%;
+          value = tags$p("Lanzadores derechos", style = "font-size: 120%;
                                                    font-family:Comic Sans;"),
-          subtitle = length(country_pit$derechos),
-          # subtitle = tags$h3(, style = "font-size: 170%;
-          #                                   text-align: center;"),
-          status = "primary",
-          icon = 'check-circle'
+          # subtitle = ,
+          subtitle = tags$h2(country_pit$derechos, style = "font-size: 170%;"),
+          status = "primary"
+          # icon = 'check-circle'
           # href = "https://www.worldometers.info/coronavirus/"
         )
         
@@ -9687,24 +9730,86 @@ IP <- function(x){
           summarise(
             derechos = sum(derechos),
             zurdos = sum(zurdos),
-            lan = sum(lan)
-          )
+            lan = sum(lan))
           
-          
-        
+
         bs4ValueBox(
-          value = tags$p("# Lanzadores zurdos", style = "font-size: 100%;
+          value = tags$p("Lanzadores zurdos", style = "font-size: 120%;
                                                    font-family:Comic Sans;"),
-          subtitle = length(country_pit$zurdos),
-          # subtitle = tags$h3(, style = "font-size: 170%;
-          #                                   text-align: center;"),
-          status = "primary",
-          icon = 'check-circle'
+          # subtitle = ,
+          subtitle = tags$h2(country_pit$zurdos, style = "font-size: 170%;"),
+          status = "primary"
+          # icon = 'check-circle'
           # href = "https://www.worldometers.info/coronavirus/"
         )
         
       })
       
+      # ---- CHARTS-----
+      # # Chart country distribution ----
+      output$country_chart <- renderHighchart({
+        
+        country_bat <- brs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          group_by(pais) %>% 
+          summarise(
+            jugador = n(),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          arrange(desc(jugador)) %>% 
+          filter(!is.na(pais)) %>% 
+          hchart(.,
+                 type = 'column', 
+                 hcaes(x = pais,
+                       y = jugador),
+                 color = c("#011C51")) %>% 
+          hc_title(
+            text = "Lanzadores <span style=\"color:#cc0000\"> GUAIRISTAS</span> por paises",
+            useHTML = TRUE) %>%
+          hc_plotOptions(series = list(stacking = "normal")) %>% 
+          hc_tooltip(sort = TRUE,
+                     pointFormat = paste('<br><b>Jugadores: {point.jugador:.1f}')) %>% 
+          # hc_chart(backgroundColor = "black") %>% 
+          hc_xAxis(title = list(text = "")) %>%
+          hc_yAxis(title = list(text = "Jugadores")) 
+          # hc_add_theme(
+          #   hc_theme_flatdark(
+          #     chart = list(
+          #       backgroundColor = 'transparent',
+          #       divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
+          #     )
+          #   )
+          # )
+        country_bat
+      })
       # -----IMAGE ----
       # image Batting player ----
       output$jugador_ <- renderImage({
@@ -9899,4 +10004,6 @@ IP <- function(x){
   )
 
 #hi
-
+  # hcmap("https://code.highcharts.com/mapdata/countries/ve/ve-all.js") %>%
+  #   hc_title(text = "Venezuela")
+  
