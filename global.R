@@ -19,7 +19,7 @@ pf <- read_csv('data/pitching_finals.csv')
 Roster_clean <- read_csv('data/rosters_clean.csv')
 
 .rosters <- Roster_clean %>% 
-  arrange(jugador, years) %>% 
+  arrange(jugador) %>% 
   distinct(name) %>% 
   mutate(ID =  paste(substr(name, 1, 1), seq(1, length(name), 1) , sep = '')
   )
@@ -39,7 +39,8 @@ Roster_clean <- Roster_clean %>%
     exp = last(exp),
     pais = last(pais),
     estado = last(estado),
-    ciudad = last(ciudad)
+    ciudad = last(ciudad),
+    .groups = "drop"
   ) %>% 
   arrange(jugador)
 
