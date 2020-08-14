@@ -247,6 +247,7 @@ IP <- function(x){
             bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "circle"),
+            bs4SidebarMenuSubItem(text = 'Paises', tabName = 'paises', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "circle")
             )
           ),
@@ -259,6 +260,7 @@ IP <- function(x){
             tabName = 'geo_estadisticas',
             icon = "tasks",
             bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "circle"),
+            bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "circle"),
             bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "circle")
           ),
           # menuItem Records ----
@@ -733,6 +735,33 @@ IP <- function(x){
                   )
               )
         ),
+        # TabItem by country ----
+        bs4TabItem(
+          h4('Datos historicos por posicion', align = 'center'),
+          tabName = 'posicion',
+          # input country ----
+          fluidRow(
+            br(),
+            column(3,
+                   selectInput(
+                     inputId = 'select_posicion',
+                     label = 'Paises',
+                     choices = .paises
+                   )
+            )
+          ),
+          # Stats by country ----
+          fluidRow(
+            column(12,
+                   bs4Box(
+                     width = NULL,
+                     title = "Temporada Regular",
+                     DT::dataTableOutput('info_position')
+                   )
+            )
+          )
+        ),
+        
         # TabItem by Roster ----
         bs4TabItem(
           h4('Rosters historicos por posicion', align = 'center'),
@@ -9800,14 +9829,7 @@ IP <- function(x){
           # hc_chart(backgroundColor = "black") %>% 
           hc_xAxis(title = list(text = "")) %>%
           hc_yAxis(title = list(text = "Jugadores")) 
-          # hc_add_theme(
-          #   hc_theme_flatdark(
-          #     chart = list(
-          #       backgroundColor = 'transparent',
-          #       divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
-          #     )
-          #   )
-          # )
+ 
         country_bat
       })
       # # Chart country evolution ----
@@ -9847,6 +9869,7 @@ IP <- function(x){
 
         country_bat
       })
+      
       # -----IMAGE ----
       # image Batting player ----
       output$jugador_ <- renderImage({
