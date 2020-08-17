@@ -50,6 +50,22 @@ Unique_Rosters <- Rosters %>%
   arrange(pais) %>% 
   pull()
 
+.paises_batting <- Rosters %>% 
+  filter(pos != "P") %>% 
+  group_by(pais) %>% 
+  summarize(pais = last(pais),
+            .groups = 'drop') %>% 
+  arrange(pais) %>% 
+  pull()
+
+.paises_pitching <- Rosters %>% 
+  filter(pos == "P") %>% 
+  group_by(pais) %>% 
+  summarize(pais = last(pais),
+            .groups = 'drop') %>% 
+  arrange(pais) %>% 
+  pull()
+
 
 .ciudad <- Rosters %>% 
   group_by(ciudad) %>% 
@@ -752,7 +768,7 @@ IP <- function(x){
                        selectInput(
                          inputId = 'select_country',
                          label = 'Temporadas',
-                         choices = .paises
+                         choices = .paises_pitching
                        )
                 )
               ),
@@ -777,7 +793,7 @@ IP <- function(x){
                        selectInput(
                          inputId = 'select_country_bat',
                          label = 'Paises',
-                         choices = .paises
+                         choices = .paises_batting
                        )
                 )
               ),
