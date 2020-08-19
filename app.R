@@ -865,7 +865,25 @@ IP <- function(x){
             side = "left",
             tabPanel(
               tabName = 'Picheo',
-              fluidRow()
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         title = "Totales en Temporada Regular",
+                         DT::dataTableOutput('versus_total_pit')
+                       )
+                )
+              ),
+              br(),
+              fluidRow(
+                column(12,
+                       bs4Box(
+                         width = NULL,
+                         title = "Totales por temporada en Temporada Regular",
+                         DT::dataTableOutput('versus_pit')
+                       )
+                )
+              )
             ),
             tabPanel(
               tabName  = 'Bateo',
@@ -4969,7 +4987,7 @@ IP <- function(x){
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
           ) %>% 
           arrange(desc(w))
@@ -9746,18 +9764,105 @@ IP <- function(x){
         ) 
       })
       #Geograficas
+      # Table Geo pitching vzla vs importado totales  ----
+      output$versus_total_pit <- renderDataTable({
+        
+        versus_totales <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 18)], 
+                                     "Importados", 
+                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
+                                     )) %>% 
+          filter(importados %in% c("Importados", "Venezolanos")) %>% 
+          select(-edad) %>% 
+          group_by(importados) %>% 
+          summarise(
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(so/bb, 2)),
+            .groups = "drop"
+          ) %>% 
+          arrange(desc(w)) 
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          versus_totales ,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('se excluyeron estadisticas de paises de jugadores con paises "Desconocidos"')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            # autoWidth = TRUE
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = 1),
+                              list(width = '120px', targets = 0)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+     
+      })
       # Table Geo pitching vzla vs importado ----
       output$versus_pit <- renderDataTable({
         req(input$select_country)
         
-        versus_pit <- prs %>% 
+        versus_pit <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 18)], "Importados", "Venezolanos")) %>% 
+          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 18)], 
+                                     "Importados", 
+                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
+          )) %>% 
+          filter(importados %in% c("Importados", "Venezolanos")) %>%  
           select(-edad) %>% 
           group_by(importados, years) %>% 
           summarise(
@@ -9781,7 +9886,7 @@ IP <- function(x){
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
           ) %>% 
           arrange(desc(w)) 
@@ -9802,11 +9907,12 @@ IP <- function(x){
             style = 'caption-side: bottom; text-align: center;'
             , htmltools::em('Top 10 historico')),
           options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
             searching = FALSE,
-            paging = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
