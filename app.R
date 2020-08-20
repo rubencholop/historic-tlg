@@ -10605,95 +10605,30 @@ IP <- function(x){
       # # Chart country distribution ----
       output$country_chart <- renderHighchart({
         
-        country_bat <- brs() %>% 
-          mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador)) %>%
-                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+        country_bat <- Rosters() %>%
           group_by(pais) %>% 
           summarise(
             jugador = n(),
-            g = sum(g, na.rm = T),
-            pa = sum(pa, na.rm = T),
-            ab = sum(ab, na.rm = T),
-            r = sum(r, na.rm = T),
-            h = sum(h, na.rm = T),
-            `2b` = sum(`2b`, na.rm = T),
-            `3b` = sum(`3b`, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            rbi = sum(rbi, na.rm = T),
-            sb = sum(sb, na.rm = T),
-            cs = sum(cs, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
-            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
-            ops = round(sum(slg, obp, na.rm = T), 3),
-            ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
-            tb = sum(tb, na.rm = T),
-            xb = sum(xb, na.rm = T),
-            hbp = sum(hbp, na.rm = T),
-            sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T),
             .groups = 'drop'
           ) %>% 
+          filter(pais != "Desconocido") %>% 
           arrange(desc(jugador)) %>% 
           filter(!is.na(pais)) %>% 
           hchart(.,
-                 type = 'column', 
+                 type = 'bar', 
                  hcaes(x = pais,
                        y = jugador),
                  color = c("#011C51")) %>% 
           hc_title(
-            text = "Lanzadores <span style=\"color:#cc0000\"> GUAIRISTAS</span> por paises",
+            text = "Jugadores <span style=\"color:#cc0000\"> GUAIRISTAS</span> por paises",
             useHTML = TRUE) %>%
           hc_plotOptions(series = list(stacking = "normal")) %>% 
           hc_tooltip(sort = TRUE,
                      pointFormat = paste('<br><b>Jugadores: {point.jugador:1f}')) %>% 
           # hc_chart(backgroundColor = "black") %>% 
           hc_xAxis(title = list(text = "")) %>%
-          hc_yAxis(title = list(text = "Jugadores")) 
+          hc_yAxis(title = list(text = "")) 
  
-        country_bat
-      })
-      # # Chart country evolution ----
-      output$country_evolution <- renderHighchart({
-        req(input$select_country)
-        
-        country_bat <- brs() %>% 
-          mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador)) %>%
-                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
-          select(ID, years, pais) %>%
-          filter(pais == input$select_country) %>% 
-          group_by(years) %>% 
-          summarise(
-            years = last(years),
-            jugadores = n(),
-            .groups = 'drop'
-          ) %>% 
-          hchart(.,
-                 type = 'line', 
-                 hcaes(x = years,
-                       y = jugadores),
-                 color = c("#011C51")) %>% 
-          hc_title(
-            text = paste0("Lanzadores de <span style=\"color:#cc0000\">", 
-                          input$select_country,
-                          "</span> por temporadas"),
-            useHTML = TRUE) %>%
-          hc_plotOptions(series = list(stacking = "normal")) %>% 
-          hc_tooltip(sort = TRUE,
-                     pointFormat = paste('<br><b>Jugadores: {point.jugadores:1f}')) %>% 
-          # hc_chart(backgroundColor = "black") %>% 
-          hc_xAxis(title = list(text = "")) %>%
-          hc_yAxis(title = list(text = "Jugadores")) 
-
         country_bat
       })
       
