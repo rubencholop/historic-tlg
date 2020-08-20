@@ -856,13 +856,14 @@ IP <- function(x){
             )
           )
         ),
-        # Tabitem Estadísticas ----
+        # Tabitem Estadísticas vzla vs importados ----
         tabItem(
           h4('Venezolanos vs Importados', align = "center"),
           tabName = 'vzla',
           tabsetPanel(
             id = "tabpanel11",
             side = "left",
+            # Picheo ----
             tabPanel(
               tabName = 'Picheo',
               fluidRow(
@@ -885,9 +886,9 @@ IP <- function(x){
                 )
               )
             ),
+            # Bateo ----
             tabPanel(
               tabName  = 'Bateo',
-              fluidRow(
                 fluidRow(
                   column(12,
                          bs4Box(
@@ -909,7 +910,6 @@ IP <- function(x){
                 )
               )
             )
-          )
         ),
         # Tabitem Records ----
         tabItem(
@@ -1220,7 +1220,7 @@ IP <- function(x){
             id = "tabpanel6",
             side = "left",
             tabPanel(
-              # Picheo ----
+            # Picheo ----
               tabName = 'Picheo',
               #1 ----
               fluidRow(
@@ -1590,51 +1590,16 @@ IP <- function(x){
               tabName = 'Picheo',
               # Valuebox ----
               fluidRow(
-                column(9,
+                column(8,
                        highchartOutput('country_chart', width = '800px', height = '800px')
                        ),
-                column(3,
+                column(2,
                        bs4ValueBoxOutput("valuebox_cpit", width = 12),
                        bs4ValueBoxOutput("valuebox_lan", width = 12),
                        bs4ValueBoxOutput("valuebox_right", width = 12),
                        bs4ValueBoxOutput("valuebox_left", width = 12)
                        )
                 
-              ),
-              # Input and table by country ----
-              fluidRow(
-                br(),
-                column(3,
-                       selectInput(
-                         inputId = 'select_country',
-                         label = 'Paises',
-                         choices = .paises
-                       )
-                  )
-                # column(3,
-                #        selectInput(
-                #          inputId = 'select_state',
-                #          label = 'Estado',
-                #          choices = NULL
-                #        )
-                #   )
-                # column(3,
-                #        selectInput(
-                #          inputId = 'select_city',
-                #          label = 'Ciudad',
-                #          choices = NULL
-                #        )
-                #   )
-                ),
-              # Table ----
-              fluidRow(
-                
-                 ),
-              # Line Chart pitcher evolution ----
-              fluidRow(
-                column(12,
-                       highchartOutput('country_evolution', width = '800px', height = '800px')
-                       )
                 )
               )
             )
@@ -5366,7 +5331,6 @@ IP <- function(x){
       
       
       #Pitching Record ----
-      # By Records pitching
       # Table picheo lideres w ----
       output$p_w <- renderDataTable({
         
@@ -10067,12 +10031,12 @@ IP <- function(x){
       })
       
       # Table Geo batting vzla vs importado  ----
-      output$versus_total_bat <- renderDataTable({
+      output$versus_bat <- renderDataTable({
         
-        versus_bat <- brs %>% 
+        versus_bat <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>%
