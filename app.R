@@ -887,7 +887,27 @@ IP <- function(x){
             ),
             tabPanel(
               tabName  = 'Bateo',
-              fluidRow()
+              fluidRow(
+                fluidRow(
+                  column(12,
+                         bs4Box(
+                           width = NULL,
+                           title = "Totales en Temporada Regular",
+                           DT::dataTableOutput('versus_total_bat')
+                         )
+                  )
+                ),
+                br(),
+                fluidRow(
+                  column(12,
+                         bs4Box(
+                           width = NULL,
+                           title = "Totales por temporada en Temporada Regular",
+                           DT::dataTableOutput('versus_bat')
+                         )
+                  )
+                )
+              )
             )
           )
         ),
