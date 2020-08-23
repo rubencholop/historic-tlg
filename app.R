@@ -1580,7 +1580,6 @@ IP <- function(x){
           ),
         # Stats geographics ----
         tabItem(
-          h4('Estadisticas historicas por paises', align = 'center'),
           tabName = 'geograficas',
           tabsetPanel(
             id = "tabset8",
@@ -1588,11 +1587,13 @@ IP <- function(x){
             # General ----
             tabPanel(
               tabName = 'General',
-              
+              h4('Dashboard de estadisticas geograficas', align = 'center'),
+              br(),
               fluidRow(
                 column(8,
                        # highchartOutput('country_chart', width = '800px', height = '800px')
-                       highchartOutput('country_chart')
+                       highchartOutput('country_chart', width = '800px', height = '800px')
+                       # highchartOutput('country_chart')
                        ),
                 # column(2,
                 #        bs4ValueBoxOutput("valuebox_cpit", width = 12),
@@ -1601,7 +1602,8 @@ IP <- function(x){
                 #        bs4ValueBoxOutput("valuebox_left", width = 12)
                 #        ),
                 column(4,
-                       highchartOutput('foreign_chart')
+                       highchartOutput('foreign_chart'),
+                       highchartOutput('position_chart')
                        )
                 )
               ),
@@ -10639,11 +10641,12 @@ IP <- function(x){
                  type = 'bar', 
                  hcaes(x = pais,
                        y = importados,
-                       group = position
-                       # color = c('#4dff88', '#1aa2b8')
+                       group = position,
+                       color = position
                        )) %>% 
           hc_title(
-            text = "Jugadores <span style=\"color:#cc0000\"> GUAIRISTAS</span> por paises",
+            text = "<span style=\"color:#b90e13; 
+                      text-shadow: 1px 1px 2px rgba(150, 150, 150, 1)\">GUAIRISTAS por paises</span>",
             useHTML = TRUE) %>%
           hc_plotOptions(column = list(stacking = "normal")) %>%
           # hc_tooltip(sort = TRUE,
@@ -10658,7 +10661,7 @@ IP <- function(x){
       # Chart foreign distribution  ----
       output$foreign_chart <- renderHighchart({
 
-        foreign_chart <- Rosters %>%
+        foreign_chart <- Rosters() %>%
           mutate(position = ifelse(pos == "P", "Lanzadores", 
                                    ifelse(pos != "P", "Bateadores", "N/A")),
                  importados = ifelse(pais %in% .paises[-c(24)], 
@@ -10685,10 +10688,11 @@ IP <- function(x){
                  hcaes(x = importados,
                        y = position,
                        # group = position
-                       color = c('#4dff88', '#1aa2b8')
+                       color = c("#011C51", '#C20B10')
                  )) %>% 
           hc_title(
-            text = "Jugadores <span style=\"color:#cc0000\"> GUAIRISTAS</span> por paises",
+            text = "<span style=\"color:#b90e13; 
+                      text-shadow: 1px 1px 2px rgba(150, 150, 150, 1)\">VENEZOLANOS VS IMPORTADOS</span>",
             useHTML = TRUE) %>%
           hc_plotOptions(series = list(stacking = "normal")) %>%
           hc_tooltip(sort = TRUE,
@@ -10698,6 +10702,64 @@ IP <- function(x){
           hc_yAxis(title = list(text = ""))
         
         foreign_chart
+        
+      })
+      
+      # Chart position distribution  ----
+      output$position_chart <- renderHighchart({
+
+        position_chart <- Rosters() %>%
+          mutate(position = ifelse(pos == "P", "Lanzadores", 
+                                   ifelse(pos != "P", "Bateadores", "N/A")),
+                 importados = ifelse(pais %in% .paises[-c(24)], 
+                                     "Importados", 
+                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
+                 )) %>% 
+          group_by(ID) %>% 
+          summarise(
+            position = last(position),
+            importados = last(importados),
+            pais = last(pais),
+            .groups = 'drop'
+          ) %>% 
+          ungroup() %>% 
+          group_by(importados) %>% 
+          summarise(
+            position = last(position),
+            importados = n(),
+            .groups = 'drop'
+          ) %>% 
+          arrange(desc(position)) %>% 
+          hchart(.,
+                 type = 'column', 
+                 hcaes(x = position,
+                       y = importados,
+                       # group = position
+                       color = c("#011C51", '#C20B10')
+                 )) %>% 
+          hc_title(
+            text = "<span style=\"color:#b90e13; 
+                      text-shadow: 1px 1px 2px rgba(150, 150, 150, 1)\">BATEADORES vs LANZADORES</span>",
+            # {
+            #   float: left;
+            #   font-size: 1.1rem;
+            #   font-weight: 400;
+            #   margin: 0;
+            #   color: ;
+            #     text-transform: uppercase;
+            #   ;
+            # }
+            
+            
+            useHTML = TRUE) %>%
+          hc_plotOptions(series = list(stacking = "normal")) %>%
+          hc_tooltip(sort = TRUE,
+                     pointFormat = paste('<br><b>Jugadores: {point.importados:1f}')) %>%
+          # hc_chart(backgroundColor = "black") %>%
+          hc_xAxis(title = list(text = "")) %>%
+          hc_yAxis(title = list(text = ""))
+        
+        position_chart
         
       })
       
