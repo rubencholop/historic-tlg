@@ -1083,7 +1083,7 @@ IP <- function(x){
               tabName = 'Bateo',
               #1 ----
               fluidRow(
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1093,7 +1093,7 @@ IP <- function(x){
                          DT::dataTableOutput('b_hits')
                           )
                        ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1103,7 +1103,7 @@ IP <- function(x){
                          DT::dataTableOutput('b_2b')
                           )
                        ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1112,11 +1112,8 @@ IP <- function(x){
                          title = "3B",
                          DT::dataTableOutput('b_3b')
                           )
-                       )
-              ),
-              #2 ----
-              fluidRow(
-                column(4,
+                       ),
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1124,9 +1121,12 @@ IP <- function(x){
                          # status = 'warning',
                          title = "HR",
                          DT::dataTableOutput('b_hr')
-                         )
-                       ),
-                column(4,
+                       )
+                )
+              ),
+              #2 ----
+              fluidRow(
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1135,7 +1135,7 @@ IP <- function(x){
                          DT::dataTableOutput('b_average')
                           )
                        ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1143,11 +1143,8 @@ IP <- function(x){
                          title = "RBI",
                          DT::dataTableOutput('b_rbi')
                          )
-                       )
-                  ),
-              #3 ----
-              fluidRow(
-                column(4,
+                       ),
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1155,18 +1152,21 @@ IP <- function(x){
                          # status = 'warning',
                          title = "SLG",
                          DT::dataTableOutput('b_slg')
-                        )
-                ),
-                column(4,
+                         )
+                       ),
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
                          title = "OBP",
                          DT::dataTableOutput('b_obp')
-                          )
-                       ),
-                column(4,
+                         )
+                       )
+                  ),
+              #3 ----
+              fluidRow(
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1174,12 +1174,9 @@ IP <- function(x){
                          # status = 'warning',
                          title = "OPS",
                          DT::dataTableOutput('b_ops')
-                       )
-                    )
-                  ),
-              #4 ----
-              fluidRow(
-                column(4,
+                         )
+                       ),
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1188,7 +1185,7 @@ IP <- function(x){
                          DT::dataTableOutput('b_ab')
                          )
                        ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1196,9 +1193,9 @@ IP <- function(x){
                          # status = 'warning',
                          title = "SB",
                          DT::dataTableOutput('b_sb')
-                           )
+                         )
                        ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1207,8 +1204,8 @@ IP <- function(x){
                          title = "XB",
                          DT::dataTableOutput('b_xb')
                          )
-                      )
-                    )
+                       )
+                  )
                 )
             )
           ),
@@ -5381,8 +5378,8 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            rownames = FALSE,
-            fixedHeader = TRUE,
+            # rownames = FALSE,
+            # fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = 1),
                               list(width = '120px', targets = 0)),
@@ -5401,6 +5398,7 @@ IP <- function(x){
       # Table picheo lideres l ----
       output$p_l <- renderDataTable({
         
+        # Data ----
         l <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5425,7 +5423,7 @@ IP <- function(x){
             L = l
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5443,7 +5441,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -5468,6 +5466,7 @@ IP <- function(x){
       # Table picheo lideres g ----
       output$p_g <- renderDataTable({
         
+        # Date ----
         g <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5492,7 +5491,7 @@ IP <- function(x){
             G = g
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5510,7 +5509,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -5535,6 +5534,7 @@ IP <- function(x){
       # Table picheo lideres gs ----
       output$p_gs <- renderDataTable({
         
+        # Data ----
         gs <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5559,7 +5559,7 @@ IP <- function(x){
             GS = gs
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5577,7 +5577,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -5602,6 +5602,7 @@ IP <- function(x){
       # Table picheo lideres ip ----
       output$p_ip <- renderDataTable({
         
+        # Data ----
         ip <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5626,7 +5627,7 @@ IP <- function(x){
             IP = ip
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5644,7 +5645,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -5669,6 +5670,7 @@ IP <- function(x){
       # Table picheo lideres so ----
       output$p_so <- renderDataTable({
         
+        # Data ----
         so <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5715,7 +5717,7 @@ IP <- function(x){
             SO = so
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5733,7 +5735,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -5758,6 +5760,7 @@ IP <- function(x){
       # Table picheo lideres h ----
       output$p_h <- renderDataTable({
         
+        # Data ----
         h <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5804,7 +5807,7 @@ IP <- function(x){
             H = h
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5822,7 +5825,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -5846,6 +5849,7 @@ IP <- function(x){
       # Table picheo lideres bb ----
       output$p_bb <- renderDataTable({
         
+        # Data ----
         bb <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5894,7 +5898,7 @@ IP <- function(x){
         # %>% 
         #   slice(1:(n()-3))
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5912,7 +5916,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -5936,6 +5940,7 @@ IP <- function(x){
       # Table picheo lideres era ----
       output$p_era <- renderDataTable({
         
+        # Data ----
         era <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5984,7 +5989,7 @@ IP <- function(x){
           ) %>% 
           slice(1: n()-1)
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6002,7 +6007,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6027,6 +6032,7 @@ IP <- function(x){
       # Table picheo lideres whip ----
       output$p_whip <- renderDataTable({
         
+        # Data ----
         whip <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6075,7 +6081,7 @@ IP <- function(x){
           ) %>% 
           slice(1:n()-1)
         
-        
+        # Data ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6093,7 +6099,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6118,6 +6124,7 @@ IP <- function(x){
       # Table picheo lideres sv ----
       output$p_sv <- renderDataTable({
         
+        # Data ----
         sv <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6164,7 +6171,7 @@ IP <- function(x){
             SV = sv
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6182,7 +6189,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6207,6 +6214,7 @@ IP <- function(x){
       # Table picheo lideres h/9 ----
       output$p_h9 <- renderDataTable({
         
+        # Data ----
         h_9 <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6255,7 +6263,7 @@ IP <- function(x){
           ) %>% 
           slice(1:(n()-1))
         
-        
+       # Table ---- 
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6273,7 +6281,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6298,6 +6306,7 @@ IP <- function(x){
       # Table picheo lideres so/9 ----
       output$p_so9 <- renderDataTable({
         
+        # Data ----
         so_9 <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6346,7 +6355,7 @@ IP <- function(x){
           ) %>% 
           slice(1:(n()-1))
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6364,7 +6373,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6389,6 +6398,7 @@ IP <- function(x){
       # Table picheo lideres bb/9 ----
       output$p_bb9 <- renderDataTable({
         
+        # Data ----
         bb_9 <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6439,6 +6449,7 @@ IP <- function(x){
           ungroup()
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6456,7 +6467,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6481,6 +6492,7 @@ IP <- function(x){
       # Table picheo lideres so/bb ----
       output$p_sobb <- renderDataTable({
         
+        # Data ----
         so_bb <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6528,7 +6540,7 @@ IP <- function(x){
             `SO/BB` = `so/bb`
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6546,7 +6558,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6572,6 +6584,7 @@ IP <- function(x){
       # Table bateo lideres H ----
       output$b_hits <- renderDataTable({
         
+        # Data ----
         hits <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6619,7 +6632,7 @@ IP <- function(x){
             H = h
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6637,7 +6650,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6661,6 +6674,7 @@ IP <- function(x){
       # Table bateo lideres 2B ----
       output$b_2b <- renderDataTable({
         
+        # Data ----
         dobles <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6708,7 +6722,7 @@ IP <- function(x){
             `2B` = `2b`
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6726,7 +6740,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6750,6 +6764,7 @@ IP <- function(x){
       # Table bateo lideres 3B ----
       output$b_3b <- renderDataTable({
         
+        # Data ----
         triples <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6799,6 +6814,7 @@ IP <- function(x){
           slice(1:(n()-2))
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6816,7 +6832,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6840,6 +6856,7 @@ IP <- function(x){
       # Table bateo lideres HR ----
       output$b_hr <- renderDataTable({
         
+        # Data ----
         hr <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6888,7 +6905,7 @@ IP <- function(x){
           ) %>% 
           slice(1:(n()-3))
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6906,7 +6923,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -6930,6 +6947,7 @@ IP <- function(x){
       # Table bateo lideres AVG ----
       output$b_average <- renderDataTable({
         
+        # Data ----
         avg <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -6984,6 +7002,8 @@ IP <- function(x){
           select(Jugador, AVG) 
         
         
+        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7001,7 +7021,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7025,6 +7045,7 @@ IP <- function(x){
       # Table bateo lideres OBP ----
       output$b_obp <- renderDataTable({
         
+        # Data ----
         obp <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -7075,6 +7096,8 @@ IP <- function(x){
           ) %>% 
           arrange(desc(OBP)) 
         
+        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7092,7 +7115,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7116,6 +7139,7 @@ IP <- function(x){
       # Table bateo lideres SLG ----
       output$b_slg <- renderDataTable({
         
+        # Data ----
         slg <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -7166,6 +7190,8 @@ IP <- function(x){
           ) %>% 
           arrange(desc(SLG)) 
         
+        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7183,7 +7209,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7207,6 +7233,7 @@ IP <- function(x){
       # Table bateo lideres OPS ----
       output$b_ops <- renderDataTable({
         
+        # Data ----
         ops <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -7257,6 +7284,8 @@ IP <- function(x){
           ) %>% 
           arrange(desc(OPS)) 
         
+        
+        # Table ---- 
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7274,7 +7303,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7298,6 +7327,7 @@ IP <- function(x){
       # Table bateo lideres RBI ----
       output$b_rbi <- renderDataTable({
         
+        # Data ----
         rbi <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -7346,6 +7376,7 @@ IP <- function(x){
           ) 
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7363,7 +7394,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7387,6 +7418,7 @@ IP <- function(x){
       # Table bateo lideres AB ----
       output$b_ab <- renderDataTable({
         
+        # Data ----
         ab <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -7435,6 +7467,7 @@ IP <- function(x){
           ) 
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7452,7 +7485,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7476,6 +7509,7 @@ IP <- function(x){
       # Table bateo lideres SB ----
       output$b_sb <- renderDataTable({
         
+        # Data ----
         sb <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -7523,7 +7557,7 @@ IP <- function(x){
             SB = sb
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7541,7 +7575,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7565,6 +7599,7 @@ IP <- function(x){
       # Table bateo lideres XB ----
       output$b_xb <- renderDataTable({
         
+        # Data ----
         xb <-brs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -7613,6 +7648,7 @@ IP <- function(x){
           ) 
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -7630,7 +7666,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -7696,7 +7732,7 @@ IP <- function(x){
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
-            scrollX = TRUE,
+            scrollX = FALSE,
             # rownames = FALSE,
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
