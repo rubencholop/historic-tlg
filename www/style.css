@@ -4,9 +4,7 @@
   line-height : 0.5;
 }
 
-.dataTables_scrollBody {
-  border-bottom: none;
-}
+
 
 .table.dataTable .thead .sorting {
   color: #fff;
