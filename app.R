@@ -486,7 +486,7 @@ IP <- function(x){
                      # Input ----
                      fluidRow(
                        br(),
-                       column(3,
+                       column(2,
                               selectInput(
                                 inputId = 'select_temporada',
                                 label = 'Temporadas',
@@ -531,7 +531,7 @@ IP <- function(x){
                      # Input ----
                      fluidRow(
                        br(),
-                       column(3,
+                       column(2,
                               selectInput(
                                 inputId = 'select_temporada_bat',
                                 label = 'Temporadas',
@@ -587,7 +587,7 @@ IP <- function(x){
               # Input ----
               fluidRow(
                 br(),
-                column(3,
+                column(2,
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Lanzadores',
@@ -601,13 +601,13 @@ IP <- function(x){
                        bs4UserCard(
                          src = imageOutput('jugador_pit'),
                          # src = "pitching/logo_lg.jpg",
-                         backgroundUrl = "pitching/logo_lg.jpg",
+                         # backgroundUrl = "pitching/logo_lg.jpg",
                          status = "primary",
-                         title = "Adonys Cardona",
+                         title = h3(textOutput("pitcher"), align = "center"),
                          # subtitle = "a subtitle here",
                          elevation = 4,
-                         width = 12,
-                         "Any content here"
+                         width = 12
+                         # "Any content here"
                        )
                        # shinydashboardPlus::widgetUserBox(
                        #   title = textOutput("pitcher"),
@@ -659,7 +659,7 @@ IP <- function(x){
               # Input ----
               fluidRow(
                 br(),
-                column(3,
+                column(2,
                        selectInput(
                          inputId = 'select_jugador',
                          label = "Bateadores",
@@ -732,7 +732,7 @@ IP <- function(x){
           # input position ----
           fluidRow(
             br(),
-            column(3,
+            column(2,
                    selectInput(
                      inputId = 'select_posicion',
                      label = 'Posiciones',
@@ -764,7 +764,7 @@ IP <- function(x){
               # Input ----
               fluidRow(
                 br(),
-                column(3,
+                column(2,
                        selectInput(
                          inputId = 'select_country',
                          label = 'Temporadas',
@@ -780,7 +780,10 @@ IP <- function(x){
                          title = "Temporada Regular",
                          DT::dataTableOutput('picheo_rs_country')
                          )
-                       ),
+                       )
+                ),
+              br(),
+              fluidRow(
                 column(12,
                        bs4Box(
                          width = NULL,
@@ -788,7 +791,7 @@ IP <- function(x){
                          collapsible = TRUE,
                          title = "Estadisticas Globales",
                          DT::dataTableOutput('country_pit')
-                       )
+                         )
                 )
               )
             ),
@@ -798,7 +801,7 @@ IP <- function(x){
               # Input ----
               fluidRow(
                 br(),
-                column(3,
+                column(2,
                        selectInput(
                          inputId = 'select_country_bat',
                          label = 'Paises',
@@ -814,7 +817,10 @@ IP <- function(x){
                          title = "Temporada Regular",
                          DT::dataTableOutput('bateo_rs_country')
                          )
-                       ),
+                       )
+                ),
+              br(),
+              fluidRow(
                 column(12,
                        bs4Box(
                          width = NULL,
@@ -822,9 +828,9 @@ IP <- function(x){
                          collapsible = TRUE,
                          title = "Estadisticas Globales",
                          DT::dataTableOutput('country_bat')
+                         )
                        )
                 )
-              )
             )
             # TabPanel Fildeo ----
             # tabPanel(tabName = 'Fildeo', tableOutput('fildeo_rs'))
@@ -837,7 +843,7 @@ IP <- function(x){
           # input roster ----
           fluidRow(
             br(),
-            column(3,
+            column(2,
                    selectInput(
                      inputId = 'select_rosters',
                      label = 'Temporadas',
@@ -847,7 +853,8 @@ IP <- function(x){
           ),
           # Stats by roster ----
           fluidRow(
-            column(9,
+            column(2),
+            column(8,
                    bs4Box(
                      width = NULL,
                      title = "Temporada Regular",
@@ -4774,6 +4781,7 @@ IP <- function(x){
       output$picheo_rs_country <- renderDataTable({
         req(input$select_country)
         
+        # Data ----
         pit_geographic <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
@@ -4884,6 +4892,7 @@ IP <- function(x){
           arrange(Temporada) 
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -4895,21 +4904,24 @@ IP <- function(x){
           # escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
-          # caption = htmltools::tags$caption(
-          #   style = 'caption-side: bottom; text-align: center;'
-          #   , htmltools::em('Top 10 historico')),
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Las estadisticas CS, BB, SO, OBP, SLG, RC, HBP, SH y SF 
+                            son registradas desde la temporada 2005-06o')),
           options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
             ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE
+            autoWidth = TRUE,
             searching = FALSE,
-            paging = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
-            fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 1),
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:23)),
                               list(width = '120px', targets = 0)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
@@ -4932,6 +4944,7 @@ IP <- function(x){
       # Table Geo Pitching stats by country ----
       output$country_pit <- renderDataTable({
         
+        # Data ----
         pais_pit <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
@@ -4941,7 +4954,7 @@ IP <- function(x){
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
           group_by(pais) %>% 
           summarise(
-            # jugador = n(),
+            jugador = n(),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
             er = sum(er, na.rm = T),
@@ -4957,7 +4970,7 @@ IP <- function(x){
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
+            # ir = sum(ir, na.rm = T),
             whip = as.character(round(mean(whip, na.rm = T), 2)),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
@@ -4966,8 +4979,40 @@ IP <- function(x){
             `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
           ) %>% 
-          arrange(desc(w))
+          arrange(desc(w)) %>% 
+          rename(
+            `Pais` = pais,
+            # `Temporada` = years,
+            # `Edad` = edad,
+            `Jugadores` = jugador,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            # `GP` = gp,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            # IR = ir,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+          ) %>% 
+          filter(!is.na(Pais))
         
+        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -4981,7 +5026,8 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('333333333')),
+            , htmltools::em('Exiten jugadores a los cuales se desconoce su pais.
+                            Se asigna "Desconocido"')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -4993,7 +5039,8 @@ IP <- function(x){
             # rownames = FALSE,
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(1:21)),
+                              list(width = '120px', targets = 0)),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -5013,6 +5060,7 @@ IP <- function(x){
       output$bateo_rs_country <- renderDataTable({
         req(input$select_country_bat)
         
+        # Data ----
         country_bat <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
@@ -5129,6 +5177,7 @@ IP <- function(x){
           arrange(Temporada) 
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5142,19 +5191,22 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Las estadisticas 333333333 son registradas desde la temporada 2005-06')),
+            , htmltools::em('Las estadisticas CS, BB, SO, OBP, SLG, RC, HBP, SH y SF 
+                            son registradas desde la temporada 2005-06')),
           options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
             ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE
+            autoWidth = TRUE,
             searching = FALSE,
-            paging = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 1),
+            columnDefs = list(list(className = "dt-center", targets = c(1:25)),
                               list(width = '120px', targets = 0)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
@@ -5177,6 +5229,7 @@ IP <- function(x){
       # Table Geo Batting stats by country ----
       output$country_bat <- renderDataTable({
         
+        # Data ----
         country_bat <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
@@ -5186,7 +5239,7 @@ IP <- function(x){
           select(ID, key, first_name,last_name, jugador, 2:35) %>%
           group_by(pais) %>% 
           summarise(
-            # jugador = n(),
+            jugador = n(),
             g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
@@ -5200,6 +5253,7 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
@@ -5212,7 +5266,40 @@ IP <- function(x){
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
           ) %>% 
-          arrange(desc(ab))
+          arrange(desc(ab)) %>% 
+          rename(
+            Pais = pais,
+            Jugadores = jugador,
+            # Temporada = years,
+            # `Edad` = edad,
+            `G` = g,
+            `PA` = pa,
+            `AB` = ab,
+            `R` = r,
+            `H` = h,
+            `2B` = '2b',
+            `3B` = '3b',
+            `HR` = hr,
+            `RBI` = rbi,
+            `SB` = sb,
+            `CS` = cs,
+            `BB` = bb,
+            `SO` = so,
+            `AVG` = avg,
+            `OBP` = obp,
+            `SLG` = slg,
+            `OPS` = ops,
+            `RC` = rc,
+            `TB` = tb,
+            `XB` = xb,
+            # `IR` = ir,
+            `HBP` = hbp,
+            `SH` = sh,
+            `SF` = sf
+          ) %>% 
+          filter(!is.na(Pais))
+        
+        # Table ----
         
         headerCallback <- c(
           "function(thead, data, start, end, display){",
@@ -5227,7 +5314,8 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('333333333')),
+            , htmltools::em('Las estadisticas CS, BB, SO, OBP, SLG, RC, HBP, SH y SF 
+                            son registradas desde la temporada 2005-06')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -5236,10 +5324,11 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
+            rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:25)),
+                              list(width = '120px', targets = 0)),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -5290,11 +5379,11 @@ IP <- function(x){
           style = ,
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = TRUE,
-            pageLegth = 30,
-            lengthMenu = c(30, 50, 70),
+            pageLegth = 25,
+            lengthMenu = c(25, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
@@ -10747,30 +10836,33 @@ IP <- function(x){
       output$jugador_pit <- renderImage({
         req(input$select_jugador_pit)
         
-        player <- paste('pitching/',"A. Cardona",'.jpg', sep = '')
+        player <- paste('pitching/',input$select_jugador_pit,'.jpg', sep = '')
         logo <- "pitching/logo_lg.jpg"
         
-        if (is.null(input$select_jugador_pit)) {
+        if (file.exists(player) == TRUE) {
           return(
             list(
               src = logo,
-              contenType = "image/jpg"
+              contenType = "image/jpg",
+              width = 80,
+              height = 80,
+              align = "center"
                 )
               )
         }
         
-        else {
+        else if (file.exists(player) == FALSE) {
           return(
             list(
               src = player,
-              contentType = "image/jpg"
-            # width = 300,
-            # height = 300
-            # alt = 'Selecciona un jugador'
+              contentType = "image/jpg",
+              width = 80,
+              height = 80
                 )
               )
         }
-      }, deleteFile = FALSE)
+        
+      })
       
       
       
@@ -10798,7 +10890,7 @@ IP <- function(x){
         
         df <- Rosters() %>% 
           filter(jugador == input$select_jugador_pit) %>% 
-          select(jugador) %>% 
+          select(name) %>% 
           unique() %>% 
           pull()
       })
