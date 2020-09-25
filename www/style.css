@@ -4,6 +4,9 @@
   line-height : 0.5;
 }
 
+table.dataTable.no-footer {
+    border-bottom: none;
+}
 
 
 .table.dataTable .thead .sorting {

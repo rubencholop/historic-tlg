@@ -5417,7 +5417,7 @@ IP <- function(x){
           style = ,
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
             searching = FALSE,
             paging = TRUE,
             pageLegth = 25,
@@ -6628,29 +6628,10 @@ IP <- function(x){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
             ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T),
+            `so/bb` = as.character(round(so /bb, 2)),
             .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
@@ -6703,7 +6684,7 @@ IP <- function(x){
         )
       })
       
-      #Batting Records 
+      #Batting Records -----
       # Table bateo lideres H ----
       output$b_hits <- renderDataTable({
         
