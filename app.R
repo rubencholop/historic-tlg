@@ -102,6 +102,7 @@ posiciones <- Rosters %>%
 
 
 
+
 .st <- as.Date("2020-01-22")
 .en <- as.Date(today())
 .dates <- seq(.en, .st, by = "-1 day")
@@ -123,7 +124,10 @@ temporadas <- data.table::rbindlist(
 ) %>% 
   arrange(desc(df)) %>% 
   rename(temporadas = df) %>% 
-  pull()
+  pull() %>% as.character()
+# %>% 
+#   pull()
+
 
 # Special datos to some metrics with OBP, OPS and SLG
 from1 <- 2005
@@ -843,18 +847,34 @@ IP <- function(x){
           # input roster ----
           fluidRow(
             br(),
-            column(2,
+            column(1),
+            column(3,
                    selectInput(
                      inputId = 'select_rosters',
                      label = 'Temporadas',
-                     choices = temporadas
+                     choices = as.character(c("Todas las Temporadas", 
+                                              temporadas))
+                   )
+            ),
+            column(3,
+                   selectInput(
+                     inputId = 'countrys',
+                     label = 'Paises',
+                     choices = c("Todos los Paises", .paises)
+                   )
+            ),
+            column(3,
+                   selectInput(
+                     inputId = 'posiciones',
+                     label = 'Posiciones',
+                     choices = c("Todas las Posiciones", posiciones)
                    )
             )
           ),
           # Stats by roster ----
           fluidRow(
-            column(2),
-            column(8,
+            column(1),
+            column(9,
                    bs4Box(
                      width = NULL,
                      title = "Temporada Regular",
@@ -5386,13 +5406,28 @@ IP <- function(x){
       #By Roster ----
       # Table by roster ----
       output$info_roster <- DT::renderDataTable({
-        req(input$select_rosters)
         
         roster <- Rosters() %>%
-          filter(years == input$select_rosters) %>% 
+          # filter(years == input$select_rosters) %>% 
           mutate(jugador = paste0(first_name, " ", last_name)) %>% 
-          select(jugador, pos, bat, lan, pais, estado, ciudad) %>% 
+          select(years, jugador, pos, bat, lan, pais, estado, ciudad) 
+          
+        
+        # # Filter data based on selections
+        if (input$select_rosters != "Todas las Temporadas") {
+          roster  <- filter(roster , years == input$select_rosters)
+        }
+        if (input$countrys != "Todos los Paises") {
+          roster <- filter(roster, pais == input$countrys)
+        }
+        if (input$posiciones != "Todas las Posiciones") {
+          roster <- filter(roster, pos == input$posiciones)
+        }
+        
+        
+        roster <- roster %>% 
           rename(
+            Temporada = years,
             Jugador = jugador,
             `Posicion` = pos,
             `Batea` = bat,
@@ -5402,6 +5437,7 @@ IP <- function(x){
             `Ciudad` = ciudad
             ) %>% 
           arrange(Jugador)
+        
         
         # Datatable ----
         headerCallback <- c(
@@ -5417,7 +5453,7 @@ IP <- function(x){
           style = ,
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = TRUE,
             pageLegth = 25,
