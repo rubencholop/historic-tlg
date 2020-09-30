@@ -740,7 +740,9 @@ IP <- function(x){
                    selectInput(
                      inputId = 'select_posicion',
                      label = 'Posiciones',
-                     choices = posiciones
+                     # choices = posiciones 
+                     choices = c("C",  "P",  "CF", "1B", "RF", "IF",
+                                 "2B", "SS", "LF", "CE", "3B", "BD", "BE")
                    )
             )
           ),
@@ -844,6 +846,7 @@ IP <- function(x){
         bs4TabItem(
           h4('Rosters historicos por posicion', align = 'center'),
           tabName = 'roster',
+          br(),
           # input roster ----
           fluidRow(
             br(),
@@ -853,7 +856,9 @@ IP <- function(x){
                      inputId = 'select_rosters',
                      label = 'Temporadas',
                      choices = as.character(c("Todas las Temporadas", 
-                                              temporadas))
+                                              temporadas)),
+                     selected = "2019-20"
+                     # multiple = TRUE
                    )
             ),
             column(3,
@@ -3638,32 +3643,6 @@ IP <- function(x){
           select(key, 1:28) %>% 
           filter(jugador == input$select_jugador_pit) %>%
           select(-jugador, -key, -`w-l%`) %>%
-          mutate(
-            edad = as.numeric(edad),
-            w = as.numeric(w),
-            l = as.numeric(l),
-            era = as.numeric(era),
-            g = as.numeric(g),
-            gs = as.numeric(gs),
-            cg = as.numeric(cg),
-            sho = as.numeric(sho),
-            sv = as.numeric(sv),
-            ip = as.numeric(ip),
-            h = as.numeric(h),
-            r = as.numeric(r),
-            er = as.numeric(er),
-            hr = as.numeric(hr),
-            bb = as.numeric(bb),
-            so = as.numeric(so),
-            # ir = as.numeric(ir),
-            whip = as.numeric(whip),
-            `h/9` = as.numeric(`h/9`),
-            `hr/9` = as.numeric(`hr/9`),
-            `bb/9` = as.numeric(`bb/9`),
-            `so/9` = as.numeric(`so/9`),
-            `so/bb` = as.numeric(`so/bb`),
-            bk = as.numeric(bk)
-          ) %>%
           summarise(
             years = 'Total',
             edad = NROW(edad),
@@ -3689,8 +3668,8 @@ IP <- function(x){
             `hr/9` = round((hr/ip)*9, 2),
             `bb/9` = round((bb/ip)*9, 2),
             `so/9` = round((so/ip)*9, 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T),
+            `so/bb` = round(so/bb, 2),
+            # bk = sum(bk, na.rm = T),
             .groups = 'drop'
           )
         
@@ -4709,95 +4688,90 @@ IP <- function(x){
       
       
       # Infoboxes
-
       #By position 
       # Table bateo regular season by position ----
       output$info_position <- DT::renderDataTable({
-        req(input$select_posicion)
 
-        batting_player <- brs() %>%
-          mutate(key = paste(as.character(years), jugador)) %>% 
-          select(key, 1:28) %>% 
-          left_join(Rosters() %>% 
-                      mutate(key = paste(as.character(years), jugador)) %>% 
-                      select(key, pos, first_name, last_name), by = "key"
-                      ) %>% 
-          select(2:3, pos,first_name, last_name, 3:31) %>% 
-          arrange(years, jugador)  %>% 
-          filter(pos == input$select_posicion) %>% 
-          select(-years, -edad) %>% 
-          group_by(jugador)  %>% 
-          summarise(
-            pos  = last(pos),
-            first_name = last(first_name),
-            last_name = last(last_name),
-            g = sum(g, na.rm = T),
-            pa = sum(pa, na.rm = T),
-            ab = sum(ab, na.rm = T),
-            r = sum(r, na.rm = T),
-            h = sum(h, na.rm = T),
-            `2b` = sum(`2b`, na.rm = T),
-            `3b` = sum(`3b`, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            rbi = sum(rbi, na.rm = T),
-            sb = sum(sb, na.rm = T),
-            cs = sum(cs, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            avg = round(h/ab, 3),
-            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
-            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
-            ops = round(sum(slg, obp, na.rm = T), 3),
-            ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
-            tb = sum(tb, na.rm = T),
-            xb = sum(xb, na.rm = T),
-            hbp = sum(hbp, na.rm = T),
-            sh = sum(sh, na.rm = T),
-            sf = sum(sf, na.rm = T),
-            .groups = 'drop'
-          ) %>% 
-          select(-jugador) %>% 
-          mutate(jugador = paste0(first_name, " ", last_name, sep = " ")) %>% 
-          select(jugador, 4:28) %>% 
-          arrange(desc(g)) %>% 
-          rename(
-            Jugador = jugador,
-            `G` = g,
-            `PA` = pa,
-            `AB` = ab,
-            `R` = r,
-            `H` = h,
-            `2B` = '2b',
-            `3B` = '3b',
-            `HR` = hr,
-            `RBI` = rbi,
-            `SB` = sb,
-            `CS` = cs,
-            `BB` = bb,
-            `SO` = so,
-            `AVG` = avg,
-            `OBP` = obp,
-            `SLG` = slg,
-            `OPS` = ops,
-            `RC` = rc,
-            `TB` = tb,
-            `XB` = xb,
-            `IR` = ir,
-            `HBP` = hbp,
-            `SH` = sh,
-            `SF` = sf
-          ) 
-        
-        # Datatable ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
           "}"
         )  # To deleate header line horizontal in bottom of colums name
+
         
+      if (input$select_position == "P"){
+        
+        # Data ----
+        df <- prs() %>%
+          mutate(key = paste(as.character(years), jugador)) %>%
+          select(key, 1:28) %>%
+          left_join(Rosters() %>%
+                      mutate(key = paste(as.character(years), jugador)) %>%
+                      select(key, pos, first_name, last_name, ID), by = "key"
+          ) %>%
+          filter(pos == "P") %>%
+          select(-key, -`w-l%`, -years) %>%
+          group_by(ID) %>%
+          summarise(
+            first_name = last(first_name),
+            last_name = last(last_name),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            # ir = sum(ir, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = round((er * 9) / ip, 2),
+            # whip = round(mean(whip, na.rm = T), 2),
+            `h/9` = round((h/ip)*9, 2),
+            `hr/9` = round((hr/ip)*9, 2),
+            `bb/9` = round((bb/ip)*9, 2),
+            `so/9` = round((so/ip)*9, 2),
+            `so/bb` = round(so/bb, 2),
+            # bk = sum(bk, na.rm = T),
+            .groups = 'drop'
+          ) %>%
+          mutate(jugador = paste0(first_name, " ", last_name, sep = " ")) %>%
+          select(jugador, 4:23) %>%
+          arrange(desc(ip)) %>%
+          rename(
+            Jugador = jugador,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            # `IR` = ir,
+            # `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`)
+
+        
+        # Table ----
         DT::datatable(
-          batting_player,
+          df,
           extensions = "ColReorder",
           rownames = FALSE,
           style = ,
@@ -4816,10 +4790,10 @@ IP <- function(x){
             columnDefs = list(
               list(
                 width = '120px', targets = 0,
-                width = '10px', targets = c(1:24))),
-                # className = "left", targets = c(1:24))),
-                                   # width = "200px", targets = 1)),
-                              # list(width = '200px', targets = "_all")),
+                width = '10px', targets = c(1:20))),
+            # className = "left", targets = c(1:24))),
+            # width = "200px", targets = 1)),
+            # list(width = '200px', targets = "_all")),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -4829,7 +4803,125 @@ IP <- function(x){
               "}"
             )
           )
-        )  
+        )
+
+        }
+        
+      else if(input$select_position %in% 
+              c("C", "CF", "1B", "RF", "IF",
+                "2B", "SS", "LF", "CE", "3B", "BD", "BE")){
+
+        # Data ----
+          batting_player <- brs() %>%
+            mutate(key = paste(as.character(years), jugador)) %>%
+            select(key, 1:28) %>%
+            left_join(Rosters() %>%
+                        mutate(key = paste(as.character(years), jugador)) %>%
+                        select(key, pos, first_name, last_name), by = "key"
+            ) %>%
+            select(2:3, pos, first_name, last_name, 3:31) %>%
+            arrange(years, jugador)  %>%
+            filter(!pos == "P") %>%
+            select(-years, -edad) %>%
+            group_by(jugador)  %>%
+            summarise(
+              pos  = last(pos),
+              first_name = last(first_name),
+              last_name = last(last_name),
+              g = sum(g, na.rm = T),
+              pa = sum(pa, na.rm = T),
+              ab = sum(ab, na.rm = T),
+              r = sum(r, na.rm = T),
+              h = sum(h, na.rm = T),
+              `2b` = sum(`2b`, na.rm = T),
+              `3b` = sum(`3b`, na.rm = T),
+              hr = sum(hr, na.rm = T),
+              rbi = sum(rbi, na.rm = T),
+              sb = sum(sb, na.rm = T),
+              cs = sum(cs, na.rm = T),
+              bb = sum(bb, na.rm = T),
+              so = sum(so, na.rm = T),
+              avg = round(h/ab, 3),
+              obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+              slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+              ops = round(sum(slg, obp, na.rm = T), 3),
+              # ir = sum(ir, na.rm = T),
+              rc = sum(rc, na.rm = T),
+              tb = sum(tb, na.rm = T),
+              xb = sum(xb, na.rm = T),
+              hbp = sum(hbp, na.rm = T),
+              sh = sum(sh, na.rm = T),
+              sf = sum(sf, na.rm = T),
+              .groups = 'drop'
+            ) %>%
+            mutate(jugador = paste0(first_name, " ", last_name, sep = " ")) %>%
+            select(jugador, 4:27) %>%
+            arrange(desc(g)) %>%
+            rename(
+              Jugador = jugador,
+              `G` = g,
+              `PA` = pa,
+              `AB` = ab,
+              `R` = r,
+              `H` = h,
+              `2B` = '2b',
+              `3B` = '3b',
+              `HR` = hr,
+              `RBI` = rbi,
+              `SB` = sb,
+              `CS` = cs,
+              `BB` = bb,
+              `SO` = so,
+              `AVG` = avg,
+              `OBP` = obp,
+              `SLG` = slg,
+              `OPS` = ops,
+              `RC` = rc,
+              `TB` = tb,
+              `XB` = xb,
+              # `IR` = ir,
+              `HBP` = hbp,
+              `SH` = sh,
+              `SF` = sf
+            )
+
+          
+        # Table ----
+          DT::datatable(
+            batting_player,
+            extensions = "ColReorder",
+            rownames = FALSE,
+            style = ,
+            options = list(
+              # dom = 'ft',  # To remove showing 1 to n of entries fields
+              autoWidth = TRUE,
+              searching = FALSE,
+              paging = TRUE,
+              pageLegth = 25,
+              lengthMenu = c(25, 20, 100),
+              lengthChange = FALSE,
+              scrollX = TRUE,
+              rownames = FALSE,
+              fixedHeader = TRUE,
+              fixedColumns = list(LeftColumns = 3),
+              columnDefs = list(
+                list(
+                  width = '120px', targets = 0,
+                  width = '10px', targets = c(1:23))),
+              # className = "left", targets = c(1:24))),
+              # width = "200px", targets = 1)),
+              # list(width = '200px', targets = "_all")),
+              headerCallback = JS(headerCallback),
+              initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+                "$(this.api().table().body()).css({'font-size': '12px'});",
+                "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+                "}"
+              )
+            )
+          )
+        }
 
       })
       
@@ -5407,6 +5499,7 @@ IP <- function(x){
       # Table by roster ----
       output$info_roster <- DT::renderDataTable({
         
+        # Data ----
         roster <- Rosters() %>%
           # filter(years == input$select_rosters) %>% 
           mutate(jugador = paste0(first_name, " ", last_name)) %>% 
@@ -5439,7 +5532,7 @@ IP <- function(x){
           arrange(Jugador)
         
         
-        # Datatable ----
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5467,7 +5560,7 @@ IP <- function(x){
               list(
                 # width = '120px', targets = 0,
                 # width = '10px', targets = c(1:6),
-                className = "dt-center", targets = c(0:6))),
+                className = "dt-center", targets = c(0:7))),
             # width = "200px", targets = 1)),
             # list(width = '200px', targets = "_all")),
             headerCallback = JS(headerCallback),
