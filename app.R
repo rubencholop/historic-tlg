@@ -231,9 +231,9 @@ IP <- function(x){
           "
         ))),
         disable = FALSE,
-        title = h4("TibuStats",
+        title = h4("Tibu Stats",
                    style = "color: #FFFF;
-                            text-transform: uppercase;
+                            # text-transform: uppercase;
                             font-size: 1.2em;
                             text-shadow:1px 1px 2px rgba(150, 150, 150, 1);",
                    align = 'center'),
@@ -609,17 +609,37 @@ IP <- function(x){
                        column(6,
                               br(),
                               br(),
-                              h2(textOutput("first_name_pit")),
-                              h2(textOutput("last_name_pit")),
-                              h6(textOutput("pos_jugador1"))
+                              br(),
+                              h2(textOutput("first_name_pit"),
+                                 style = "text-transform: uppercase;
+                                                     font-size: 1.5em;
+                                                     font-weight: 200;
+                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                                    "),
+                              h2(textOutput("last_name_pit"),
+                                  style = "text-transform: uppercase;
+                                           font-size: 1.6em;
+                                           font-weight: 700;
+                                           font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                                    ")
                               )
                         )
                        ),
-                column(3),
-                column(5,
+                column(4),
+                column(4,
+                       br(),
+                       br(),
                        box(
-                         # imageOutput('jugador_pit'),
-                         width = 12
+                         overflow = TRUE,
+                         headerBorder = FALSE,
+                         width = 12,
+                         closable = FALSE,
+                         fluidRow(
+                           shinydashboard::valueBoxOutput("g_p", width = 3),
+                           shinydashboard::valueBoxOutput("era", width = 3),
+                           shinydashboard::valueBoxOutput("k", width = 3),
+                           shinydashboard::valueBoxOutput("whip", width = 3)
+                         )
                        )
                 )
               ),
@@ -10793,6 +10813,39 @@ IP <- function(x){
         
       })
       
+      # ValueBox Position ----
+      output$era <- renderValueBox({
+        req(input$select_jugador_pit)
+        
+        
+        era <- prs() %>%
+          mutate(key = paste(as.character(years), jugador)) %>% 
+          filter(jugador == input$select_jugador_pit) %>%
+          summarise(
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = round((er * 9) / ip, 2),
+            .groups = 'drop'
+          ) %>% 
+          select(era) %>% 
+          pull()
+        
+        
+        shinydashboard::valueBox(
+          value = tags$h2("ERA", style = 'color: #6c6d6f; 
+                                          font-size: 55%;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h1(era, style = 'color:#707070; 
+                                           font-size: 75%;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
       # ---- CHARTS-----
       # Chart country distribution ----
       output$country_chart <- renderHighchart({
