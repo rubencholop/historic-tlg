@@ -239,9 +239,9 @@ IP <- function(x){
                    align = 'center'),
         skin = "dark",
         status = "primary",
-        brandColor = '#011C51',
+        brandColor = '#0d3583',
         url = NULL,
-        src = "logo_top.png",
+        src = "ts_isotipo.png",
         elevation = 4,
         opacity = 0.8,
         expand_on_hover = TRUE,
@@ -601,11 +601,13 @@ IP <- function(x){
               ),
               # Image ----
               fluidRow(
+                # Player name ----
                 column(4,
                        fluidRow(
                        column(6,
                               imageOutput('jugador_pit')
                               ),
+                       
                        column(6,
                               br(),
                               br(),
@@ -625,10 +627,10 @@ IP <- function(x){
                               )
                         )
                        ),
+                # Player info ----
                 column(4),
+                # Summarise stats ----
                 column(4,
-                       br(),
-                       br(),
                        box(
                          overflow = TRUE,
                          headerBorder = FALSE,
@@ -10678,7 +10680,7 @@ IP <- function(x){
       
       
       # ---- VALUEBOX ----
-      # Valueboxpitching # countrys ----
+      # Valuebox pitching countrys ----
       output$valuebox_cpit <- renderbs4ValueBox({
         
         .country_pit <- prs() %>% 
@@ -10706,7 +10708,7 @@ IP <- function(x){
         
       })
       
-      # Valuebox pitching # pitchers ----
+      # Valuebox pitching pitchers ----
       output$valuebox_lan <- renderbs4ValueBox({
         
         country_pit <- Rosters() %>% 
@@ -10742,7 +10744,7 @@ IP <- function(x){
         
       })
       
-      # Valuebox pitching # pitchers right ----
+      # Valuebox pitching pitchers right ----
       output$valuebox_right <- renderbs4ValueBox({
         
         country_pit <- Rosters() %>% 
@@ -10778,7 +10780,7 @@ IP <- function(x){
         
       })
       
-      # Valuebox pitching # pitchers left ----
+      # Valuebox pitching pitchers left ----
       output$valuebox_left <- renderbs4ValueBox({
         
         country_pit <- Rosters() %>% 
@@ -10813,7 +10815,7 @@ IP <- function(x){
         
       })
       
-      # ValueBox Position ----
+      # ValueBox Era ----
       output$era <- renderValueBox({
         req(input$select_jugador_pit)
         
@@ -10833,13 +10835,115 @@ IP <- function(x){
         
         shinydashboard::valueBox(
           value = tags$h2("ERA", style = 'color: #6c6d6f; 
-                                          font-size: 55%;
+                                          font-size: 10px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h1(era, style = 'color:#707070; 
-                                           font-size: 75%;
+          subtitle = tags$h1(era, style = 'font-size: 22px;
                                            font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
+      # ValueBox G-P ----
+      output$g_p <- renderValueBox({
+        req(input$select_jugador_pit)
+        
+        
+        w <- prs() %>%
+          mutate(key = paste(as.character(years), jugador)) %>% 
+          filter(jugador == input$select_jugador_pit) %>%
+          summarise(
+            w = as.character(sum(w, na.rm = T)),
+            .groups = 'drop'
+          ) %>% 
+          select(w) %>% 
+          pull()
+        
+        
+        l <- prs() %>%
+          mutate(key = paste(as.character(years), jugador)) %>% 
+          filter(jugador == input$select_jugador_pit) %>%
+          summarise(
+            l = as.character(sum(l, na.rm = T)),
+            .groups = 'drop'
+          ) %>% 
+          select(l) %>% 
+          pull()
+        
+        
+        shinydashboard::valueBox(
+          value = tags$h2("W-L", style = 'color: #6c6d6f; 
+                                          font-size: 10px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h2(paste0(w, "-", l), 
+                                  style = 'font-size: 22px;
+                                           font-weight: 800;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
+      # ValueBox K ----
+      output$k <- renderValueBox({
+        req(input$select_jugador_pit)
+        
+        so <- prs() %>%
+          mutate(key = paste(as.character(years), jugador)) %>% 
+          filter(jugador == input$select_jugador_pit) %>%
+          summarise(
+            so = as.character(sum(so, na.rm = T)),
+            .groups = 'drop'
+          ) %>% 
+          select(so) %>% 
+          pull()
+        
+        
+        shinydashboard::valueBox(
+          value = tags$h2("K", style = 'color: #6c6d6f; 
+                                          font-size: 10px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h2(so, style = ' font-size: 22px;
+                                           font-weight: 800;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
+      # ValueBox WHIP ----
+      output$whip <- renderValueBox({
+        req(input$select_jugador_pit)
+        
+        whip <- prs() %>%
+          mutate(key = paste(as.character(years), jugador)) %>% 
+          filter(jugador == input$select_jugador_pit) %>%
+          summarise(
+            h = sum(h, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            ip = IP(ip),
+            whip = round(sum(h, bb) / ip, 2),
+            .groups = 'drop'
+          ) %>% 
+          select(whip) %>% 
+          pull()
+        
+        
+        shinydashboard::valueBox(
+          value = tags$h2("WHIP", style = 'color: #6c6d6f; 
+                                          font-size: 10px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h2(whip, style = 'font-size: 22px;
+                                           font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
                                             ')
@@ -11030,7 +11134,7 @@ IP <- function(x){
         
         player <- paste('www/pitching/',input$select_jugador_pit,'.jpg', sep = '')
         # player <- paste('www/pitching/',"A. Cardona",'.jpg', sep = '')
-        logo <- "www/pitching/logo_lg.jpg"
+        logo <- "www/pitching/ts_isotipo.png"
         
         if (file.exists(player) == TRUE) {
           return(
@@ -11048,9 +11152,9 @@ IP <- function(x){
           return(
             list(
               src = logo,
-              contentType = "image/jpg",
+              contentType = "image/png",
               width = 160,
-              height = 220
+              height = 160
                 )
               )
         }
