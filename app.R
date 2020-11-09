@@ -244,7 +244,7 @@ IP <- function(x){
         src = "ts_isotipo.png",
         elevation = 4,
         opacity = 0.8,
-        expand_on_hover = TRUE,
+        expand_on_hover = FALSE,
         fixed = FALSE,
         sidebarMenu(
           # meniItem Tiburones de la Guaira ----
@@ -628,10 +628,49 @@ IP <- function(x){
                         )
                        ),
                 # Player info ----
-                column(4),
+                column(4,
+                       fluidRow(
+                         h2(textOutput("FDN"),
+                            style = "text-transform: uppercase;
+                                                     font-size: 1.5em;
+                                                     font-weight: 200;
+                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                                    "),
+                         h2(textOutput("B/L"),
+                           style = "text-transform: uppercase;
+                                                     font-size: 1.5em;
+                                                     font-weight: 200;
+                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                                    "),
+                         h2(textOutput("POS"),
+                            style = "text-transform: uppercase;
+                                                     font-size: 1.5em;
+                                                     font-weight: 200;
+                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                                    "),
+                         h2(textOutput("BORN"),
+                            style = "text-transform: uppercase;
+                                                     font-size: 1.5em;
+                                                     font-weight: 200;
+                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                                    "),
+                         h2(textOutput("EXP"),
+                            style = "text-transform: uppercase;
+                                                     font-size: 1.5em;
+                                                     font-weight: 200;
+                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                                    ")
+                         
+                         
+                         
+                        )
+                       ),
                 # Summarise stats ----
                 column(4,
                        box(
+                         collapsed = FALSE,
+                         collapsible = FALSE,
+                         title = h3("Estadisticas generales"),
                          overflow = TRUE,
                          headerBorder = FALSE,
                          width = 12,
@@ -10815,7 +10854,7 @@ IP <- function(x){
         
       })
       
-      # ValueBox Era ----
+      # ValueBox ERA ----
       output$era <- renderValueBox({
         req(input$select_jugador_pit)
         
@@ -10839,7 +10878,7 @@ IP <- function(x){
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h1(era, style = 'font-size: 22px;
+          subtitle = tags$h1(era, style = 'font-size: 19px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -10881,7 +10920,7 @@ IP <- function(x){
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
           subtitle = tags$h2(paste0(w, "-", l), 
-                                  style = 'font-size: 22px;
+                                  style = 'font-size: 19px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -10910,7 +10949,7 @@ IP <- function(x){
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h2(so, style = ' font-size: 22px;
+          subtitle = tags$h2(so, style = ' font-size: 19px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -10942,7 +10981,7 @@ IP <- function(x){
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h2(whip, style = 'font-size: 22px;
+          subtitle = tags$h2(whip, style = 'font-size: 19px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
