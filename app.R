@@ -629,42 +629,74 @@ IP <- function(x){
                        ),
                 # Player info ----
                 column(4,
+                       br(),
                        fluidRow(
+                         h2(textOutput("FDN_PIT"),
+                            style = 'color: #6c6d6f;
+                                          font-size: 19px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'
+                            ),  
                          h2(textOutput("FDN"),
-                            style = "text-transform: uppercase;
-                                                     font-size: 1.5em;
-                                                     font-weight: 200;
-                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                                    "),
-                         h2(textOutput("B/L"),
-                           style = "text-transform: uppercase;
-                                                     font-size: 1.5em;
-                                                     font-weight: 200;
-                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                                    "),
-                         h2(textOutput("POS"),
-                            style = "text-transform: uppercase;
-                                                     font-size: 1.5em;
-                                                     font-weight: 200;
-                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                                    "),
-                         h2(textOutput("BORN"),
-                            style = "text-transform: uppercase;
-                                                     font-size: 1.5em;
-                                                     font-weight: 200;
-                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                                    "),
-                         h2(textOutput("EXP"),
-                            style = "text-transform: uppercase;
-                                                     font-size: 1.5em;
-                                                     font-weight: 200;
-                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                                    ")
-                         
-                         
-                         
-                        )
+                            style = 'font-size: 19px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;')
+                         ),
+                       fluidRow(
+                         h2(textOutput("B_L"),
+                                   style = 'color: #6c6d6f;
+                                          font-size: 19px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+                         h2(textOutput("B_L_L"),
+                            style = 'font-size: 19px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;')
                        ),
+                       fluidRow(
+                         h2(textOutput("POS_PIT"),
+                            style = 'color: #6c6d6f;
+                                          font-size: 19px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+                         h2(textOutput("POS_L"),
+                            style = 'font-size: 19px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;')
+                         ),
+                       fluidRow(
+                         h2(textOutput("BORN_PIT"),
+                            style = 'color: #6c6d6f;
+                                          font-size: 19px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+                         h2(textOutput("BORN"),
+                            style = 'font-size: 19px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;')
+                         ),
+                       fluidRow(
+                         h2(textOutput("EXP_PIT"),
+                            style = 'color: #6c6d6f;
+                                          font-size: 19px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+                         h2(textOutput("EXP_L"),
+                            style = 'font-size: 19px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;')
+                         )
+              ),
                 # Summarise stats ----
                 column(4,
                        box(
@@ -11240,78 +11272,80 @@ IP <- function(x){
           unique() %>% 
           pull()
       })
-      # Text output season ----
-      output$year <- renderText({
-        req(input$select_jugador)
-        
-        df <- Rosters() %>% 
-          filter(years == input$select_temporada) %>% 
-          select(years) %>% 
-          unique() %>% 
-          pull()
-      })
-      # Text output Jugador bat ----
-      output$jugador_bat <- renderText({
-        req(input$select_jugador)
-        
-        df <- Rosters()%>% 
-          filter( jugador == input$select_jugador) %>% 
-          select(name) %>% 
-          unique() %>% 
-          pull()
-      })
-      # Text output Jugador position ----
-      output$pos_jugador1 <- renderText({
-        req(input$select_jugador)
-        
-        df <- Rosters() %>% 
-          filter( jugador == input$select_jugador) %>% 
-          select(pos) %>% 
-          summarise(
-            pos = last(pos)
-          ) %>% 
-          unique() %>% 
-          pull()
-        
-        paste('Posición :', df, sep = ' ')
+      # Text output Jugador batea-lanza ----
+      output$FDN_PIT <- renderText({
+        "FDN:  "
         
       })
       
       # Text output Jugador batea-lanza ----
-      output$bl_jugador <- renderText({
-        req(input$select_jugador)
+      output$B_L <- renderText({
+        "B/L:  "
+        
+      })
+      
+      # Text output Jugador batea-lanza ----
+      output$B_L_L <- renderText({
+        req(input$select_jugador_pit)
         
         df <- Rosters() %>% 
-          filter( jugador == input$select_jugador) %>% 
+          filter(jugador == input$select_jugador_pit) %>% 
           select(bat) %>% 
           summarise(
-            bat = last(bat)
+            bat = last(bat),
+            bat = if_else(bat == "D", "Derecha", if_else(bat == "A", "Ambidiestro", 
+                                                         "Zurda")),
+            .groups = "drop"
           ) %>% 
           unique() %>% 
           pull()
         
         df1 <- Rosters() %>% 
-          filter( jugador == input$select_jugador) %>% 
+          filter(jugador == input$select_jugador_pit) %>% 
           select(lan) %>% 
           summarise(
-            lan = last(lan)
+            lan = last(lan),
+            lan = if_else(lan == "D", "Derecha", "Zurda"),
+            .groups = "drop"
           ) %>% 
           unique() %>% 
           pull()
         
-        paste('B / L :', df, '/', df1, sep = ' ')
-        
-        # paste0("x=", input$plot_click$x, "\ny=", input$plot_click$y)
+        paste(" ", df, '/', df1, sep = ' ')
         
       })
       
-      # Text output Jugador pais ----
-      output$pais_jugador <- renderText({
+      # Text output Jugador position ----
+      output$POS_PIT <- renderText({
+        "Posicion:"
+        
+      })
+      
+      # Text output Jugador position ----
+      output$POS_L <- renderText({
+        req(input$select_jugador_pit)
+        
+        df <- Rosters() %>% 
+          filter(jugador == input$select_jugador_pit) %>% 
+          select(pos) %>% 
+          summarise(
+            pos = last(pos),
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        paste(" ", df, sep = ' ')
+        
+      })
+      
+      # Text output Lugar de nacimiento ----
+      output$BORN <- renderText({
         req(input$select_jugador_pit)
         
         
         df <- Rosters() %>% 
-          filter( jugador == input$select_jugador) %>% 
+          filter(jugador == input$select_jugador_pit) %>% 
           select(pais) %>% 
           summarise(
             pais = last(pais)
@@ -11320,32 +11354,45 @@ IP <- function(x){
           pull()
         
         df1 <- Rosters() %>% 
-          filter( jugador == input$select_jugador) %>% 
-          select(estado) %>% 
-          summarise(
-            estado = last(estado)
-          ) %>% 
-          unique() %>% 
-          pull()
-        
-        df2 <- Rosters() %>% 
-          filter( jugador == input$select_jugador) %>% 
+          filter(jugador == input$select_jugador_pit) %>% 
           select(ciudad) %>% 
           summarise(
-            ciudad = last(ciudad)
+            estado = last(ciudad)
           ) %>% 
           unique() %>% 
           pull()
         
-        paste(df,':', df1, '-', df2, sep = '  ')
+        paste(df1, ',', " ", df)
         
       })
       
-      # User
+      # Text output Lugar de nacimiento ----
+      output$BORN_PIT <- renderText({
+        "Nacido:"
+        
+      })
       
-      
-      
-      
+      # Text output Experience ----
+      output$EXP_PIT <- renderText({
+        'Temporadas:'
+        
+      })
+      # Text output Experience ----
+      output$EXP_L <- renderText({
+        req(input$select_jugador_pit)
+        
+        df <- Rosters() %>% 
+          filter(jugador == input$select_jugador_pit) %>% 
+          summarise(
+            exp = n(), 
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        paste('', df, sep = ' ')
+        
+      })
     }
   )
 
