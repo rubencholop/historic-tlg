@@ -195,28 +195,32 @@ IP <- function(x){
            ')
           )
         ),
-        div(id = "tiburones",
-            h2("Registro historico de Tiburones de la Guaira", 
-               style = "color:red", align = 'center'),
-                # HTML(
-                #     "<span style='color:#8bd5d2;
-                #       font-size:30px;
-                #       font-family:Segoe Script;
-                #       font-style: italic;'> Pa Encima!<span>"
-                # ),
-            tags$style(HTML('#tiburones {align-left: auto;}'))
-        ),
-        # title = tagList(
-        #   span(class = "logo-lg", "Tiburones de la Guaira")
+        column(2),
+        column(8, h2("Registro historico de Tiburones de la Guaira", 
+                      style = "color: #707070; text-align: left; 
+                              font-size: 1.6rem; font-family: 'Roboto Regular', sans-serif;
+                              font-weight: 500; text-transform: uppercase;",
+                                  align = 'center'),
+                            style = "padding-left: 0px;"),
+        # column(1),
+        # div(id = "tiburones",
+        #     h2("Registro historico de Tiburones de la Guaira", 
+        #        style = "color:red", align = 'center'),
+        #     tags$style(HTML('#tiburones {align-left: auto;}'))
         # ),
-        # (title = span(tagList(icon("calendar"), "Example"))
-        # fixed = TRUE,
-        titleWidth = 250,
-        enable_rightsidebar = FALSE,
-        rightSidebarIcon = "bars"
-        
-        # User Ruben Lopez
-        # userOutput("user")
+        # column(2, tags$img(src = "logo_wahoo2.png",  width = '95px')),
+        # column(1),
+        # column(1, tags$img(src = "logo_nbs3.png",  width = '75px', align = "right",
+        #                    style = "padding-right: 0px;")
+        # ),
+        # column(5, h2("Showcase November 2nd to 4th", style = "color: #707070; text-align: left; 
+        #                                        font-size: 1.3rem; font-family: 'Roboto Regular', sans-serif;
+        #                                         font-weight: 500; text-transform: uppercase;",
+        #              align = 'Left'),
+        #        style = "padding-left: 0px;"),
+        # column(3),
+        # titleWidth = 1050,
+        enable_rightsidebar = TRUE
       ),
       # Sidebar ----
       sidebar = bs4DashSidebar(
@@ -244,8 +248,8 @@ IP <- function(x){
         src = "ts_isotipo.png",
         elevation = 4,
         opacity = 0.8,
-        expand_on_hover = FALSE,
-        fixed = FALSE,
+        expand_on_hover = TRUE,
+        fixed = TRUE,
         sidebarMenu(
           # meniItem Tiburones de la Guaira ----
           bs4SidebarMenu(
@@ -322,7 +326,9 @@ IP <- function(x){
         )
       ),
       # Control bar ----
-      controlbar = bs4DashControlbar(),
+      # controlbar = bs4DashControlbar(
+      #   disable = TRUE
+      # ),
       # Footer ----
       footer = bs4DashFooter(
         tags$head(
@@ -3881,7 +3887,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = round((er * 9) / ip, 2),
-            whip = round(mean(whip, na.rm = T), 2),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
             `h/9` = round((h/ip)*9, 2),
             `hr/9` = round((hr/ip)*9, 2),
             `bb/9` = round((bb/ip)*9, 2),
@@ -3896,7 +3902,7 @@ IP <- function(x){
           mutate(key = paste(as.character(years), jugador)) %>% 
           select(key, 1:28) %>%
           filter(jugador == input$select_jugador_pit) %>%
-          select(-jugador, -key, -`w-l%`) %>%
+          select(-jugador, -key, -`w-l%`, -ir, -bk) %>%
           mutate(
             edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3915,20 +3921,18 @@ IP <- function(x){
             bb = as.numeric(bb),
             so = as.numeric(so),
             # ir = as.numeric(ir),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = round((er * 9) / ip, 2),
-            whip = round(as.numeric(whip), 2),
+            # er = sum(er, na.rm = T),
+            # ip = IP(ip),
+            # era = round((er * 9) / ip, 2),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = round(as.numeric(`h/9`), 2), 
             `hr/9` = round(as.numeric(`hr/9`), 2),
             `bb/9` = round(as.numeric(`bb/9`), 2),
             `so/9` = round(as.numeric(`so/9`), 2),
-            `so/bb` = round(as.numeric(`so/bb`), 2),
-            bk = as.numeric(bk)
+            `so/bb` = round(as.numeric(so / bb), 2)
           ) 
         
         df <- rbind(pitching_player, player_summarise) %>% 
-          select(-bk) %>% 
           rename(
             `Temporada` = years,
             `Edad` = edad,
@@ -4018,34 +4022,6 @@ IP <- function(x){
           select(key, 1:28) %>%
           filter(jugador == input$select_jugador_pit) %>%
           select(-jugador, -key, -`w-l%`) %>%
-          mutate(
-            edad = as.numeric(edad),
-            w = as.numeric(w),
-            l = as.numeric(l),
-            # era = as.numeric(era),
-            g = as.numeric(g),
-            gs = as.numeric(gs),
-            cg = as.numeric(cg),
-            sho = as.numeric(sho),
-            sv = as.numeric(sv),
-            # ip = as.numeric(ip),
-            h = as.numeric(h),
-            r = as.numeric(r),
-            # er = as.numeric(er),
-            hr = as.numeric(hr),
-            bb = as.numeric(bb),
-            so = as.numeric(so),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = round((er * 9) / ip, 2),
-            whip = as.numeric(whip),
-            `h/9` = as.numeric(`h/9`),
-            `hr/9` = as.numeric(`hr/9`),
-            `bb/9` = as.numeric(`bb/9`),
-            `so/9` = as.numeric(`so/9`),
-            `so/bb` = as.numeric(`so/bb`),
-            bk = as.numeric(bk)
-          ) %>%
           summarise(
             years = 'Total',
             edad = NROW(edad),
@@ -4065,7 +4041,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = round((er * 9) / ip, 2),
-            whip = round(mean(whip, na.rm = T), 2),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = round((h/ip)*9, 2),
             `hr/9` = round((hr/ip)*9, 2),
             `bb/9` = round((bb/ip)*9, 2),
@@ -4099,15 +4075,15 @@ IP <- function(x){
             hr = as.numeric(hr),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
+            # er = sum(er, na.rm = T),
+            # ip = IP(ip),
             era = round((er * 9) / ip, 2),
-            whip = round(as.numeric(whip), 2),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = round(as.numeric(`h/9`), 2), 
             `hr/9` = round(as.numeric(`hr/9`), 2),
             `bb/9` = round(as.numeric(`bb/9`), 2),
             `so/9` = round(as.numeric(`so/9`), 2),
-            `so/bb` = round(as.numeric(`so/bb`), 2),
+            `so/bb` = round(so / bb, 2),
             bk = as.numeric(bk),
             refuerzo = refuerzo
           ) 
@@ -4203,34 +4179,6 @@ IP <- function(x){
           select(key, 1:28) %>%
           filter(jugador == input$select_jugador_pit) %>%
           select(-jugador, -key, -`w-l%`) %>%
-          mutate(
-            edad = as.numeric(edad),
-            w = as.numeric(w),
-            l = as.numeric(l),
-            # era = as.numeric(era),
-            g = as.numeric(g),
-            gs = as.numeric(gs),
-            cg = as.numeric(cg),
-            sho = as.numeric(sho),
-            sv = as.numeric(sv),
-            # ip = as.numeric(ip),
-            h = as.numeric(h),
-            r = as.numeric(r),
-            # er = as.numeric(er),
-            hr = as.numeric(hr),
-            bb = as.numeric(bb),
-            so = as.numeric(so),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = round((er * 9) / ip, 2),
-            whip = as.numeric(whip),
-            `h/9` = as.numeric(`h/9`),
-            `hr/9` = as.numeric(`hr/9`),
-            `bb/9` = as.numeric(`bb/9`),
-            `so/9` = as.numeric(`so/9`),
-            `so/bb` = as.numeric(`so/bb`),
-            bk = as.numeric(bk)
-          ) %>%
           summarise(
             years = 'Total',
             edad = NROW(edad),
@@ -4249,12 +4197,12 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = round((er * 9) / ip, 2),
-            whip = round(mean(whip, na.rm = T), 2),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = round((h/ip)*9, 2),
             `hr/9` = round((hr/ip)*9, 2),
             `bb/9` = round((bb/ip)*9, 2),
             `so/9` = round((so/ip)*9, 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
+            `so/bb` = round(so / bb, 2),
             bk = sum(bk, na.rm = T),
             refuerzo = '-',
             resultado = '-',
@@ -4284,10 +4232,10 @@ IP <- function(x){
             hr = as.numeric(hr),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
+            # er = sum(er, na.rm = T),
+            # ip = IP(ip),
             era = round((er * 9) / ip, 2),
-            whip = round(as.numeric(whip), 2),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = round(as.numeric(`h/9`), 2), 
             `hr/9` = round(as.numeric(`hr/9`), 2),
             `bb/9` = round(as.numeric(`bb/9`), 2),
