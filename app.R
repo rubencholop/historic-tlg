@@ -602,12 +602,11 @@ IP <- function(x){
               # Image ----
               fluidRow(
                 # Player name ----
-                column(4,
+                column(5,
                        fluidRow(
                        column(6,
                               imageOutput('jugador_pit')
                               ),
-                       
                        column(6,
                               br(),
                               br(),
@@ -628,20 +627,21 @@ IP <- function(x){
                         )
                        ),
                 # Player info ----
-                column(4,
+                column(3,
+                       br(),
                        br(),
                        fluidRow(
                          column(4,
                          h2("FDN:",
                             style = 'color: #6c6d6f;
-                                          font-size: 19px;
+                                          font-size: 15px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: rigth;')
                          ),  
                          column(8,
                          h2(textOutput("FDN"),
-                            style = 'font-size: 19px;
+                            style = 'font-size: 15px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: rigth;')
@@ -651,14 +651,14 @@ IP <- function(x){
                          column(4,
                          h2("B/L:",
                                   style = 'color: #6c6d6f;
-                                          font-size: 19px;
+                                          font-size: 15px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: rigth;')
                          ),
                          column(8,
                          h4(textOutput("B_L_L"),
-                            style = 'font-size: 19px;
+                            style = 'font-size: 15px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: rigth;')
@@ -668,14 +668,14 @@ IP <- function(x){
                          column(4,
                          h2("Posición:",
                             style = 'color: #6c6d6f;
-                                          font-size: 19px;
+                                          font-size: 15px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: rigth;')
                          ),
                          column(8,
                          h2(textOutput("POS_L"),
-                            style = 'font-size: 19px;
+                            style = 'font-size: 15px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: rigth;')
@@ -685,14 +685,14 @@ IP <- function(x){
                          column(4,
                          h2("Nacido en:",
                             style = 'color: #6c6d6f;
-                                          font-size: 19px;
+                                          font-size: 15px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: rigth;')
                          ),
                          column(8,
                          h2(textOutput("BORN"),
-                            style = 'font-size: 19px;
+                            style = 'font-size: 15px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: rigth;')
@@ -702,14 +702,14 @@ IP <- function(x){
                          column(4,
                          h2("Temporadas:",
                             style = 'color: #6c6d6f;
-                                          font-size: 19px;
+                                          font-size: 15px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: rigth;')
                          ),
                          column(8,
                          h2(textOutput("EXP_L"),
-                            style = 'font-size: 19px;
+                            style = 'font-size: 15px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: rigth;')
@@ -718,10 +718,20 @@ IP <- function(x){
               ),
                 # Summarise stats ----
                 column(4,
+                       br(),
                        box(
+                         id = "stats",
                          collapsed = FALSE,
                          collapsible = FALSE,
-                         title = h3("Estadisticas generales"),
+                         title = h2("Estadisticas Generales", 
+                                  style = 'color: #b90e13;
+                                          font-size: 19px;
+                                          font-weight: 400;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center;
+                                          text-transform: uppercase;
+                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
+                                    ),
                          overflow = TRUE,
                          headerBorder = FALSE,
                          width = 12,
@@ -738,6 +748,8 @@ IP <- function(x){
               hr(),
               # Table  ----
               fluidRow(
+                br(),
+                br(),
                 column(12,
                        bs4Box(
                          width = NULL,
@@ -11032,7 +11044,7 @@ IP <- function(x){
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h1(era, style = 'font-size: 19px;
+          subtitle = tags$h1(era, style = 'font-size: 23px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -11074,7 +11086,7 @@ IP <- function(x){
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
           subtitle = tags$h2(paste0(w, "-", l), 
-                                  style = 'font-size: 19px;
+                                  style = 'font-size: 23px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -11103,7 +11115,7 @@ IP <- function(x){
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h2(so, style = ' font-size: 19px;
+          subtitle = tags$h2(so, style = ' font-size: 23px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -11135,7 +11147,7 @@ IP <- function(x){
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h2(whip, style = 'font-size: 19px;
+          subtitle = tags$h2(whip, style = 'font-size: 23px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -11379,6 +11391,7 @@ IP <- function(x){
         req(input$select_jugador_pit)
         
         df <- Rosters() %>% 
+          filter(pos == "P") %>% 
           filter(jugador == input$select_jugador_pit) %>% 
           select(first_name) %>% 
           unique() %>% 
@@ -11484,7 +11497,13 @@ IP <- function(x){
           unique() %>% 
           pull()
         
-        paste(df1, ',', " ", df)
+        if (is.na(df1) == TRUE) {
+          paste0(df)
+          
+        } else if (is.na(df1) == FALSE) {
+          paste0(df1,', ', df)
+          
+        }
         
       })
       
