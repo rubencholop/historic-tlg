@@ -586,7 +586,7 @@ IP <- function(x){
           ),
         # TabItem by Player ----
         tabItem(
-          h4('Datos historicos por jugador', align = 'center'),
+          # h4('Estadisticas historicas por jugador', align = 'center'),
           tabName = 'jugador',
           tabsetPanel(
             id = "tabset2",
@@ -594,24 +594,43 @@ IP <- function(x){
             # Picheo ----
             tabPanel(
               tabName = 'Picheo',
+              br(),
+              box( 
+                width = 12,
+                title = h2("Estadisticas historicas de lanzadores", 
+                           style = 'color: #b90e13;
+                                          font-size: 19px;
+                                          font-weight: 400;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center;
+                                          text-transform: uppercase;
+                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
+                ),
+                height = "400px",
+                collapsed = FALSE,
+                collapsible = FALSE,
+                closable = FALSE,
               # Input ----
               fluidRow(
+                br(),
                 br(),
                 column(2,
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Lanzadores',
                          choices = .pitchers
+                         )
                        )
-                )
               ),
+              br(),
               # Image ----
               fluidRow(
                 # Player name ----
-                column(5,
+                column(4,
                        fluidRow(
                        column(6,
-                              imageOutput('jugador_pit')
+                              imageOutput('jugador_pit'),
+                              height = "230px"
                               ),
                        column(6,
                               br(),
@@ -633,7 +652,7 @@ IP <- function(x){
                         )
                        ),
                 # Player info ----
-                column(3,
+                column(4,
                        br(),
                        br(),
                        fluidRow(
@@ -726,11 +745,11 @@ IP <- function(x){
                 column(4,
                        br(),
                        box(
-                         id = "stats",
+                         inputId = "stats",
                          collapsed = FALSE,
                          collapsible = FALSE,
                          title = h2("Estadisticas Generales", 
-                                  style = 'color: #b90e13;
+                                  style = 'color: #ffffff;
                                           font-size: 19px;
                                           font-weight: 400;
                                           font-family: "Roboto Regular", sans-serif;
@@ -747,7 +766,8 @@ IP <- function(x){
                            shinydashboard::valueBoxOutput("era", width = 3),
                            shinydashboard::valueBoxOutput("k", width = 3),
                            shinydashboard::valueBoxOutput("whip", width = 3)
-                         )
+                           )
+                          )
                        )
                 )
               ),
@@ -930,7 +950,8 @@ IP <- function(x){
               # Table  ----
               fluidRow(
                 column(12,
-                       bs4Box(
+                       box(
+                         headerBorder = TRUE,
                          width = NULL,
                          title = "Temporada Regular",
                          DT::dataTableOutput('bat_rs')
