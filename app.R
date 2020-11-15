@@ -631,70 +631,89 @@ IP <- function(x){
                 column(4,
                        br(),
                        fluidRow(
-                         h2(textOutput("FDN_PIT"),
+                         column(4,
+                         h2("FDN:",
                             style = 'color: #6c6d6f;
                                           font-size: 19px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
-                                          text-align: center!important;'
-                            ),  
+                                          text-align: rigth;')
+                         ),  
+                         column(8,
                          h2(textOutput("FDN"),
                             style = 'font-size: 19px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
-                                           text-align: center!important;')
+                                           text-align: rigth;')
+                          )
                          ),
                        fluidRow(
-                         h2(textOutput("B_L"),
-                                   style = 'color: #6c6d6f;
+                         column(4,
+                         h2("B/L:",
+                                  style = 'color: #6c6d6f;
                                           font-size: 19px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
-                                          text-align: center!important;'),
-                         h2(textOutput("B_L_L"),
+                                          text-align: rigth;')
+                         ),
+                         column(8,
+                         h4(textOutput("B_L_L"),
                             style = 'font-size: 19px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
-                                           text-align: center!important;')
+                                           text-align: rigth;')
+                         )
                        ),
                        fluidRow(
-                         h2(textOutput("POS_PIT"),
+                         column(4,
+                         h2("Posición:",
                             style = 'color: #6c6d6f;
                                           font-size: 19px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
-                                          text-align: center!important;'),
+                                          text-align: rigth;')
+                         ),
+                         column(8,
                          h2(textOutput("POS_L"),
                             style = 'font-size: 19px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
-                                           text-align: center!important;')
+                                           text-align: rigth;')
+                          )
                          ),
                        fluidRow(
-                         h2(textOutput("BORN_PIT"),
+                         column(4,
+                         h2("Nacido en:",
                             style = 'color: #6c6d6f;
                                           font-size: 19px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
-                                          text-align: center!important;'),
+                                          text-align: rigth;')
+                         ),
+                         column(8,
                          h2(textOutput("BORN"),
                             style = 'font-size: 19px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
-                                           text-align: center!important;')
+                                           text-align: rigth;')
+                          )
                          ),
                        fluidRow(
-                         h2(textOutput("EXP_PIT"),
+                         column(4,
+                         h2("Temporadas:",
                             style = 'color: #6c6d6f;
                                           font-size: 19px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
-                                          text-align: center!important;'),
+                                          text-align: rigth;')
+                         ),
+                         column(8,
                          h2(textOutput("EXP_L"),
                             style = 'font-size: 19px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
-                                           text-align: center!important;')
+                                           text-align: rigth;')
+                          )
                          )
               ),
                 # Summarise stats ----
@@ -756,37 +775,140 @@ IP <- function(x){
               ),
               # Image ----
               fluidRow(
+                # Player name ----
                 column(4,
-                       bs4Box(
-                         width = NULL,
-                         height = "200px",
-                         collapsible = TRUE,
-                         # title = h4(textOutput('jugador_bat'), align = 'center'),
-                         title = ,
-                         fluidRow(
-                           column(5,
-                                  column(12,
-                                         imageOutput('jugador_')
+                       fluidRow(
+                         column(6,
+                                imageOutput('jugador_bat')
+                         ),
+                         column(6,
+                                br(),
+                                br(),
+                                br(),
+                                h2(textOutput("first_name_bat"),
+                                   style = "text-transform: uppercase;
+                                   font-size: 1.5em;
+                                   font-weight: 200;
+                                   font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                   "),
+                                h2(textOutput("last_name_bat"),
+                                   style = "text-transform: uppercase;
+                                   font-size: 1.6em;
+                                   font-weight: 700;
+                                   font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+                                   ")
+                                    )
                                   )
-                           ),
-                           column(7,
-                                # fluidRow(h6(textOutput('pos_jugador'),  align = 'rigth')),
-                                fluidRow(h6(textOutput('bl_jugador'), align = 'rigth')),
-                                fluidRow(h6(textOutput('pais_jugador'),  align = 'rigth'))
+                                ),
+                # Player info ----
+                column(4,
+                       br(),
+                       fluidRow(
+                         column(4,
+                                h2("FDN:",
+                                   style = 'color: #6c6d6f;
+                                   font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                ),  
+                         column(8,
+                                h2(textOutput("FDN_B"),
+                                   style = 'font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                  )
+                                ),
+                       fluidRow(
+                         column(4,
+                                h2("B/L:",
+                                   style = 'color: #6c6d6f;
+                                   font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                ),
+                         column(8,
+                                h4(textOutput("B_L_B"),
+                                   style = 'font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                  )
+                                ),
+                       fluidRow(
+                         column(4,
+                                h2("Posición:",
+                                   style = 'color: #6c6d6f;
+                                   font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                ),
+                         column(8,
+                                h2(textOutput("POS_B"),
+                                   style = 'font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                  )
+                                ),
+                       fluidRow(
+                         column(4,
+                                h2("Nacido en:",
+                                   style = 'color: #6c6d6f;
+                                   font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                ),
+                         column(8,
+                                h2(textOutput("BORN_B"),
+                                   style = 'font-size: 19px;
+                                   font-weight: 700;
+                                   font-family: "Roboto Regular", sans-serif;
+                                   text-align: rigth;')
+                                  )
+                                ),
+                       fluidRow(
+                         column(4,
+                                h2("Temporadas:",
+                                   style = 'color: #6c6d6f;
+                                          font-size: 19px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: rigth;')
+                         ),
+                         column(8,
+                                h2(textOutput("EXP_B"),
+                                   style = 'font-size: 19px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: rigth;')
                                 )
+                         )
+                       ),
+                # Summarise stats ----
+                column(4,
+                       box(
+                         collapsed = FALSE,
+                         collapsible = FALSE,
+                         title = h3("Estadisticas generales"),
+                         overflow = TRUE,
+                         headerBorder = FALSE,
+                         width = 12,
+                         closable = FALSE,
+                         fluidRow(
+                           shinydashboard::valueBoxOutput("g_b", width = 3),
+                           shinydashboard::valueBoxOutput("xxx", width = 3),
+                           shinydashboard::valueBoxOutput("xx", width = 3),
+                           shinydashboard::valueBoxOutput("x", width = 3)
                            )
-                       )
+                         )
+                     )
                 ),
-                column(5,
-                       bs4Box(
-                         width = NULL,
-                         collapsible = TRUE,
-                         # status = 'warning',
-                         title = 'Radarchart'
-                       )
-                )
-              ),
-              br(),
+              hr(),
               # Table  ----
               fluidRow(
                 column(12,
