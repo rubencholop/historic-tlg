@@ -78,7 +78,7 @@ Unique_Rosters <- Rosters %>%
   filter(pos == 'P') %>% 
   arrange(jugador, years) %>% 
   group_by(ID) %>% 
-  summarize(jugador = last(jugador),
+  summarize(jugador = paste0(last(first_name), " ", last(last_name)),
             .groups = 'drop') %>% 
   arrange(jugador) %>% 
   select(jugador) %>% 
@@ -88,7 +88,7 @@ Unique_Rosters <- Rosters %>%
   filter(!pos == 'P') %>% 
   arrange(jugador, years) %>% 
   group_by(ID) %>% 
-  summarize(jugador = last(jugador),
+  summarize(jugador = paste0(last(first_name), " ", last(last_name)),
             .groups = 'drop') %>% 
   arrange(jugador) %>% 
   select(jugador) %>% 
@@ -614,7 +614,7 @@ IP <- function(x){
               fluidRow(
                 br(),
                 br(),
-                column(2,
+                column(3,
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Lanzadores',
@@ -745,6 +745,9 @@ IP <- function(x){
                 column(4,
                        br(),
                        box(
+                         status = "primary",
+                         # gradientColor = "blue",
+                         # solidHeader = TRUE,
                          inputId = "stats",
                          collapsed = FALSE,
                          collapsible = FALSE,
