@@ -806,17 +806,34 @@ IP <- function(x){
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
+              br(),
+              box( 
+                width = 12,
+                title = h2("Estadisticas historicas de lBateadores", 
+                           style = 'color: #b90e13;
+                                          font-size: 19px;
+                                          font-weight: 400;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center;
+                                          text-transform: uppercase;
+                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
+                ),
+                height = "350px",
+                collapsed = FALSE,
+                collapsible = FALSE,
+                closable = FALSE,
               # Input ----
               fluidRow(
                 br(),
-                column(2,
+                column(3,
                        selectInput(
-                         inputId = 'select_jugador',
+                         inputId = 'select_jugador_bat',
                          label = "Bateadores",
                          choices = .bateadores
                        )
                 )
               ),
+              br(),
               # Image ----
               fluidRow(
                 # Player name ----
@@ -944,13 +961,14 @@ IP <- function(x){
                          width = 12,
                          closable = FALSE,
                          fluidRow(
-                           shinydashboard::valueBoxOutput("g_b", width = 3),
-                           shinydashboard::valueBoxOutput("xxx", width = 3),
-                           shinydashboard::valueBoxOutput("xx", width = 3),
-                           shinydashboard::valueBoxOutput("x", width = 3)
+                           shinydashboard::valueBoxOutput("avg_b", width = 3),
+                           shinydashboard::valueBoxOutput("hr_b", width = 3),
+                           shinydashboard::valueBoxOutput("rbi_b", width = 3),
+                           shinydashboard::valueBoxOutput("bb_b", width = 3)
                            )
                          )
                      )
+                  )
                 ),
               hr(),
               # Table  ----
@@ -11034,7 +11052,7 @@ IP <- function(x){
         
         
         era <- prs() %>%
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
@@ -11054,7 +11072,7 @@ IP <- function(x){
         if (era$er == 0 & era$ip == 0) {
           era <- "-"
         }
-        else if (is.numeric(ip)) {
+        else if (is.numeric(era$er)) {
           era <- era %>% 
             select(era) %>% 
             pull()
@@ -11081,7 +11099,7 @@ IP <- function(x){
         
         
         w <- prs() %>%
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
@@ -11098,7 +11116,7 @@ IP <- function(x){
         
         
         l <- prs() %>%
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
@@ -11134,7 +11152,7 @@ IP <- function(x){
         req(input$select_jugador_pit)
         
         so <- prs() %>%
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
@@ -11169,7 +11187,7 @@ IP <- function(x){
         req(input$select_jugador_pit)
         
         whip <- prs() %>%
-          mutate(key = paste(as.character(years), jugador)) %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
@@ -11178,10 +11196,10 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) 
         
-        if (era$ip == 0) {
+        if (length(whip$ip) == 0) {
           whip <- "-"
         }
-        else if (is.numeric(ip)) {
+        else if (is.numeric(whip$ip)) {
           whip <- whip %>% 
             summarise(
               h = sum(h, na.rm = T),
@@ -11203,6 +11221,155 @@ IP <- function(x){
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
           subtitle = tags$h2(whip, style = 'font-size: 23px;
+                                           font-weight: 800;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
+      # ValueBox AVG ----
+      output$avg_b <- renderValueBox({
+        req(input$select_jugador_bat)
+        
+       avg <- brs() %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:32) %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(player == input$select_jugador_bat) 
+      # "Raúl Pérez Tovar"
+        
+        if (length(avg$avg) == 0) {
+          avg <- "-"
+        }
+        else if (is.numeric(avg$avg)) {
+          avg <- avg %>% 
+            summarise(
+              avg = round(sum(h)/sum(ab), 3),
+              .groups = 'drop'
+            ) %>% 
+            select(avg) %>% 
+            pull()
+        }
+        
+        
+        
+        shinydashboard::valueBox(
+          value = tags$h2("AVG", style = 'color: #6c6d6f; 
+                                          font-size: 10px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h2(avg, style = 'font-size: 23px;
+                                           font-weight: 800;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
+      # ValueBox HR ----
+      output$hr_b <- renderValueBox({
+        req(input$select_jugador_bat)
+        
+       hr <- brs() %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:32) %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(player == input$select_jugador_bat) %>% 
+         summarise(
+           hr = sum(hr),
+           .groups = 'drop'
+         ) %>% 
+         select(hr) %>% 
+         pull()
+
+        
+        shinydashboard::valueBox(
+          value = tags$h2("HR", style = 'color: #6c6d6f; 
+                                          font-size: 10px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h2(hr, style = 'font-size: 23px;
+                                           font-weight: 800;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
+      # ValueBox RBI ----
+      output$rbi_b <- renderValueBox({
+        req(input$select_jugador_bat)
+        
+       rbi <- brs() %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:32) %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(player == input$select_jugador_bat) %>% 
+         summarise(
+           rbi = sum(rbi),
+           .groups = 'drop'
+         ) %>% 
+         select(rbi) %>% 
+         pull()
+
+        
+        shinydashboard::valueBox(
+          value = tags$h2("RBI", style = 'color: #6c6d6f; 
+                                          font-size: 10px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h2(rbi, style = 'font-size: 23px;
+                                           font-weight: 800;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: center!important;
+                                            ')
+        )
+        
+      })
+      # ValueBox OPS ----
+      output$bb_b <- renderValueBox({
+        req(input$select_jugador_bat)
+        
+       bb <- brs() %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:32) %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(player == input$select_jugador_bat) %>% 
+         summarise(
+           rbi = sum(bb),
+           .groups = 'drop'
+         ) %>% 
+         select(bb) %>% 
+         pull()
+
+        
+        shinydashboard::valueBox(
+          value = tags$h2("BB", style = 'color: #6c6d6f; 
+                                          font-size: 10px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center!important;'),
+          subtitle = tags$h2(bb, style = 'font-size: 23px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
@@ -11448,7 +11615,6 @@ IP <- function(x){
         df <- Rosters() %>% 
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(
-            pos == "P",
             player == input$select_jugador_pit) %>% 
           #Before first space
           mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
