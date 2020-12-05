@@ -964,7 +964,7 @@ IP <- function(x){
                            shinydashboard::valueBoxOutput("avg_b", width = 3),
                            shinydashboard::valueBoxOutput("hr_b", width = 3),
                            shinydashboard::valueBoxOutput("rbi_b", width = 3),
-                           shinydashboard::valueBoxOutput("bb_b", width = 3)
+                           shinydashboard::valueBoxOutput("slg_b", width = 3)
                            )
                          )
                      )
@@ -11342,11 +11342,11 @@ IP <- function(x){
         )
         
       })
-      # ValueBox OPS ----
-      output$bb_b <- renderValueBox({
+      # ValueBox BB ----
+      output$slg_b <- renderValueBox({
         req(input$select_jugador_bat)
         
-       bb <- brs() %>%
+       slg <- brs() %>%
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:28) %>% 
           left_join(Rosters() %>%
@@ -11356,20 +11356,25 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_bat) %>% 
          summarise(
-           rbi = sum(bb),
+           ab = sum(ab),
+           h = sum(h),
+           `2b` = sum(`2b`),
+           `3b` = sum(`3b`),
+           hr = sum(hr),
+           slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
            .groups = 'drop'
          ) %>% 
-         select(bb) %>% 
+         select(slg) %>% 
          pull()
 
         
         shinydashboard::valueBox(
-          value = tags$h2("BB", style = 'color: #6c6d6f; 
+          value = tags$h2("SLG", style = 'color: #6c6d6f; 
                                           font-size: 10px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: center!important;'),
-          subtitle = tags$h2(bb, style = 'font-size: 23px;
+          subtitle = tags$h2(slg, style = 'font-size: 23px;
                                            font-weight: 800;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: center!important;
