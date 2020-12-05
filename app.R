@@ -864,86 +864,87 @@ IP <- function(x){
                 # Player info ----
                 column(4,
                        br(),
+                       br(),
                        fluidRow(
                          column(4,
                                 h2("FDN:",
                                    style = 'color: #6c6d6f;
-                                   font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                          font-size: 15px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: rigth;')
                                 ),  
                          column(8,
                                 h2(textOutput("FDN_B"),
-                                   style = 'font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                   style = 'font-size: 15px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: rigth;')
                                   )
                                 ),
                        fluidRow(
                          column(4,
                                 h2("B/L:",
                                    style = 'color: #6c6d6f;
-                                   font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                          font-size: 15px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: rigth;')
                                 ),
                          column(8,
                                 h4(textOutput("B_L_B"),
-                                   style = 'font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                   style = 'font-size: 15px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: rigth;')
                                   )
                                 ),
                        fluidRow(
                          column(4,
                                 h2("Posición:",
                                    style = 'color: #6c6d6f;
-                                   font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                          font-size: 15px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: rigth;')
                                 ),
                          column(8,
                                 h2(textOutput("POS_B"),
-                                   style = 'font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                   style = 'font-size: 15px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: rigth;')
                                   )
                                 ),
                        fluidRow(
                          column(4,
                                 h2("Nacido en:",
                                    style = 'color: #6c6d6f;
-                                   font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                          font-size: 15px;
+                                          font-weight: 700;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: rigth;')
                                 ),
                          column(8,
                                 h2(textOutput("BORN_B"),
-                                   style = 'font-size: 19px;
-                                   font-weight: 700;
-                                   font-family: "Roboto Regular", sans-serif;
-                                   text-align: rigth;')
+                                   style = 'font-size: 15px;
+                                           font-weight: 700;
+                                           font-family: "Roboto Regular", sans-serif;
+                                           text-align: rigth;')
                                   )
                                 ),
                        fluidRow(
                          column(4,
                                 h2("Temporadas:",
                                    style = 'color: #6c6d6f;
-                                          font-size: 19px;
+                                          font-size: 15px;
                                           font-weight: 700;
                                           font-family: "Roboto Regular", sans-serif;
                                           text-align: rigth;')
                          ),
                          column(8,
                                 h2(textOutput("EXP_B"),
-                                   style = 'font-size: 19px;
+                                   style = 'font-size: 15px;
                                            font-weight: 700;
                                            font-family: "Roboto Regular", sans-serif;
                                            text-align: rigth;')
@@ -955,7 +956,15 @@ IP <- function(x){
                        box(
                          collapsed = FALSE,
                          collapsible = FALSE,
-                         title = h3("Estadisticas generales"),
+                         title = h2("Estadisticas Generales", 
+                                    style = 'color: #ffffff;
+                                          font-size: 19px;
+                                          font-weight: 400;
+                                          font-family: "Roboto Regular", sans-serif;
+                                          text-align: center;
+                                          text-transform: uppercase;
+                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
+                         ),
                          overflow = TRUE,
                          headerBorder = FALSE,
                          width = 12,
@@ -971,8 +980,10 @@ IP <- function(x){
                   )
                 ),
               hr(),
+              br(),
               # Table  ----
               fluidRow(
+                br(),
                 column(12,
                        box(
                          headerBorder = TRUE,
@@ -4407,11 +4418,16 @@ IP <- function(x){
       
       # Table por Bat_rs  by jugador ----
       output$bat_rs <- DT::renderDataTable({
-        req(input$select_jugador)
+        req(input$select_jugador_bat)
         
         player_summarise <- brs() %>%
-          filter(jugador == input$select_jugador) %>%
-          select(-jugador) %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>% 
+                      select(first_name, last_name, key), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(key, player, 1:31) %>% 
+          filter(player == input$select_jugador_bat) %>%
+          select(-player) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -4457,7 +4473,7 @@ IP <- function(x){
             so = sum(so, na.rm = T),
             avg = round(h/ab, 3),
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
-            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
             ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
@@ -4470,9 +4486,14 @@ IP <- function(x){
           )
         
         
-        batting_player <- brs() %>%
-          filter(jugador == input$select_jugador) %>%
-          select(-jugador) %>%
+        batting_player <- brs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>% 
+                      select(first_name, last_name, key), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(key, player, 1:31) %>% 
+          filter(player == input$select_jugador_bat) %>% 
+          select(-jugador, -player, -key, -first_name, -last_name) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -4580,37 +4601,16 @@ IP <- function(x){
       
       # Table por Bat_rr  by jugador ----
       output$bat_rr <- DT::renderDataTable({
-        req(input$select_jugador)
+        req(input$select_jugador_bat)
         
-        player_summarise <- brr()%>%
-          filter(jugador == input$select_jugador) %>%
+        player_summarise <- brr() %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>% 
+                      select(first_name, last_name, key), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(key, player, 1:31) %>% 
+          filter(player == input$select_jugador_bat) %>% 
           select(-jugador) %>% 
-          mutate(
-            edad = as.numeric(edad),
-            g = as.numeric(g),
-            X5 = as.numeric(X5),
-            ab = as.numeric(ab),
-            r = as.numeric(r),
-            h = as.numeric(h),
-            hr = as.numeric(hr),
-            rbi = as.numeric(rbi),
-            sb = as.numeric(sb),
-            cs = as.numeric(cs),
-            bb = as.numeric(bb),
-            so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
-            rc = as.numeric(rc),
-            tb = as.numeric(tb),
-            xb = as.numeric(xb),
-            hbp = as.numeric(hbp),
-            sh = as.numeric(sh),
-            sf = as.numeric(sf),
-            `2b` = as.numeric(`2b`),
-            `3b` = as.numeric(`3b`)
-          ) %>% 
           summarise(
             years = 'Temporadas',
             edad = NROW(edad),
@@ -4629,7 +4629,7 @@ IP <- function(x){
             so = sum(so, na.rm = T),
             avg = round(h/`X5`, 3),
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
-            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
@@ -4643,8 +4643,13 @@ IP <- function(x){
         
         
         batting_player <- brr() %>%
-          filter(jugador == input$select_jugador) %>%
-          select(-jugador) %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>% 
+                      select(first_name, last_name, key), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(key, player, 1:31) %>% 
+          filter(player == input$select_jugador_bat) %>% 
+          select(-jugador, -player, -key, -first_name, -last_name) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -4658,10 +4663,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
+            avg = round(h/`X5`, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
@@ -4703,84 +4708,72 @@ IP <- function(x){
           ) %>% 
           arrange(Temporada)  
         
-        # Datatable ----
         
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          df,
-          class = 'display', # To remove lines horizontal in table
-          extensions = "ColReorder",
-          rownames = FALSE,
-          options = list(
-            # autoWidth = TRUE,
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            searching = FALSE,
-            paging = FALSE,
-            pageLegth = 15,
-            lengthMenu = c(15, 20, 25),
-            lengthChange = FALSE,
-            scrollX = TRUE,
+        if (nrow(df) > 1) {
+          # Datatable ----
+          headerCallback <- c(
+            "function(thead, data, start, end, display){",
+            "  $('th', thead).css('border-bottom', 'none');",
+            "}"
+          )  # To deleate header line horizontal in bottom of colums name
+          
+          DT::datatable(
+            df,
+            class = 'display', # To remove lines horizontal in table
+            extensions = "ColReorder",
             rownames = FALSE,
-            fixedHeader = TRUE,
-            fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 0:25),
-                              list(width = '100px', targets = 1)),
-            headerCallback = JS(headerCallback),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
+            options = list(
+              # autoWidth = TRUE,
+              dom = 'ft',  # To remove showing 1 to n of entries fields
+              searching = FALSE,
+              paging = FALSE,
+              pageLegth = 15,
+              lengthMenu = c(15, 20, 25),
+              lengthChange = FALSE,
+              scrollX = TRUE,
+              rownames = FALSE,
+              fixedHeader = TRUE,
+              fixedColumns = list(LeftColumns = 3),
+              columnDefs = list(list(className = "dt-center", targets = 0:25),
+                                list(width = '100px', targets = 1)),
+              headerCallback = JS(headerCallback),
+              initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+                "$(this.api().table().body()).css({'font-size': '12px'});",
+                "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+                "}"
+              )
             )
-          )
-        ) %>% 
-          formatStyle(
-            'Temporada',
-            target = "row",
-            fontWeight = styleEqual(c('Temporadas'), "bold")
-          )
+          ) %>% 
+            formatStyle(
+              'Temporada',
+              target = "row",
+              fontWeight = styleEqual(c('Temporadas'), "bold")
+            )
+ 
+          
+        }
+        else if (nrow(df) == 0) {
+          "No tiene estadisticas"
+        }
+        
+        
         
       })
       
       # Table por Bat_finals  by jugador ----
       output$bat_final <- DT::renderDataTable({
-        req(input$select_jugador)
+        req(input$select_jugador_bat)
         
         player_summarise <- bf() %>% 
-          filter(jugador == input$select_jugador) %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>% 
+                      select(first_name, last_name, key), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(key, player, 1:32) %>% 
+          filter(player == input$select_jugador_bat) %>% 
           select(-jugador) %>%
-          mutate(
-            edad = as.numeric(edad),
-            g = as.numeric(g),
-            X5 = as.numeric(X5),
-            ab = as.numeric(ab),
-            r = as.numeric(r),
-            h = as.numeric(h),
-            hr = as.numeric(hr),
-            rbi = as.numeric(rbi),
-            sb = as.numeric(sb),
-            cs = as.numeric(cs),
-            bb = as.numeric(bb),
-            so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
-            rc = as.numeric(rc),
-            tb = as.numeric(tb),
-            xb = as.numeric(xb),
-            hbp = as.numeric(hbp),
-            sh = as.numeric(sh),
-            sf = as.numeric(sf),
-            `2b` = as.numeric(`2b`),
-            `3b` = as.numeric(`3b`)
-          ) %>% 
           summarise(
             years = 'Temporadas',
             resultado = '',
@@ -4801,7 +4794,7 @@ IP <- function(x){
             so = sum(so, na.rm = T),
             avg = round(h/`X5`, 3),
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
-            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
@@ -4814,35 +4807,14 @@ IP <- function(x){
         
         
         batting_player <- bf() %>% 
-          filter(jugador == input$select_jugador) %>% 
-          select(-jugador) %>% 
-          mutate(
-            edad = as.numeric(edad),
-            g = as.numeric(g),
-            X5 = as.numeric(X5),
-            ab = as.numeric(ab),
-            r = as.numeric(r),
-            h = as.numeric(h),
-            hr = as.numeric(hr),
-            rbi = as.numeric(rbi),
-            sb = as.numeric(sb),
-            cs = as.numeric(cs),
-            bb = as.numeric(bb),
-            so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
-            rc = as.numeric(rc),
-            tb = as.numeric(tb),
-            xb = as.numeric(xb),
-            hbp = as.numeric(hbp),
-            sh = as.numeric(sh),
-            sf = as.numeric(sf),
-            `2b` = as.numeric(`2b`),
-            `3b` = as.numeric(`3b`)
-          )
-        
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>% 
+                      select(first_name, last_name, key), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(key, player, 1:32) %>% 
+          filter(player == input$select_jugador_bat) %>% 
+          select(-jugador, -player, -key, -first_name, -last_name)
+
         
         
         df <- rbind(batting_player, player_summarise) %>%
@@ -4885,48 +4857,57 @@ IP <- function(x){
           ) 
           # replace(., is.na(.), 0)
         
-        # Datatable ----
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        ) # To deleate header line horizontal in bottom of colums name
         
-        DT::datatable(
-          df,
-          class = 'display', # To remove lines horizontal in table
-          extensions = "ColReorder",
-          rownames = FALSE,
-          options = list(
-            # autoWidth = TRUE,
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            searching = FALSE,
-            paging = FALSE,
-            pageLegth = 15,
-            lengthMenu = c(15, 20, 25),
-            lengthChange = FALSE,
-            scrollX = TRUE,
+        if (nrow(df) > 1) {
+          # Datatable ----
+          headerCallback <- c(
+            "function(thead, data, start, end, display){",
+            "  $('th', thead).css('border-bottom', 'none');",
+            "}"
+          ) # To deleate header line horizontal in bottom of colums name
+          
+          DT::datatable(
+            df,
+            class = 'display', # To remove lines horizontal in table
+            extensions = "ColReorder",
             rownames = FALSE,
-            fixedColumns = list(LeftColumns = 3),
-            fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 0:26),
-                              list(width = '50px', targets = 26)
-            ),
-            headerCallback = JS(headerCallback),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Rajdhani'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Rajdhani'});",
-              "}"
+            options = list(
+              # autoWidth = TRUE,
+              dom = 'ft',  # To remove showing 1 to n of entries fields
+              searching = FALSE,
+              paging = FALSE,
+              pageLegth = 15,
+              lengthMenu = c(15, 20, 25),
+              lengthChange = FALSE,
+              scrollX = TRUE,
+              rownames = FALSE,
+              fixedColumns = list(LeftColumns = 3),
+              fixedHeader = TRUE,
+              columnDefs = list(list(className = "dt-center", targets = 0:26),
+                                list(width = '50px', targets = 26)
+              ),
+              headerCallback = JS(headerCallback),
+              initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().body()).css({'font-family': 'Rajdhani'});",
+                "$(this.api().table().body()).css({'font-size': '12px'});",
+                "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Rajdhani'});",
+                "}"
+              )
             )
-          )
-        ) %>% 
-          formatStyle(
-            'Temporada',
-            target = "row",
-            fontWeight = styleEqual(c('Temporadas'), "bold")
-          )
+          ) %>% 
+            formatStyle(
+              'Temporada',
+              target = "row",
+              fontWeight = styleEqual(c('Temporadas'), "bold")
+            )
+          
+          
+        }
+        else if (nrow(df) == 0) {
+          "No tiene estadisticas"
+        }
+        
         
       })
       
@@ -11628,6 +11609,21 @@ IP <- function(x){
           pull()
       })
       
+      # Text output First name Hitter ----
+      output$first_name_bat <- renderText({
+        req(input$select_jugador_bat)
+        
+        df <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>% 
+          #Before first space
+          mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
+          select(player) %>% 
+          unique() %>% 
+          pull()
+      })
+      
       # Text output Last name Pitcher ----
       output$last_name_pit <- renderText({
         req(input$select_jugador_pit)
@@ -11637,6 +11633,21 @@ IP <- function(x){
           filter(
             pos == "P",
             player == input$select_jugador_pit
+            ) %>% 
+          mutate(player = sub("^\\S+\\s+", '', player)) %>% 
+          select(last_name) %>% 
+          unique() %>% 
+          pull()
+
+      })
+      # Text output Last name Hitter ----
+      output$last_name_bat <- renderText({
+        req(input$select_jugador_pit)
+        
+        df <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat
             ) %>% 
           mutate(player = sub("^\\S+\\s+", '', player)) %>% 
           select(last_name) %>% 
@@ -11656,7 +11667,7 @@ IP <- function(x){
         
       })
       
-      # Text output Jugador batea-lanza ----
+      # Text output Pitching Jugador batea-lanza ----
       output$B_L_L <- renderText({
         req(input$select_jugador_pit)
         
@@ -11693,13 +11704,68 @@ IP <- function(x){
         
       })
       
+      # Text output Batting Jugador batea-lanza ----
+      output$B_L_B <- renderText({
+        req(input$select_jugador_bat)
+        
+        df <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>% 
+          select(bat) %>% 
+          summarise(
+            bat = last(bat),
+            bat = if_else(bat == "D", "Derecha", if_else(bat == "A", "Ambidiestro", 
+                                                         "Zurda")),
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        df1 <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>% 
+          select(lan) %>% 
+          summarise(
+            lan = last(lan),
+            lan = if_else(lan == "D", "Derecha", "Zurda"),
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        paste(" ", df, '/', df1, sep = ' ')
+        
+      })
+      
       # Text output Jugador position ----
       output$POS_PIT <- renderText({
         "Posicion:"
         
       })
       
-      # Text output Jugador position ----
+      # Text output Batting Jugador position ----
+      output$POS_B <- renderText({
+        req(input$select_jugador_bat)
+        
+        df <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>% 
+          select(pos) %>% 
+          summarise(
+            pos = last(pos),
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        paste(" ", df, sep = ' ')
+        
+      })
+      
+      # Text output Pitching Jugador position ----
       output$POS_L <- renderText({
         req(input$select_jugador_pit)
         
@@ -11720,7 +11786,7 @@ IP <- function(x){
         
       })
       
-      # Text output Lugar de nacimiento ----
+      # Text output Pitching Lugar de nacimiento ----
       output$BORN <- renderText({
         req(input$select_jugador_pit)
         
@@ -11756,6 +11822,41 @@ IP <- function(x){
         
       })
       
+      # Text output Batting Lugar de nacimiento ----
+      output$BORN_B <- renderText({
+        req(input$select_jugador_bat)
+        
+        
+        df <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>% 
+          select(pais) %>% 
+          summarise(
+            pais = last(pais)
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        df1 <- Rosters() %>% 
+          filter(jugador == input$select_jugador_bat) %>% 
+          select(ciudad) %>% 
+          summarise(
+            estado = last(ciudad)
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        if (is.na(df1) == TRUE) {
+          paste0(df)
+          
+        } else if (is.na(df1) == FALSE) {
+          paste0(df1,', ', df)
+          
+        }
+        
+      })
+      
       # Text output Lugar de nacimiento ----
       output$BORN_PIT <- renderText({
         "Nacido:"
@@ -11767,7 +11868,7 @@ IP <- function(x){
         'Temporadas:'
         
       })
-      # Text output Experience ----
+      # Text output Pitching Experience ----
       output$EXP_L <- renderText({
         req(input$select_jugador_pit)
         
@@ -11776,6 +11877,24 @@ IP <- function(x){
           filter(
             pos == "P",
             player == input$select_jugador_pit) %>% 
+          summarise(
+            exp = n(), 
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        paste('', df, sep = ' ')
+        
+      })
+      # Text output Batting Experience ----
+      output$EXP_B <- renderText({
+        req(input$select_jugador_bat)
+        
+        df <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>% 
           summarise(
             exp = n(), 
             .groups = "drop"
