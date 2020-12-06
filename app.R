@@ -1209,7 +1209,7 @@ IP <- function(x){
             )
           )
         ),
-        # Tabitem Estadísticas vzla vs importados ----
+        # Tabitem Estadísticas Vzla vs importados ----
         tabItem(
           h4('Venezolanos vs Importados', align = "center"),
           tabName = 'vzla',
@@ -1219,6 +1219,7 @@ IP <- function(x){
             # Picheo ----
             tabPanel(
               tabName = 'Picheo',
+              br(),
               fluidRow(
                 column(12,
                        bs4Box(
@@ -1228,6 +1229,7 @@ IP <- function(x){
                        )
                 )
               ),
+              br(),
               br(),
               fluidRow(
                 column(12,
@@ -1242,6 +1244,7 @@ IP <- function(x){
             # Bateo ----
             tabPanel(
               tabName  = 'Bateo',
+              br(),
                 fluidRow(
                   column(12,
                          bs4Box(
@@ -1251,6 +1254,7 @@ IP <- function(x){
                          )
                   )
                 ),
+                br(),
                 br(),
                 fluidRow(
                   column(12,
@@ -10181,21 +10185,27 @@ IP <- function(x){
         ) 
       })
       #Geograficas
+      #Vzla vs importados ----
       # Table Geo pitching vzla vs importado totales  ----
       output$versus_total_pit <- renderDataTable({
         
+        # Data ----
         versus_totales <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
-                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+                      select(key, name, ID, first_name, last_name, pais, 
+                             estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 18)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-                                     )) %>% 
-          filter(importados %in% c("Importados", "Venezolanos")) %>% 
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                     )
+                 ) %>% 
+          # filter(importados %in% c("Importados", "Venezolanos")) %>% 
           select(-edad) %>% 
           group_by(importados) %>% 
           summarise(
@@ -10222,9 +10232,35 @@ IP <- function(x){
             `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
           ) %>% 
-          arrange(desc(w)) 
+          arrange(desc(w)) %>% 
+          rename(
+            Grupo = importados,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+            )
         
         
+        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -10238,7 +10274,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('se excluyeron estadisticas de paises de jugadores con paises "Desconocidos"')),
+            , htmltools::em('Existen jugadores que no tienen información de su país y se asigna "Desconocidos"')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -10250,8 +10286,7 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 1),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -10268,6 +10303,7 @@ IP <- function(x){
       output$versus_pit <- renderDataTable({
         req(input$select_country)
         
+        # Data ----
         versus_pit <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
@@ -10275,11 +10311,13 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 18)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-          )) %>% 
-          filter(importados %in% c("Importados", "Venezolanos")) %>%  
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   )
+          )  %>% 
           select(-edad) %>% 
           group_by(importados, years) %>% 
           summarise(
@@ -10306,9 +10344,34 @@ IP <- function(x){
             `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
           ) %>% 
-          arrange(desc(w)) 
+          arrange(desc(w)) %>% 
+          rename(
+            Grupo = importados,
+            Temporada = years, 
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+          )
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -10322,7 +10385,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Estadisticas de jugadores Venezolanos vs Importados')),
+            , htmltools::em('Existen jugadores que no tienen información de su país y se asigna "Desconocidos"')),
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -10335,8 +10398,7 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 1),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -10352,6 +10414,7 @@ IP <- function(x){
       # Table Geo batting vzla vs importado totales ----
       output$versus_total_bat <- renderDataTable({
         
+        # Data ----
         versus_total_bat <- brs() %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
@@ -10359,11 +10422,13 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>%
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 18)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-          )) %>% 
-          filter(importados %in% c("Importados", "Venezolanos")) %>% 
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   )
+          )  %>% 
           group_by(importados) %>% 
           summarise(
             g = sum(g, na.rm = T),
@@ -10383,8 +10448,6 @@ IP <- function(x){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
-            # ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -10393,7 +10456,7 @@ IP <- function(x){
             .groups = 'drop'
           ) %>% 
           rename(
-            Jugadores = importados,
+            Grupo = importados,
             `G` = g,
             `PA` = pa,
             `AB` = ab,
@@ -10411,16 +10474,14 @@ IP <- function(x){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
-            # `IR` = ir,
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -10433,8 +10494,8 @@ IP <- function(x){
           extensions = "ColReorder",
           rownames = FALSE,
           caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Las estadisticas PA, CS, BB, SO, OBP, OPS, RC, HBP, SH y SF 
+            style = 'caption-side: bottom; text-align: center;', 
+                      htmltools::em('Las estadísticas PA, CS, BB, SO, OBP, OPS, RC, HBP, SH y SF 
                             son registradas desde la temporada 2005-06')),
           options = list(
             ordering = F, # To delete Ordering
@@ -10447,8 +10508,7 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 1),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -10507,7 +10567,7 @@ IP <- function(x){
           ) %>% 
           rename(
             Temporada = years,
-            Jugadores = importados,
+            Grupo = importados,
             `G` = g,
             `PA` = pa,
             `AB` = ab,
@@ -10549,7 +10609,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Las estadisticas PA, CS, BB, SO, OBP, OPS, RC, HBP, SH y SF 
+            , htmltools::em('Las estadísticas PA, CS, BB, SO, OBP, OPS, RC, HBP, SH y SF 
                             son registradas desde la temporada 2005-06')),
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -10563,8 +10623,7 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 1),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
