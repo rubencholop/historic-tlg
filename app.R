@@ -1872,61 +1872,18 @@ IP <- function(x){
           tabName = 'lvbp',
           h4('Records en la LVBP ', align = 'center'),
           fluidRow(
-              column(4,
-                     bs4Dash::bs4Box(
-                       width = NULL,
-                       higth = '300px',
-                       collapsible = TRUE,
-                       title = "Novato del año",
-                       DT::dataTableOutput('lvbp_novatos')
-                     )
-              ),
-              column(4,
-                     bs4Dash::bs4Box(
-                       width = NULL,
-                       higth = '300px',
-                       collapsible = TRUE,
-                       title = "MVP",
-                       DT::dataTableOutput('lvbp_mvp')
-                     )
-              ),
-              column(4,
-                     bs4Dash::bs4Box(
-                       width = NULL,
-                       higth = '300px',
-                       collapsible = TRUE,
-                       title = "Productor del año",
-                       DT::dataTableOutput('lvbp_productor')
-                     )
-              ),
-              column(4,
-                     bs4Dash::bs4Box(
-                       width = NULL,
-                       higth = '300px',
-                       collapsible = TRUE,
-                       title = "Manager del año",
-                       DT::dataTableOutput('lvbp_manager')
-                     )
-                ),
-            column(4,
-                   bs4Dash::bs4Box(
-                     width = NULL,
-                     higth = '300px',
-                     collapsible = TRUE,
-                     title = "Triple corona",
-                     DT::dataTableOutput('lvbp_triple_p')
-                   )
-            ),
-            column(4,
-                   bs4Dash::bs4Box(
-                     width = NULL,
-                     higth = '300px',
-                     collapsible = TRUE,
-                     title = "Regreso del año",
-                     DT::dataTableOutput('lvbp_regreso')
-                   )
+            column(3),
+            column(5,
+                  bs4Dash::bs4Box(
+                    width = 12,
+                    higth = '1900px',
+                    collapsible = TRUE,
+                    title = "Premios en la LVBP",
+                    DT::dataTableOutput('lvbp_general')
+                    )
+                  ),
+            column(4)
               )
-            )
           ),
         # Stats geographics ----
         tabItem(
@@ -9863,11 +9820,15 @@ IP <- function(x){
       })
       #LVBP records ----
       # Table Record LVBP Novato ----
-      output$lvbp_novatos <- renderDataTable({
+      output$lvbp_general <- renderDataTable({
         
         novatos <- lvbp() %>% 
           janitor::clean_names() %>% 
-          filter(premio == "Novato del año")
+          rename(
+            Temporada = years,
+            Premio = premio,
+            Jugador = jugador
+          )
         
         
         headerCallback <- c(
@@ -9887,17 +9848,16 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
+            rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = 0:2)),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -9908,283 +9868,6 @@ IP <- function(x){
           )
         ) 
       })
-      # Table Record LVBP MVP ----
-      output$lvbp_mvp <- renderDataTable({
-        
-        mvp <- lvbp() %>% 
-          janitor::clean_names() %>% 
-          filter(premio == "MVP")
-        
-        
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          mvp,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          # caption = htmltools::tags$caption(
-          #   style = 'caption-side: bottom; text-align: center;'
-          #   , htmltools::em('Top 10 historico')),
-          options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      # Table Record LVBP manager ----
-      output$lvbp_manager <- renderDataTable({
-        
-        manager <- lvbp() %>% 
-          janitor::clean_names() %>% 
-          filter(premio == "Manager del año")
-        
-        
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          manager,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          # caption = htmltools::tags$caption(
-          #   style = 'caption-side: bottom; text-align: center;'
-          #   , htmltools::em('Top 10 historico')),
-          options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      # Table Record LVBP productor ----
-      output$lvbp_productor <- renderDataTable({
-        
-        productor <- lvbp() %>% 
-          janitor::clean_names() %>% 
-          filter(premio == "Productor del año")
-        
-        
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          productor,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          # caption = htmltools::tags$caption(
-          #   style = 'caption-side: bottom; text-align: center;'
-          #   , htmltools::em('Top 10 historico')),
-          options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      # Table Record LVBP regreso ----
-      output$lvbp_regreso <- renderDataTable({
-        
-        regreso <- lvbp() %>% 
-          janitor::clean_names() %>% 
-          filter(premio == "Regreso del año")
-        
-        
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          regreso,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          # caption = htmltools::tags$caption(
-          #   style = 'caption-side: bottom; text-align: center;'
-          #   , htmltools::em('Top 10 historico')),
-          options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      # Table Record LVBP triplecorona P ----
-      output$lvbp_triple_p <- renderDataTable({
-        
-        triple_p <- lvbp() %>% 
-          janitor::clean_names() %>% 
-          filter(premio %in% c("Triple corona (Picheo)", "Triple corona (Bateo)"))
-        
-        
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          triple_p,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          # caption = htmltools::tags$caption(
-          #   style = 'caption-side: bottom; text-align: center;'
-          #   , htmltools::em('Top 10 historico')),
-          options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      # Table Record LVBP triplecorona b ----
-      output$lvbp_triple_b <- renderDataTable({
-        
-        triple_b <- lvbp() %>% 
-          janitor::clean_names() %>% 
-          filter(premio == "Triple corona (Bateo)")
-        
-        
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          triple_b,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Top 10 historico')),
-          options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      #Geograficas
       #Vzla vs importados ----
       # Table Geo pitching vzla vs importado totales  ----
       output$versus_total_pit <- renderDataTable({
