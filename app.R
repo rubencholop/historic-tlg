@@ -11196,23 +11196,20 @@ IP <- function(x){
       output$country_chart <- renderHighchart({
         
         country_bat <- Rosters() %>%
-          mutate(position = ifelse(pos == "P", "Lanzadores", 
-                                     ifelse(pos != "P", "Bateadores", "N/A")),
-                 importados = ifelse(pais %in% .paises[-c(24)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-                 )) %>% 
-          group_by(ID) %>% 
-          summarise(
-            position = last(position),
-            importados = last(importados),
-            pais = last(pais),
-            .groups = 'drop'
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   ),
+                 bateadores = if_else(
+                   pos %in% c("CF", "IF", "2B", "1B", "3B", "RF", "LF", "C", 
+                              "SS", "BD", "BE"), "Bateadores", "Lanzadores"
+                 )
+                 
           ) %>% 
-          ungroup() %>% 
-          group_by(pais, position) %>% 
+          group_by(pais, bateadores) %>% 
           summarise(
-            position = last(position),
             importados = n(),
             .groups = 'drop'
           ) %>% 
@@ -11222,8 +11219,9 @@ IP <- function(x){
                  type = 'bar', 
                  hcaes(x = pais,
                        y = importados,
-                       group = position,
-                       color = position
+                       group = bateadores
+                       # color = bateadores
+                       # color = c("#0D3583", "4A4A4B")
                        )) %>% 
           hc_title(
             text = "<span style=\"color:#b90e13; 
@@ -11243,24 +11241,23 @@ IP <- function(x){
       output$foreign_chart <- renderHighchart({
 
         foreign_chart <- Rosters() %>%
-          mutate(position = ifelse(pos == "P", "Lanzadores", 
-                                   ifelse(pos != "P", "Bateadores", "N/A")),
-                 importados = ifelse(pais %in% .paises[-c(24)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-                 )) %>% 
-          group_by(ID) %>% 
-          summarise(
-            position = last(position),
-            importados = last(importados),
-            pais = last(pais),
-            .groups = 'drop'
+          mutate(
+            importados =
+                   case_when(
+                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   ),
+                 bateadores = if_else(
+                   pos %in% c("CF", "IF", "2B", "1B", "3B", "RF", "LF", "C", 
+                              "SS", "BD", "BE"), "Bateadores", "Lanzadores"
+                 )
+                 
           ) %>% 
           ungroup() %>% 
           group_by(importados) %>% 
           summarise(
             position = n(),
-            importados = last(importados),
             .groups = 'drop'
           ) %>% 
           arrange(desc(importados)) %>% 
@@ -11268,8 +11265,9 @@ IP <- function(x){
                  type = 'column', 
                  hcaes(x = importados,
                        y = position,
-                       # group = position
-                       color = c("#011C51", '#C20B10')
+                       # group = importados,
+                       color = c("#011C51", '#C20B10', "4A4A4B")
+                       # color = c("#011C51", '#C20B10', )
                  )) %>% 
           hc_title(
             text = "<span style=\"color:#b90e13; 
@@ -11290,30 +11288,27 @@ IP <- function(x){
       output$position_chart <- renderHighchart({
 
         position_chart <- Rosters() %>%
-          mutate(position = ifelse(pos == "P", "Lanzadores", 
-                                   ifelse(pos != "P", "Bateadores", "N/A")),
-                 importados = ifelse(pais %in% .paises[-c(24)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-                 )) %>% 
-          group_by(ID) %>% 
-          summarise(
-            position = last(position),
-            importados = last(importados),
-            pais = last(pais),
-            .groups = 'drop'
+          mutate(
+            importados =
+              case_when(
+                pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                pais == "Venezuela" ~ "Venezolanos",
+                TRUE ~ "Desconocido"
+              ),
+            bateadores = if_else(
+              pos %in% c("CF", "IF", "2B", "1B", "3B", "RF", "LF", "C", 
+                         "SS", "BD", "BE"), "Bateadores", "Lanzadores"
+            )
           ) %>% 
           ungroup() %>% 
-          group_by(importados) %>% 
+          group_by(bateadores) %>% 
           summarise(
-            position = last(position),
             importados = n(),
             .groups = 'drop'
           ) %>% 
-          arrange(desc(position)) %>% 
           hchart(.,
                  type = 'column', 
-                 hcaes(x = position,
+                 hcaes(x = bateadores,
                        y = importados,
                        # group = position
                        color = c("#011C51", '#C20B10')
@@ -11321,17 +11316,6 @@ IP <- function(x){
           hc_title(
             text = "<span style=\"color:#b90e13; 
                       text-shadow: 1px 1px 2px rgba(150, 150, 150, 1)\">BATEADORES vs LANZADORES</span>",
-            # {
-            #   float: left;
-            #   font-size: 1.1rem;
-            #   font-weight: 400;
-            #   margin: 0;
-            #   color: ;
-            #     text-transform: uppercase;
-            #   ;
-            # }
-            
-            
             useHTML = TRUE) %>%
           hc_plotOptions(series = list(stacking = "normal")) %>%
           hc_tooltip(sort = TRUE,
