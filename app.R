@@ -419,6 +419,7 @@ IP <- function(x){
             tabPanel(
             # Picheo ----
               tabName = 'Picheo',
+            br(),
               fluidRow(
                 column(12,
                        bs4Box(
@@ -452,7 +453,8 @@ IP <- function(x){
             # Bateo ----  
             tabPanel(
               tabName = 'Bateo',
-                     fluidRow(
+              br(),
+              fluidRow(
                        column(12,
                               bs4Box(
                                 width = NULL,
@@ -495,6 +497,7 @@ IP <- function(x){
             tabPanel(
               tabName = 'Picheo', 
                      # Input ----
+                    br(),
                      fluidRow(
                        br(),
                        column(2,
@@ -539,6 +542,7 @@ IP <- function(x){
             # TabPanel Bateo ----
             tabPanel(
               tabName = 'Bateo',
+              br(),
                      # Input ----
                      fluidRow(
                        br(),
@@ -1088,13 +1092,14 @@ IP <- function(x){
             # TabPanel Picheo ----
             tabPanel(
               tabName = 'Picheo', 
+              br(),
               # Input ----
               fluidRow(
                 br(),
                 column(2,
                        selectInput(
                          inputId = 'select_country',
-                         label = 'Temporadas',
+                         label = 'Paises',
                          choices = .paises_pitching
                        )
                 )
@@ -1125,6 +1130,7 @@ IP <- function(x){
             # TabPanel Bateo ----
             tabPanel(
               tabName = 'Bateo',
+              br(),
               # Input ----
               fluidRow(
                 br(),
@@ -1198,6 +1204,7 @@ IP <- function(x){
             )
           ),
           # Stats by roster ----
+          br(),
           fluidRow(
             column(1),
             column(9,
@@ -1279,6 +1286,7 @@ IP <- function(x){
               # Picheo ----
               tabName = 'Picheo',
               #1 ----
+              br(),
               fluidRow(
                 column(3,
                        bs4Dash::bs4Box(
@@ -1321,6 +1329,8 @@ IP <- function(x){
                        )
                 )
               ),
+              br(),
+              br(),
               #2 ----
               fluidRow(
                 column(3,
@@ -1362,6 +1372,8 @@ IP <- function(x){
                        )
                 )
               ),
+              br(),
+              br(),
               #3 ----
               fluidRow(
                 column(3,
@@ -1402,6 +1414,8 @@ IP <- function(x){
                           )
                        )
               ),
+              br(),
+              br(),
               #4 ----
               fluidRow(
                 column(3,
@@ -1439,6 +1453,7 @@ IP <- function(x){
             tabPanel(
               tabName = 'Bateo',
               #1 ----
+              br(),
               fluidRow(
                 column(3,
                        bs4Box(
@@ -1481,6 +1496,8 @@ IP <- function(x){
                        )
                 )
               ),
+              br(),
+              br(),
               #2 ----
               fluidRow(
                 column(3,
@@ -1521,6 +1538,8 @@ IP <- function(x){
                          )
                        )
                   ),
+              br(),
+              br(),
               #3 ----
               fluidRow(
                 column(3,
@@ -1577,6 +1596,7 @@ IP <- function(x){
             # Picheo ----
               tabName = 'Picheo',
               #1 ----
+              br(),
               fluidRow(
                 column(3,
                        bs4Dash::bs4Box(
@@ -1619,6 +1639,8 @@ IP <- function(x){
                          )
                        )
                 ),
+              br(),
+              br(),
               #2 ----
               fluidRow(
                 column(3,
@@ -1660,6 +1682,8 @@ IP <- function(x){
                          )
                        )
                 ),
+              br(),
+              br(),
               #3 ----
               fluidRow(
                 column(3,
@@ -1700,6 +1724,8 @@ IP <- function(x){
                          )
                        )
                 ),
+              br(),
+              br(),
               #4 ----
               fluidRow(
                 column(3,
@@ -1737,8 +1763,9 @@ IP <- function(x){
             tabPanel(
               tabName = 'Bateo',
               #1 ----
+              br(),
               fluidRow(
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1748,7 +1775,7 @@ IP <- function(x){
                          DT::dataTableOutput('pt_b_hits')
                        )
                 ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1758,7 +1785,7 @@ IP <- function(x){
                          DT::dataTableOutput('pt_b_2b')
                        )
                 ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1767,11 +1794,8 @@ IP <- function(x){
                          title = "3B",
                          DT::dataTableOutput('pt_b_3b')
                        )
-                )
-              ),
-              #2 ----
-              fluidRow(
-                column(4,
+                ),
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1780,8 +1804,13 @@ IP <- function(x){
                          title = "HR",
                          DT::dataTableOutput('pt_b_hr')
                        )
-                ),
-                column(4,
+                )
+              ),
+              br(),
+              br(),
+              #2 ----
+              fluidRow(
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1790,19 +1819,7 @@ IP <- function(x){
                          DT::dataTableOutput('pt_b_average')
                        )
                 ),
-                column(4,
-                       bs4Box(
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "RBI",
-                         DT::dataTableOutput('pt_b_rbi')
-                       )
-                )
-              ),
-              #3 ----
-              fluidRow(
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1812,7 +1829,7 @@ IP <- function(x){
                          DT::dataTableOutput('pt_b_slg')
                        )
                 ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1821,7 +1838,7 @@ IP <- function(x){
                          DT::dataTableOutput('pt_b_obp')
                        )
                 ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1832,9 +1849,20 @@ IP <- function(x){
                        )
                 )
               ),
-              #4 ----
+              br(),
+              br(),
+              #3 ----
               fluidRow(
-                column(4,
+                column(3,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "RBI",
+                         DT::dataTableOutput('pt_b_rbi')
+                       )
+                ),
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1843,7 +1871,7 @@ IP <- function(x){
                          DT::dataTableOutput('pt_b_ab')
                        )
                 ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1853,7 +1881,7 @@ IP <- function(x){
                          DT::dataTableOutput('pt_b_sb')
                        )
                 ),
-                column(4,
+                column(3,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1871,6 +1899,7 @@ IP <- function(x){
         tabItem(
           tabName = 'lvbp',
           h4('Records en la LVBP ', align = 'center'),
+          br(),
           fluidRow(
             column(3),
             column(5,
@@ -2015,7 +2044,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            # whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -2045,7 +2074,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            # whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -2157,7 +2186,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            # whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -2188,7 +2217,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            # whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -2307,7 +2336,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            # whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -2340,7 +2369,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            # whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -2927,7 +2956,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -3091,7 +3120,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -3124,7 +3153,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            whip = as.numeric(round((bb + h) / ip, 2)),
+            whip = as.character(round((bb + h)/ ip, 2)),
             `h/9` = as.numeric(round((h/ip)*9, 2)),
             `hr/9` = as.numeric(round((hr/ip)*9, 2)),
             `bb/9` = as.numeric(round((bb/ip)*9, 2)),
@@ -3162,7 +3191,7 @@ IP <- function(x){
             `SO/BB` = `so/bb`) %>% 
           arrange(Temporada) 
         
-        # Datatable ----
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -3257,7 +3286,7 @@ IP <- function(x){
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -5773,6 +5802,7 @@ IP <- function(x){
       # Table picheo lideres w ----
       output$p_w <- renderDataTable({
         
+        # Data ----
         w <- prs() %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:27) %>% 
@@ -5800,6 +5830,7 @@ IP <- function(x){
           slice(1:(n()-1))
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -5817,16 +5848,15 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
-            # fixedHeader = TRUE,
-            fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 1),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            # columnDefs = list(list(className = "dt-center", targets = 1),
+            #                   list(width = '120px', targets = 0)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -5890,10 +5920,8 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -5953,17 +5981,13 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6028,6 +6052,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -6089,17 +6114,13 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = "100px")),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6179,17 +6200,14 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6276,10 +6294,8 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6365,12 +6381,9 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6447,7 +6460,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con más de 400 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -6456,104 +6469,9 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
-            initComplete = JS(
-              "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
-              "}"
-            )
-          )
-        ) 
-      })
-      
-      # Table picheo lideres whip ----
-      output$p_whip <- renderDataTable({
-        
-        # Data ----
-        whip <- prs() %>% 
-          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
-          summarise(
-            first_name = last(first_name),
-            last_name = last(last_name),
-            jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T),
-            .groups = 'drop'
-          ) %>% 
-          filter(ip > 400) %>% 
-          arrange(whip) %>%
-          select(first_name, last_name, whip) %>% 
-          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(10, whip) %>%
-          rename(
-            Jugador = jugador,
-            WHIP = whip
-          ) %>% 
-          slice(1:n()-1)
-        
-        # Data ----
-        headerCallback <- c(
-          "function(thead, data, start, end, display){",
-          "  $('th', thead).css('border-bottom', 'none');",
-          "}"
-        )  # To deleate header line horizontal in bottom of colums name
-        
-        DT::datatable(
-          whip,
-          escape = FALSE,
-          extensions = "ColReorder",
-          rownames = FALSE,
-          caption = htmltools::tags$caption(
-            style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
-          options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
-            searching = FALSE,
-            paging = FALSE,
-            lengthChange = FALSE,
-            scrollX = TRUE,
-            # rownames = FALSE,
-            fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
-            headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6633,17 +6551,101 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+      })
+      
+      # Table picheo lideres whip ----
+      output$p_whip <- renderDataTable({
+        
+        # Data ----
+        whip <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+                      select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          group_by(ID) %>% 
+          summarise(
+            first_name = last(first_name),
+            last_name = last(last_name),
+            jugador= last(jugador),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            # ir = sum(ir, na.rm = T),
+            whip = as.character(round((bb + h)/ ip, 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            bk = sum(bk, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          filter(ip > 400) %>% 
+          arrange(whip) %>%
+          select(first_name, last_name, whip) %>% 
+          tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
+          top_n(10, whip) %>%
+          rename(
+            Jugador = jugador,
+            WHIP = whip
+          ) %>% 
+          slice(1:n()-1)
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          whip,
+          escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Con más de 400 ip')),
+          options = list(
+            ordering = F, # To delete Ordering
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = FALSE,
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
+            headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6707,7 +6709,7 @@ IP <- function(x){
           ) %>% 
           slice(1:(n()-1))
         
-       # Table ---- 
+        # Table ---- 
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -6721,21 +6723,17 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con más de 400 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6813,21 +6811,17 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con más de 400 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6907,7 +6901,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con más de 400 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -6916,12 +6910,9 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -6979,7 +6970,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 400 ip')),
+            , htmltools::em('Con más de 400 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -6990,8 +6981,8 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            # fixedColumns = list(LeftColumns = 0),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -7003,6 +6994,7 @@ IP <- function(x){
             )
           )
         )
+        
       })
       
       #Batting Records -----
@@ -7082,6 +7074,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7172,6 +7165,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7264,6 +7258,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7355,6 +7350,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7453,6 +7449,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7547,6 +7544,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7641,6 +7639,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7735,6 +7734,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7826,6 +7826,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7917,6 +7918,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8007,6 +8009,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8098,6 +8101,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8163,6 +8167,7 @@ IP <- function(x){
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8227,6 +8232,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8289,6 +8295,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8353,6 +8360,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8415,6 +8423,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = "100px")),
             headerCallback = JS(headerCallback),
@@ -8476,6 +8485,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8537,6 +8547,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8600,6 +8611,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8653,7 +8665,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 50 ip')),
+            , htmltools::em('Con más de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -8664,6 +8676,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8690,6 +8703,29 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          mutate(
+            w = as.numeric(w),
+            l = as.numeric(l),
+            g = as.numeric(g),
+            gs = as.numeric(gs),
+            cg = as.numeric(cg),
+            sho = as.numeric(sho),
+            sv = as.numeric(sv),
+            h = as.numeric(h),
+            r = as.numeric(r),
+            hr = as.numeric(hr),
+            bb = as.numeric(bb),
+            so = as.numeric(so),
+            er = as.numeric(er),
+            ip = as.numeric(ip),
+            era = as.numeric(era),
+            whip = as.numeric(round((bb + h) / ip, 2)),
+            `h/9` = as.numeric(round((h/ip)*9, 2)),
+            `hr/9` = as.numeric(round((hr/ip)*9, 2)),
+            `bb/9` = as.numeric(round((bb/ip)*9, 2)),
+            `so/9` = as.numeric(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2)
+          ) %>% 
           filter(ip > 50) %>% 
           arrange(whip) %>%
           select(years, first_name, last_name, whip) %>% 
@@ -8715,7 +8751,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 500 ip')),
+            , htmltools::em('Con más de 500 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -8724,12 +8760,9 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -8788,6 +8821,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8839,7 +8873,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 50 ip')),
+            , htmltools::em('Con más de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -8850,6 +8884,7 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8902,7 +8937,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 50 ip')),
+            , htmltools::em('Con más de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -8913,6 +8948,8 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
+            
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -8939,6 +8976,30 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          mutate(
+            # edad = as.numeric(edad),
+            w = as.numeric(w),
+            l = as.numeric(l),
+            g = as.numeric(g),
+            gs = as.numeric(gs),
+            cg = as.numeric(cg),
+            sho = as.numeric(sho),
+            sv = as.numeric(sv),
+            h = as.numeric(h),
+            r = as.numeric(r),
+            hr = as.numeric(hr),
+            bb = as.numeric(bb),
+            so = as.numeric(so),
+            er = as.numeric(er),
+            ip = as.numeric(ip),
+            era = as.numeric(era),
+            whip = as.numeric(round((bb + h) / ip, 2)),
+            `h/9` = as.numeric(round((h/ip)*9, 2)),
+            `hr/9` = as.numeric(round((hr/ip)*9, 2)),
+            `bb/9` = as.numeric(round((bb/ip)*9, 2)),
+            `so/9` = as.numeric(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2)
+          ) %>% 
           filter(ip > 50) %>% 
           arrange(`bb/9`) %>%
           select(years, first_name, last_name, `bb/9`) %>% 
@@ -8964,7 +9025,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 50 ip')),
+            , htmltools::em('Con más de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -8975,6 +9036,8 @@ IP <- function(x){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
+            columnDefs = list(list(className = "dt-center", targets = 1)),
+            
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -9001,6 +9064,30 @@ IP <- function(x){
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:29) %>%
+          mutate(
+            # edad = as.numeric(edad),
+            w = as.numeric(w),
+            l = as.numeric(l),
+            g = as.numeric(g),
+            gs = as.numeric(gs),
+            cg = as.numeric(cg),
+            sho = as.numeric(sho),
+            sv = as.numeric(sv),
+            h = as.numeric(h),
+            r = as.numeric(r),
+            hr = as.numeric(hr),
+            bb = as.numeric(bb),
+            so = as.numeric(so),
+            er = as.numeric(er),
+            ip = as.numeric(ip),
+            era = as.numeric(era),
+            whip = as.numeric(round((bb + h) / ip, 2)),
+            `h/9` = as.numeric(round((h/ip)*9, 2)),
+            `hr/9` = as.numeric(round((hr/ip)*9, 2)),
+            `bb/9` = as.numeric(round((bb/ip)*9, 2)),
+            `so/9` = as.numeric(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2)
+          ) %>% 
           filter(ip > 50) %>% 
           arrange(desc(`so/bb`)) %>%
           select(years, first_name, last_name, `so/bb`) %>% 
@@ -9026,7 +9113,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 50 ip')),
+            , htmltools::em('Con más de 50 ip')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9035,12 +9122,9 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = 1)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
@@ -9343,7 +9427,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 190 AB')),
+            , htmltools::em('Con más de 190 AB')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9471,7 +9555,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 190 BA')),
+            , htmltools::em('Con más de 190 BA')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9538,7 +9622,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 190 BA')),
+            , htmltools::em('Con más de 190 BA')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9606,7 +9690,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Con mas de 190 BA')),
+            , htmltools::em('Con más de 190 BA')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -9615,12 +9699,8 @@ IP <- function(x){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            # rownames = FALSE,
             fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
-            # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
