@@ -1960,9 +1960,9 @@ IP <- function(x){
                 column(4,
                        highchartOutput('foreign_chart_paises'),
                        highchartOutput('position_chart_paises')
+                  )
                 )
               )
-            )
             )
           )
         )
@@ -11303,7 +11303,7 @@ IP <- function(x){
       # Chart position distribution  ----
       output$position_chart <- renderHighchart({
 
-        position_chart <- Rosters() %>%
+        position_chart <- Rosters %>%
           mutate(
             importados =
               case_when(
@@ -11344,6 +11344,50 @@ IP <- function(x){
         
       })
       
+      # Chart country distribution by countries ----
+      output$country_chart_paises <- renderHighchart({
+        
+        country_bat <- Rosters %>%
+          mutate(
+            importados =
+              case_when(
+                pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                pais == "Venezuela" ~ "Venezolanos",
+                TRUE ~ "Desconocido"
+              ),
+            bateadores = if_else(
+              pos %in% c("CF", "IF", "2B", "1B", "3B", "RF", "LF", "C", 
+                         "SS", "BD", "BE"), "Bateadores", "Lanzadores"
+            )
+          ) %>% 
+          ungroup() %>% 
+          filter(pais == "Cuba") %>% 
+          group_by(bateadores) %>% 
+          summarise(
+            importados = n(),
+            .groups = 'drop'
+          ) %>% 
+          hchart(.,
+                 type = 'bar', 
+                 hcaes(x = bateadores,
+                       y = importados,
+                       # group = position
+                       color = c("#011C51", '#C20B10')
+                 )) %>% 
+          hc_title(
+            text = "<span style=\"color:#b90e13; 
+                      text-shadow: 1px 1px 2px rgba(150, 150, 150, 1)\">GUAIRISTAS por paises</span>",
+            useHTML = TRUE) %>%
+          hc_plotOptions(column = list(stacking = "normal")) %>%
+          # hc_tooltip(sort = TRUE,
+          #            pointFormat = paste('<br><b>Jugadores: {point.importados:1f}')) %>%
+          # hc_chart(backgroundColor = "black") %>%
+          hc_xAxis(title = list(text = "")) %>%
+          hc_yAxis(title = list(text = ""))
+        
+        country_bat
+        
+      })
       # -----IMAGE ----
       # image Batting player ----
       output$jugador_ <- renderImage({
