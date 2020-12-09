@@ -1917,13 +1917,13 @@ IP <- function(x){
         # Stats geographics ----
         tabItem(
           tabName = 'geograficas',
+          h4('Dashboard de estadísticas geográficas', align = 'center'),
           tabsetPanel(
             id = "tabset8",
             side = "left",
             # General ----
             tabPanel(
               tabName = 'General',
-              h4('Dashboard de estadisticas geograficas', align = 'center'),
               br(),
               fluidRow(
                 column(8,
@@ -1945,8 +1945,24 @@ IP <- function(x){
               ),
             # Por paises -----
             tabPanel(
-              tabName = 'Paises'
+              tabName = 'Por Paises',
+              br(),
+              fluidRow(
+                column(8,
+                       highchartOutput('paises_chart', width = '800px', height = '800px')
+                ),
+                # column(2,
+                #        bs4ValueBoxOutput("valuebox_cpit", width = 12),
+                #        bs4ValueBoxOutput("valuebox_lan", width = 12),
+                #        bs4ValueBoxOutput("valuebox_right", width = 12),
+                #        bs4ValueBoxOutput("valuebox_left", width = 12)
+                #        ),
+                column(4,
+                       highchartOutput('foreign_chart_paises'),
+                       highchartOutput('position_chart_paises')
+                )
               )
+            )
             )
           )
         )
