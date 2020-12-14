@@ -2044,7 +2044,7 @@ IP <- function(x){
           select(-bk) %>% 
           summarise(
             years = 'Total',
-            # edad = round(mean(edad, na.rm = T), 1),
+            edad = round(mean(edad, na.rm = T), 1),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -2074,7 +2074,7 @@ IP <- function(x){
           select(-bk) %>% 
           group_by(years) %>% 
           summarise(
-            # edad = as.character(round(mean(edad, na.rm = T), 1)),
+            edad = as.character(round(mean(edad, na.rm = T), 1)),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -2104,7 +2104,7 @@ IP <- function(x){
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
             `Temporada` = years,
-            # `Edad` = edad,
+            `Edad` = edad,
             `W` = w,
             `L` = l,
             `ERA` = era,
@@ -2120,7 +2120,7 @@ IP <- function(x){
             `HR` = hr,
             `BB` = bb,
             `SO` = so,
-            # `WHIP` = whip,
+            `WHIP` = whip,
             `H/9` = `h/9`,
             `HR/9` = `hr/9`,
             `BB/9` = `bb/9`,
@@ -2142,7 +2142,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Las estadisticas SHO, R, HR y HR/9
+            , htmltools::em('Las estadísticas SHO, R, HR y HR/9
                             son registradas desde la temporada 2005-06')),
           options = list(
             autoWidth = TRUE,
@@ -2156,7 +2156,7 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:20))
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
@@ -2186,7 +2186,7 @@ IP <- function(x){
           select(-bk) %>% 
           summarise(
             years = 'Total',
-            # edad = as.character(round(mean(edad, na.rm = T), 1)),
+            edad = as.character(round(mean(edad, na.rm = T), 1)),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -2217,7 +2217,7 @@ IP <- function(x){
           select(-bk) %>% 
           group_by(years) %>% 
           summarise(
-            # edad = as.character(round(mean(edad, na.rm = T), 1)),
+            edad = as.character(round(mean(edad, na.rm = T), 1)),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -2245,7 +2245,7 @@ IP <- function(x){
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
             `Temporada` = years,
-            # `Edad` = edad,
+            `Edad` = edad,
             `W` = w,
             `L` = l,
             `ERA` = era,
@@ -2261,7 +2261,7 @@ IP <- function(x){
             `HR` = hr,
             `BB` = bb,
             `SO` = so,
-            # `WHIP` = whip,
+            `WHIP` = whip,
             `H/9` = `h/9`,
             `HR/9` = `hr/9`,
             `BB/9` = `bb/9`,
@@ -2290,7 +2290,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;',
-                htmltools::em('Las estadisticas SHO, R, HR y HR/9
+                htmltools::em('Las estadísticas SHO, R, HR y HR/9
                             son registradas desde la temporada 2005-06')),
           # callback = JS(c("$('table.dataTable thead th').css('border-bottom', 'none');",
           #                 "$('table.dataTable.no-footer').css('border-top', 'none');")),
@@ -2306,7 +2306,7 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:23))),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -2332,11 +2332,39 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- pf() %>% 
-          arrange(years, jugador) %>% 
           select(-bk) %>% 
+          arrange(years, jugador) %>% 
+          group_by(years) %>% 
+         summarise(
+            edad = round(mean(edad), 1),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = round((er * 9) / ip, 2),
+            whip = round((bb + h)/ ip, 2),
+            `h/9` = round((h/ip)*9, 2),
+            `hr/9` = round((hr/ip)*9, 2),
+            `bb/9` = round((bb/ip)*9, 2),
+            `so/9` = round((so/ip)*9, 2),
+            `so/bb` = round(so / bb, 2),
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+            resultado = last(resultado),
+            .groups = 'drop'
+          ) %>% 
           summarise(
             years = 'Total',
-            # edad = round(mean(edad), 1),
+            edad = round(mean(edad), 1),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -2358,7 +2386,7 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
-            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+            refuerzo = sum(refuerzo, na.rm = T),
             resultado = sum(ifelse(resultado == 'Campeon', 1, 0)),
             .groups = 'drop'
           )
@@ -2369,7 +2397,7 @@ IP <- function(x){
           select(-bk) %>% 
           group_by(years) %>% 
           summarise(
-            # edad = round(mean(edad), 1),
+            edad = round(mean(edad), 1),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -2398,7 +2426,7 @@ IP <- function(x){
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
             `Temporada` = years,
-            # `Edad` = edad,
+            `Edad` = edad,
             REF = refuerzo,
             RESULTADO = resultado,
             `W` = w,
@@ -2416,7 +2444,7 @@ IP <- function(x){
             `HR` = hr,
             `BB` = bb,
             `SO` = so,
-            # `WHIP` = whip,
+            `WHIP` = whip,
             `H/9` = `h/9`,
             `HR/9` = `hr/9`,
             `BB/9` = `bb/9`,
@@ -2444,7 +2472,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;',
-            htmltools::em('Las estadisticas SHO, R, HR y HR/9
+            htmltools::em('Las estadísticas SHO, R, HR y HR/9
                             son registradas desde la temporada 2005-06')),
           # callback = JS(c("$('table.dataTable thead th').css('border-bottom', 'none');",
           #                 "$('table.dataTable.no-footer').css('border-top', 'none');")),
@@ -2460,7 +2488,7 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:24))),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -2484,6 +2512,7 @@ IP <- function(x){
       # Table bateo regular season by team ----
       output$Breseason_team <- DT::renderDataTable({
         
+        # Data ---- 
         player_summarise <- brs() %>% 
           arrange(years, jugador) %>% 
           summarise(
@@ -2502,11 +2531,11 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
-            ir = sum(ir, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
+            # ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -2535,11 +2564,11 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
-            ir = sum(ir, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
+            # ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -2573,14 +2602,14 @@ IP <- function(x){
             `RC` = rc,
             `TB` = tb,
             `XB` = xb,
-            `IR` = ir,
+            # `IR` = ir,
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf
           ) %>% 
           arrange(Temporada)
         
-        # Datatable ----
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -2592,19 +2621,25 @@ IP <- function(x){
           extensions = "ColReorder",
           rownames = FALSE,
           style = ,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
           options = list(
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
-            paging = FALSE,
-            pageLegth = 40,
-            # lengthMenu = c(15, 20, 25),
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 0:25)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:24))
+                              # list(width = '100px', targets = 1)
+            ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -2625,13 +2660,14 @@ IP <- function(x){
       # Table bateo round robin by team ----
       output$Brr_team <- DT::renderDataTable({
         
+        # Data ----
         player_summarise <- brr() %>% 
           arrange(years, jugador) %>% 
           summarise(
             years = 'Total',
             edad = round(mean(edad), 1),
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -2643,10 +2679,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -2664,7 +2700,7 @@ IP <- function(x){
           summarise(
             edad = round(mean(edad), 1),
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -2676,10 +2712,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -2696,7 +2732,7 @@ IP <- function(x){
             `Refuerzo` = refuerzo,
             `Edad` = edad,
             `G` = g,
-            `PA` = X5,
+            `PA` = pa,
             `AB` = ab,
             `R` = r,
             `H` = h,
@@ -2721,7 +2757,7 @@ IP <- function(x){
           ) %>% 
           arrange(Temporada)  
         
-        # Datatable ----
+        # Table ----
         
         headerCallback <- c(
           "function(thead, data, start, end, display){",
@@ -2734,13 +2770,17 @@ IP <- function(x){
           class = 'display', # To remove lines horizontal in table
           extensions = "ColReorder",
           rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
           options = list(
-            # autoWidth = TRUE,
-            dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
-            paging = FALSE,
-            pageLegth = 25,
-            lengthMenu = c(25, 30, 35),
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
@@ -2769,13 +2809,13 @@ IP <- function(x){
       # Table bateo final by team ----
       output$Bfinal_team <- DT::renderDataTable({
         
-        player_summarise <-  bf()%>% 
-          arrange(years, jugador) %>% 
+        # Data ----
+        player_summarise <-  bf() %>% 
           group_by(years) %>% 
           summarise(
             edad = round(mean(edad), 1),
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -2787,10 +2827,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -2798,17 +2838,14 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
             refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
-            resultado = sum(ifelse(resultado == 'Campeon', 1, 0)),
+            resultado = last(resultado),
             .groups = 'drop'
-          ) 
-        
-        batting_player <-  bf() %>% 
-          arrange(years, jugador) %>% 
-          group_by(years) %>% 
+          ) %>% 
           summarise(
+            years = "Total",
             edad = round(mean(edad), 1),
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -2820,10 +2857,44 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            refuerzo = sum(refuerzo, na.rm = T),
+            resultado = sum(ifelse(resultado == 'campeon', 1, 0)),
+            .groups = 'drop'
+          )
+          
+        
+        batting_player <-  bf() %>% 
+          arrange(years, jugador) %>% 
+          group_by(years) %>% 
+          summarise(
+            edad = round(mean(edad), 1),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -2840,7 +2911,7 @@ IP <- function(x){
             `Temporada` = years,
             `Edad` = edad,
             `G` = g,
-            `PA` = X5,
+            `PA` = pa,
             `AB` = ab,
             `R` = r,
             `H` = h,
@@ -2865,13 +2936,9 @@ IP <- function(x){
             `Refuerzo` = refuerzo,
             `Logro` = resultado
           ) %>% 
-          arrange(Temporada)  %>% 
-          mutate(Logro = if_else(Logro == 'campeon', 'Campeon', Logro),
-                 Logro = if_else(Logro == 'subcampeon', 'SubCampeon', Logro)
-          ) %>% 
-          replace(., is.na(.), 0)
+          arrange(Temporada) 
         
-        # Datatable ----
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -2883,13 +2950,17 @@ IP <- function(x){
           class = 'display', # To remove lines horizontal in table
           extensions = "ColReorder",
           rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
           options = list(
             # autoWidth = TRUE,
             dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
             paging = FALSE,
-            pageLegth = 25,
-            lengthMenu = c(25, 30, 35),
+            pageLegth = 20,
+            lengthMenu = c(20, 30, 35),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
@@ -2901,9 +2972,9 @@ IP <- function(x){
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Rajdhani'});",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
               "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Rajdhani'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -2923,8 +2994,12 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- prs() %>% 
-          filter(years == input$select_temporada) %>% 
-          select(-`w-l%`, -bk) %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>%  
+                      select(key, first_name, last_name), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(years, key, player, 1:31) %>% 
+          filter(years == input$select_temporada) %>%
           mutate(
             edad = as.numeric(edad),
             w = as.numeric(w),
@@ -2955,7 +3030,7 @@ IP <- function(x){
           ) %>%
           summarise(
             years = 'Jugadores',
-            jugador = NROW(jugador),
+            player = NROW(player),
             edad = round(mean(edad, na.rm = T), 1),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
@@ -2983,8 +3058,13 @@ IP <- function(x){
         
         
         pitching_player <- prs() %>%
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          left_join(Rosters() %>%  
+                      select(key, first_name, last_name), by = 'key') %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(years, key, player, 1:31) %>% 
+          select(-`w-l%`, -bk, -jugador, -key, -first_name, -last_name, -ir) %>%
           filter(years == input$select_temporada) %>%
-          select(-`w-l%`, -bk, -ir) %>%
           mutate(
             # edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3013,7 +3093,7 @@ IP <- function(x){
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
             `Temporada` = years,
-            Jugador = jugador,  
+            Jugador = player,  
             `Edad` = edad,
             `W` = w,
             `L` = l,
@@ -3064,8 +3144,8 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:23))
-                              # list(width = '100px', targets = 1)
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:23)),
+                              list(width = '120px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
@@ -3437,6 +3517,7 @@ IP <- function(x){
       output$bateo_rs <- DT::renderDataTable({
         req(input$select_temporada_bat)
         
+        # Data ----
         player_summarise <- brs() %>%
           filter(years == input$select_temporada_bat) %>% 
           mutate(
@@ -3560,7 +3641,7 @@ IP <- function(x){
           ) %>% 
           arrange(Temporada)
         
-        # Datatable ----
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
