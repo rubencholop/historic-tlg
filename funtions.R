@@ -2,6 +2,7 @@
 library(dplyr)
 library(rvest)
 library(futile.logger)
+library(stringr)
 
 
 # Roster players ----
@@ -89,6 +90,8 @@ get_batting <- function(.URL){
   flog.info('Batting Df')
   batting
 }
+
+
 # Batting stats Round Robin
 get_batting_rr <- function(.URL){
   flog.info('Getting available URl')
@@ -189,6 +192,8 @@ get_batting_finals <- function(.URL){
   flog.info('Batting Df')
   batting_finals
 }
+
+
 # Batting stats but with other order in the table
 get_batting_finals1 <- function(.URL){
   flog.info('Getting available URl')
@@ -293,6 +298,8 @@ get_pitching <- function(.URL){
   flog.info('Pitching Df')
   pitching
 }
+
+
 # Pitching players regular season 2
 get_pitching2 <- function(.URL){
   flog.info('Getting available URl')
@@ -705,3 +712,8 @@ IP <- function(x){
   
   
 str(.df)
+
+
+.test_roster <- get_roster(.URL = "http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2020-21")
+.test_batting <- get_batting(.URL = "http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2020-21")
+.test_pitching <- get_pitching(.URL = "http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2020-21")

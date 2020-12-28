@@ -2994,11 +2994,11 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- prs() %>% 
-          mutate(key = paste0(as.character(years), jugador)) %>% 
-          left_join(Rosters() %>%  
-                      select(key, first_name, last_name), by = 'key') %>%
-          mutate(player = paste0(first_name, " ", last_name)) %>% 
-          select(years, key, player, 1:31) %>% 
+          # mutate(key = paste0(as.character(years), jugador)) %>% 
+          # left_join(Rosters() %>%  
+          #             select(key, first_name, last_name), by = 'key') %>%
+          # mutate(player = paste0(first_name, " ", last_name)) %>% 
+          # select(years, key, player, 1:31) %>% 
           filter(years == input$select_temporada) %>%
           mutate(
             edad = as.numeric(edad),
@@ -3030,7 +3030,7 @@ IP <- function(x){
           ) %>%
           summarise(
             years = 'Jugadores',
-            player = NROW(player),
+            jugador = NROW(jugador),
             edad = round(mean(edad, na.rm = T), 1),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
@@ -3058,12 +3058,12 @@ IP <- function(x){
         
         
         pitching_player <- prs() %>%
-          mutate(key = paste0(as.character(years), jugador)) %>% 
-          left_join(Rosters() %>%  
-                      select(key, first_name, last_name), by = 'key') %>%
-          mutate(player = paste0(first_name, " ", last_name)) %>% 
-          select(years, key, player, 1:31) %>% 
-          select(-`w-l%`, -bk, -jugador, -key, -first_name, -last_name, -ir) %>%
+          # mutate(key = paste0(as.character(years), jugador)) %>% 
+          # left_join(Rosters() %>%  
+          #             select(key, first_name, last_name), by = 'key') %>%
+          # mutate(player = paste0(first_name, " ", last_name)) %>% 
+          # select(years, key, player, 1:31) %>% 
+          select(-`w-l%`, -bk, -ir) %>%
           filter(years == input$select_temporada) %>%
           mutate(
             # edad = as.numeric(edad),
@@ -3090,10 +3090,11 @@ IP <- function(x){
             `so/bb` = round(so / bb, 2)
           )
         
+        
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
             `Temporada` = years,
-            Jugador = player,  
+            Jugador = jugador,
             `Edad` = edad,
             `W` = w,
             `L` = l,
@@ -3145,7 +3146,7 @@ IP <- function(x){
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = c(0, 2:23)),
-                              list(width = '120px', targets = 1)
+                              list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
@@ -3231,32 +3232,21 @@ IP <- function(x){
           filter(years == input$select_temporada) %>%
           select(-bk, -`w-l%`, -edad) %>%
           mutate(
-            w = as.numeric(w),
-            l = as.numeric(l),
-            # era = as.numeric(era),
-            g = as.numeric(g),
-            gs = as.numeric(gs),
-            cg = as.numeric(cg),
-            sho = as.numeric(sho),
-            sv = as.numeric(sv),
-            # ip = as.numeric(ip),
-            h = as.numeric(h),
-            r = as.numeric(r),
-            # er = as.numeric(er),
             hr = as.numeric(hr),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
+            # er = sum(er, na.rm = T),
+            # ip = IP(ip),
+            # era = as.character(round((er * 9) / ip, 2)),
             whip = as.character(round((bb + h)/ ip, 2)),
-            `h/9` = as.numeric(round((h/ip)*9, 2)),
-            `hr/9` = as.numeric(round((hr/ip)*9, 2)),
-            `bb/9` = as.numeric(round((bb/ip)*9, 2)),
-            `so/9` = as.numeric(round((so/ip)*9, 2)),
+            # `h/9` = as.numeric(round((h/ip)*9, 2)),
+            # `hr/9` = as.numeric(round((hr/ip)*9, 2)),
+            # `bb/9` = as.numeric(round((bb/ip)*9, 2)),
+            # `so/9` = as.numeric(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
             refuerzo = refuerzo
           ) 
+        
         
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
@@ -3312,7 +3302,10 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:23))),
+            # columnDefs = list(list(className = "dt-center", targets = c(0:23))),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:23)),
+                              list(width = '80px', targets = 1)
+            ),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -3414,14 +3407,14 @@ IP <- function(x){
             hr = as.numeric(hr),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
+            # er = sum(er, na.rm = T),
+            # ip = IP(ip),
+            # era = as.character(round((er * 9) / ip, 2)),
             whip = as.numeric(round((bb + h) / ip, 2)),
-            `h/9` = as.numeric(round((h/ip)*9, 2)),
-            `hr/9` = as.numeric(round((hr/ip)*9, 2)),
-            `bb/9` = as.numeric(round((bb/ip)*9, 2)),
-            `so/9` = as.numeric(round((so/ip)*9, 2)),
+            # `h/9` = as.numeric(round((h/ip)*9, 2)),
+            # `hr/9` = as.numeric(round((hr/ip)*9, 2)),
+            # `bb/9` = as.numeric(round((bb/ip)*9, 2)),
+            # `so/9` = as.numeric(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
             refuerzo = refuerzo,
             resultado = resultado
@@ -3492,7 +3485,9 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 0:23)),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:23)),
+                              list(width = '80px', targets = 1)
+            ),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
