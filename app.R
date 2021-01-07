@@ -169,11 +169,15 @@ IP <- function(x){
   shiny::shinyApp(
     # Page ----
     ui = bs4DashPage(
-      enable_preloader = FALSE, # Icon before preloader
+      enable_preloader = TRUE, # Icon before preloader
       controlbar_overlay = TRUE,
       sidebar_collapsed = TRUE,
       # Navbar ----
       navbar = bs4DashNavbar(
+        status = "danger",
+        border = TRUE,
+        controlbarIcon = "th",
+        fixed = FALSE,
         tags$head(
           tags$style(
             HTML('
@@ -188,7 +192,7 @@ IP <- function(x){
             .bg-dark{
             background-color: #0473cb;
             }
-            
+
             .navbar-light {
             background-color: #f4f6f9;
             }
@@ -196,13 +200,13 @@ IP <- function(x){
            ')
           )
         ),
-        column(2),
-        column(8, h2("Registro historico de Tiburones de la Guaira", 
-                      style = "color: #707070; text-align: left; 
-                              font-size: 1.6rem; font-family: 'Roboto Regular', sans-serif;
-                              font-weight: 500; text-transform: uppercase;",
-                                  align = 'center'),
-                            style = "padding-left: 0px;"),
+        # column(2),
+        # column(8, h2("Registro historico de Tiburones de la Guaira", 
+        #               style = "color: #707070; text-align: left; 
+        #                       font-size: 1.6rem; font-family: 'Roboto Regular', sans-serif;
+        #                       font-weight: 500; text-transform: uppercase;",
+        #                           align = 'center'),
+        #                     style = "padding-left: 0px;"),
         # column(1),
         # div(id = "tiburones",
         #     h2("Registro historico de Tiburones de la Guaira", 
@@ -236,7 +240,7 @@ IP <- function(x){
           "
         ))),
         disable = FALSE,
-        title = h4("Tibu Stats",
+        title = h4("TIBU STATS",
                    style = "color: #FFFF;
                             # text-transform: uppercase;
                             font-size: 1.2em;
@@ -249,7 +253,7 @@ IP <- function(x){
         src = "ts_isotipo.png",
         elevation = 4,
         opacity = 0.8,
-        expand_on_hover = TRUE,
+        expand_on_hover = FALSE,
         fixed = TRUE,
         sidebarMenu(
           # meniItem Tiburones de la Guaira ----
@@ -278,15 +282,16 @@ IP <- function(x){
           ),
           # menuItem Estadisticas ----
           bs4SidebarMenuItem(
-            text = HTML(paste('Estadísticas', 
-                          bs4Badge("New", position = "left", status = "success"))
-                        ),
+            text = 'Estadísticas', 
+              # HTML(paste(
+              #             bs4Badge("New", position = "left", status = "success"))
+              #           ),
             startExpanded = FALSE,
             tabName = 'geo_estadisticas',
             icon = "tasks",
             bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "circle"),
-            bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "circle"),
-            bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "circle")
+            bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "circle")
+            # bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "circle")
           ),
           # menuItem Records ----
           bs4SidebarMenuItem(
@@ -347,10 +352,26 @@ IP <- function(x){
             )
           )
         ),
-        div( 
-          id = "logo",
-          img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
-        ),
+        copyrights = 
+          span("Creado por:"),
+        a(href = "https://www.linkedin.com/in/macv1031/", target = "_blank", "Ruben Lopez"),
+        br(),
+        span("Fuente de datos:"),
+        a(href = "http://www.pelotabinaria.com.ve/beisbol/", target = "_blank", "http://www.pelotabinaria.com.ve/"),
+        right_text = h6("© 2020 Tibu Stats. Todos los derechos reservados.", align = "center")
+        # fluidRow(
+        #   column(9),
+        #   column(3,
+        #          div(
+        #            id = "logo",
+        #            img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
+        #          )
+        #   )
+        # )
+        # div(
+        #   id = "logo",
+        #   img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
+        # ),
         
         # span(
         #   style = "font-size: 1em",
@@ -365,10 +386,6 @@ IP <- function(x){
       #   ),
       #   right_text = "2020"
       # ),
-      copyrights = 
-        span("Created by "),
-        a(href = "https://twitter.com/divadnojnarg", target = "_blank", "@DivadNojnarg"),
-      right_text = "2020"
     ),
       # Title ----
       title = 'Tiburones de la Guaira B.B.C',
@@ -403,6 +420,16 @@ IP <- function(x){
            }
           '
         ))),
+        fluidRow(
+          column(2),
+          column(8, h2("Registro historico de Tiburones de la Guaira", 
+                       style = "color: #707070; text-align: center; 
+                                font-size: 1.6rem; font-family: 'Roboto Regular', sans-serif;
+                                font-weight: 500; text-transform: uppercase;",
+                       align = 'center'),
+                 style = "padding-left: 20px;"),
+          column(2)
+          ),
         tabItems(
         # TabItem Home ----
           tabItem(
@@ -1278,7 +1305,7 @@ IP <- function(x){
         # Tabitem Records ----
         tabItem(
           tabName = 'deporvida',
-          h4('Records historicos', align = 'center'),
+          h4('Records de por vida', align = 'center'),
           tabsetPanel(
             id = "tabpanel4",
             side = "left",
@@ -1911,7 +1938,7 @@ IP <- function(x){
                     DT::dataTableOutput('lvbp_general')
                     )
                   ),
-            column(4)
+            column(3)
               )
           ),
         # Stats geographics ----
@@ -3528,10 +3555,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
+            avg = round(h/ab, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             ir = as.numeric(ir),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
@@ -3559,10 +3586,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
@@ -3589,10 +3616,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = round(as.numeric(avg), 3), 
-            obp = round(as.numeric(obp), 3),
-            slg = round(as.numeric(slg), 3),
-            ops = round(as.numeric(ops), 3),
+            avg = round(h/ab, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             ir = as.numeric(ir),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
@@ -3648,6 +3675,10 @@ IP <- function(x){
           extensions = "ColReorder",
           rownames = FALSE,
           style = ,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
             # autoWidth = TRUE,
@@ -3684,14 +3715,15 @@ IP <- function(x){
       output$bateo_rr_sm <- DT::renderDataTable({
         req(input$select_temporada_bat)
         
+        # Data ----
         player_summarise <- brr() %>%
-          filter(years == input$select_temporada_bat,
-                 trimws(X5) != '' 
+          filter(years == input$select_temporada_bat
+                 # trimws(X5) != '' 
           ) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
-            X5 = as.numeric(X5),
+            pa = as.numeric(pa),
             ab = as.numeric(ab),
             r = as.numeric(r),
             h = as.numeric(h),
@@ -3701,10 +3733,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
+            avg = round(h/ab, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
@@ -3719,7 +3751,7 @@ IP <- function(x){
             jugador = NROW(jugador),
             edad = round(mean(edad), 1),
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -3731,10 +3763,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3), # Importante debe calcularse y no em promedio
-            obp = round(mean(obp, na.rm = T), 3), # Importante debe calcularse y no em promedio
-            slg = round(mean(slg, na.rm = T), 3), # Importante debe calcularse y no em promedio
-            ops = round(mean(ops, na.rm = T), 3), # Importante debe calcularse y no em promedio
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -3747,12 +3779,13 @@ IP <- function(x){
         
         
         batting_player <- brr() %>%
-          filter(years == input$select_temporada_bat,
-                 trimws(X5) != '' ) %>%
+          filter(years == input$select_temporada_bat
+                 # trimws(X5) != '' 
+                 ) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
-            X5 = as.numeric(X5),
+            pa = as.numeric(pa),
             ab = as.numeric(ab),
             r = as.numeric(r),
             h = as.numeric(h),
@@ -3762,10 +3795,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
+            avg = round(h/ab, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
@@ -3783,7 +3816,7 @@ IP <- function(x){
             Jugador = jugador,
             `Edad` = edad,
             `G` = g,
-            `PA` = X5,
+            `PA` = pa,
             `AB` = ab,
             `R` = r,
             `H` = h,
@@ -3808,7 +3841,7 @@ IP <- function(x){
           ) %>% 
           arrange(Temporada)  
         
-        # Datatable ----
+        # Table ----
         
         headerCallback <- c(
           "function(thead, data, start, end, display){",
@@ -3821,6 +3854,10 @@ IP <- function(x){
           class = 'display', # To remove lines horizontal in table
           extensions = "ColReorder",
           rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
           options = list(
             # autoWidth = TRUE,
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -3860,12 +3897,12 @@ IP <- function(x){
         # Data ----
         player_summarise <- bf() %>% 
           filter(years == input$select_temporada_bat,
-                 trimws(X5) != '' 
+                 trimws(pa) != '' 
           ) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
-            X5 = as.numeric(X5),
+            pa = as.numeric(pa),
             ab = as.numeric(ab),
             r = as.numeric(r),
             h = as.numeric(h),
@@ -3875,10 +3912,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
+            avg = round(h/ab, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
@@ -3893,7 +3930,7 @@ IP <- function(x){
             jugador = NROW(jugador),
             edad = round(mean(edad), 1),
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -3905,10 +3942,10 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(mean(avg, na.rm = T), 3),
-            obp = round(mean(obp, na.rm = T), 3),
-            slg = round(mean(slg, na.rm = T), 3),
-            ops = round(mean(ops, na.rm = T), 3),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -3923,11 +3960,11 @@ IP <- function(x){
         
         batting_player <- bf() %>% 
           filter(years == input$select_temporada_bat,
-                 trimws(X5) != '' ) %>% 
+                 trimws(pa) != '' ) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
-            X5 = as.numeric(X5),
+            pa = as.numeric(pa),
             ab = as.numeric(ab),
             r = as.numeric(r),
             h = as.numeric(h),
@@ -3937,10 +3974,10 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = as.numeric(avg),
-            obp = as.numeric(obp),
-            slg = as.numeric(slg),
-            ops = as.numeric(ops),
+            avg = round(h/ab, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
             rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
@@ -3959,7 +3996,7 @@ IP <- function(x){
             Jugador = jugador,
             `Edad` = edad,
             `G` = g,
-            `PA` = X5,
+            `PA` = pa,
             `AB` = ab,
             `R` = r,
             `H` = h,
@@ -4002,6 +4039,10 @@ IP <- function(x){
           class = 'display', # To remove lines horizontal in table
           extensions = "ColReorder",
           rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
           options = list(
             # autoWidth = TRUE,
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -4015,13 +4056,12 @@ IP <- function(x){
             fixedColumns = list(LeftColumns = 3),
             fixedHeader = TRUE,
             columnDefs = list(list(className = "dt-center", targets = c(0:26))),
-            
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
-              "$(this.api().table().body()).css({'font-family': 'Rajdhani'});",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
               "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Rajdhani'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -5206,6 +5246,10 @@ IP <- function(x){
           extensions = "ColReorder",
           rownames = FALSE,
           style = ,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
@@ -5489,8 +5533,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Exiten jugadores a los cuales se desconoce su pais.
-                            Se asigna "Desconocido"')),
+            , htmltools::em('Existen jugadores a los cuales se desconoce su país. Se asigna "Desconocido"')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -5777,8 +5820,7 @@ IP <- function(x){
           rownames = FALSE,
           caption = htmltools::tags$caption(
             style = 'caption-side: bottom; text-align: center;'
-            , htmltools::em('Exiten jugadores a los cuales se desconoce su pais.
-                            Se asigna "Desconocido"')),
+            , htmltools::em('Existen jugadores a los cuales se desconoce su país. Se asigna "Desconocido"')),
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
@@ -10020,7 +10062,7 @@ IP <- function(x){
           options = list(
             ordering = F, # To delete Ordering
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             lengthChange = FALSE,
@@ -11379,7 +11421,7 @@ IP <- function(x){
       # Chart position distribution  ----
       output$position_chart <- renderHighchart({
 
-        position_chart <- Rosters %>%
+        position_chart <- Rosters() %>%
           mutate(
             importados =
               case_when(
@@ -11423,7 +11465,7 @@ IP <- function(x){
       # Chart country distribution by countries ----
       output$country_chart_paises <- renderHighchart({
         
-        country_bat <- Rosters %>%
+        country_bat <- Rosters() %>%
           mutate(
             importados =
               case_when(
