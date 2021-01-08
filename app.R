@@ -254,7 +254,7 @@ IP <- function(x){
         elevation = 4,
         opacity = 0.8,
         expand_on_hover = FALSE,
-        fixed = TRUE,
+        fixed = FALSE,
         sidebarMenu(
           # meniItem Tiburones de la Guaira ----
           bs4SidebarMenu(
@@ -352,34 +352,43 @@ IP <- function(x){
             )
           )
         ),
-        copyrights = 
           span("Creado por:"),
         a(href = "https://www.linkedin.com/in/macv1031/", target = "_blank", "Ruben Lopez"),
         br(),
         span("Fuente de datos:"),
         a(href = "http://www.pelotabinaria.com.ve/beisbol/", target = "_blank", "http://www.pelotabinaria.com.ve/"),
-        right_text = h6("© 2020 Tibu Stats. Todos los derechos reservados.", align = "center")
-        # fluidRow(
-        #   column(9),
-        #   column(3,
-        #          div(
-        #            id = "logo",
-        #            img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
-        #          )
-        #   )
-        # )
-        # div(
-        #   id = "logo",
-        #   img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
-        # ),
-        
-        # span(
-        #   style = "font-size: 1em",
-        #   span("Created by "),
-        #   a("Ruben Lopez",
-        #     href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/',
-        #     target = "_blank")
-        # ),
+        right_text = h6("© 2020 Tibu Stats. Todos los derechos reservados.", align = "center"),
+        fluidRow(
+          column(5),
+          column(2,
+                 div(
+                   id = "logo",
+                   img(src = 'TS Horizontal Color (2).png', aling = "center")
+                 )
+          ),
+          column(5)
+        )
+      # fluidRow(
+      #   column(9),
+      #   column(3,
+      #          div(
+      #            id = "logo",
+      #            img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
+      #          )
+      #   )
+      # )
+      # div(
+      #   id = "logo",
+      #   img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
+      # ),
+      
+      # span(
+      #   style = "font-size: 1em",
+      #   span("Created by "),
+      #   a("Ruben Lopez",
+      #     href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/',
+      #     target = "_blank")
+      # ),
       #   copyrights = a(
       #     href = "https://twitter.com/divadnojnarg", 
       #     target = "_blank", "@DivadNojnarg"
