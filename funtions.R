@@ -34,7 +34,7 @@ get_roster <- function(.URL){
   flog.info('Data Wrangling completed')
   
   flog.info('Roster Df')
-  roster
+  
 }
 
 
