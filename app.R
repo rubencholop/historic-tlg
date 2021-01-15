@@ -3023,6 +3023,7 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- prs() %>% 
+         
           # mutate(key = paste0(as.character(years), jugador)) %>% 
           # left_join(Rosters() %>%  
           #             select(key, first_name, last_name), by = 'key') %>%
@@ -3032,6 +3033,7 @@ IP <- function(x){
             years == input$select_temporada,
             ronda == "regular"
             ) %>%
+          select(-resultado, -ronda, -refuerzo) %>% 
           mutate(
             edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3095,11 +3097,11 @@ IP <- function(x){
           #             select(key, first_name, last_name), by = 'key') %>%
           # mutate(player = paste0(first_name, " ", last_name)) %>% 
           # select(years, key, player, 1:31) %>% 
-          select(-`w-l%`, -bk, -ir) %>%
           filter(
             years == input$select_temporada,
             ronda == "regular"
             ) %>%
+          select(-`w-l%`, -bk, -ir, -resultado, -ronda, -refuerzo) %>%
           mutate(
             # edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3211,7 +3213,7 @@ IP <- function(x){
             years == input$select_temporada,
             ronda == "round robin"
             ) %>%
-          select(-bk, -`w-l%`) %>%
+          select(-bk, -`w-l%`, resultado, -ronda) %>%
           mutate(
             # edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3261,7 +3263,7 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
-            refuerzo = '-',
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
             .groups = 'drop'
           )
         
@@ -3271,7 +3273,7 @@ IP <- function(x){
             years == input$select_temporada,
             ronda == "round robin"
             ) %>%
-          select(-bk, -`w-l%`, -edad) %>%
+          select(-bk, -`w-l%`, -edad, -resultado, -ronda, -ir) %>%
           mutate(
             hr = as.numeric(hr),
             bb = as.numeric(bb),
@@ -3377,7 +3379,7 @@ IP <- function(x){
             years == input$select_temporada,
             ronda == "finales"
             ) %>%
-          select(-bk, -`w-l%`, -edad) %>%
+          select(-bk, -`w-l%`, -edad, -ronda) %>%
           mutate(
             w = as.numeric(w),
             l = as.numeric(l),
@@ -3425,7 +3427,7 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
-            refuerzo = '-',
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
             resultado = '-',
             .groups = 'drop'
           )
@@ -3436,7 +3438,7 @@ IP <- function(x){
             years == input$select_temporada,
             ronda == "finales"
             ) %>%
-          select(-bk, -`w-l%`, -edad) %>%
+          select(-bk, -`w-l%`, -edad, -ronda, -ir) %>%
           mutate(
             # edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3629,6 +3631,7 @@ IP <- function(x){
             years == input$select_temporada_bat,
             ronda == "regular"
             ) %>%
+          select(-ronda, -resultado, -refuerzo) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3801,7 +3804,7 @@ IP <- function(x){
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
-            refuerzo = '',
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
             .groups = 'drop'
           )
         
@@ -3812,6 +3815,7 @@ IP <- function(x){
             ronda == "round robin"
                  # trimws(X5) != '' 
                  ) %>%
+          select(-ronda, -resultado, -ir) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3983,8 +3987,8 @@ IP <- function(x){
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
-            refuerzo = '',
-            resultado = '',
+            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+            resultado = last(resultado),
             .groups = 'drop'
           )
         
@@ -3992,8 +3996,9 @@ IP <- function(x){
         batting_player <- brs() %>% 
           filter(
             years == input$select_temporada_bat,
-            ronda == "round robin",
+            ronda == "finales",
             trimws(pa) != '' ) %>% 
+          select(-ronda, -ir) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
