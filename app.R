@@ -1220,7 +1220,7 @@ IP <- function(x){
                      label = 'Temporadas',
                      choices = as.character(c("Todas las Temporadas", 
                                               temporadas)),
-                     selected = "2019-20"
+                     selected = "2020-21"
                      # multiple = TRUE
                    )
             ),
@@ -2025,34 +2025,14 @@ IP <- function(x){
         
       })
       
-      # Reactive Batting regular season ----
+      # Reactive Batting ----
       brs <- reactive({
         brs <- read_csv('data/batting_reseason.csv')
       })
       
-      # Reactive Batting round robin ----
-      brr <- reactive({
-        brr <- read_csv('data/batting_rr.csv')
-      })
-      
-      # Reactive Batting finals ----
-      bf <- reactive({
-        bf <- read_csv('data/batting_finals.csv')
-      })
-      
-      # Reactive Pitching regular season ----
+      # Reactive Pitching ----
       prs <- reactive({
         prs <- read_csv('data/pitching_reseason.csv')
-      })
-      
-      # Reactive Pitching round robin ----
-      prr <- reactive({
-        prr <- read_csv('data/pitching_rrobin.csv')
-      })
-      
-      # Reactive Pitching final ----
-      pf <- reactive({
-        pf <- read_csv('data/pitching_finals.csv')
       })
       
       # Reactive info player ----
@@ -2076,6 +2056,7 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- prs() %>% 
+          filter(ronda == "regular") %>% 
           arrange(years, jugador) %>% 
           select(-bk) %>% 
           summarise(
@@ -2106,6 +2087,7 @@ IP <- function(x){
             ) 
         
         pitching_player <- prs() %>% 
+          filter(ronda == "regular") %>% 
           arrange(years, jugador) %>% 
           select(-bk) %>% 
           group_by(years) %>% 
@@ -2217,9 +2199,10 @@ IP <- function(x){
       output$Prr_team <- DT::renderDataTable({
         
         # Data ----
-        player_summarise <- prr() %>% 
+        player_summarise <- prs() %>%
+          filter(ronda == "round robin") %>% 
           arrange(years, jugador) %>% 
-          select(-bk) %>% 
+          select(-bk, -ronda, -resultado) %>% 
           summarise(
             years = 'Total',
             edad = as.character(round(mean(edad, na.rm = T), 1)),
@@ -2244,13 +2227,14 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
-            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
+            ref = sum(ifelse(refuerzo =='SI', 1, 0)),
             .groups = 'drop'
           )
         
-        pitching_player <- prr() %>% 
+        pitching_player <- prs() %>%
+          filter(ronda == "round robin") %>% 
           arrange(years, jugador) %>% 
-          select(-bk) %>% 
+          select(-bk, -ronda, -resultado) %>%
           group_by(years) %>% 
           summarise(
             edad = as.character(round(mean(edad, na.rm = T), 1)),
@@ -2275,7 +2259,8 @@ IP <- function(x){
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
-            refuerzo = sum(ifelse(refuerzo =='SI', 1, 0))
+            ref = sum(ifelse(refuerzo =='SI', 1, 0)),
+            .groups = "drop"
           )
         
         df <- rbind(pitching_player, player_summarise) %>% 
@@ -2303,7 +2288,7 @@ IP <- function(x){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`,
-            `REF` = `refuerzo`
+            `REF` = `ref`
           ) %>% 
           arrange(Temporada) 
         
@@ -2367,7 +2352,8 @@ IP <- function(x){
       output$Pfinal_team <- DT::renderDataTable({
         
         # Data ----
-        player_summarise <- pf() %>% 
+        player_summarise <- prs() %>% 
+          filter(ronda == "finales") %>% 
           select(-bk) %>% 
           arrange(years, jugador) %>% 
           group_by(years) %>% 
@@ -2428,7 +2414,8 @@ IP <- function(x){
           )
         
         
-        pitching_player <- pf() %>% 
+        pitching_player <- prs() %>% 
+          filter(ronda == "finales") %>% 
           arrange(years, jugador) %>% 
           select(-bk) %>% 
           group_by(years) %>% 
@@ -2550,6 +2537,7 @@ IP <- function(x){
         
         # Data ---- 
         player_summarise <- brs() %>% 
+          filter(ronda == "regular") %>% 
           arrange(years, jugador) %>% 
           summarise(
             years = 'Total',
@@ -2583,6 +2571,7 @@ IP <- function(x){
         
         
         batting_player <- brs() %>% 
+          filter(ronda == "regular") %>% 
           arrange(years, jugador) %>% 
           group_by(years) %>% 
           summarise(
@@ -2697,7 +2686,8 @@ IP <- function(x){
       output$Brr_team <- DT::renderDataTable({
         
         # Data ----
-        player_summarise <- brr() %>% 
+        player_summarise <- brs() %>% 
+          filter(ronda == "round robin") %>% 
           arrange(years, jugador) %>% 
           summarise(
             years = 'Total',
@@ -2730,7 +2720,8 @@ IP <- function(x){
           )
         
         
-        batting_player <- brr() %>% 
+        batting_player <- brs() %>% 
+          filter(ronda == "round robin") %>% 
           arrange(years, jugador) %>% 
           group_by(years) %>% 
           summarise(
@@ -2846,7 +2837,8 @@ IP <- function(x){
       output$Bfinal_team <- DT::renderDataTable({
         
         # Data ----
-        player_summarise <-  bf() %>% 
+        player_summarise <-  brs() %>% 
+          filter(ronda == "finales") %>% 
           group_by(years) %>% 
           summarise(
             edad = round(mean(edad), 1),
@@ -2909,7 +2901,8 @@ IP <- function(x){
           )
           
         
-        batting_player <-  bf() %>% 
+        batting_player <-  brs() %>% 
+          filter(ronda == "finales") %>% 
           arrange(years, jugador) %>% 
           group_by(years) %>% 
           summarise(
@@ -3035,7 +3028,10 @@ IP <- function(x){
           #             select(key, first_name, last_name), by = 'key') %>%
           # mutate(player = paste0(first_name, " ", last_name)) %>% 
           # select(years, key, player, 1:31) %>% 
-          filter(years == input$select_temporada) %>%
+          filter(
+            years == input$select_temporada,
+            ronda == "regular"
+            ) %>%
           mutate(
             edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3100,7 +3096,10 @@ IP <- function(x){
           # mutate(player = paste0(first_name, " ", last_name)) %>% 
           # select(years, key, player, 1:31) %>% 
           select(-`w-l%`, -bk, -ir) %>%
-          filter(years == input$select_temporada) %>%
+          filter(
+            years == input$select_temporada,
+            ronda == "regular"
+            ) %>%
           mutate(
             # edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3207,8 +3206,11 @@ IP <- function(x){
         req(input$select_temporada)
         
         # Data ----
-        player_summarise <- prr() %>%
-          filter(years == input$select_temporada) %>%
+        player_summarise <- prs() %>%
+          filter(
+            years == input$select_temporada,
+            ronda == "round robin"
+            ) %>%
           select(-bk, -`w-l%`) %>%
           mutate(
             # edad = as.numeric(edad),
@@ -3264,8 +3266,11 @@ IP <- function(x){
           )
         
         
-        pitching_player <- prr() %>%
-          filter(years == input$select_temporada) %>%
+        pitching_player <- prs() %>%
+          filter(
+            years == input$select_temporada,
+            ronda == "round robin"
+            ) %>%
           select(-bk, -`w-l%`, -edad) %>%
           mutate(
             hr = as.numeric(hr),
@@ -3367,8 +3372,11 @@ IP <- function(x){
         req(input$select_temporada)
         
         # Data ----
-        player_summarise <- pf() %>%
-          filter(years == input$select_temporada) %>%
+        player_summarise <- prs() %>%
+          filter(
+            years == input$select_temporada,
+            ronda == "finales"
+            ) %>%
           select(-bk, -`w-l%`, -edad) %>%
           mutate(
             w = as.numeric(w),
@@ -3423,8 +3431,11 @@ IP <- function(x){
           )
         
         
-        pitching_player <- pf() %>%
-          filter(years == input$select_temporada) %>%
+        pitching_player <- prs() %>%
+          filter(
+            years == input$select_temporada,
+            ronda == "finales"
+            ) %>%
           select(-bk, -`w-l%`, -edad) %>%
           mutate(
             # edad = as.numeric(edad),
@@ -3550,7 +3561,10 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- brs() %>%
-          filter(years == input$select_temporada_bat) %>% 
+          filter(
+            years == input$select_temporada_bat,
+            ronda == "regular"
+            ) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3611,7 +3625,10 @@ IP <- function(x){
         
         
         batting_player <- brs() %>%
-          filter(years == input$select_temporada_bat) %>%
+          filter(
+            years == input$select_temporada_bat,
+            ronda == "regular"
+            ) %>%
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3720,13 +3737,15 @@ IP <- function(x){
         
       })
       
-      # Table bateo round robin  ----
+      # Table bateo round robin ----
       output$bateo_rr_sm <- DT::renderDataTable({
         req(input$select_temporada_bat)
         
         # Data ----
-        player_summarise <- brr() %>%
-          filter(years == input$select_temporada_bat
+        player_summarise <- brs() %>%
+          filter(
+            years == input$select_temporada_bat,
+            ronda == "round robin"
                  # trimws(X5) != '' 
           ) %>%
           mutate(
@@ -3787,8 +3806,10 @@ IP <- function(x){
           )
         
         
-        batting_player <- brr() %>%
-          filter(years == input$select_temporada_bat
+        batting_player <- brs() %>%
+          filter(
+            years == input$select_temporada_bat,
+            ronda == "round robin"
                  # trimws(X5) != '' 
                  ) %>%
           mutate(
@@ -3904,8 +3925,9 @@ IP <- function(x){
         req(input$select_temporada_bat)
         
         # Data ----
-        player_summarise <- bf() %>% 
+        player_summarise <- brs() %>% 
           filter(years == input$select_temporada_bat,
+                 ronda == "finales",
                  trimws(pa) != '' 
           ) %>% 
           mutate(
@@ -3967,9 +3989,11 @@ IP <- function(x){
           )
         
         
-        batting_player <- bf() %>% 
-          filter(years == input$select_temporada_bat,
-                 trimws(pa) != '' ) %>% 
+        batting_player <- brs() %>% 
+          filter(
+            years == input$select_temporada_bat,
+            ronda == "round robin",
+            trimws(pa) != '' ) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -4092,6 +4116,7 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- prs() %>%
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters(), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -4130,6 +4155,7 @@ IP <- function(x){
         
         
         pitching_player <- prs() %>%
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% select(key, name, ID, first_name, last_name) , by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -4258,7 +4284,8 @@ IP <- function(x){
         req(input$select_jugador_pit)
         
         # Data ----
-        player_summarise <- prr() %>%
+        player_summarise <- prs() %>%
+          filter(ronda == "round robin") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -4295,7 +4322,8 @@ IP <- function(x){
           )
         
         
-        pitching_player <- prr() %>%
+        pitching_player <- prs() %>%
+          filter(ronda == "round robin") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -4426,7 +4454,8 @@ IP <- function(x){
         req(input$select_jugador_pit)
         
         # Data ----
-        player_summarise <- pf() %>%
+        player_summarise <- prs() %>%
+          filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -4462,7 +4491,8 @@ IP <- function(x){
           )
         
         
-        pitching_player <- pf() %>%
+        pitching_player <- prs() %>%
+          filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -4594,6 +4624,7 @@ IP <- function(x){
         
         # Data ----
         player_summarise <- brs() %>%
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
                       select(first_name, last_name, key), by = 'key') %>%
@@ -4632,6 +4663,7 @@ IP <- function(x){
         
         
         batting_player <- brs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
                       select(first_name, last_name, key), by = 'key') %>%
@@ -4737,7 +4769,8 @@ IP <- function(x){
       output$bat_rr <- DT::renderDataTable({
         req(input$select_jugador_bat)
         
-        player_summarise <- brr() %>%
+        player_summarise <- brs() %>%
+          filter(ronda == "round robin") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
                       select(first_name, last_name, key), by = 'key') %>%
@@ -4776,7 +4809,8 @@ IP <- function(x){
           )
         
         
-        batting_player <- brr() %>%
+        batting_player <- brs() %>%
+          filter(ronda == "round robin") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
                       select(first_name, last_name, key), by = 'key') %>%
@@ -4901,7 +4935,8 @@ IP <- function(x){
         req(input$select_jugador_bat)
         
         
-        player_summarise <- bf() %>% 
+        player_summarise <- brs() %>% 
+          filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
                       select(first_name, last_name, key), by = 'key') %>%
@@ -4941,7 +4976,8 @@ IP <- function(x){
           )
         
         
-        batting_player <- bf() %>% 
+        batting_player <- brs() %>% 
+          filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
                       select(first_name, last_name, key), by = 'key') %>%
@@ -5918,13 +5954,13 @@ IP <- function(x){
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
-            fixedHeader = TRUE,
-            fixedColumns = list(LeftColumns = 3),
+            # fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
             columnDefs = list(
               list(
-                # width = '120px', targets = 0,
-                # width = '10px', targets = c(1:6),
-                className = "dt-center", targets = c(0:7))),
+                width = '140px', targets = c(1, 5),
+                # width = '10px', targets = c(0, 2, 3, 4, 6, 7)
+                className = "dt-center", targets = c(0, 2, 3, 4, 6, 7))),
             # width = "200px", targets = 1)),
             # list(width = '200px', targets = "_all")),
             headerCallback = JS(headerCallback),
