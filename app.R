@@ -277,22 +277,22 @@ IP <- function(x){
             bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Paises', tabName = 'paises', icon = "circle"),
             bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "circle")
-            )
-          ),
-          # menuItem Estadisticas ----
-          bs4SidebarMenuItem(
-            text = 'Estadísticas', 
-              # HTML(paste(
-              #             bs4Badge("New", position = "left", status = "success"))
-              #           ),
-            startExpanded = FALSE,
-            tabName = 'geo_estadisticas',
-            icon = "tasks",
+            bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "circle"),
             bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "circle"),
             bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "circle")
-            # bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "circle")
+            )
           ),
+          # menuItem Graficos ----
+          # bs4SidebarMenuItem(
+          #   text = 'Estadísticas', 
+          #     # HTML(paste(
+          #     #             bs4Badge("New", position = "left", status = "success"))
+          #     #           ),
+          #   startExpanded = FALSE,
+          #   tabName = 'geo_estadisticas',
+          #   icon = "tasks"
+          #   # bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "circle")
+          # ),
           # menuItem Records ----
           bs4SidebarMenuItem(
             text = 'Records',
@@ -303,7 +303,7 @@ IP <- function(x){
             bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "circle")
             # bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "circle")
           ),
-          # menuItem Historia ----
+          # menuItem History ----
           bs4SidebarMenuItem(
             text ='Historia',
             tabName = 'historia',
@@ -311,13 +311,19 @@ IP <- function(x){
             bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "circle"),
             bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "circle")
           ),
-          # menuItem Glosario ----
+          # menuItem Glosary ----
           bs4SidebarMenuItem(
             text = 'Glosario',
             tabName = 'glosario',
             icon = "book",
             bs4SidebarMenuSubItem('Glosario Sabermetrico', tabName = 'g_saberm', icon = "circle"),
             bs4SidebarMenuSubItem('Cálculos', tabName = 'calc', icon = "circle")
+          ),
+          # menuItem About us ----
+          bs4SidebarMenuItem(
+            text = 'Nosotros',
+            tabName = 'nosotros',
+            icon = ""
           )
         ),
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
@@ -636,6 +642,7 @@ IP <- function(x){
             tabPanel(
               tabName = 'Picheo',
               br(),
+              fluidRow(
               box( 
                 width = 12,
                 title = h2("Estadisticas historicas de lanzadores", 
@@ -652,8 +659,6 @@ IP <- function(x){
                 collapsible = FALSE,
                 closable = FALSE,
               # Input ----
-              fluidRow(
-                br(),
                 br(),
                 column(3,
                        selectInput(
@@ -661,8 +666,7 @@ IP <- function(x){
                          label = 'Lanzadores',
                          choices = .pitchers
                          )
-                       )
-              ),
+                       ),
               br(),
               # Image ----
               fluidRow(
@@ -813,6 +817,7 @@ IP <- function(x){
                            )
                           )
                        )
+                  )
                 )
               ),
               hr(),
@@ -847,6 +852,7 @@ IP <- function(x){
             tabPanel(
               tabName = 'Bateo',
               br(),
+              fluidRow(
               box( 
                 width = 12,
                 title = h2("Estadisticas historicas de lBateadores", 
@@ -1019,9 +1025,10 @@ IP <- function(x){
                            shinydashboard::valueBoxOutput("hr_b", width = 3),
                            shinydashboard::valueBoxOutput("rbi_b", width = 3),
                            shinydashboard::valueBoxOutput("slg_b", width = 3)
-                           )
-                         )
-                     )
+                             )
+                          )
+                       )
+                    )
                   )
                 ),
               hr(),
@@ -4123,9 +4130,9 @@ IP <- function(x){
         player_summarise <- prs() %>%
           filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
-          left_join(Rosters(), by = 'key') %>%
+          left_join(Rosters() %>% select(key, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
-          select(key, player, 1:31) %>% 
+          select(key, player, 1:31, -resultado, -ronda, -refuerzo, -bk, -jugador) %>% 
           filter(player == input$select_jugador_pit) %>%
           select(-key, -`w-l%`) %>%
           summarise(
@@ -4165,7 +4172,8 @@ IP <- function(x){
           left_join(Rosters() %>% select(key, name, ID, first_name, last_name) , by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>%
-          select(-player, -jugador, -key, -`w-l%`, -name, -ID, -bk, -first_name, -last_name, -ir) %>%
+          select(-player, -jugador, -key, -`w-l%`, -name, -ID, -bk, -first_name, -last_name, -ir,
+                 -resultado, - ronda, -refuerzo) %>%
           arrange(edad) %>% 
           mutate(
             edad = as.numeric(edad),
@@ -4295,7 +4303,8 @@ IP <- function(x){
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>%
-          select(-jugador, -key, -`w-l%`, -name, -ID, -first_name, -last_name, -player, -bk) %>%
+          select(-jugador, -key, -`w-l%`, -name, -ID, -first_name, -last_name, -player, -bk,
+                 -ronda, -resultado) %>%
           arrange(edad) %>% 
           summarise(
             years = 'Total',
@@ -4333,7 +4342,8 @@ IP <- function(x){
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>%
-          select(-jugador, -key, -`w-l%`, -name, -ID, -first_name, -last_name, -player, -bk) %>%
+          select(-jugador, -key, -`w-l%`, -name, -ID, -first_name, -last_name, -player, -bk,
+                 -ronda,  -resultado, -ir) %>%
           arrange(edad) %>%
           mutate(
             edad = as.numeric(edad),
@@ -4465,7 +4475,8 @@ IP <- function(x){
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>% 
-          select(-player, -key, -`w-l%`, -jugador, -name, -first_name, -last_name, -ID) %>% 
+          select(-player, -key, -`w-l%`, -jugador, -name, -first_name, -last_name, -ID, 
+                 -ronda) %>% 
           summarise(
             years = 'Total',
             edad = NROW(edad),
@@ -4502,7 +4513,8 @@ IP <- function(x){
           left_join(Rosters() %>%  select(key, name, ID, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>% 
-          select(-player, -key, -`w-l%`, -jugador, -name, -first_name, -last_name, -ID, -bk) %>%
+          select(-player, -key, -`w-l%`, -jugador, -name, -first_name, -last_name, -ID, -bk,
+                 -ronda, -ir) %>%
           mutate(
             edad = as.numeric(edad),
             w = as.numeric(w),
