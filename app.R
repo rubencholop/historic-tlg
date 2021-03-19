@@ -167,7 +167,7 @@ IP <- function(x){
 }
 
   shiny::shinyApp(
-    # Page ----
+# Page ----
     ui = bs4DashPage(
       enable_preloader = TRUE, # Icon before preloader
       controlbar_overlay = TRUE,
@@ -2015,6 +2015,7 @@ IP <- function(x){
     
     # Server ----
     server = function(input, output, session) {
+     
       # Reactive Rosters ----
       Rosters <- reactive({
         .Rosters <- read_csv('data/rosters_clean.csv')
@@ -2028,7 +2029,10 @@ IP <- function(x){
         Rosters <- .Rosters %>%
           arrange(jugador, years) %>%
           left_join(.rosters, by = 'name') %>% 
-          mutate(key = paste0(as.character(years), jugador))
+          mutate(
+            key = paste0(as.character(years), jugador),
+            f_nac = as.Date(f_nac, format = "%m/%d/%Y")
+            )
         
       })
       
@@ -2056,16 +2060,23 @@ IP <- function(x){
       })
       
       # Reactive Geographic Stats ----
+      # Functions ----
+      # pitching <- function(){
+      #   prs() <- filter(ronda == "regular") %>% 
+      #     arrange(years, jugador) %>% 
+      #     select(-bk)
+      # }
+      
       # -----TABLES ----
       #By Team
-      # Table picheo regular season by team ----
+      # Table pitching regular season by team ----
       output$Preseason_team <- DT::renderDataTable({
         
         # Data ----
         player_summarise <- prs() %>% 
           filter(ronda == "regular") %>% 
           arrange(years, jugador) %>% 
-          select(-bk) %>% 
+          select(-bk, -refuerzo, -ronda, -resultado) %>% 
           summarise(
             years = 'Total',
             edad = round(mean(edad, na.rm = T), 1),
@@ -2096,7 +2107,7 @@ IP <- function(x){
         pitching_player <- prs() %>% 
           filter(ronda == "regular") %>% 
           arrange(years, jugador) %>% 
-          select(-bk) %>% 
+          select(-bk, -refuerzo, -ronda, -resultado) %>% 
           group_by(years) %>% 
           summarise(
             edad = as.character(round(mean(edad, na.rm = T), 1)),
@@ -2123,7 +2134,8 @@ IP <- function(x){
             `so/bb` = round(so / bb, 2),
             .groups = 'drop'
           ) %>% 
-          ungroup()
+          ungroup() %>% 
+          arrange(desc(years))
         
         
         df <- rbind(pitching_player, player_summarise) %>% 
@@ -2151,15 +2163,14 @@ IP <- function(x){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          ) %>% 
-          arrange(Temporada) 
+          ) 
         
         # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
           "}"
-        )  # To deleate header line horizontal in bottom of colums name
+        )  # To delete header line horizontal in bottom of columns name
         
         DT::datatable(
           df,
@@ -2268,7 +2279,8 @@ IP <- function(x){
             `so/bb` = round(so / bb, 2),
             ref = sum(ifelse(refuerzo =='SI', 1, 0)),
             .groups = "drop"
-          )
+          ) %>% 
+          arrange(desc(years))
         
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
@@ -2296,8 +2308,7 @@ IP <- function(x){
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`,
             `REF` = `ref`
-          ) %>% 
-          arrange(Temporada) 
+          ) 
         
         # Table ----
         headerCallback <- c(
@@ -2451,7 +2462,8 @@ IP <- function(x){
             `so/bb` = round(so / bb, 2),
             refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
             resultado = last(resultado)
-          ) 
+          ) %>% 
+          arrange(desc(years))
         
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
@@ -2479,8 +2491,7 @@ IP <- function(x){
             `HR/9` = `hr/9`,
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
-            `SO/BB` = `so/bb`) %>% 
-          arrange(Temporada) 
+            `SO/BB` = `so/bb`) 
         
         
         # Table ----
@@ -2608,7 +2619,8 @@ IP <- function(x){
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
-          ) 
+          ) %>% 
+          arrange(desc(years))
         
         df <- rbind(batting_player, player_summarise) %>% 
           rename(
@@ -2638,8 +2650,7 @@ IP <- function(x){
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf
-          ) %>% 
-          arrange(Temporada)
+          ) 
         
         # Table ----
         headerCallback <- c(
@@ -2758,7 +2769,8 @@ IP <- function(x){
             sf = sum(sf, na.rm = T),
             refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
             .groups = 'drop'
-          )
+          ) %>% 
+          arrange(desc(years))
         
         df <-  rbind(player_summarise, batting_player) %>%
           rename(
@@ -2788,8 +2800,7 @@ IP <- function(x){
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf
-          ) %>% 
-          arrange(Temporada)  
+          )  
         
         # Table ----
         
@@ -2940,7 +2951,8 @@ IP <- function(x){
             refuerzo = sum(ifelse(refuerzo =='SI', 1, 0)),
             resultado = last(resultado),
             .groups = 'drop'
-          )
+          ) %>% 
+          arrange(desc(years))
         
         df <- rbind(batting_player, player_summarise) %>%
           rename(
@@ -2971,8 +2983,7 @@ IP <- function(x){
             `SF` = sf,
             `Refuerzo` = refuerzo,
             `Logro` = resultado
-          ) %>% 
-          arrange(Temporada) 
+          ) 
         
         # Table ----
         headerCallback <- c(
@@ -3024,18 +3035,12 @@ IP <- function(x){
       })
       
       #By season -----
-      # Table picheo regular season ----
+      # Table pitches regular season ----
       output$picheo_rs <- DT::renderDataTable({
         req(input$select_temporada)
         
         # Data ----
         player_summarise <- prs() %>% 
-         
-          # mutate(key = paste0(as.character(years), jugador)) %>% 
-          # left_join(Rosters() %>%  
-          #             select(key, first_name, last_name), by = 'key') %>%
-          # mutate(player = paste0(first_name, " ", last_name)) %>% 
-          # select(years, key, player, 1:31) %>% 
           filter(
             years == input$select_temporada,
             ronda == "regular"
@@ -3058,10 +3063,6 @@ IP <- function(x){
             hr = as.numeric(hr),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            # er = sum(er, na.rm = T),
-            # ip = IP(ip),
-            # era = as.character(round((er * 9) / ip, 2)),
-            # ir = as.numeric(ir),
             whip = as.numeric(whip),
             `h/9` = as.numeric(`h/9`),
             `hr/9` = as.numeric(`hr/9`),
@@ -3099,16 +3100,11 @@ IP <- function(x){
         
         
         pitching_player <- prs() %>%
-          # mutate(key = paste0(as.character(years), jugador)) %>% 
-          # left_join(Rosters() %>%  
-          #             select(key, first_name, last_name), by = 'key') %>%
-          # mutate(player = paste0(first_name, " ", last_name)) %>% 
-          # select(years, key, player, 1:31) %>% 
           filter(
             years == input$select_temporada,
             ronda == "regular"
             ) %>%
-          select(-`w-l%`, -bk, -ir, -resultado, -ronda, -refuerzo) %>%
+          select(-`w-l%`, -bk, -ir, -resultado, -ronda, -refuerzo, -player_id) %>%
           mutate(
             # edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3161,7 +3157,7 @@ IP <- function(x){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`) %>% 
-          arrange(Temporada) 
+          arrange(Temporada)
         
         
         # Table ----
@@ -4031,7 +4027,8 @@ IP <- function(x){
             sf = as.numeric(sf),
             `2b` = as.numeric(`2b`),
             `3b` = as.numeric(`3b`)
-          ) 
+          ) %>% 
+          arrange(desc(years))
         
         
         
