@@ -3276,7 +3276,7 @@ IP <- function(x){
             years == input$select_temporada,
             ronda == "round robin"
             ) %>%
-          select(-bk, -`w-l%`, -edad, -resultado, -ronda, -ir) %>%
+          select(-bk, -`w-l%`, -edad, -resultado, -ronda, -ir, -player_id) %>%
           mutate(
             hr = as.numeric(hr),
             bb = as.numeric(bb),
@@ -3441,7 +3441,7 @@ IP <- function(x){
             years == input$select_temporada,
             ronda == "finales"
             ) %>%
-          select(-bk, -`w-l%`, -edad, -ronda, -ir) %>%
+          select(-bk, -`w-l%`, -edad, -ronda, -ir, -player_id) %>%
           mutate(
             # edad = as.numeric(edad),
             w = as.numeric(w),
@@ -3475,7 +3475,6 @@ IP <- function(x){
         df <- rbind(pitching_player, player_summarise) %>% 
           rename(
             `Temporada` = years,
-            # `Edad` = edad,
             Jugador = jugador,
             REF = refuerzo,
             Resultado = resultado,
@@ -3538,8 +3537,8 @@ IP <- function(x){
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = c(0, 2:23)),
-                              list(width = '80px', targets = 1)
-            ),
+                              list(width = '100px', targets = 1)
+                              ),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -3634,7 +3633,7 @@ IP <- function(x){
             years == input$select_temporada_bat,
             ronda == "regular"
             ) %>%
-          select(-ronda, -resultado, -refuerzo) %>% 
+          select(-ronda, -resultado, -refuerzo, -player_id) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3713,7 +3712,7 @@ IP <- function(x){
                             son registradas desde la temporada 2005-06')),
           options = list(
             dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
             searching = FALSE,
             paging = FALSE,
             pageLegth = 40,
@@ -3723,7 +3722,10 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:26))),
+            # columnDefs = list(list(className = "dt-center", targets = c(0:26))),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+                              list(width = '100px', targets = 1)
+                              ),
             # list(width = '100px', targets = 1)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
@@ -3818,7 +3820,7 @@ IP <- function(x){
             ronda == "round robin"
                  # trimws(X5) != '' 
                  ) %>%
-          select(-ronda, -resultado, -ir) %>% 
+          select(-ronda, -resultado, -ir, -player_id) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -3896,7 +3898,7 @@ IP <- function(x){
             htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
                             son registradas desde la temporada 2005-06')),
           options = list(
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
             dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
             paging = FALSE,
@@ -3907,7 +3909,9 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:26))),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+                              list(width = '100px', targets = 1)
+                              ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -4001,7 +4005,7 @@ IP <- function(x){
             years == input$select_temporada_bat,
             ronda == "finales",
             trimws(pa) != '' ) %>% 
-          select(-ronda, -ir) %>% 
+          select(-ronda, -ir, -player_id) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -4062,12 +4066,7 @@ IP <- function(x){
             `SF` = sf,
             `Refuerzo` = refuerzo,
             `Logro` = resultado
-          ) %>% 
-          arrange(Temporada)  %>% 
-          mutate(Logro = if_else(Logro == 'campeon', 'Campeon', Logro),
-                 Logro = if_else(Logro == 'subcampeon', 'SubCampeon', Logro)
-          ) %>% 
-          replace(., is.na(.), 0)
+          ) 
         
         # Table ----
         headerCallback <- c(
@@ -4086,7 +4085,7 @@ IP <- function(x){
             htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
                             son registradas desde la temporada 2005-06')),
           options = list(
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
             dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
             paging = FALSE,
@@ -4095,9 +4094,12 @@ IP <- function(x){
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
-            fixedColumns = list(LeftColumns = 3),
+            # fixedColumns = list(LeftColumns = 3),
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = c(0:26))),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+                              list(width = '100px', targets = 1),
+                              list(width = '85px', targets = 27)
+                              ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
