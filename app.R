@@ -4131,7 +4131,7 @@ IP <- function(x){
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% select(key, first_name, last_name), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
-          select(key, player, 1:31, -resultado, -ronda, -refuerzo, -bk, -jugador) %>% 
+          select(key, player, 1:31, -resultado, -ronda, -refuerzo, -bk, -jugador, -player_id) %>% 
           filter(player == input$select_jugador_pit) %>%
           select(-key, -`w-l%`) %>%
           summarise(
@@ -4172,7 +4172,7 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>%
           select(-player, -jugador, -key, -`w-l%`, -name, -ID, -bk, -first_name, -last_name, -ir,
-                 -resultado, - ronda, -refuerzo) %>%
+                 -resultado, - ronda, -refuerzo, -player_id) %>%
           arrange(edad) %>% 
           mutate(
             edad = as.numeric(edad),
@@ -4245,7 +4245,7 @@ IP <- function(x){
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
           "}"
-        )  # To deleate header line horizontal in bottom of colums name
+        )  # To delete header line horizontal in bottom of columns name
         
         # footerCallback <- c(
         #   "function(tfoot, data, start, end, display){",
@@ -4342,7 +4342,7 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>%
           select(-jugador, -key, -`w-l%`, -name, -ID, -first_name, -last_name, -player, -bk,
-                 -ronda,  -resultado, -ir) %>%
+                 -ronda,  -resultado, -ir, -player_id) %>%
           arrange(edad) %>%
           mutate(
             edad = as.numeric(edad),
@@ -4513,7 +4513,7 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(player == input$select_jugador_pit) %>% 
           select(-player, -key, -`w-l%`, -jugador, -name, -first_name, -last_name, -ID, -bk,
-                 -ronda, -ir) %>%
+                 -ronda, -ir, -player_id) %>%
           mutate(
             edad = as.numeric(edad),
             w = as.numeric(w),
@@ -4686,7 +4686,7 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           select(key, player, 1:31) %>% 
           filter(player == input$select_jugador_bat) %>% 
-          select(-jugador, -player, -key, -first_name, -last_name, -ir) %>% 
+          select(-jugador, -player, -key, -ir, -player_id, -ronda, -resultado, -refuerzo) %>% 
           mutate(
             g = as.numeric(g),
             # X5 = as.numeric(X5),
@@ -4798,7 +4798,7 @@ IP <- function(x){
             years = 'Temporadas',
             edad = NROW(edad),
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -4810,7 +4810,7 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(h/`X5`, 3),
+            avg = round(h/ab, 3),
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
@@ -4833,11 +4833,11 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           select(key, player, 1:31) %>% 
           filter(player == input$select_jugador_bat) %>% 
-          select(-jugador, -player, -key, -first_name, -last_name) %>% 
+          select(-jugador, -player, -key, -player_id, -ronda, -resultado, -ir) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
-            X5 = as.numeric(X5),
+            pa = as.numeric(pa),
             ab = as.numeric(ab),
             r = as.numeric(r),
             h = as.numeric(h),
@@ -4847,7 +4847,7 @@ IP <- function(x){
             cs = as.numeric(cs),
             bb = as.numeric(bb),
             so = as.numeric(so),
-            avg = round(h/`X5`, 3),
+            avg = round(h/ab, 3),
             obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
@@ -4867,7 +4867,7 @@ IP <- function(x){
             `Refuerzo` = refuerzo,
             `Edad` = edad,
             `G` = g,
-            `PA` = X5,
+            `PA` = pa,
             `AB` = ab,
             `R` = r,
             `H` = h,
@@ -4951,7 +4951,7 @@ IP <- function(x){
         req(input$select_jugador_bat)
         
         
-        player_summarise <- brs() %>% 
+        player_summarise <- brs() %>%
           filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
@@ -4959,14 +4959,12 @@ IP <- function(x){
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           select(key, player, 1:32) %>% 
           filter(player == input$select_jugador_bat) %>% 
-          select(-jugador) %>%
+          select(-jugador) %>% 
           summarise(
             years = 'Temporadas',
-            resultado = '',
             edad = NROW(edad),
-            refuerzo = '',
             g = sum(g, na.rm = T),
-            X5 = sum(X5, na.rm = T),
+            pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
             h = sum(h, na.rm = T),
@@ -4978,7 +4976,7 @@ IP <- function(x){
             cs = sum(cs, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            avg = round(h/`X5`, 3),
+            avg = round(h/ab, 3),
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
@@ -4988,29 +4986,56 @@ IP <- function(x){
             hbp = sum(hbp, na.rm = T),
             sh = sum(sh, na.rm = T),
             sf = sum(sf, na.rm = T),
+            refuerzo = '',
             .groups = 'drop'
           )
         
         
-        batting_player <- brs() %>% 
+        batting_player <- brs() %>%
           filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           left_join(Rosters() %>% 
                       select(first_name, last_name, key), by = 'key') %>%
           mutate(player = paste0(first_name, " ", last_name)) %>% 
-          select(key, player, 1:32) %>% 
+          select(key, player, 1:31) %>% 
           filter(player == input$select_jugador_bat) %>% 
-          select(-jugador, -player, -key, -first_name, -last_name)
+          select(-jugador, -player, -key, -player_id, -ronda, -resultado, -ir) %>% 
+          mutate(
+            edad = as.numeric(edad),
+            g = as.numeric(g),
+            pa = as.numeric(pa),
+            ab = as.numeric(ab),
+            r = as.numeric(r),
+            h = as.numeric(h),
+            hr = as.numeric(hr),
+            rbi = as.numeric(rbi),
+            sb = as.numeric(sb),
+            cs = as.numeric(cs),
+            bb = as.numeric(bb),
+            so = as.numeric(so),
+            avg = round(h/ab, 3),
+            obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
+            rc = as.numeric(rc),
+            tb = as.numeric(tb),
+            xb = as.numeric(xb),
+            hbp = as.numeric(hbp),
+            sh = as.numeric(sh),
+            sf = as.numeric(sf),
+            `2b` = as.numeric(`2b`),
+            `3b` = as.numeric(`3b`)
+          )
 
         
         
         df <- rbind(batting_player, player_summarise) %>%
-          select(years, 2:27, refuerzo, resultado) %>% 
+          select(years, 2:26, refuerzo) %>% 
           rename(
             `Temporada` = years,
             `Edad` = edad,
             `G` = g,
-            `PA` = X5,
+            `PA` = pa,
             `AB` = ab,
             `R` = r,
             `H` = h,
@@ -5032,17 +5057,9 @@ IP <- function(x){
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf,
-            `Refuerzo` = refuerzo,
-            `Logro` = resultado
+            `Refuerzo` = refuerzo
           ) %>% 
-          arrange(Temporada)  %>% 
-          filter(
-            trimws(PA) != ''  # To filter a empty value in colum AB
-          ) %>% 
-          mutate(Logro = if_else(Logro == 'campeon', 'Campeon', Logro),
-                 Logro = if_else(Logro == 'subcampeon', 'SubCampeon', Logro)
-          ) 
-          # replace(., is.na(.), 0)
+          arrange(Temporada) 
         
         
         if (nrow(df) > 1) {
@@ -5051,7 +5068,7 @@ IP <- function(x){
             "function(thead, data, start, end, display){",
             "  $('th', thead).css('border-bottom', 'none');",
             "}"
-          ) # To deleate header line horizontal in bottom of colums name
+          ) # To delete header line horizontal in bottom of columns name
           
           DT::datatable(
             df,
@@ -5070,8 +5087,8 @@ IP <- function(x){
               rownames = FALSE,
               fixedColumns = list(LeftColumns = 3),
               fixedHeader = TRUE,
-              columnDefs = list(list(className = "dt-center", targets = 0:26),
-                                list(width = '50px', targets = 26)
+              columnDefs = list(list(className = "dt-center", targets = 0:25),
+                                list(width = '50px', targets = 25)
               ),
               headerCallback = JS(headerCallback),
               initComplete = JS(
@@ -5376,7 +5393,7 @@ IP <- function(x){
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
             # ir = sum(ir, na.rm = T),
-            # whip = as.character(round(sum(bb,h, na.rm = TRUE)/ ip), 2),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -5416,7 +5433,7 @@ IP <- function(x){
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             # ir = sum(ir, na.rm = T),
-            # whip = as.character(round(mean(whip, na.rm = T), 2)),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -5522,7 +5539,7 @@ IP <- function(x){
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
           group_by(pais) %>% 
           summarise(
-            jugador = n(),
+            jugador = n_distinct(jugador),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
             g = sum(g, na.rm = T),
@@ -5539,7 +5556,7 @@ IP <- function(x){
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
             # ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -5607,7 +5624,7 @@ IP <- function(x){
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = c(1:21)),
-                              list(width = '120px', targets = 0)),
+                              list(width = '130px', targets = 0)),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -5629,15 +5646,16 @@ IP <- function(x){
         
         # Data ----
         country_bat <- brs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
+          select(key, 1:28) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>%
           group_by(pais, years) %>% 
           summarise(
-            jugador = n(),
+            jugador = n_distinct(jugador),
             g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
@@ -5669,8 +5687,9 @@ IP <- function(x){
         
         
         player_summarise <- brs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
+          select(key, 1:28) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
@@ -5774,7 +5793,351 @@ IP <- function(x){
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = c(1:25)),
-                              list(width = '120px', targets = 0)),
+                              list(width = '140px', targets = 0)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) %>% 
+          formatStyle(
+            'Temporada',
+            target = "row",
+            fontWeight = styleEqual(c('Total'), "bold")
+          )
+        
+      })
+      
+      # Table batting round robin season by country ----
+      output$bateo_rs_country <- renderDataTable({
+        req(input$select_country_bat)
+        
+        # Data ----
+        country_bat <- brs() %>% 
+          filter(ronda == "regular") %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          group_by(pais, years) %>% 
+          summarise(
+            jugador = n_distinct(jugador),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            # ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          arrange(desc(jugador)) %>% 
+          filter(pais == input$select_country_bat)
+        
+        
+        player_summarise <- brs() %>% 
+          filter(ronda == "regular") %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          group_by(pais) %>% 
+          summarise(
+            years = 'Total',
+            jugador = n(),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            # ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          filter(pais == input$select_country_bat)
+        
+        
+        
+        
+        df <- rbind(country_bat, player_summarise) %>% 
+          rename(
+            Pais = pais,
+            Jugadores = jugador,
+            Temporada = years,
+            # `Edad` = edad,
+            `G` = g,
+            `PA` = pa,
+            `AB` = ab,
+            `R` = r,
+            `H` = h,
+            `2B` = '2b',
+            `3B` = '3b',
+            `HR` = hr,
+            `RBI` = rbi,
+            `SB` = sb,
+            `CS` = cs,
+            `BB` = bb,
+            `SO` = so,
+            `AVG` = avg,
+            `OBP` = obp,
+            `SLG` = slg,
+            `OPS` = ops,
+            `RC` = rc,
+            `TB` = tb,
+            `XB` = xb,
+            # `IR` = ir,
+            `HBP` = hbp,
+            `SH` = sh,
+            `SF` = sf
+          ) %>% 
+          arrange(Temporada) 
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          df,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Las estadisticas CS, BB, SO, OBP, SLG, RC, HBP, SH y SF 
+                            son registradas desde la temporada 2005-06')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            ordering = F, # To delete Ordering
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:25)),
+                              list(width = '140px', targets = 0)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) %>% 
+          formatStyle(
+            'Temporada',
+            target = "row",
+            fontWeight = styleEqual(c('Total'), "bold")
+          )
+        
+      })
+      
+      # Table batting finales season by country ----
+      output$bateo_rs_country <- renderDataTable({
+        req(input$select_country_bat)
+        
+        # Data ----
+        country_bat <- brs() %>% 
+          filter(ronda == "regular") %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          group_by(pais, years) %>% 
+          summarise(
+            jugador = n_distinct(jugador),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            # ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          arrange(desc(jugador)) %>% 
+          filter(pais == input$select_country_bat)
+        
+        
+        player_summarise <- brs() %>% 
+          filter(ronda == "regular") %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:28) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          group_by(pais) %>% 
+          summarise(
+            years = 'Total',
+            jugador = n(),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
+            ops = round(sum(slg, obp, na.rm = T), 3),
+            # ir = sum(ir, na.rm = T),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          filter(pais == input$select_country_bat)
+        
+        
+        
+        
+        df <- rbind(country_bat, player_summarise) %>% 
+          rename(
+            Pais = pais,
+            Jugadores = jugador,
+            Temporada = years,
+            # `Edad` = edad,
+            `G` = g,
+            `PA` = pa,
+            `AB` = ab,
+            `R` = r,
+            `H` = h,
+            `2B` = '2b',
+            `3B` = '3b',
+            `HR` = hr,
+            `RBI` = rbi,
+            `SB` = sb,
+            `CS` = cs,
+            `BB` = bb,
+            `SO` = so,
+            `AVG` = avg,
+            `OBP` = obp,
+            `SLG` = slg,
+            `OPS` = ops,
+            `RC` = rc,
+            `TB` = tb,
+            `XB` = xb,
+            # `IR` = ir,
+            `HBP` = hbp,
+            `SH` = sh,
+            `SF` = sf
+          ) %>% 
+          arrange(Temporada) 
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          df,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Las estadisticas CS, BB, SO, OBP, SLG, RC, HBP, SH y SF 
+                            son registradas desde la temporada 2005-06')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            ordering = F, # To delete Ordering
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:25)),
+                              list(width = '140px', targets = 0)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -5798,15 +6161,16 @@ IP <- function(x){
         
         # Data ----
         country_bat <- brs() %>% 
+          filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
+          select(key, 1:28) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>%
           group_by(pais) %>% 
           summarise(
-            jugador = n(),
+            jugador = n_distinct(jugador),
             g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
@@ -5824,7 +6188,7 @@ IP <- function(x){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
-            ir = sum(ir, na.rm = T),
+            # ir = sum(ir, na.rm = T),
             rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
@@ -10148,10 +10512,10 @@ IP <- function(x){
       output$versus_total_pit <- renderDataTable({
         
         # Data ----
-        versus_totales <- prs() %>% 
+        versus_totales <- prs %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters() %>%
+          left_join(Rosters %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, 
                              estado, ciudad), by = 'key') %>%

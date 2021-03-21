@@ -1,4 +1,5 @@
 player_id,years,jugador,name,first_name,last_name,pos,bat,lan,exp,pais,estado,ciudad ,f_nac,ronda
+acealfre001,2014-15,A. Aceves,Alfredo Aceves,Alfredo,Aceves,P,D,D,1,Mexico,Sonora,San Luis Rio Colorado,08/12/82,round robin
 alvalv001,2019-20,A. Alvarez,Alvaro Paul Alvarez,Alvaro,Alvarez,C,D,D,1,Venezuela,Distrito Federal,Caracas,11/23/1997,regular
 alvale001,2020-21,A. Álvarez,Alexander Javier Álvarez,Alexander,Alvarez,C,D,D,2,Venezuela,Distrito Federal,Caracas,9/14/1996,regular
 alvale001,2017-18,A. Álvarez,Alexander Javier Álvarez,Alexander,Alvarez,C,D,D,1,Venezuela,Distrito Federal,Caracas,9/14/1996,regular
@@ -52,9 +53,11 @@ carado001,2018-19,A. Cardona,Adonys José Cardona,Adonys,Cardona,P,D,D,2,Venezue
 carado001,2017-18,A. Cardona,Adonys José Cardona,Adonys,Cardona,P,D,D,1,Venezuela,Vargas,La Sabana,1/16/1994,regular
 casale001,2014-15,A. Castellanos,Alejandro Luis Castellanos,Alejandro,Castellanos,CF,D,D,2,USA,Florida,Miami,8/4/1986,regular
 casale001,2012-13,A. Castellanos,Alejandro Luis Castellanos,Alejandro,Castellanos,CF,D,D,1,USA,Florida,Miami,8/4/1986,regular
+casalbe001,2009-10,A. Castillo,Alberto Castillo,Alberto,Castillo,P,D,D,3,Republica Dominicana,,San Juan De La Maguana,10/02/70,round robin
 colalv001,2008-09,A. Colina,Alvin Enrique Colina,Alvin,Colina,C,D,D,8,Venezuela,Carabobo,Puerto Cabello,12/26/1981,regular
 colalv001,2007-08,A. Colina,Alvin Enrique Colina,Alvin,Colina,C,D,D,7,Venezuela,Carabobo,Puerto Cabello,12/26/1981,regular
 conant001,2018-19,A. Concepcion,Anthony Concepcion,Anthony,Concepcion,RF,D,D,2,Venezuela,Portuguesa,Acarigua,3/23/1995,regular
+condarg001,2000-01,A. Conde,Argenis Conde,Argenis,Conde,P,D,D,15,Venezuela,Anzoategui,Soledad,28/10/1966,round robin
 corant001,1985-86,A. Cordova,Antonio Cordova,Antonio,Cordova,IF,D,D,6,Venezuela,Nueva Esparta,Porlamar,9/12/1961,regular
 corant001,1984-85,A. Cordova,Antonio Cordova,Antonio,Cordova,IF,D,D,5,Venezuela,Nueva Esparta,Porlamar,9/12/1961,regular
 corant001,1983-84,A. Cordova,Antonio Cordova,Antonio,Cordova,IF,D,D,4,Venezuela,Nueva Esparta,Porlamar,9/12/1961,regular
@@ -98,6 +101,7 @@ fitala001,1972-73,A. Fitzmorris,Alan James Fitzmorris,Alan,Fitzmorris,P,A,D,1,US
 freale001,2007-08,A. Freire,Alejandro Freire,Alejandro,Freire,1B,D,D,13,Venezuela,Distrito Federal,Caracas,8/23/1974,regular
 freale001,2006-07,A. Freire,Alejandro Freire,Alejandro,Freire,1B,D,D,12,Venezuela,Distrito Federal,Caracas,8/23/1974,regular
 freale001,2005-06,A. Freire,Alejandro Freire,Alejandro,Freire,1B,D,D,11,Venezuela,Distrito Federal,Caracas,8/23/1974,regular
+galarm001,2011-12,A. Galarraga,Armando Galarraga,Armando,Galarraga,P,D,D,5,Venezuela,Sucre,Cumana,15/01/1982,round robin
 gerand001,2016-17,A. Gerdel,Anderson Denny Gerdel,Anderson,Gerdel,P,D,D,2,Venezuela,Miranda,Charallave,3/22/1993,regular
 gerand001,2014-15,A. Gerdel,Anderson Denny Gerdel,Anderson,Gerdel,P,D,D,1,Venezuela,Miranda,Charallave,3/22/1993,regular
 gomagu001,1998-99,A. Gómez,Agustín Gómez,Agustín,Gómez,P,D,D,6,Venezuela,Distrito Federal,Caracas,10/28/1973,regular
@@ -282,6 +286,7 @@ bucwil001,1970-71,B. Buckner,William Joseph Buckner,William,Buckner,1B,Z,Z,1,USA
 buredw001,1965-66,B. Burda,Edward Robert Burda,Edward,Burda,1B,Z,Z,1,USA,Misuri,St. Louis,7/16/1938,regular
 burbri001,2016-17,B. Burgamy,Brian Randall Burgamy,Brian,Burgamy,LF,A,D,2,USA,Oklahoma,Lawton,6/27/1981,regular
 burbri001,2015-16,B. Burgamy,Brian Randall Burgamy,Brian,Burgamy,LF,A,D,1,USA,Oklahoma,Lawton,6/27/1981,regular
+butbill001,1972-73,B. Butler,William Franklin Butler,Bill,Butler,P,Z,Z,2,USA,Maryland,Hyattsville,12/03/47,round robin
 canbar001,2009-10,B. Canizares,Barbaro Rafael Canizares,Barbaro,Canizares,1B,D,D,2,Cuba,La Habana,,11/21/1979,regular
 cedbla001,2006-07,B. Cedeño,Blas Cedeño,Blas,Cedeño,P,D,D,17,Venezuela,Carabobo,Valencia,11/15/1972,regular
 cedbla001,2005-06,B. Cedeño,Blas Cedeño,Blas,Cedeño,P,D,D,16,Venezuela,Carabobo,Valencia,11/15/1972,regular
@@ -293,6 +298,7 @@ clabry001,1983-84,B. Clark,Bryan Donald Clark,Bryan,Clark,P,Z,Z,4,USA,California
 clabry001,1982-83,B. Clark,Bryan Donald Clark,Bryan,Clark,P,Z,Z,3,USA,California,Madera,7/12/1956,regular
 clarob001,1982-83,B. Clark,Robert Cale Clark,Robert,Clark,CF,D,D,1,USA,California,Sacramento,6/13/1955,regular
 corbra001,2001-02,B. Cornett,Brad Byron Cornett,Brad,Cornett,P,D,D,1,USA,Texas,Lamesa,2/4/1969,regular
+crabob001,2013-14,B. Cramer,Bobby Cramer,Bobby,Cramer,P,Z,Z,1,USA,California,Anaheim,28/10/1979,round robin
 disben001,1989-90,B. Distefano,Benito James Distefano,Benito,Distefano,CF,Z,Z,4,USA,Nueva York,Brooklyn,1/23/1962,regular
 drabri001,1990-91,B. Drahman,Brian Stacy Drahman,Brian,Drahman,P,D,D,1,USA,Kentucky,Kenton,11/7/1966,regular
 durbra001,2009-10,B. Durden,Brandon R. Durden,Brandon,Durden,P,D,Z,1,USA,Georgia,Adel,7/20/1984,regular
@@ -344,10 +350,14 @@ pulwil001,2002-03,B. Pulsipher,William Thomas Pulsipher,William,Pulsipher,P,Z,Z,
 razbarr001,1973-74,B. Raziano,Barry John Raziano,Barry,Raziano,P,A,D,4,USA,Luisiana,New Orleans,2/5/1947,regular
 salbra001,2020-21,B. Salaya,Brayan Salaya,Brayan,Salaya,P,D,D,1,Venezuela,Distrito Federal,Caracas,2/13/2000,regular
 sanbru001,2008-09,B. Sánchez,Bruno Sánchez,Bruno,Sánchez,P,D,D,1,Venezuela,Aragua,,11/8/1986,regular
+scabob001,2000-01,B. Scanlan,Bob Scanlan,Bobby,Scanlan,P,D,D,1,USA,California,Los Angeles,09/08/66,round robin
 sanbru001,2012-13,B. Short,Brandon Lydell Short,Brandon,Short,CF,D,D,1,USA,Maryland,St. Marys County,9/9/1988,regular
 sinben001,2002-03,B. Simon,Benji Simon,Benji,Simon,P,D,D,2,USA,Ohio,Elyra,11/12/1974,regular
 smical001,1971-72,B. Smith,Calvin Bernard Smith,Calvin,Smith,CF,D,D,1,USA,Luisiana,Ponchatoula,9/4/1941,regular
 stabro001,2016-17,B. Stassi,Brock James Stassi,Brock,Stassi,1B,Z,Z,2,USA,California,Sacramento,8/7/1989,regular
+suebru001,2013-14,B. Suero,Brudelin Suero,Brudelin,Suero,P,Z,Z,1,Republica Dominicana,Santo Domingo,,28/02/1990,round robin
+swebri001,2011-12,B. Sweeney,Brian Sweeney,Brian,Sweeney,P,D,D,4,USA,New York,Yorkens,13/06/1974,finales
+swebri001,2011-12,B. Sweeney,Brian Sweeney,Brian,Sweeney,P,D,D,4,USA,New York,Yorkens,13/06/1974,round robin
 torber001,1998-99,B. Torres,Bernardino Torres,Bernardino,Torres,SS,D,D,1,Venezuela,Carabobo,Valencia,12/26/1979,regular
 vanben001,1996-97,B. VanRyn,Benjamin Ashley VanRyn,Benjamin,VanRyn,P,Z,Z,2,USA,Indiana,Fort Wayne,8/9/1971,regular
 vilbra001,2015-16,B. Villarreal,Brayan René Villarreal,Brayan,Villarreal,P,D,D,6,Venezuela,Vargas,La Guaira,5/10/1987,regular
@@ -577,6 +587,7 @@ gordar001,2014-15,D. Gorski,Darin Walter Gorski,Darin,Gorski,P,Z,Z,1,USA,Pensiln
 gradan001,1980-81,D. Graham,Daniel Jay Graham,Daniel,Graham,IF,Z,D,3,USA,Arizona,Ray,,regular
 gradan001,1979-80,D. Graham,Daniel Jay Graham,Daniel,Graham,IF,Z,D,2,USA,Arizona,Ray,,regular
 hardon001,1992-93,D. Harris,Donald Harris,Donald,Harris,CF,D,D,1,USA,Texas,Waco,,regular
+hurdan001,2016-17,D. Hurtado,Daniel Hurtado,Daniel,Hurtado,P,D,D,4,Venezuela,Miranda,Los Teques,25/07/1992,round robin
 infdie001,2020-21,D. Infante,Diego Infante,Diego,Infante,RF,D,D,1,Venezuela,Vargas,Macuto,10/22/1999,regular
 johdav001,1964-65,D. Johnson,David Charles Johnson,David,Johnson,IF,D,D,1,USA,Texas,Abilene,,regular
 knodar001,1964-65,D. Knowles,Darold Duane Knowles,Darold,Knowles,P,Z,Z,1,USA,Misuri,Brunswick,,regular
@@ -623,6 +634,7 @@ polric001,1976-77,D. Pole,Richard Henry Pole,Richard,Pole,P,D,D,2,USA,Michigan,T
 powdan001,1999-00,D. Powell,Le Jon Dante Powell,Dante,Powell,CF,D,D,1,USA,California,Long Beach,,regular
 powden001,1991-92,D. Powell,Dennis Clay Powell,Dennis,Powell,P,D,Z,2,USA,Georgia,Moultrie,,regular
 rajdav001,1980-81,D. Rajsich,David Christopher Rajsich,David,Rajsich,P,Z,Z,1,USA,Ohio,Youngstown,,regular
+ramdan001,1991-92,D. Rambo,Daniel Rambo,Daniel,Rambo,P,D,D,1,USA,Michigan,Grayling,01/10/66,round robin
 reidim001,2005-06,D. Reina,Dimas Reina,Dimas,Reina,P,D,D,4,Venezuela,Distrito Federal,Caracas,,regular
 reidim001,2003-04,D. Reina,Dimas Reina,Dimas,Reina,P,D,D,3,Venezuela,Distrito Federal,Caracas,,regular
 reidim001,2001-02,D. Reina,Dimas Reina,Dimas,Reina,P,D,D,2,Venezuela,Distrito Federal,Caracas,,regular
@@ -746,6 +758,7 @@ gutenr001,1969-70,E. Gutierrez,Enrique Gutierrez,Enrique,Gutierrez,CF,D,D,5,Vene
 gutenr001,1968-69,E. Gutierrez,Enrique Gutierrez,Enrique,Gutierrez,CF,D,D,4,Venezuela,Sucre,Cumana,,regular
 gutenr001,1967-68,E. Gutierrez,Enrique Gutierrez,Enrique,Gutierrez,CF,D,D,3,Venezuela,Sucre,Cumana,,regular
 gutenr001,1966-67,E. Gutierrez,Enrique Gutierrez,Enrique,Gutierrez,CF,D,D,2,Venezuela,Sucre,Cumana,,regular
+harest001,2016-17,E. Haro,Esteban Haro,Esteba,Haro,P,D,D,1,Mexico,,Los Mochis,11/11/85,round robin
 herenz001,1978-79,E. Hernández,Enzo Octavio Hernández,Enzo,Hernández,SS,D,D,11,Venezuela,Anzoategui,Valle de Guanape,2/12/1949,regular
 herenz001,1976-77,E. Hernández,Enzo Octavio Hernández,Enzo,Hernández,SS,D,D,10,Venezuela,Anzoategui,Valle de Guanape,2/12/1949,regular
 herenz001,1974-75,E. Hernández,Enzo Octavio Hernández,Enzo,Hernández,SS,D,D,8,Venezuela,Anzoategui,Valle de Guanape,2/12/1949,regular
@@ -762,6 +775,7 @@ idreud001,2018-19,E. Idrogo,Eudis Joel Idrogo,Eudis,Idrogo,P,Z,Z,3,Venezuela,Anz
 idreud001,2015-16,E. Idrogo,Eudis Joel Idrogo,Eudis,Idrogo,P,Z,Z,2,Venezuela,Anzoategui,,6/6/1995,regular
 idreud001,2014-15,E. Idrogo,Eudis Joel Idrogo,Eudis,Idrogo,P,Z,Z,1,Venezuela,Anzoategui,,6/6/1995,regular
 jimedu001,2020-21,E. Jiménez,Eduardo Jiménez,Eduardo,Jiménez,P,D,D,1,Venezuela,Sucre,Araya,4/4/1995,regular
+lizedg001,2009-10,E. Lizarraga,Edgar Lizarraga,Edgar,Lizarraga,P,D,D,1,Mexico,,Culiacan,27/01/1981,round robin
 maredw001,1994-95,E. Marquez,Edwin Marquez,Edwin,Marquez,C,D,D,11,Venezuela,Anzoategui,Puerto la Cruz,1/6/1965,regular
 maredw001,1992-93,E. Marquez,Edwin Marquez,Edwin,Marquez,C,D,D,10,Venezuela,Anzoategui,Puerto la Cruz,1/6/1965,regular
 maredw001,1991-92,E. Marquez,Edwin Marquez,Edwin,Marquez,C,D,D,9,Venezuela,Anzoategui,Puerto la Cruz,1/6/1965,regular
@@ -777,6 +791,7 @@ milledw001,1984-85,E. Miller,Edward Lee Miller,Edward,Miller,CF,A,D,4,USA,Califo
 moxedw001,1966-67,E. Moxey,Edward Moxey,Edward,Moxey,C,,,1,USA,,,,regular
 nuneva001,1972-73,E. Nuñez,Evangelista Nuñez,Evangelista,Nuñez,2B,D,D,4,Venezuela,Falcon,Punta Iguana,,regular
 pereri001,2000-01,E. Pérez,Erick Pérez,Erick,Pérez,P,Z,Z,10,Venezuela,Distrito Federal,Caracas,,regular
+quiedw001,2015-16,E. Quirarte,Edwin Quirarte,Edwin,Quirarte,P,D,D,3,USA,California,,20/12/1986,round robin
 ramedu001,2019-20,E. Ramos,Edubray Eduar Ramos,Edubray,Ramos,P,D,D,2,Venezuela,Distrito Federal,Caracas,,regular
 ramedu001,2015-16,E. Ramos,Edubray Eduar Ramos,Edubray,Ramos,P,D,D,1,Venezuela,Distrito Federal,Caracas,,regular
 ramedy001,2009-10,E. Ramos,Eddy N. Ramos,Eddy,Ramos,P,A,D,2,Republica Dominicana,Santo Domingo,,,regular
@@ -813,8 +828,8 @@ arefel001,1998-99,F. Arellan,Félix Arellan,Félix,Arellan,P,D,D,1,Venezuela,Var
 borfra001,1966-67,F. Borges,Francisco Borges,Francisco,Borges,C,D,D,3,Venezuela,Vargas,La Guaira,,regular
 borfra001,1965-66,F. Borges,Francisco Borges,Francisco,Borges,C,D,D,2,Venezuela,Vargas,La Guaira,,regular
 borfra001,1963-64,F. Borges,Francisco Borges,Francisco,Borges,C,D,D,1,Venezuela,Vargas,La Guaira,,regular
-butfra001,2019-20,F. Buttó,Francisco Luis Buttó,Francisco,Buttó,P,D,D,20,Venezuela,Monagas,Maturin,,regular
-butfra001,2018-19,F. Buttó,Francisco Luis Buttó,Francisco,Buttó,P,D,D,19,Venezuela,Monagas,Maturin,,regular
+butfra001,2019-20,F. Buttó,Francisco Luis Buttó,Francisco,Buttó,P,D,D,20,Venezuela,Monagas,Maturin,11/05/82,regular
+butfra001,2018-19,F. Buttó,Francisco Luis Buttó,Francisco,Buttó,P,D,D,19,Venezuela,Monagas,Maturin,11/05/82,regular
 camfra001,1997-98,F. Campos,Frank Campos,Frank,Campos,P,D,D,12,Venezuela,Distrito Federal,Caracas,2/23/1969,regular
 camfra001,1996-97,F. Campos,Frank Campos,Frank,Campos,P,D,D,11,Venezuela,Distrito Federal,Caracas,2/23/1969,regular
 camfra001,1995-96,F. Campos,Frank Campos,Frank,Campos,P,D,D,10,Venezuela,Distrito Federal,Caracas,2/23/1969,regular
@@ -825,9 +840,11 @@ camfra001,1991-92,F. Campos,Frank Campos,Frank,Campos,P,D,D,6,Venezuela,Distrito
 camfra001,1990-91,F. Campos,Frank Campos,Frank,Campos,P,D,D,5,Venezuela,Distrito Federal,Caracas,2/23/1969,regular
 camfra001,1989-90,F. Campos,Frank Campos,Frank,Campos,P,D,D,4,Venezuela,Distrito Federal,Caracas,2/23/1969,regular
 camfra001,1988-89,F. Campos,Frank Campos,Frank,Campos,P,D,D,3,Venezuela,Distrito Federal,Caracas,2/23/1969,regular
-chafra001,1998-99,F. Charles,Frank Charles,Frank,Charles,C,D,D,1,USA,California,Fontana,,regular
-deleul001,2015-16,F. De La Cruz,Eulogio De La Cruz Martínez,Eulogio,De la  Cruz,P,D,D,1,Republica Dominicana,Santo Domingo,,,regular
+chafra001,1998-99,F. Charles,Frank Charles,Frank,Charles,C,D,D,1,USA,California,Fontana,2/23/1969,regular
+deleul001,2015-16,F. De La Cruz,Eulogio De La Cruz Martínez,Eulogio,De la  Cruz,P,D,D,1,Republica Dominicana,Santo Domingo,,12/03/84,regular
+doufel001,2019-20,F. Doubront,Felix Doubront,Felix,Doubront,P,Z,Z,4,Venezuela,Carabobo,Puerto Cabello,23/10/1987,round robin
 escfel001,2006-07,F. Escalona,Félix Eduardo Escalona,Félix,Escalona,SS,D,D,8,Venezuela,Carabobo,Puerto Cabello,,regular
+felfra001,2008-09,F. Felix,Francisco  Felix,Francisco ,Felix,P,D,D,1,Mexico,,Culiacan,28/07/1983,round robin
 ferfran001,1967-68,F. Fernández,Frank Fernández,Frank,Fernández,C,D,D,1,USA,Nueva York,Staten Island,,regular
 gutfer001,2004-05,F. Gutierrez,Fernando Gutierrez,Fernando,Gutierrez,P,D,D,3,Venezuela,Portuguesa,Acarigua,,regular
 herfer001,2014-15,F. Hernández,Fernando Hernández,Fernando,Hernández,P,D,D,4,USA,Florida,Miami,,regular
@@ -939,6 +956,7 @@ fergab001,1979-80,G. Ferrer,Gabriel Ferrer,Gabriel,Ferrer,CF,Z,Z,4,Venezuela,Zul
 fergab001,1978-79,G. Ferrer,Gabriel Ferrer,Gabriel,Ferrer,CF,Z,Z,3,Venezuela,Zulia,Cabimas,12/27/1958,regular
 fergab001,1977-78,G. Ferrer,Gabriel Ferrer,Gabriel,Ferrer,CF,Z,Z,2,Venezuela,Zulia,Cabimas,12/27/1958,regular
 fergab001,1976-77,G. Ferrer,Gabriel Ferrer,Gabriel,Ferrer,CF,Z,Z,1,Venezuela,Zulia,Cabimas,12/27/1958,regular
+gonger001,2003-04,G. González,Geremi González,Geremi ,González,P,D,D,11,Venezuela,Zulia,Maracaibo,08/01/75,round robin
 guegeu001,2016-17,G. Guerra,Geudy Egla Guerra,Geudy,Guerra,P,D,D,4,Venezuela,Nueva Esparta,Margarita,8/13/1993,regular
 heigor001,1984-85,G. Heimuller,Gorman Heimuller,Gorman,Heimuller,P,Z,Z,2,USA,California,Los Angeles,9/24/1955,regular
 hergab001,2010-11,G. Hernández,Gabriel Hernández,Gabriel,Hernández,P,D,D,1,USA,Florida,Miami,5/21/1986,regular
@@ -973,8 +991,11 @@ matgus001,2002-03,G. Mata,Gustavo Mata,Gustavo,Mata,P,D,D,1,Venezuela,Sucre,Caru
 mckgor001,1963-64,G. Mckenzie,Gordon Mckenzie,Gordon,Mckenzie,C,,,1,USA,,,,regular
 medgab001,2010-11,G. Medina,Gabriel Enrique Medina,Gabriel,Medina,P,D,D,1,Venezuela,Zulia,Maracaibo,2/17/1984,regular
 mingre001,1977-78,G. Minton,Gregory Brian Minton,Gregory,Minton,P,A,D,1,USA,Texas,Lubbock,7/29/1951,regular
+mosgui001,2019-20,G. Moscoso,Guillermo Moscoso,Guillermo,Moscoso,P,D,D,10,Venezuela,Aragua,Maracay,14/11/1983,round robin
 norgre001,1998-99,G. Norton,Gregory Blakemoor Norton,Gregory,Norton,3B,A,D,2,USA,California,San Leandro,7/6/1972,regular
 norgre001,1997-98,G. Norton,Gregory Blakemoor Norton,Gregory,Norton,3B,A,D,1,USA,California,San Leandro,7/6/1972,regular
+pargra001,1966-67,G. Parra,Graciano Parra,Graciano,Parra,P,D,D,4,Venezuela,Zulia,Maracaibo,04/08/43,round robin
+pargra001,1966-67,G. Parra,Graciano Parra,Graciano,Parra,P,D,D,4,Venezuela,Zulia,Maracaibo,04/08/43,finales
 pergre001,1990-91,G. Perschke,Gregory Perschke,Gregory,Perschke,P,D,D,1,USA,Indiana,La Ponte,8/3/1967,regular
 petgar001,1983-84,G. Pettis,Gary George Pettis,Gary,Pettis,CF,A,D,2,USA,California,Oakland,4/3/1958,regular
 pingus001,1994-95,G. Pinto,Gustavo Pinto,Gustavo,Pinto,P,D,D,8,Venezuela,Miranda,Higuerote,6/15/1969,regular
@@ -1207,6 +1228,7 @@ camjua001,1965-66,J. Campos,Juan Campos,Juan,Campos,P,D,D,4,Venezuela,Miranda,Pe
 camjua001,1964-65,J. Campos,Juan Campos,Juan,Campos,P,D,D,3,Venezuela,Miranda,Petare,11/24/1940,regular
 camjua001,1963-64,J. Campos,Juan Campos,Juan,Campos,P,D,D,2,Venezuela,Miranda,Petare,11/24/1940,regular
 camjua001,1962-63,J. Campos,Juan Campos,Juan,Campos,P,D,D,1,Venezuela,Miranda,Petare,11/24/1940,regular
+capjos001,2013-14,J. Capellan,Jose Francisco Capellan,Jose,Capellan,P,D,D,1,Republica Dominicana,,Couti,13/01/1981,round robin
 carjos001,1979-80,J. Cardenal,José Rosario Domec Cardenal,José,Cardenal,CF,D,D,8,Cuba,Matanzas,,10/7/1943,regular
 carjos001,1978-79,J. Cardenal,José Rosario Domec Cardenal,José,Cardenal,CF,D,D,7,Cuba,Matanzas,,10/7/1943,regular
 carjos001,1977-78,J. Cardenal,José Rosario Domec Cardenal,José,Cardenal,CF,D,D,6,Cuba,Matanzas,,10/7/1943,regular
@@ -1245,6 +1267,7 @@ cenang001,1999-00,J. Centeno,Ángel José Centeno,Ángel,Centeno,P,Z,Z,8,Venezue
 cenang001,1998-99,J. Centeno,Ángel José Centeno,Ángel,Centeno,P,Z,Z,7,Venezuela,Anzoategui,El Tigrito,11/9/1972,regular
 coljav001,2008-09,J. Colina,Javier José Colina,Javier,Colina,3B,D,D,11,Venezuela,Yaracuy,San Felipe,2/15/1979,regular
 coljav001,2007-08,J. Colina,Javier José Colina,Javier,Colina,3B,D,D,10,Venezuela,Yaracuy,San Felipe,2/15/1979,regular
+coljes001,2009-10,J. Colome,Jesus Colome,Jesus,Colome,P,D,D,1,Republica Dominicana,,San Pedro de Macoris,23/12/1977,round robin
 conjos001,2007-08,J. Contreras,José A. Contreras,José,Contreras,SS,A,D,2,Venezuela,Distrito Federal,Caracas,4/26/1985,regular
 conjos001,2006-07,J. Contreras,José A. Contreras,José,Contreras,SS,A,D,1,Venezuela,Distrito Federal,Caracas,4/26/1985,regular
 corjul001,2006-07,J. Cordido,Julio César Cordido Mejias,Julio,Cordido,3B,D,D,9,Venezuela,Yaracuy,San Felipe,7/30/1980,regular
@@ -1333,6 +1356,7 @@ guejun001,2011-12,J. Guerra,Junior J. Guerra,Junior,Guerra,P,D,D,4,Venezuela,Bol
 guejun001,2010-11,J. Guerra,Junior J. Guerra,Junior,Guerra,P,D,D,3,Venezuela,Bolivar,San Felix,1/16/1985,regular
 guejun001,2009-10,J. Guerra,Junior J. Guerra,Junior,Guerra,P,D,D,2,Venezuela,Bolivar,San Felix,1/16/1985,regular
 guejun001,2008-09,J. Guerra,Junior J. Guerra,Junior,Guerra,P,D,D,1,Venezuela,Bolivar,San Felix,1/16/1985,regular
+gutjua001,2007-08,J. Gutierrez,Juan Carlos gutierrez,Juan,Gutierrez,P,D,D,5,Venezuela,Anzoategui,Puerto La Cruz,14/07/1983,round robin
 halwil001,2017-18,J. Hale,Willie Paul Jacob Hale,Willie,Hale,P,D,D,3,USA,Ohio,Athens,12/11/1985,regular
 halwil001,2016-17,J. Hale,Willie Paul Jacob Hale,Willie,Hale,P,D,D,2,USA,Ohio,Athens,12/11/1985,regular
 halwil001,2015-16,J. Hale,Willie Paul Jacob Hale,Willie,Hale,P,D,D,1,USA,Ohio,Athens,12/11/1985,regular
@@ -1360,6 +1384,7 @@ herjos002,1964-65,J. Herrera,José Concepcion Herrera Ontiveros,José,Herrera,IF
 herjos002,1963-64,J. Herrera,José Concepcion Herrera Ontiveros,José,Herrera,IF,D,D,1,Venezuela,Zulia,San Lorenzo,4/8/1942,regular
 hofjam001,2011-12,J. Hoffmann,Jamie Richard Hoffmann,Jamie,Hoffmann,CF,D,D,2,USA,Minnesota,New Ulm,8/20/1984,regular
 hubjon001,2010-11,J. Huber,Jonathon Lloyd Huber,Jonathon,Huber,P,D,D,1,USA,California,Sacramento,7/7/1981,regular
+hunjon001,2011-12,J. Hunton,Jon Hunton,Jon,Hunton,P,D,D,1,USA,New Jersey,Plainfield,30/11/1982,finales
 hurjam001,1995-96,J. Hurts,James Hurts,James,Hurts,P,Z,Z,3,USA,Florida,Plantation,6/1/1967,regular
 hurjam001,1994-95,J. Hurts,James Hurts,James,Hurts,P,Z,Z,2,USA,Florida,Plantation,6/1/1967,regular
 hurjam001,1993-94,J. Hurts,James Hurts,James,Hurts,P,Z,Z,1,USA,Florida,Plantation,6/1/1967,regular
@@ -1368,6 +1393,7 @@ infjes001,2014-15,J. Infante,Juan C Infante,Juan,Infante,SS,A,D,3,Venezuela,Dist
 infjos001,1964-65,J. Infante,José Infante,José,Infante,P,Z,Z,2,Venezuela,Zulia,Maracaibo,4/6/1944,regular
 infjos001,1963-64,J. Infante,José Infante,José,Infante,P,Z,Z,1,Venezuela,Zulia,Maracaibo,4/6/1944,regular
 jetjoh001,1973-74,J. Jeter,John Jeter,John,Jeter,CF,D,D,2,USA,Luisiana,Shreveport,10/24/1944,regular
+jimjos001,2011-12,J. Jiménez,Jose Miguel Jimenez,Jose,Jiménez,P,Z,Z,2,Venezuela,Barinas,Barinas,23/03/1987,round robin
 joujam001,2006-07,J. Journell,James Richard Journell,James,Journell,P,D,D,1,USA,Ohio,Springfield,12/29/1977,regular
 juljor001,2010-11,J. Julio,Jorge Dandys Julio Tapia,Jorge,Julio,P,D,D,13,Venezuela,Distrito Federal,Caracas,3/3/1979,regular
 juljor001,2004-05,J. Julio,Jorge Dandys Julio Tapia,Jorge,Julio,P,D,D,8,Venezuela,Distrito Federal,Caracas,3/3/1979,regular
@@ -1382,6 +1408,7 @@ jurjam001,2004-05,J. Jurries,James Jurries,James,Jurries,1B,D,D,1,USA,Texas,Free
 keljer001,1982-83,J. Keller,Jerry Keller,Jerry,Keller,1B,D,D,2,USA,Michigan,Royal Oak,2/9/1955,regular
 lanjas001,2008-09,J. Lane,Jason Dean Lane,Jason,Lane,CF,D,Z,4,USA,California,Santa Rosa,12/22/1976,regular
 layjes001,1987-88,J. Laya,Jesús Laya,Jesús,Laya,C,D,D,1,Venezuela,Vargas,Maiquetia,1/14/1968,regular
+lehjus001,2008-09,J. Lehr,Justin Lehr,Justin,Lehr,P,D,D,1,USA,California,Orangeburg,03/08/77,round robin
 leijoh001,1988-89,J. Leister,John William Leister,John,Leister,P,D,D,1,USA,Texas,San Antonio,030/01/1961,regular
 lewjam001,1983-84,J. Lewis,James Martín Lewis,James,Lewis,P,D,D,1,USA,Florida,Miami,10/12/1955,regular
 linjon001,2014-15,J. Link,Jon Paul Link,Jon,Link,P,D,D,5,USA,Ohio,Columbus,3/23/1984,regular
@@ -1488,6 +1515,7 @@ ortjos001,2008-09,J. Ortiz,Joseph Ortiz,Joseph,Ortiz,P,Z,Z,1,Venezuela,Distrito 
 ovajua001,2009-10,J. Ovalles,Juan Carlos Ovalles,Juan,Ovalles,P,D,D,8,Venezuela,Distrito Federal,Caracas,5/15/1982,regular
 ovajua001,2008-09,J. Ovalles,Juan Carlos Ovalles,Juan,Ovalles,P,D,D,7,Venezuela,Distrito Federal,Caracas,5/15/1982,regular
 ovajos001,1963-64,J. Ovalles,José Ovalles,José,Ovalles,1B,D,D,2,Venezuela,Anzoategui,El Tigrito,7/29/1942,regular
+ovijos001,2009-10,J. Oviedo,Jose Oviedo,Jose,Oviedo,P,D,D,1,Venezuela,Lara,Cabudare,30/11/1988,round robin
 owejer001,2005-06,J. Owens,Jerry Lee Owens,Jerry,Owens,CF,Z,Z,1,USA,California,Hollywood,2/16/1981,regular
 padjua001,1990-91,J. Padilla,Juan Padilla,Juan,Padilla,CF,,,5,Venezuela,Anzoategui,Cantaura,1/10/1964,regular
 padjua001,1989-90,J. Padilla,Juan Padilla,Juan,Padilla,CF,,,4,Venezuela,Anzoategui,Cantaura,1/10/1964,regular
@@ -1540,6 +1568,8 @@ ricjua001,2008-09,J. Richardson,Juan Miguel Richardson,Juan,Richardson,1B,D,D,1,
 riejor001,2008-09,J. Riera,Jorge Riera,Jorge,Riera,P,D,D,3,Venezuela,,,6/17/1983,regular
 riejor001,2006-07,J. Riera,Jorge Riera,Jorge,Riera,P,D,D,2,Venezuela,,,6/17/1983,regular
 riejor001,2005-06,J. Riera,Jorge Riera,Jorge,Riera,P,D,D,1,Venezuela,,,6/17/1983,regular
+rinjua001,2016-17,J. Rincon,Junior Rincon,Junior,Rincon,P,D,D,1,Republica Dominicana,,Santo Domingo,07/12/91,round robin
+rinjua001,2003-04,J. Rincon,Juan Rinco,Juan ,Rincon,P,D,D,7,Venezuela,Zulia,Maracaibo,23/01/1979,round robin
 rizjes001,1963-64,J. Rizales,Jesús Rizales,Jesús,Rizales,P,D,D,1,Venezuela,Anzoategui,Barcelona,1/20/1942,regular
 rodjos001,2019-20,J. Rodríguez,José Alexander Rodríguez,José,Rodríguez,P,D,D,2,Venezuela,Lara,Barquisimeto,3/18/1995,regular
 rodjos001,2018-19,J. Rodríguez,Jorma J Rodríguez,Jorma,Rodríguez,2B,D,D,3,Venezuela,Aragua,Palo Negro,3/25/1996,regular
@@ -1564,12 +1594,15 @@ saijos001,1967-68,J. Saiz,José Saiz,José,Saiz,CF,D,D,1,Venezuela,Anzoategui,Ba
 saljos001,2003-04,J. Salas,José Salas,José,Salas,1B,D,D,3,Venezuela,Distrito Federal,Caracas,2/16/1982,regular
 saljos001,2002-03,J. Salas,José Salas,José,Salas,1B,D,D,2,Venezuela,Distrito Federal,Caracas,2/16/1982,regular
 saljos001,1999-00,J. Salas,José Salas,José,Salas,1B,D,D,1,Venezuela,Distrito Federal,Caracas,2/16/1982,regular
+seljef001,1986-87,J. Sellers,Jeff Sellers,Jeff,Sellers,P,D,D,1,USA,California,Compton,11/05/64,finales
+seljef001,1986-87,J. Sellers,Jeff Sellers,Jeff,Sellers,P,D,D,1,USA,California,Compton,11/05/64,round robin
 simjas001,2010-11,J. Simontacchi,Jason William Simontacchi,Jason,Simontacchi,P,D,D,4,USA,California,Mountain View,11/13/1973,regular
 smijam001,1979-80,J. Smith,James Lorne Smith,James,Smith,SS,D,D,1,USA,California,Santa Monica,9/8/1954,regular
 soljes001,2011-12,J. Solorzano,Jesús Solorzano,Jesús,Solorzano,CF,D,D,1,Venezuela,Anzoategui,Barcelona,8/8/1990,regular
 sosjun001,2020-21,J. Sosa,Junior Sosa,Junior,Sosa,CF,Z,Z,7,Venezuela,Miranda,,10/3/1990,regular
 sosjun001,2019-20,J. Sosa,Junior Sosa,Junior,Sosa,CF,Z,Z,6,Venezuela,Miranda,,10/3/1990,regular
 sosjun001,2018-19,J. Sosa,Junior Sosa,Junior,Sosa,CF,Z,Z,5,Venezuela,Miranda,,10/3/1990,regular
+sosjua001,2016-17,J. Sosa,Juan Sosa,Juan ,Sosa,P,D,D,1,Republica Dominicana,,Santo Domingo,11/10/89,round robin
 suljua001,2014-15,J. Sulbaran,Juan Carlos Antonio Sulbaran,Juan,Sulbaran,P,D,D,1,USA,Florida,Davie,11/9/1989,regular
 terjer001,1978-79,J. Terrell,Jerry Wayne Terrell,Jerry,Terrell,SS,D,D,3,USA,Minnesota,Waseca,7/13/1946,regular
 tesjay001,2001-02,J. Tessmer,Jay Tessmer,Jay,Tessmer,P,D,D,1,USA,Pensilnavia,Meadville,12/26/1971,regular
@@ -1652,6 +1685,8 @@ reekei001,2004-05,K. Reed,Keith A. Reed,Keith,Reed,CF,D,D,1,USA,Massachusetts,Ya
 regkri001,2014-15,K. Regas,Kristopher L Regas,Kristopher,Regas,P,Z,Z,1,USA,Illinois,Kankakee,10/8/1978,regular
 rhokar001,1993-94,K. Rhodes,Karl Derrick Rhodes,Karl,Rhodes,CF,Z,Z,3,USA,Ohio,Cincinnati,8/21/1968,regular
 rogken001,1988-89,K. Rogers,Kenneth Scott Rogers,Kenneth,Rogers,P,Z,Z,1,USA,Georgia,Savannah,11/10/1964,regular
+sanken001,1964-65,K. Sanders,Ken Sanders,Ken,Sanders,P,D,D,2,USA,Misuri,St. Louis,08/07/41,finales
+snwkra001,2016-17,K. Sneed,kramer Sneed,Kramer,Sneed,P,Z,Z,1,USA,Carolina del Norte,Winterville,07/10/88,round robin
 valker001,1996-97,K. Valrie,Kerry Lavell Valrie,Kerry,Valrie,CF,D,D,1,USA,Alabama,Mobile,10/31/1968,regular
 kenvil001,2014-15,K. Villegas,Kender Villegas,Kender,Villegas,P,D,D,2,Venezuela,Distrito Federal,Caracas,6/8/1993,regular
 kenvil001,2011-12,K. Villegas,Kender Villegas,Kender,Villegas,P,D,D,1,Venezuela,Distrito Federal,Caracas,6/8/1993,regular
@@ -1709,6 +1744,7 @@ herlui001,2007-08,L. Hernández,Luis A. Hernández Mendoza,Luis,Hernández,SS,A,
 herlui001,2006-07,L. Hernández,Luis A. Hernández Mendoza,Luis,Hernández,SS,A,D,3,Venezuela,Lara,Quibor,6/26/1984,regular
 herlui001,2005-06,L. Hernández,Luis A. Hernández Mendoza,Luis,Hernández,SS,A,D,2,Venezuela,Lara,Quibor,6/26/1984,regular
 herlui001,2004-05,L. Hernández,Luis A. Hernández Mendoza,Luis,Hernández,SS,A,D,1,Venezuela,Lara,Quibor,6/26/1984,regular
+irvluk001,2016-17,L. Irvine,Luke Irvine,Luke,Irvine,P,D,D,1,USA,Oklahoma,Grove,01/12/88,round robin
 jaslar001,1969-70,L. Jaster,Larry Edward Jaster,Larry,Jaster,P,Z,Z,1,USA,Michigan,Midland,1/13/1944,regular
 johlou001,1963-64,L. Johnson,Louis Brown Johnson,Louis,Johnson,CF,D,D,2,USA,Kentucky,Lexington,9/22/1934,regular
 lanlui001,2006-07,L. Landaeta,Luis Oswaldo Landaeta,Luis,Landaeta,CF,Z,Z,12,Venezuela,Carabobo,Valencia,3/4/1977,regular
@@ -1834,6 +1870,7 @@ vazlui001,1990-91,L. Vázquez,Luis Eduardo Vázquez,Luis,Vázquez,P,D,D,5,Venezu
 villui001,2019-20,L. Villegas,Luis Villegas,Luis,Villegas,C,D,D,4,Venezuela,Aragua,Maracay,12/2/1992,regular
 villui001,2018-19,L. Villegas,Luis Villegas,Luis,Villegas,C,D,D,3,Venezuela,Aragua,Maracay,12/2/1992,regular
 villui001,2017-18,L. Villegas,Luis Villegas,Luis,Villegas,C,D,D,2,Venezuela,Aragua,Maracay,12/2/1992,regular
+vizlui001,2014-15,L. Vizcaino,Luis Vizcaino Arias,Luis,Vizcaino,P,D,D,1,Republica Dominicana,,Bani,06/08/74,round robin
 walles001,2012-13,L. Walrond,Leslie Dale Walrond,Leslie,Walrond,P,Z,Z,3,USA,Oklahoma,Muskogee,11/7/1976,regular
 walles001,2011-12,L. Walrond,Leslie Dale Walrond,Leslie,Walrond,P,Z,Z,2,USA,Oklahoma,Muskogee,11/7/1976,regular
 whilar001,1981-82,L. Whisenton,Larry Whisenton,Larry,Whisenton,CF,Z,Z,1,USA,Misuri,St. Louis,7/3/1956,regular
@@ -1862,6 +1899,7 @@ bommar001,1997-98,M. Bovee,Michael Craig Bovee,Michael,Bovee,P,D,D,1,USA,Califor
 bovmic001,2019-20,M. Burgos,Miguel Ramiro Burgos,Miguel,Burgos,P,Z,Z,3,Venezuela,Carabobo,Valencia,6/16/1995,regular
 bovmic001,2018-19,M. Burgos,Miguel Ramiro Burgos,Miguel,Burgos,P,Z,Z,2,Venezuela,Carabobo,Valencia,6/16/1995,regular
 busmic001,2000-01,M. Busby,Michael James Busby,Michael,Busby,P,D,D,1,USA,California,Lomita,12/27/1972,regular
+calmic001,2000-01,M. Callaway,Mickey Callaway,Mickey,Callaway,P,D,D,2,USA,Tennessee,Memphis,13/05/1975,round robin
 carmah001,1994-95,M. Carrera,Mahali Carrera,Mahali,Carrera,IF,A,D,4,Venezuela,Lara,Barquisimeto,8/13/1971,regular
 carmah001,1992-93,M. Carrera,Mahali Carrera,Mahali,Carrera,IF,A,D,3,Venezuela,Lara,Barquisimeto,8/13/1971,regular
 carmah001,1990-91,M. Carrera,Mahali Carrera,Mahali,Carrera,IF,A,D,2,Venezuela,Lara,Barquisimeto,8/13/1971,regular
@@ -1925,6 +1963,7 @@ iztmai001,2010-11,M. Izturis,Maicer E. Izturis,Maicer,Izturis,SS,A,D,8,Venezuela
 jarmil001,1999-00,M. Jaramillo,Milko Jaramillo,Milko,Jaramillo,SS,A,Z,1,Venezuela,Distrito Federal,Caracas,1/21/1980,regular
 jenmar001,1999-00,M. Jensen,Marcus Christian Jensen,Marcus,Jensen,C,A,D,1,USA,California,Oakland,12/14/1972,regular
 kekmic001,1976-77,M. Kekich,Michael Dennis Kekich,Michael,Kekich,P,D,Z,2,USA,California,San Diego,4/2/1945,regular
+klimat001,2011-12,M. Klinker,Matt Klinker,Matt,Klinker,P,D,D,1,USA,Indiana,Peru,08/10/84,finales
 lopmar001,1970-71,M. López,Marcelino Pons López,Marcelino,López,P,D,Z,6,Cuba,La Habana,,9/23/1943,regular
 lopmar001,1969-70,M. López,Marcelino Pons López,Marcelino,López,P,D,Z,5,Cuba,La Habana,,9/23/1943,regular
 lopmar001,1968-69,M. López,Marcelino Pons López,Marcelino,López,P,D,Z,4,Cuba,La Habana,,9/23/1943,regular
@@ -1942,6 +1981,7 @@ mcbmar001,2008-09,M. McBeth,Marcus Andre McBeth,Marcus,McBeth,P,D,D,1,USA,Caroli
 medman001,1965-66,M. Medina,Manuel Medina,Manuel,Medina,IF,D,D,2,Venezuela,Miranda,Altagracia,2/7/1941,regular
 medman001,1964-65,M. Medina,Manuel Medina,Manuel,Medina,IF,D,D,1,Venezuela,Miranda,Altagracia,2/7/1941,regular
 menmig001,2017-18,M. Mendez,Miguel Ernesto Mendez,Miguel,Mendez,2B,Z,D,3,Venezuela,Distrito Federal,Caracas,4/16/1993,regular
+menmar001,2013-14,M. Mendoza,Mario Mendoza,Mario,Mendoza,P,D,D,1,Mexico,Navojoa,,19/01/1979,round robin
 minmar001,2016-17,M. Minicozzi,Mark Minicozzi,Mark,Minicozzi,3B,D,D,4,USA,Pensilnavia,Wayne,2/11/1983,regular
 nesmic001,2014-15,M. Nesseth,Michael John Nesseth,Michael,Nesseth,P,D,D,1,USA,Minnesota,Windom,4/19/1988,regular
 nigmar001,1979-80,M. Niggins,Mark Niggins,Mark,Niggins,P,,,1,USA,,,,regular
@@ -1981,6 +2021,7 @@ rojmig001,2012-13,M. Rojas,Miguel Elias Rojas,Miguel,Rojas,SS,D,D,5,Venezuela,Mi
 rojmig001,2011-12,M. Rojas,Miguel Elias Rojas,Miguel,Rojas,SS,D,D,4,Venezuela,Miranda,Los Teques,2/24/1989,regular
 rojmig001,2010-11,M. Rojas,Miguel Elias Rojas,Miguel,Rojas,SS,D,D,3,Venezuela,Miranda,Los Teques,2/24/1989,regular
 rojmig001,2009-10,M. Rojas,Miguel Elias Rojas,Miguel,Rojas,SS,D,D,2,Venezuela,Miranda,Los Teques,2/24/1989,regular
+rommik001,2003-04,M. Romano,Mike Romano,Mike,Romano,P,D,D,5,USA,Illinois,Largo,03/03/72,round robin
 rusmat001,2014-15,M. Rusch,Matthew Andrew Rusch,Matthew,Rusch,P,D,D,2,USA,Nueva York,Rotterdam,5/20/1983,regular
 sanmer001,1995-96,M. Sanford,Meredith Leroy Sanford,Meredith,Sanford,P,D,D,1,USA,Georgia,Americus,12/24/1966,regular
 sotmig001,1993-94,M. Soto,Miguel Soto,Miguel,Soto,C,D,D,3,Venezuela,Zulia,Maracaibo,8/13/1972,regular
@@ -2023,6 +2064,8 @@ carnor001,1984-85,N. Carrasco,Norman Rafael Carrasco,Norman,Carrasco,2B,D,D,4,Ve
 carnor001,1983-84,N. Carrasco,Norman Rafael Carrasco,Norman,Carrasco,2B,D,D,3,Venezuela,Distrito Federal,Caracas,8/6/1960,regular
 carnor001,1982-83,N. Carrasco,Norman Rafael Carrasco,Norman,Carrasco,2B,D,D,2,Venezuela,Distrito Federal,Caracas,8/6/1960,regular
 carnor001,1981-82,N. Carrasco,Norman Rafael Carrasco,Norman,Carrasco,2B,D,D,1,Venezuela,Distrito Federal,Caracas,8/6/1960,regular
+chanes001,1966-67,N. Chávez,Nestor Chávez ,Nestor,Chávez,P,D,D,4,Venezuela,Miranda,Chacao,06/07/47,finales
+chanes001,1964-65,N. Chávez,Nestor Chávez ,Nestor,Chávez,P,D,D,4,Venezuela,Miranda,Chacao,06/07/47,finales
 echnel001,2003-04,N. Echarry,Nelson Echarry,Nelson,Echarry,P,D,D,1,Venezuela,Vargas,La Guaira,2/26/1982,regular
 hernes001,2020-21,N. Heredia,Néstor Heredia,Nestor,Heredia,SS,D,D,1,Venezuela,Miranda,Guarenas,11/25/2000,regular
 hernel001,2020-21,N. Hernández,Nelson Hernández,Nelson,Hernández,P,D,D,1,Venezuela,Vargas,La Guaira,3/13/1997,regular
@@ -2037,6 +2080,7 @@ ochneh001,2004-05,N. Ochoa,Nehomar Ochoa,Nehomar,Ochoa,P,D,D,1,Venezuela,Miranda
 olanes001,1963-64,N. Olano,Néstor Olano,Néstor,Olano,P,D,D,8,Venezuela,Zulia,Maracaibo,6/8/1932,regular
 olanes001,1962-63,N. Olano,Néstor Olano,Néstor,Olano,P,D,D,7,Venezuela,Zulia,Maracaibo,6/8/1932,regular
 orfnat001,2017-18,N. Orf,Nathan Orf,Nathan,Orf,2B,D,D,1,USA,Misuri,Wentzville,2/1/1990,regular
+rodner001,2007-08,N. Rodríguez,Nerio Rodríguez ,Nerio,Rodríguez,P,D,D,1,Republica Dominicana,,San Pedro de Macoris,04/03/71,round robin
 sannel001,1987-88,N. Santovenia,Nelson Gil Santovenia Mayol,Nelson,Santovenia,C,D,D,1,Cuba,Pinar Del Rio,,7/27/1961,regular
 shinor001,1981-82,N. Shiera,Norman Shiera,Norman,Shiera,P,Z,Z,6,Venezuela,Zulia,Maracaibo,7/26/1958,regular
 shinor001,1980-81,N. Shiera,Norman Shiera,Norman,Shiera,P,Z,Z,5,Venezuela,Zulia,Maracaibo,7/26/1958,regular
@@ -2054,6 +2098,7 @@ azoasc001,2002-03,O. Azocar,Óscar Gregorio Azocar,Óscar,Azocar,CF,Z,Z,20,Venez
 azoasc001,2001-02,O. Azocar,Óscar Gregorio Azocar,Óscar,Azocar,CF,Z,Z,19,Venezuela,Sucre,Soro,2/21/1965,regular
 azoasc001,2000-01,O. Azocar,Óscar Gregorio Azocar,Óscar,Azocar,CF,Z,Z,18,Venezuela,Sucre,Soro,2/21/1965,regular
 azoasc001,1999-00,O. Azocar,Óscar Gregorio Azocar,Óscar,Azocar,CF,Z,Z,17,Venezuela,Sucre,Soro,2/21/1965,regular
+benoma001,2015-16,O. Bencomo,Omar David Bencomo Jr,,Bencomo,P,D,D,3,Venezuela,Carabobo,Valencia,10/02/89,round robin
 blaosw001,1980-81,O. Blanco,Oswaldo Carlos Blanco Díaz,Oswaldo,Blanco,1B,D,D,20,Venezuela,Distrito Federal,Caracas,9/8/1945,regular
 blaosw001,1979-80,O. Blanco,Oswaldo Carlos Blanco Díaz,Oswaldo,Blanco,1B,D,D,19,Venezuela,Distrito Federal,Caracas,9/8/1945,regular
 blaosw001,1978-79,O. Blanco,Oswaldo Carlos Blanco Díaz,Oswaldo,Blanco,1B,D,D,18,Venezuela,Distrito Federal,Caracas,9/8/1945,regular
@@ -2153,6 +2198,8 @@ estpau001,2012-13,P. Estrada,Paul Estrada,Paul,Estrada,P,D,D,10,Venezuela,Boliva
 gibpau001,1986-87,P. Gibson,Paul Marshall Gibson,Paul,Gibson,P,D,Z,1,USA,Nueva York,Southampton,1/4/1960,regular
 gueped001,2009-10,P. Guerra,Pedro Rafael Guerra,Pedro,Guerra,P,D,D,2,Venezuela,Aragua,Cagua,1/9/1990,regular
 gueped001,2008-09,P. Guerra,Pedro Rafael Guerra,Pedro,Guerra,P,D,D,1,Venezuela,Aragua,Cagua,1/9/1990,regular
+hampet001,1971-72,P. Hamm,Pete Hamm,Pete,Hamm,P,D,D,1,USA,New York,Buffalo,20/09/1947,finales
+hampet001,1971-72,P. Hamm,Pete Hamm,Pete,Hamm,P,D,D,1,USA,New York,Buffalo,20/09/1947,round robin
 harpau001,1980-81,P. Hartzell,Paul Franklin Hartzell,Paul,Hartzell,P,D,D,1,USA,Pensilnavia,Bloomsburg,11/2/1953,regular
 hufphi001,1985-86,P. Huffman,Phillip Lee Huffman,Phillip,Huffman,P,D,D,4,USA,Texas,Freeport,6/20/1958,regular
 hufphi001,1984-85,P. Huffman,Phillip Lee Huffman,Phillip,Huffman,P,D,D,3,USA,Texas,Freeport,6/20/1958,regular
@@ -2172,9 +2219,11 @@ perpas001,1976-77,P. Pérez,Pastor Pérez,Pastor,Pérez,IF,D,D,7,Venezuela,Lara,
 quipat001,1963-64,P. Quintana,Patricio Quintana,Patricio,Quintana,IF,D,D,3,Cuba,Descocido,,,regular
 rivped001,1984-85,P. Rivas,Pedro Rivas,Pedro,Rivas,C,D,D,2,Venezuela,Miranda,Ocumare Del Tuy,3/13/1962,regular
 rivped001,1983-84,P. Rivas,Pedro Rivas,Pedro,Rivas,C,D,D,1,Venezuela,Miranda,Ocumare Del Tuy,3/13/1962,regular
+rodped001,2011-12,P. Rodríguez,Pedro Rodriguez,Pedro,Rodríguez,P,D,D,3,Venezuela,Anzoategui,Barcelona,31/10/1987,finales
 rospas001,1962-63,P. Rosario,Pascual Rosario,Pascual,Rosario,IF,D,D,1,Venezuela,Carabobo,Puerto Cabello,5/17/1941,regular
 siepau001,1976-77,P. Siebert,Paul Edward Siebert,Paul,Siebert,P,Z,Z,1,USA,Minnesota,Minneapolis,,regular
 swaped001,2004-05,P. Swann,Pedro Swann,Pedro,Swann,CF,Z,D,4,USA,Delaware,Wilmington,10/27/1970,regular
+torpab001,1968-69,P. Torrealba,Pablo Torrealba,Pablo,Torrealba,P,D,D,3,Venezuela,Lara,Barquisimeto,28/04/1948,finales
 tovpau001,1990-91,P. Tovar,Paul Tovar,Paul,Tovar,P,Z,Z,2,Desconocido,,,,regular
 tovpau001,1989-90,P. Tovar,Paul Tovar,Paul,Tovar,P,Z,Z,1,Desconocido,,,,regular
 vilped001,1968-69,P. Villaren,Pedro Villaren,Pedro,Villaren,3B,D,D,6,Venezuela,Anzoategui,Barcelona,11/26/1943,regular
@@ -2255,6 +2304,7 @@ genric001,2016-17,R. Genoves,Ricardo Enrique Genoves,Ricardo,Genoves,C,D,D,1,Ven
 girrob001,2009-10,R. Giron,Roberto Giron,Roberto,Giron,P,D,D,2,Republica Dominicana,Villa Mella,,3/24/1976,regular
 girrob001,2008-09,R. Giron,Roberto Giron,Roberto,Giron,P,D,D,1,Republica Dominicana,Villa Mella,,3/24/1976,regular
 glyrya001,2010-11,R. Glynn,Ryan Glynn,Ryan,Glynn,P,D,D,1,USA,Virginia,Portsmouth,11/1/1974,regular
+gomrub001,1965-66,R. Gómez,Ruben Gomez,Ruben,Gómez,P,D,D,1,Puerto Rico,,Arroyo,13/07/1927,finales
 gonvic001,2010-11,R. González,Víctor Raúl González,Víctor,González,CF,D,D,1,Puerto Rico,Santurce,,12/27/1973,regular
 guerob001,1994-95,R. Guerra,Robert Guerra,Robert,Guerra,2B,D,D,2,Venezuela,Distrito Federal,Caracas,9/24/1973,regular
 guerob001,1993-94,R. Guerra,Robert Guerra,Robert,Guerra,2B,D,D,1,Venezuela,Distrito Federal,Caracas,9/24/1973,regular
@@ -2287,6 +2337,7 @@ layray001,2006-07,R. Laya,Rayner Laya,Rayner,Laya,SS,D,D,4,Venezuela,Vargas,La S
 layray001,2005-06,R. Laya,Rayner Laya,Rayner,Laya,SS,D,D,3,Venezuela,Vargas,La Sabana,9/30/1980,regular
 layray001,2004-05,R. Laya,Rayner Laya,Rayner,Laya,SS,D,D,2,Venezuela,Vargas,La Sabana,9/30/1980,regular
 layray001,2003-04,R. Laya,Rayner Laya,Rayner,Laya,SS,D,D,1,Venezuela,Vargas,La Sabana,9/30/1980,regular
+lazrau001,2016-17,R. Lazo,Raudel Lazo,Raudel,Lazo,P,Z,Z,1,Cuba,Pinar Del Rio,,12/04/89,round robin
 lisric001,1980-81,R. Lisi,Riccardo Patrick Emilio Lisi,Riccardo,Lisi,CF,D,D,1,Canada,Nueva Escocia,Halifax,3/17/1956,regular
 luqrog001,2005-06,R. Luque,Roger Luque,Roger,Luque,P,Z,Z,9,Venezuela,Zulia,Ciudad Ojeda,1/8/1980,regular
 mahric001,1980-81,R. Mahler,Richard Keith Mahler,Richard,Mahler,P,D,D,2,USA,Texas,Austin,8/5/1953,regular
@@ -2319,8 +2370,10 @@ medrub001,2007-08,R. Medina,Ruben Antonio Medina,Ruben,Medina,P,D,D,2,Venezuela,
 medrub001,2006-07,R. Medina,Ruben Antonio Medina,Ruben,Medina,P,D,D,1,Venezuela,Falcon,San Luis,7/29/1986,regular
 meorud001,1977-78,R. Meoli,Rudolph Bartholomew Meoli,Rudolph,Meoli,2B,Z,D,1,USA,Nueva York,Troy,5/1/1951,regular
 morram001,1973-74,R. Moreno,Ramon Moreno,Ramon,Moreno,P,,,1,Venezuela,Guarico,Las Mercedes del Llano,6/16/1955,regular
+munrob001,1966-67,R. Muñoz,Roberto Muñoz ,Roberto,Muñoz,P,D,D,5,Venezuela,Distrito Federal,Caracas,05/02/41,finales
 muston001,2015-16,R. Mustelier,Ronnier Mustelier,Ronnier,Mustelier,3B,D,D,1,Cuba,Santiago de Cuba,,8/8/1984,regular
 newray001,1977-78,R. Newman,Raymond Francis Newman,Raymond,Newman,P,Z,Z,1,USA,Indiana,Evansville,6/20/1945,regular
+nieran001,1977-78,R. Nieman,Randal Nieman,Randel,Nieman,P,Z,Z,1,USA,California,Scotia,15/11/1955,round robin
 nyeric001,1969-70,R. Nye,Richard Raymond Nye,Richard,Nye,P,Z,Z,2,USA,California,Oakland,8/4/1944,regular
 nyeric001,1968-69,R. Nye,Richard Raymond Nye,Richard,Nye,P,Z,Z,1,USA,California,Oakland,8/4/1944,regular
 odorou001,1995-96,R. Odor,Rouglas Odor,Rouglas,Odor,IF,D,D,6,Venezuela,Zulia,Maracaibo,1/26/1968,regular
@@ -2382,6 +2435,7 @@ ramram001,2014-15,R. Ramírez,Ramon A. Ramírez,Ramon,Ramírez,P,D,D,8,Venezuela
 reirya001,2014-15,R. Reid,Ryan Allen Reid,Ryan,Reid,P,Z,D,3,USA,Maine,Portland,4/24/1985,regular
 reyren001,2014-15,R. Reyes,René Reyes,René,Reyes,CF,A,D,16,Venezuela,Nueva Esparta,Margarita,2/21/1978,regular
 reyren001,2013-14,R. Reyes,René Reyes,René,Reyes,CF,A,D,15,Venezuela,Nueva Esparta,Margarita,2/21/1978,regular
+rivrau001,2009-10,R. Rivero,Raul Rivero,Raul,Rivero,P,D,D,3,Venezuela,Sucre,Cumana,06/05/86,round robin
 robric001,1992-93,R. Robertson,Richard Wayne Robertson,Richard,Robertson,P,Z,Z,1,USA,Texas,Nacogdoches,9/15/1968,regular
 ridric001,2004-05,R. Rodríguez,Ricardo Rodríguez,Ricardo,Rodríguez,P,D,D,1,Venezuela,Distrito Federal,Caracas,5/21/1978,regular
 rojric001,1992-93,R. Rojas,Ricardo Rojas,Ricardo,Rojas,P,D,D,2,Cuba,Descocido,,,regular
@@ -2467,6 +2521,8 @@ marsha001,2011-12,S. Martis,Shairon B. Martis,Shairon,Martis,P,D,D,2,Curazao,Wil
 maysco001,1988-89,S. May,Scott Francis May,Scott,May,P,D,D,1,USA,Wisconsin,West Bend,11/11/1961,regular
 mirser001,2014-15,S. Miranda,Sergio Miranda,Sergio,Miranda,3B,A,D,1,USA,Virginia,Richmond,3/5/1987,regular
 mitser001,2018-19,S. Mitre,Sergio Armando Mitre,Sergio,Mitre,P,D,D,1,USA,California,Los Angeles,2/16/1981,regular
+ninsan001,2011-12,S. Nin,Sandy Nin,Sandy,Nin,P,D,D,1,Republica Dominicana,,Estebania,13/08/1980,finales
+ninsan001,2011-12,S. Nin,Sandy Nin,Sandy,Nin,P,D,D,1,Republica Dominicana,,Estebania,13/08/1980,round robin
 ocaste001,1995-96,S. Ocando,Stewart Ocando,Stewart,Ocando,P,D,D,2,Venezuela,,,,regular
 ocaste001,1994-95,S. Ocando,Stewart Ocando,Stewart,Ocando,P,D,D,1,Venezuela,,,,regular
 patste001,1976-77,S. Patchin,Steve Patchin,Steve,Patchin,C,,,1,USA,Misuri,Joplin,,regular
@@ -2572,6 +2628,7 @@ diavic001,2020-21,V. Diaz,Victor Manuel Diaz,Victor,Diaz,P,D,D,2,Venezuela,Portu
 diavic001,2019-20,V. Diaz,Victor Manuel Diaz,Victor,Diaz,P,D,D,1,Venezuela,Portuguesa,Guanare,10/6/1993,regular
 echven001,1987-88,V. Echarry,Ventura Echarry,Ventura,Echarry,P,D,D,5,Venezuela,Vargas,Todasana,8/31/1961,regular
 echven001,1986-87,V. Echarry,Ventura Echarry,Ventura,Echarry,P,D,D,4,Venezuela,Vargas,Todasana,8/31/1961,regular
+garvic001,2015-16,V. Garate,Victor Garate,,Garate,P,Z,Z,9,Venezuela,Aragua,Maracay,25/09/1984,round robin
 hervic001,2007-08,V. Hernández,Víctor García Hernández,Víctor,Hernández,P,D,D,1,Venezuela,Lara,Cabudare,1/17/1985,regular
 jimvic001,1968-69,V. Jiménez,Víctor Jiménez,Víctor,Jiménez,P,D,D,7,Venezuela,Zulia,Lagunillas,10/5/1944,regular
 jimvic001,1967-68,V. Jiménez,Víctor Jiménez,Víctor,Jiménez,P,D,D,6,Venezuela,Zulia,Lagunillas,10/5/1944,regular
@@ -2599,6 +2656,7 @@ aviwil001,2011-12,W. Avinazar,Willian Alejandro Avinazar,Willian,Avinazar,P,D,D,
 aviwil001,2010-11,W. Avinazar,Willian Alejandro Avinazar,Willian,Avinazar,P,D,D,1,Venezuela,Carabobo,Valencia,2/27/1989,regular
 berwan001,2019-20,W. Beras,Wander Federico Beras,Wander,Beras,P,Z,Z,2,Republica Dominicana,Elias Pina,,7/18/1988,regular
 bonwal001,1964-65,W. Bond,Walter Franklin Bond,Walter,Bond,1B,Z,D,1,USA,Tennessee,Denmark,10/19/1937,regular
+wilbos001,2015-16,W. Boscán,Wilfredo Boscán,Wilfredo,Boscán,P,D,D,5,Venezuela,Zulia,Maracaibo,26/10/1989,round robin
 canwil001,1998-99,W. Canate,William Emisael Canate Librada,William,Canate,CF,D,D,9,Venezuela,Zulia,Bobures,12/11/1971,regular
 canwil001,1997-98,W. Canate,William Emisael Canate Librada,William,Canate,CF,D,D,8,Venezuela,Zulia,Bobures,12/11/1971,regular
 canwil001,1995-96,W. Canate,William Emisael Canate Librada,William,Canate,CF,D,D,7,Venezuela,Zulia,Bobures,12/11/1971,regular
@@ -2690,61 +2748,3 @@ sanyol001,2013-14,Y. Sánchez,Yolmer Carlos Javier Sánchez Yanez,Yolmer,Sánche
 sanyol001,2012-13,Y. Sánchez,Yolmer Carlos Javier Sánchez Yanez,Yolmer,Sánchez,3B,A,D,2,Venezuela,Aragua,Maracay,6/29/1992,regular
 sanyol001,2011-12,Y. Sánchez,Yolmer Carlos Javier Sánchez Yanez,Yolmer,Sánchez,3B,A,D,1,Venezuela,Aragua,Maracay,6/29/1992,regular
 krozac001,2011-12,Z. Kroenke,Zachary B. Kroenke,Zachary,Kroenke,P,D,Z,1,USA,Nebraska,Omaha,4/21/1984,regular
-acealfre001,2014-15,A. Aceves,Alfredo Aceves,Alfredo,Aceves,P,D,D,1,Mexico,Sonora,San Luis Rio Colorado,08/12/82,round robin
-,2009-10,A. Castillo,Alberto Castillo,Alberto,Castillo,P,D,D,3,Republica Dominicana,,San Juan De La Maguana,10/02/70,round robin
-,2000-01,A. Conde,Argenis Conde,Argenis,Conde,P,D,D,15,Venezuela,Anzoategui,Soledad,28/10/1966,round robin
-,2011-12,A. Galarraga,Armando Galarraga,Armando,Galarraga,P,D,D,5,Venezuela,Sucre,Cumana,15/01/1982,round robin
-,1972-73,B. Butler,William Franklin Butler,Bill,Butler,P,Z,Z,2,USA,Maryland,Hyattsville,12/03/47,round robin
-,2013-14,B. Cramer,Bobby Cramer,Bobby,Cramer,P,Z,Z,1,USA,California,Anaheim,28/10/1979,round robin
-,2000-01,B. Scanlan,Bob Scanlan,Bobby,Scanlan,P,D,D,1,USA,California,Los Angeles,09/08/66,round robin
-,2013-14,B. Suero,Brudelin Suero,Brudelin,Suero,P,Z,Z,1,Republica Dominicana,Santo Domingo,,28/02/1990,round robin
-,2011-12,B. Sweeney,Brian Sweeney,Brian,Sweeney,P,D,D,4,USA,New York,Yorkens,13/06/1974,finales
-,2011-12,B. Sweeney,Brian Sweeney,Brian,Sweeney,P,D,D,4,USA,New York,Yorkens,13/06/1974,round robin
-,2016-17,D. Hurtado,Daniel Hurtado,Daniel,Hurtado,P,D,D,4,Venezuela,Miranda,Los Teques,25/07/1992,round robin
-,1991-92,D. Rambo,Daniel Rambo,Daniel,Rambo,P,D,D,1,USA,Michigan,Grayling,01/10/66,round robin
-,2016-17,E. Haro,Esteban Haro,Esteba,Haro,P,D,D,1,Mexico,,Los Mochis,11/11/85,round robin
-,2009-10,E. Lizarraga,Edgar Lizarraga,Edgar,Lizarraga,P,D,D,1,Mexico,,Culiacan,27/01/1981,round robin
-,2015-16,E. Quirarte,Edwin Quirarte,Edwin,Quirarte,P,D,D,3,USA,California,,20/12/1986,round robin
-,2019-20,F. Doubront,Felix Doubront,Felix,Doubront,P,Z,Z,4,Venezuela,Carabobo,Puerto Cabello,23/10/1987,round robin
-,2008-09,F. Felix,Francisco  Felix,Francisco ,Felix,P,D,D,1,Mexico,,Culiacan,28/07/1983,round robin
-,2003-04,G. González,Geremi González,Geremi ,González,P,D,D,11,Venezuela,Zulia,Maracaibo,08/01/75,round robin
-,2019-20,G. Moscoso,Guillermo Moscoso,Guillermo,Moscoso,P,D,D,10,Venezuela,Aragua,Maracay,14/11/1983,round robin
-,1966-67,G. Parra,Graciano Parra,Graciano,Parra,P,D,D,4,Venezuela,Zulia,Maracaibo,04/08/43,round robin
-,1966-67,G. Parra,Graciano Parra,Graciano,Parra,P,D,D,4,Venezuela,Zulia,Maracaibo,04/08/43,finales
-,2013-14,J. Capellan,Jose Francisco Capellan,Jose,Capellan,P,D,D,1,Republica Dominicana,,Couti,13/01/1981,round robin
-,2009-10,J. Colome,Jesus Colome,Jesus,Colome,P,D,D,1,Republica Dominicana,,San Pedro de Macoris,23/12/1977,round robin
-,2007-08,J. Gutierrez,Juan Carlos gutierrez,Juan,Gutierrez,P,D,D,5,Venezuela,Anzoategui,Puerto La Cruz,14/07/1983,round robin
-,2011-12,J. Hunton,Jon Hunton,Jon,Hunton,P,D,D,1,USA,New Jersey,Plainfield,30/11/1982,finales
-,2011-12,J. Jiménez,Jose Miguel Jimenez,Jose,Jiménez,P,Z,Z,2,Venezuela,Barinas,Barinas,23/03/1987,round robin
-,2008-09,J. Lehr,Justin Lehr,Justin,Lehr,P,D,D,1,USA,California,Orangeburg,03/08/77,round robin
-,2009-10,J. Oviedo,Jose Oviedo,Jose,Oviedo,P,D,D,1,Venezuela,Lara,Cabudare,30/11/1988,round robin
-,2016-17,J. Rincon,Junior Rincon,Junior,Rincon,P,D,D,1,Republica Dominicana,,Santo Domingo,07/12/91,round robin
-,2003-04,J. Rincon,Juan Rinco,Juan ,Rincon,P,D,D,7,Venezuela,Zulia,Maracaibo,23/01/1979,round robin
-,1986-87,J. Sellers,Jeff Sellers,Jeff,Sellers,P,D,D,1,USA,California,Compton,11/05/64,finales
-,1986-87,J. Sellers,Jeff Sellers,Jeff,Sellers,P,D,D,1,USA,California,Compton,11/05/64,round robin
-,2016-17,J. Sosa,Juan Sosa,Juan ,Sosa,P,D,D,1,Republica Dominicana,,Santo Domingo,11/10/89,round robin
-,1964-65,K. Sanders,,,Sanders,,,,,,,,,finales
-,2016-17,K. Sneed,,,Sneed,,,,,,,,,round robin
-,2016-17,L. Irvine,,,Irvine,,,,,,,,,round robin
-,2014-15,L. Vizcaino,Luis Vizcaino Arias,,Vizcaino,P,D,D,1,Republica Dominicana,,Bani,06/08/74,round robin
-,2000-01,M. Callaway,,,Callaway,,,,,,,,,round robin
-,2011-12,M. Klinker,,,Klinker,,,,,,,,,finales
-,2013-14,M. Mendoza,,,Mendoza,,,,,,,,,round robin
-,2003-04,M. Romano,,,Romano,,,,,,,,,round robin
-,1966-67,N. Chávez,Nestor Chávez ,Nestor,Chávez,P,D,D,4,Venezuela,Miranda,Chacao,06/07/47,finales
-,1964-65,N. Chávez,Nestor Chávez ,Nestor,Chávez,P,D,D,4,Venezuela,Miranda,Chacao,06/07/47,finales
-,2007-08,N. Rodríguez,Nerio Rodríguez ,Nerio,Rodríguez,P,D,D,1,Republica Dominicana,,San Pedro de Macoris,04/03/71,round robin
-,2015-16,O. Bencomo,Omar David Bencomo Jr,,Bencomo,P,D,D,3,Venezuela,Carabobo,Valencia,10/02/89,round robin
-,1971-72,P. Hamm,Pete Hamm,Pete,Hamm,P,D,D,1,USA,New York,Buffalo,20/09/1947,finales
-,1971-72,P. Hamm,Pete Hamm,Pete,Hamm,P,D,D,1,USA,New York,Buffalo,20/09/1947,round robin
-,2011-12,P. Rodríguez,,,Rodríguez,,,,,,,,,finales
-,1968-69,P. Torrealba,,,Torrealba,,,,,,,,,finales
-,1965-66,R. Gómez,,,Gómez,,,,,,,,,finales
-,2016-17,R. Lazo,,,Lazo,,,,,,,,,round robin
-,1966-67,R. Muñoz,,,Muñoz,,,,,,,,,finales
-,1977-78,R. Nieman,,,Nieman,,,,,,,,,round robin
-,2009-10,R. Rivero,,,Rivero,,,,,,,,,round robin
-,2011-12,S. Nin,Sandy Nin,Sandy,Nin,P,D,D,1,Republica Dominicana,,Estebania,13/08/1980,finales
-,2011-12,S. Nin,Sandy Nin,Sandy,Nin,P,D,D,1,Republica Dominicana,,Estebania,13/08/1980,round robin
-,2015-16,V. Garate,Victor Garate,,Garate,,,,,,,,,round robin
-,2015-16,W. Boscán,Wilfredo Boscán,Wilfredo,Boscán,,,,,,,,,round robin
