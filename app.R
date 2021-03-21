@@ -5526,6 +5526,334 @@ IP <- function(x){
       })
       
       #By Rosters 
+      # Table pitching round robin by country ----
+      output$picheo_rs_country <- renderDataTable({
+        req(input$select_country)
+        
+        # Data ----
+        pit_geographic <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          group_by(pais, years) %>% 
+          summarise(
+            jugador = n(),
+            w = as.character(sum(w, na.rm = T)),
+            l = as.character(sum(l, na.rm = T)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            # ir = sum(ir, na.rm = T),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2),
+            .groups = 'drop'
+          ) %>% 
+          arrange(jugador) %>% 
+          filter(pais == input$select_country)
+        
+        
+        
+        country_summarise <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          group_by(pais) %>% 
+          summarise(
+            years = "Total",
+            jugador = n(),
+            w = as.character(sum(w, na.rm = T)),
+            l = as.character(sum(l, na.rm = T)),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            # ir = sum(ir, na.rm = T),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2),
+            .groups = 'drop'
+          ) %>% 
+          arrange(jugador) %>% 
+          filter(pais == input$select_country)
+        
+        df <- rbind(pit_geographic, country_summarise) %>% 
+          rename(
+            `Pais` = pais,
+            `Temporada` = years,
+            # `Edad` = edad,
+            `Jugadores` = jugador,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            # `GP` = gp,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            # IR = ir,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            # `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+          ) %>% 
+          arrange(Temporada) 
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          df,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Las estadisticas SHO, R, HR y HR/9
+                            son registradas desde la temporada 2005-06')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            ordering = F, # To delete Ordering
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:22)),
+                              list(width = '120px', targets = 0)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) %>% 
+          formatStyle(
+            'Temporada',
+            target = "row",
+            fontWeight = styleEqual(c('Total'), "bold")
+          )
+      })
+      
+      #By Rosters 
+      # Table pitching finales by country ----
+      output$picheo_rs_country <- renderDataTable({
+        req(input$select_country)
+        
+        # Data ----
+        pit_geographic <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          group_by(pais, years) %>% 
+          summarise(
+            jugador = n(),
+            w = as.character(sum(w, na.rm = T)),
+            l = as.character(sum(l, na.rm = T)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            # ir = sum(ir, na.rm = T),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2),
+            .groups = 'drop'
+          ) %>% 
+          arrange(jugador) %>% 
+          filter(pais == input$select_country)
+        
+        
+        
+        country_summarise <- prs() %>% 
+          mutate(key = paste0(as.character(years), jugador)) %>% 
+          select(key, 1:27) %>% 
+          left_join(Rosters() %>%
+                      mutate(key = paste0(as.character(years), jugador)) %>%
+                      select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
+          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          group_by(pais) %>% 
+          summarise(
+            years = "Total",
+            jugador = n(),
+            w = as.character(sum(w, na.rm = T)),
+            l = as.character(sum(l, na.rm = T)),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            # ir = sum(ir, na.rm = T),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2),
+            .groups = 'drop'
+          ) %>% 
+          arrange(jugador) %>% 
+          filter(pais == input$select_country)
+        
+        df <- rbind(pit_geographic, country_summarise) %>% 
+          rename(
+            `Pais` = pais,
+            `Temporada` = years,
+            # `Edad` = edad,
+            `Jugadores` = jugador,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            # `GP` = gp,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            # IR = ir,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            # `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+          ) %>% 
+          arrange(Temporada) 
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          df,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Las estadisticas SHO, R, HR y HR/9
+                            son registradas desde la temporada 2005-06')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            ordering = F, # To delete Ordering
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:22)),
+                              list(width = '120px', targets = 0)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) %>% 
+          formatStyle(
+            'Temporada',
+            target = "row",
+            fontWeight = styleEqual(c('Total'), "bold")
+          )
+      })
+      
+      #By Rosters 
       # Table Geo Pitching stats by country ----
       output$country_pit <- renderDataTable({
         
@@ -5640,7 +5968,7 @@ IP <- function(x){
         
         
       })
-      # Table batting regular season by country ----
+      # Table batting regular by country ----
       output$bateo_rs_country <- renderDataTable({
         req(input$select_country_bat)
         
@@ -5812,7 +6140,7 @@ IP <- function(x){
         
       })
       
-      # Table batting round robin season by country ----
+      # Table batting round robin by country ----
       output$bateo_rs_country <- renderDataTable({
         req(input$select_country_bat)
         
