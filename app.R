@@ -1150,25 +1150,40 @@ IP <- function(x){
               # Tables Picheo ----
               fluidRow(
                 column(12,
-                       bs4Dash::bs4Box(
-                         width = NULL,
-                         title = "Temporada Regular",
-                         DT::dataTableOutput('picheo_rs_country')
-                         )
-                       )
-                ),
-              br(),
-              fluidRow(
-                column(12,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
                          title = "Estadisticas Globales",
                          DT::dataTableOutput('country_pit')
-                         )
+                       )
                 )
-              )
+              ),
+              br(),
+              fluidRow(
+                column(12,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         title = "Temporada Regular",
+                         DT::dataTableOutput('picheo_rs_country')
+                         )
+                       ),
+                br(),
+                column(12,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         title = "Round Robin",
+                         DT::dataTableOutput('picheo_rr_country')
+                         )
+                       ),
+                column(12,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         title = "Finales",
+                         DT::dataTableOutput('picheo_finals_country')
+                         )
+                       )
+                )
             ),
             # TabPanel Bateo ----
             tabPanel(
@@ -5368,13 +5383,15 @@ IP <- function(x){
         
         # Data ----
         pit_geographic <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais, years) %>% 
+          filter(pais == input$select_country) %>%
+          group_by(years) %>% 
           summarise(
             jugador = n(),
             w = as.character(sum(w, na.rm = T)),
@@ -5401,19 +5418,21 @@ IP <- function(x){
             `so/bb` = round(so / bb, 2),
             .groups = 'drop'
           ) %>% 
-          arrange(jugador) %>% 
-          filter(pais == input$select_country)
+          arrange(desc(years)) 
+
+          
         
         
         
         country_summarise <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais) %>% 
+          filter(pais == input$select_country) %>%
           summarise(
             years = "Total",
             jugador = n(),
@@ -5440,13 +5459,12 @@ IP <- function(x){
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
             .groups = 'drop'
-          ) %>% 
-          arrange(jugador) %>% 
-          filter(pais == input$select_country)
+          ) 
+          
         
         df <- rbind(pit_geographic, country_summarise) %>% 
           rename(
-            `Pais` = pais,
+            # `Pais` = pais,
             `Temporada` = years,
             # `Edad` = edad,
             `Jugadores` = jugador,
@@ -5473,8 +5491,7 @@ IP <- function(x){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          ) %>% 
-          arrange(Temporada) 
+          ) 
         
         
         # Table ----
@@ -5506,8 +5523,8 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(1:22)),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+                              # list(width = '60px', targets = 0)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -5527,20 +5544,22 @@ IP <- function(x){
       
       #By Rosters 
       # Table pitching round robin by country ----
-      output$picheo_rs_country <- renderDataTable({
+      output$picheo_rr_country <- renderDataTable({
         req(input$select_country)
         
         # Data ----
         pit_geographic <- prs() %>% 
+          filter(ronda == "round robin") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais, years) %>% 
+          filter(pais == input$select_country) %>% 
+          group_by(years) %>% 
           summarise(
-            jugador = n(),
+            jugador = n_distinct(jugador),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -5565,22 +5584,23 @@ IP <- function(x){
             `so/bb` = round(so / bb, 2),
             .groups = 'drop'
           ) %>% 
-          arrange(jugador) %>% 
-          filter(pais == input$select_country)
+          arrange(desc(years))
+        
         
         
         
         country_summarise <- prs() %>% 
+          filter(ronda == "round robin") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais) %>% 
+          filter(pais == input$select_country) %>% 
           summarise(
             years = "Total",
-            jugador = n(),
+            jugador = n_distinct(jugador),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             er = sum(er, na.rm = T),
@@ -5604,13 +5624,13 @@ IP <- function(x){
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
             .groups = 'drop'
-          ) %>% 
-          arrange(jugador) %>% 
-          filter(pais == input$select_country)
+            ) 
+         
+        
         
         df <- rbind(pit_geographic, country_summarise) %>% 
           rename(
-            `Pais` = pais,
+            # `Pais` = pais,
             `Temporada` = years,
             # `Edad` = edad,
             `Jugadores` = jugador,
@@ -5637,8 +5657,7 @@ IP <- function(x){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          ) %>% 
-          arrange(Temporada) 
+          ) 
         
         
         # Table ----
@@ -5670,8 +5689,8 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(1:22)),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+                              # list(width = '120px', targets = 0)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -5691,20 +5710,22 @@ IP <- function(x){
       
       #By Rosters 
       # Table pitching finales by country ----
-      output$picheo_rs_country <- renderDataTable({
+      output$picheo_finals_country <- renderDataTable({
         req(input$select_country)
         
         # Data ----
         pit_geographic <- prs() %>% 
+          filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais, years) %>% 
+          filter(pais == input$select_country) %>% 
+          group_by(years) %>% 
           summarise(
-            jugador = n(),
+            jugador = n_distinct(jugador),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             g = sum(g, na.rm = T),
@@ -5729,22 +5750,22 @@ IP <- function(x){
             `so/bb` = round(so / bb, 2),
             .groups = 'drop'
           ) %>% 
-          arrange(jugador) %>% 
-          filter(pais == input$select_country)
+          arrange(desc(years))
         
         
         
         country_summarise <- prs() %>% 
+          filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
-          group_by(pais) %>% 
+          filter(pais == input$select_country) %>% 
           summarise(
             years = "Total",
-            jugador = n(),
+            jugador = n_distinct(jugador),
             w = as.character(sum(w, na.rm = T)),
             l = as.character(sum(l, na.rm = T)),
             er = sum(er, na.rm = T),
@@ -5768,13 +5789,13 @@ IP <- function(x){
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = round(so / bb, 2),
             .groups = 'drop'
-          ) %>% 
-          arrange(jugador) %>% 
-          filter(pais == input$select_country)
+          ) 
+        
+        
         
         df <- rbind(pit_geographic, country_summarise) %>% 
           rename(
-            `Pais` = pais,
+            # `Pais` = pais,
             `Temporada` = years,
             # `Edad` = edad,
             `Jugadores` = jugador,
@@ -5801,8 +5822,7 @@ IP <- function(x){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          ) %>% 
-          arrange(Temporada) 
+          )
         
         
         # Table ----
@@ -5834,8 +5854,8 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(1:22)),
-                              list(width = '120px', targets = 0)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+                              # list(width = '120px', targets = 0)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -5859,6 +5879,7 @@ IP <- function(x){
         
         # Data ----
         pais_pit <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
