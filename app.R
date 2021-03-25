@@ -1144,8 +1144,8 @@ IP <- function(x){
                          inputId = 'select_country',
                          label = 'Paises',
                          choices = .paises_pitching
+                         )
                        )
-                )
               ),
               # Tables Picheo ----
               fluidRow(
@@ -6734,13 +6734,17 @@ IP <- function(x){
         
         # Data ----
         w <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          # left_join(Rosters %>%
+          #             mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+          #             select(key, name, ID, first_name, last_name), by = 'key') %>%
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -6804,13 +6808,14 @@ IP <- function(x){
         
         # Data ----
         l <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -6825,7 +6830,8 @@ IP <- function(x){
           rename(
             Jugador = jugador,
             L = l
-          ) 
+          ) %>% 
+          slice(1:(n()-1))
         
         # Table ----
         headerCallback <- c(
@@ -6870,13 +6876,14 @@ IP <- function(x){
         
         # Date ----
         g <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -6934,13 +6941,14 @@ IP <- function(x){
         
         # Data ----
         gs <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7003,13 +7011,14 @@ IP <- function(x){
         
         # Data ----
         ip <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7067,13 +7076,14 @@ IP <- function(x){
         
         # Data ----
         so <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7154,13 +7164,14 @@ IP <- function(x){
         
         # Data ----
         h <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7241,13 +7252,14 @@ IP <- function(x){
         
         # Data ----
         bb <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7329,13 +7341,14 @@ IP <- function(x){
         
         # Data ----
         era <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7418,13 +7431,14 @@ IP <- function(x){
         
         # Data ----
         sv <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7504,13 +7518,14 @@ IP <- function(x){
         
         # Data ----
         whip <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7592,13 +7607,14 @@ IP <- function(x){
         
         # Data ----
         h_9 <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7680,13 +7696,14 @@ IP <- function(x){
         
         # Data ----
         so_9 <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7768,13 +7785,14 @@ IP <- function(x){
         
         # Data ----
         bb_9 <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -7859,13 +7877,14 @@ IP <- function(x){
         
         # Data ----
         so_bb <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
-          select(key, 1:27) %>% 
-          left_join(Rosters() %>%
-                      mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
-                      select(key, name, ID, first_name, last_name), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:29) %>%
-          group_by(ID) %>% 
+          select(player_id, 1:28) %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, name, ID, first_name, last_name), 
+                    by = c("player_id", "years")) %>% 
+          select(player_id, first_name,last_name, jugador, 2:29) %>%
+          group_by(player_id) %>% 
           summarise(
             first_name = last(first_name),
             last_name = last(last_name),
@@ -10883,18 +10902,19 @@ IP <- function(x){
       output$versus_total_pit <- renderDataTable({
         
         # Data ----
-        versus_totales <- prs %>% 
+        versus_totales <- prs() %>% 
+          filter(ronda ==  "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, 
                              estado, ciudad), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:35) %>% 
+          select(-player_id, ID, key, first_name,last_name, jugador, 2:35) %>% 
           mutate(importados =
                    case_when(
-                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
                      pais == "Venezuela" ~ "Venezolanos",
+                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
                      TRUE ~ "Desconocido"
                      )
                  ) %>% 
@@ -10925,7 +10945,7 @@ IP <- function(x){
             `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
           ) %>% 
-          arrange(desc(w)) %>% 
+          # arrange(desc(years)) %>% 
           rename(
             Grupo = importados,
             `W` = w,
@@ -10979,7 +10999,10 @@ IP <- function(x){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
+            columnDefs = list(list(className = "dt-center", targets = c(1:21)),
+                              list(width = '120px', targets = 0)
+                              ),
+            
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -10998,6 +11021,7 @@ IP <- function(x){
         
         # Data ----
         versus_pit <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
@@ -11006,7 +11030,7 @@ IP <- function(x){
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
           mutate(importados =
                    case_when(
-                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
                      pais == "Venezuela" ~ "Venezolanos",
                      TRUE ~ "Desconocido"
                    )
@@ -11037,7 +11061,7 @@ IP <- function(x){
             `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
           ) %>% 
-          arrange(desc(w)) %>% 
+          arrange(desc(years)) %>% 
           rename(
             Grupo = importados,
             Temporada = years, 
@@ -11109,15 +11133,16 @@ IP <- function(x){
         
         # Data ----
         versus_total_bat <- brs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
+          select(key, 1:28) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:35) %>%
+          select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
           mutate(importados =
                    case_when(
-                     pais %in% .paises_pitching[-c(8, 18)] ~ " Importados",
+                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
                      pais == "Venezuela" ~ "Venezolanos",
                      TRUE ~ "Desconocido"
                    )
@@ -11148,6 +11173,7 @@ IP <- function(x){
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
           ) %>% 
+          # arrange(desc(years)) %>% 
           rename(
             Grupo = importados,
             `G` = g,
@@ -11219,13 +11245,14 @@ IP <- function(x){
       output$versus_bat <- renderDataTable({
         
         versus_bat <- brs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
-          select(key, 1:27) %>% 
+          select(key, 1:28) %>% 
           left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
-          select(ID, key, first_name,last_name, jugador, 2:35) %>%
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 18)], 
+          select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
+          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 19)], 
                                      "Importados", 
                                      ifelse(pais == "Venezuela", "Venezolanos", "N/A")
           )) %>% 
@@ -11258,6 +11285,7 @@ IP <- function(x){
             sf = sum(sf, na.rm = T),
             .groups = 'drop'
           ) %>% 
+          arrange(desc(years)) %>% 
           rename(
             Temporada = years,
             Grupo = importados,
@@ -11285,8 +11313,7 @@ IP <- function(x){
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf
-          ) %>% 
-          arrange(Temporada)
+          ) 
         
         
         headerCallback <- c(
@@ -11335,6 +11362,7 @@ IP <- function(x){
         req(input$select_country)
         
         geographic <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
@@ -11416,6 +11444,7 @@ IP <- function(x){
       output$state_pit <- renderDataTable({
         
         pais_pit <- prs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
@@ -11458,6 +11487,7 @@ IP <- function(x){
       output$state_bat <- renderDataTable({
         
         state_bat <- brs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
@@ -11499,6 +11529,7 @@ IP <- function(x){
       output$city_bat <- renderDataTable({
         
         city_bat <- brs() %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
