@@ -153,17 +153,77 @@ IP <- function(x){
   x <- x %>%
     as.character()
   
-  episodio <-  as.numeric(sub("\\..*", "", x)) %>% 
-    sum()
+  episodio <-  as.numeric(sub("\\..*", "", x))
+  episodio <- sum(episodio)
   
-  tercio <- case_when(str_detect(x,"\\.") ~ str_sub(x, -1, -1),
-                      TRUE ~ "0") %>% 
-    as.numeric() %>% 
-    sum()
+  tercio <- dplyr::case_when(stringr::str_detect(x,"\\.") ~ stringr::str_sub(x, -1, -1),
+                      TRUE ~ "0")
+  tercio <- as.numeric(tercio)
+  tercio <- sum(tercio)
   
   x <-  episodio + trunc(tercio / 3) + ((tercio %% 3) / 10)
 
   return(x)
+}
+
+leaders <- function(stat, .ip = 0){
+  .roster <- Rosters()
+  .roster <- dplyr::select(Rosters, player_id, years, name, ID, first_name, last_name)
+  
+  
+  .prs <- prs()
+  .prs <- dplyr::filter(.prs, ronda == "regular")
+  .prs <- dplyr::mutate(.prs, key = paste0(as.character(years), jugador, sep = ""))
+  .prs <- dplyr::select(.prs, player_id, 1:28)
+  .prs <- dplyr::left_join(.prs, .roster, by = c("player_id", "years"))
+  .prs <- dplyr::select(.prs, player_id, first_name,last_name, jugador, 2:29)
+  .prs <- dplyr::group_by(.prs, player_id) 
+  .prs <- dplyr::summarise(.prs,
+                           first_name = dplyr::last(first_name),
+                           last_name = dplyr::last(last_name),
+                           jugador= dplyr::last(jugador),
+                           w = sum(w, na.rm = T),
+                           l = sum(l, na.rm = T),
+                           er = sum(er, na.rm = T),
+                           ip = IP(ip),
+                           era = as.character(round((er * 9) / ip, 2)),
+                           g = sum(g, na.rm = T),
+                           gs = sum(gs, na.rm = T),
+                           cg = sum(cg, na.rm = T),
+                           sho = sum(sho, na.rm = T),
+                           sv = sum(sv, na.rm = T),
+                           h = sum(h, na.rm = T),
+                           r = sum(r, na.rm = T),
+                           hr = sum(hr, na.rm = T),
+                           bb = sum(bb, na.rm = T),
+                           so = sum(so, na.rm = T),
+                           ir = sum(ir, na.rm = T),
+                           whip = as.character(round(mean(whip, na.rm = T), 2)),
+                           `h/9` = as.character(round((h/ip)*9, 2)),
+                           `hr/9` = as.character(round((hr/ip)*9, 2)),
+                           `bb/9` = as.character(round((bb/ip)*9, 2)),
+                           `so/9` = as.character(round((so/ip)*9, 2)),
+                           `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+                           img = '<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>',
+                           .groups = 'drop')        
+  .prs <- dplyr::filter(.prs, ip > .ip) 
+  .prs <- dplyr::arrange(.prs, desc(stat))
+  .prs <- dplyr::select(.prs, img, first_name, last_name, stat)
+  .prs <- tidyr::unite(.prs, 'jugador', first_name, last_name, sep = ' ')
+  .prs <- dplyr::top_n(.prs, 10, stat) 
+  .prs <- dplyr::rename(.prs,
+                        " " = img,
+                        Jugador = jugador
+  )
+  
+  if (nrow(.prs) >= 11) {
+    .prs <- dplyr::slice(.prs, 1:(n()-1))
+  } else {
+    .prs
+  }
+  
+  .prs
+  
 }
 
   shiny::shinyApp(
@@ -6807,11 +6867,11 @@ IP <- function(x){
       output$p_l <- renderDataTable({
         
         # Data ----
-        l <- prs() %>% 
+        l <- prs %>% 
           filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(player_id, 1:28) %>% 
-          left_join(Rosters() %>% 
+          left_join(Rosters %>% 
                       select(player_id, years, name, ID, first_name, last_name), 
                     by = c("player_id", "years")) %>% 
           select(player_id, first_name,last_name, jugador, 2:29) %>%
@@ -6821,17 +6881,20 @@ IP <- function(x){
             last_name = last(last_name),
             jugador= last(jugador),
             l = sum(l, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           arrange(desc(l)) %>%
-          select(first_name, last_name, l) %>% 
+          select(img, first_name, last_name, l) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, l) %>% 
           rename(
+            " " = img,
             Jugador = jugador,
             L = l
           ) %>% 
-          slice(1:(n()-1))
+          slice(1:(n()-1)) 
+          
         
         # Table ----
         headerCallback <- c(
