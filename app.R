@@ -1431,7 +1431,7 @@ leaders <- function(stat, .ip = 0){
               #1 ----
               br(),
               fluidRow(
-                column(3,
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1441,7 +1441,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('p_w')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1451,7 +1451,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('p_l')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1460,8 +1460,13 @@ leaders <- function(stat, .ip = 0){
                          title = "G",
                          DT::dataTableOutput('p_g')
                          )
-                       ),
-                column(3,
+                       )
+                ),
+              br(),
+              br(),
+              #2 ----
+              fluidRow(
+                column(4,
                        bs4Dash::bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1470,13 +1475,8 @@ leaders <- function(stat, .ip = 0){
                          title = "GS",
                          DT::dataTableOutput('p_gs')
                        )
-                )
-              ),
-              br(),
-              br(),
-              #2 ----
-              fluidRow(
-                column(3,
+                ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1485,7 +1485,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('p_ip')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1493,8 +1493,13 @@ leaders <- function(stat, .ip = 0){
                          title = "SO",
                          DT::dataTableOutput('p_so')
                          )
-                       ),
-                column(3,
+                       )
+              ),
+              br(),
+              br(),
+              #3 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1504,7 +1509,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('p_h')
                        )
                 ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1513,13 +1518,8 @@ leaders <- function(stat, .ip = 0){
                          title = "BB",
                          DT::dataTableOutput('p_bb')
                        )
-                )
-              ),
-              br(),
-              br(),
-              #3 ----
-              fluidRow(
-                column(3,
+                ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1528,40 +1528,45 @@ leaders <- function(stat, .ip = 0){
                          title = "SV",
                          DT::dataTableOutput('p_sv')
                          )
-                       ),
-                column(3,
-                       bs4Box(
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "WHIP",
-                         DT::dataTableOutput('p_whip')
-                          )
-                       ),
-                column(3,
-                       bs4Box(
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "ERA",
-                         DT::dataTableOutput('p_era')
-                          )
-                       ),
-                column(3,
-                       bs4Box(
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "SO/BB",
-                         DT::dataTableOutput('p_sobb')
-                          )
                        )
               ),
               br(),
               br(),
               #4 ----
               fluidRow(
-                column(3,
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "WHIP",
+                         DT::dataTableOutput('p_whip')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "ERA",
+                         DT::dataTableOutput('p_era')
+                       )
+                ),
+                column(4,
+                       bs4Box(
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "SO/BB",
+                         DT::dataTableOutput('p_sobb')
+                       )
+                )
+              ),
+              br(),
+              br(),
+              #5 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1570,7 +1575,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('p_h9')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1580,7 +1585,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('p_so9')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1592,6 +1597,7 @@ leaders <- function(stat, .ip = 0){
                        )
                 )
               ),
+
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
