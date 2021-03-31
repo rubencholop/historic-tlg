@@ -6793,7 +6793,7 @@ leaders <- function(stat, .ip = 0){
       output$p_w <- renderDataTable({
         
         # Data ----
-        w <- prs() %>%
+        w <- prs()%>%
           filter(ronda == "regular") %>%
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
           select(player_id, 1:28) %>%
@@ -6810,16 +6810,18 @@ leaders <- function(stat, .ip = 0){
             last_name = last(last_name),
             jugador= last(jugador),
             w = sum(w, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>%
           ungroup() %>%
           arrange(desc(w)) %>%
-          select(first_name, last_name, w) %>%
+          select(img, first_name, last_name, w) %>%
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>%
           top_n(10, w) %>%
           rename(
             Jugador = jugador,
-            W = w
+            W = w,
+            " " = img
           ) %>%
           slice(1:(n()-1))
 
@@ -6833,7 +6835,7 @@ leaders <- function(stat, .ip = 0){
         
         DT::datatable(
           w,
-          # escape = FALSE,
+          escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
           caption = htmltools::tags$caption(
@@ -6846,7 +6848,7 @@ leaders <- function(stat, .ip = 0){
             paging = FALSE,
             lengthChange = FALSE,
             scrollX = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 1),
@@ -6920,7 +6922,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -6952,15 +6954,17 @@ leaders <- function(stat, .ip = 0){
             last_name = last(last_name),
             jugador= last(jugador),
             g = sum(g, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           arrange(desc(g)) %>%
-          select(first_name, last_name, g) %>% 
+          select(img, first_name, last_name, g) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, g) %>% 
           rename(
             Jugador = jugador,
-            G = g
+            G = g, 
+            " " = img
           ) 
         
         # Table ----
@@ -6986,7 +6990,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7017,15 +7021,17 @@ leaders <- function(stat, .ip = 0){
             last_name = last(last_name),
             jugador= last(jugador),
             gs = sum(gs, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           arrange(desc(gs)) %>%
-          select(first_name, last_name, gs) %>% 
+          select(img, first_name, last_name, gs) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, gs) %>% 
           rename(
             Jugador = jugador,
-            GS = gs
+            GS = gs, 
+            " " = img
           ) 
         
         # Table ----
@@ -7053,7 +7059,7 @@ leaders <- function(stat, .ip = 0){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             # fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = 0)),
             headerCallback = JS(headerCallback),
@@ -7087,15 +7093,17 @@ leaders <- function(stat, .ip = 0){
             last_name = last(last_name),
             jugador= last(jugador),
             ip = IP(ip),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           arrange(desc(ip)) %>%
-          select(first_name, last_name, ip) %>% 
+          select(img, first_name, last_name, ip) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, ip) %>% 
           rename(
             Jugador = jugador,
-            IP = ip
+            IP = ip,
+            " " = img
           ) 
         
         # Table ----
@@ -7121,7 +7129,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7151,38 +7159,18 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            ip = sum(ip, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           arrange(desc(so)) %>%
-          select(first_name, last_name, so) %>% 
+          select(img, first_name, last_name, so) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, so) %>% 
           rename(
             Jugador = jugador,
-            SO = so
+            SO = so,
+            " " = img
           ) 
         
         # Table ----
@@ -7209,7 +7197,7 @@ leaders <- function(stat, .ip = 0){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7239,38 +7227,18 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            ip = sum(ip, na.rm = T),
             h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           arrange(desc(h)) %>%
-          select(first_name, last_name, h) %>% 
+          select(img, first_name, last_name, h) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, h) %>% 
           rename(
             Jugador = jugador,
-            H = h
+            H = h,
+            " " = img
           ) 
         
         # Table ----
@@ -7298,7 +7266,7 @@ leaders <- function(stat, .ip = 0){
             scrollX = TRUE,
             # rownames = FALSE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7327,38 +7295,18 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            era = round(mean(era, na.rm = T), 2),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            ip = sum(ip, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            er = sum(er, na.rm = T),
-            hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = round(mean(whip, na.rm = T), 2),
-            `h/9` = round(mean(`h/9`, na.rm = T), 2),
-            `hr/9` = round(mean(`hr/9`, na.rm = T), 2),
-            `bb/9` = round(mean(`bb/9`, na.rm = T), 2),
-            `so/9` = round(mean(`so/9`, na.rm = T), 2),
-            `so/bb` = round(mean(`so/bb`, na.rm = T), 2),
-            bk = sum(bk, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           arrange(desc(bb)) %>%
-          select(first_name, last_name, bb) %>% 
+          select(img, first_name, last_name, bb) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, bb) %>% 
           rename(
             Jugador = jugador,
-            BB = bb
+            BB = bb,
+            " " = img
           ) 
         # %>% 
         #   slice(1:(n()-3))
@@ -7387,7 +7335,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7416,41 +7364,22 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
             er = sum(er, na.rm = T),
             ip = IP(ip),
             era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(era) %>%
-          select(first_name, last_name, era) %>% 
+          select(img, first_name, last_name, era) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_frac(10, era) %>% 
           rename(
             Jugador = jugador,
-            ERA = era
-          ) %>% 
-          slice(1: n()-1)
+            ERA = era, 
+            " " = img
+          ) 
         
         # Table ----
         headerCallback <- c(
@@ -7476,7 +7405,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7506,39 +7435,21 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
             sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             bk = sum(bk, na.rm = T),
             .groups = 'drop'
           ) %>% 
           arrange(desc(sv)) %>%
-          select(first_name, last_name, sv) %>% 
+          select(img, first_name, last_name, sv) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, sv) %>% 
           rename(
             Jugador = jugador,
-            SV = sv
-          ) 
+            SV = sv,
+            " " = img
+          ) %>% 
+          slice(1:(n()-1))
         
         # Table ----
         headerCallback <- c(
@@ -7563,7 +7474,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7593,41 +7504,26 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
             ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
             h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            # ir = sum(ir, na.rm = T),
             whip = as.character(round((bb + h)/ ip, 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(whip) %>%
-          select(first_name, last_name, whip) %>% 
+          select(img, first_name, last_name, whip) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, whip) %>%
           rename(
             Jugador = jugador,
-            WHIP = whip
-          ) %>% 
-          slice(1:n()-1)
+            WHIP = whip, 
+            " " = img
+            ) 
+        # 
+        # %>% 
+        #   slice(1:n()-1)
         
         # Table ----
         headerCallback <- c(
@@ -7652,7 +7548,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7682,42 +7578,27 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
             ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
             h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
             `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
             bk = sum(bk, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(`h/9`) %>%
-          select(first_name, last_name, `h/9`) %>% 
+          select(img, first_name, last_name, `h/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, `h/9`) %>%
           rename(
             Jugador = jugador,
-            `H/9` = `h/9`
-          ) %>% 
-          slice(1:(n()-1))
+            `H/9` = `h/9`,
+            " " = img
+          ) 
         
+        # %>% 
+        #   slice(1:(n()-1))
+        # 
         # Table ---- 
         headerCallback <- c(
           "function(thead, data, start, end, display){",
@@ -7741,7 +7622,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7771,41 +7652,26 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
             ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             bk = sum(bk, na.rm = T),
             .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(desc(`so/9`)) %>%
-          select(first_name, last_name, `so/9`) %>% 
+          select(img, first_name, last_name, `so/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, `so/9`) %>%
           rename(
             Jugador = jugador,
-            `SO/9` = `so/9`
-          ) %>% 
-          slice(1:(n()-1))
+            `SO/9` = `so/9`, 
+            " " = img
+          ) 
+        
+        # %>% 
+        #   slice(1:(n()-1))
         
         # Table ----
         headerCallback <- c(
@@ -7830,7 +7696,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7860,42 +7726,26 @@ leaders <- function(stat, .ip = 0){
             first_name = last(first_name),
             last_name = last(last_name),
             jugador= last(jugador),
-            w = sum(w, na.rm = T),
-            l = sum(l, na.rm = T),
-            er = sum(er, na.rm = T),
             ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            ir = sum(ir, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = as.character(round(mean(`so/bb`, na.rm = T), 2)),
-            bk = sum(bk, na.rm = T),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(`bb/9`) %>%
-          select(first_name, last_name, `bb/9`) %>% 
+          select(img, first_name, last_name, `bb/9`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
           top_n(10, `bb/9`) %>%
           rename(
             Jugador = jugador,
-            `BB/9` = `bb/9`
-          ) %>% 
-          slice(1:(n()-1)) %>% 
-          ungroup()
+            `BB/9` = `bb/9`,
+             " " = img
+          ) 
+        
+        # %>% 
+        #   slice(1:(n()-1)) %>% 
+        #   ungroup()
         
         
         # Table ----
@@ -7922,7 +7772,7 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7956,16 +7806,18 @@ leaders <- function(stat, .ip = 0){
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
             `so/bb` = as.character(round(so /bb, 2)),
+            img = c('<img src="https://sports.cbsimg.net/images/baseball/mlb/players/25x35/2829944.jpg" height="20"></img>'),
             .groups = 'drop'
           ) %>% 
           filter(ip > 400) %>% 
           arrange(desc(`so/bb`)) %>%
-          select(first_name, last_name, `so/bb`) %>% 
+          select(img, first_name, last_name, `so/bb`) %>% 
           tidyr::unite('jugador', first_name, last_name, sep = ' ') %>% 
-          top_n(5, `so/bb`) %>%
+          top_n(10, `so/bb`) %>%
           rename(
             Jugador = jugador,
-            `SO/BB` = `so/bb`
+            `SO/BB` = `so/bb`, 
+            " " = img
           ) 
         
         # Table ----
@@ -7994,7 +7846,7 @@ leaders <- function(stat, .ip = 0){
             # rownames = FALSE,
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 0),
-            columnDefs = list(list(className = "dt-center", targets = 1)),
+            columnDefs = list(list(className = "dt-center", targets = c(0:2))),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -8497,11 +8349,11 @@ leaders <- function(stat, .ip = 0){
       output$b_obp <- renderDataTable({
         
         # Data ----
-        obp <- brs %>% 
+        obp <- brs() %>% 
           filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador, sep = "")) %>% 
           select(key, 1:28) %>% 
-          left_join(Rosters %>%
+          left_join(Rosters() %>%
                       mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
                       select(key, name, ID, first_name, last_name), by = 'key') %>%
           select(years, ID, key, first_name,last_name, jugador, 2:29) %>%
@@ -8742,7 +8594,7 @@ leaders <- function(stat, .ip = 0){
           rename(
             Jugador = jugador,
             OPS = ops,
-            " ", img
+            " " = img
           ) %>% 
           arrange(desc(OPS)) 
         
