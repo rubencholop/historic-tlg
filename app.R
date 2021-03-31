@@ -1604,7 +1604,7 @@ leaders <- function(stat, .ip = 0){
               #1 ----
               br(),
               fluidRow(
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1614,7 +1614,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('b_hits')
                           )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1624,7 +1624,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('b_2b')
                           )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1633,8 +1633,13 @@ leaders <- function(stat, .ip = 0){
                          title = "3B",
                          DT::dataTableOutput('b_3b')
                           )
-                       ),
-                column(3,
+                       )
+              ),
+              br(),
+              br(),
+              #2 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1642,14 +1647,9 @@ leaders <- function(stat, .ip = 0){
                          # status = 'warning',
                          title = "HR",
                          DT::dataTableOutput('b_hr')
-                       )
-                )
-              ),
-              br(),
-              br(),
-              #2 ----
-              fluidRow(
-                column(3,
+                         )
+                       ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1658,7 +1658,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('b_average')
                           )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1666,8 +1666,13 @@ leaders <- function(stat, .ip = 0){
                          title = "RBI",
                          DT::dataTableOutput('b_rbi')
                          )
-                       ),
-                column(3,
+                       )
+                  ),
+              br(),
+              br(),
+              #3 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1677,7 +1682,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('b_slg')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1685,13 +1690,8 @@ leaders <- function(stat, .ip = 0){
                          title = "OBP",
                          DT::dataTableOutput('b_obp')
                          )
-                       )
-                  ),
-              br(),
-              br(),
-              #3 ----
-              fluidRow(
-                column(3,
+                       ),
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1700,8 +1700,13 @@ leaders <- function(stat, .ip = 0){
                          title = "OPS",
                          DT::dataTableOutput('b_ops')
                          )
-                       ),
-                column(3,
+                       )
+                  ),
+              br(),
+              br(),
+              # 4 ----
+              fluidRow(
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '100px',
@@ -1710,7 +1715,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('b_ab')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1720,7 +1725,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('b_sb')
                          )
                        ),
-                column(3,
+                column(4,
                        bs4Box(
                          width = NULL,
                          higth = '300px',
@@ -1730,8 +1735,8 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('b_xb')
                          )
                        )
-                  )
                 )
+              )
             )
           ),
         # Records by season ----
