@@ -524,7 +524,8 @@ leaders <- function(stat, .ip = 0){
             br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Temporada Regular",
                          DT::dataTableOutput('Preseason_team')
@@ -534,7 +535,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Round Robin", 
                          DT::dataTableOutput('Prr_team')
@@ -544,7 +546,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Final",
                          DT::dataTableOutput('Pfinal_team')
@@ -558,7 +561,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                        column(12,
-                              bs4Box(
+                              bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Temporada Regular",
                                 DT::dataTableOutput('Breseason_team')
@@ -568,7 +572,8 @@ leaders <- function(stat, .ip = 0){
                      br(),
                      fluidRow(
                        column(12,
-                              bs4Box(
+                              bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Round Robin",
                                 DT::dataTableOutput('Brr_team')
@@ -578,7 +583,8 @@ leaders <- function(stat, .ip = 0){
                      br(),
                      fluidRow(
                        column(12,
-                              bs4Box(
+                              bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Final",
                                 DT::dataTableOutput('Bfinal_team')
@@ -613,7 +619,8 @@ leaders <- function(stat, .ip = 0){
                      # Tables Picheo ----
                      fluidRow(
                        column(12,
-                              bs4Dash::bs4Box(
+                              bs4Dash::bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Temporada Regular",
                                 DT::dataTableOutput('picheo_rs')
@@ -623,7 +630,8 @@ leaders <- function(stat, .ip = 0){
                      br(),
                      fluidRow(
                        column(12,
-                              bs4Dash::bs4Box(
+                              bs4Dash::bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Round Robin",
                                 DT::dataTableOutput('picheo_rr_sm')
@@ -633,7 +641,8 @@ leaders <- function(stat, .ip = 0){
                      br(),
                      fluidRow(
                        column(12,
-                              bs4Dash::bs4Box(
+                              bs4Dash::bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Final",
                                 DT::dataTableOutput('picheo_finals')
@@ -659,7 +668,8 @@ leaders <- function(stat, .ip = 0){
                      # Tables Bateo ----
                      fluidRow(
                        column(12,
-                              bs4Box(
+                              bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Temporada Regular",
                                 DT::dataTableOutput('bateo_rs')
@@ -669,7 +679,8 @@ leaders <- function(stat, .ip = 0){
                      br(),
                      fluidRow(
                        column(12,
-                              bs4Box(
+                              bs4Card(
+                                closable = FALSE,
                                 width = NULL,
                                 title = "Raound Robin",
                                 DT::dataTableOutput('bateo_rr_sm')
@@ -679,7 +690,8 @@ leaders <- function(stat, .ip = 0){
                    br(),
                    fluidRow(
                      column(12,
-                            bs4Box(
+                            bs4Card(
+                              closable = FALSE,
                               width = NULL,
                               title = "Final",
                               DT::dataTableOutput('bateo_finals')
@@ -1146,7 +1158,8 @@ leaders <- function(stat, .ip = 0){
               # Stats by position ----
               fluidRow(
                   column(12,
-                         bs4Box(
+                         bs4Card(
+                           closable = FALSE,
                            width = NULL,
                            title = "Temporada Regular",
                            DT::dataTableOutput('info_position_pit')
@@ -1175,7 +1188,8 @@ leaders <- function(stat, .ip = 0){
               # Stats by position ----
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Temporada Regular",
                          DT::dataTableOutput('info_position_bat')
@@ -1210,7 +1224,8 @@ leaders <- function(stat, .ip = 0){
               # Tables Picheo ----
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1268,7 +1283,8 @@ leaders <- function(stat, .ip = 0){
               # Tables Bateo ----
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1351,7 +1367,8 @@ leaders <- function(stat, .ip = 0){
           fluidRow(
             column(1),
             column(9,
-                   bs4Box(
+                   bs4Card(
+                     closable = FALSE,
                      width = NULL,
                      title = "Temporada Regular",
                      DT::dataTableOutput('info_roster')
@@ -1372,7 +1389,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Totales en Temporada Regular",
                          DT::dataTableOutput('versus_total_pit')
@@ -1383,7 +1401,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Totales por temporada en Temporada Regular",
                          DT::dataTableOutput('versus_pit')
@@ -1397,7 +1416,8 @@ leaders <- function(stat, .ip = 0){
               br(),
                 fluidRow(
                   column(12,
-                         bs4Box(
+                         bs4Card(
+                           closable = FALSE,
                            width = NULL,
                            title = "Totales en Temporada Regular",
                            DT::dataTableOutput('versus_total_bat')
@@ -1408,7 +1428,8 @@ leaders <- function(stat, .ip = 0){
                 br(),
                 fluidRow(
                   column(12,
-                         bs4Box(
+                         bs4Card(
+                           closable = FALSE,
                            width = NULL,
                            title = "Totales por temporada en Temporada Regular",
                            DT::dataTableOutput('versus_bat')
@@ -1432,7 +1453,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(4,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1442,7 +1464,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1452,7 +1475,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1467,7 +1491,8 @@ leaders <- function(stat, .ip = 0){
               #2 ----
               fluidRow(
                 column(4,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1477,7 +1502,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1486,7 +1512,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1500,7 +1527,8 @@ leaders <- function(stat, .ip = 0){
               #3 ----
               fluidRow(
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1510,7 +1538,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1520,7 +1549,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1535,7 +1565,8 @@ leaders <- function(stat, .ip = 0){
               #4 ----
               fluidRow(
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1544,7 +1575,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1553,7 +1585,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1567,7 +1600,8 @@ leaders <- function(stat, .ip = 0){
               #5 ----
               fluidRow(
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1576,7 +1610,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1586,7 +1621,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1597,7 +1633,6 @@ leaders <- function(stat, .ip = 0){
                        )
                 )
               ),
-
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
@@ -1605,7 +1640,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1615,7 +1651,8 @@ leaders <- function(stat, .ip = 0){
                           )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1625,7 +1662,8 @@ leaders <- function(stat, .ip = 0){
                           )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1640,7 +1678,8 @@ leaders <- function(stat, .ip = 0){
               #2 ----
               fluidRow(
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1650,7 +1689,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1659,7 +1699,8 @@ leaders <- function(stat, .ip = 0){
                           )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1673,7 +1714,8 @@ leaders <- function(stat, .ip = 0){
               #3 ----
               fluidRow(
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1683,7 +1725,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1692,7 +1735,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1704,10 +1748,11 @@ leaders <- function(stat, .ip = 0){
                   ),
               br(),
               br(),
-              # 4 ----
+              #4 ----
               fluidRow(
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1716,7 +1761,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1726,7 +1772,8 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1752,38 +1799,51 @@ leaders <- function(stat, .ip = 0){
               #1 ----
               br(),
               fluidRow(
-                column(3,
-                       bs4Dash::bs4Box(
+                column(1),
+                column(5,
+                       bs4Dash::bs4Card(
+                         solidHeader = FALSE, 
+                         collapsible = TRUE,
                          width = NULL,
                          higth = '300px',
-                         collapsible = TRUE,
-                         # status = 'warning',
+                         closable = FALSE,
                          title = "W",
                          DT::dataTableOutput('pt_p_w')
                          )
                        ),
-                column(3,
-                       bs4Dash::bs4Box(
+                column(5,
+                       bs4Dash::bs4Card(
+                         solidHeader = FALSE, 
+                         collapsible = TRUE,
+                         # labelText = 1,
+                         # labelStatus = "danger",
+                         # labelTooltip = "Hi Bro!",
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
-                         collapsible = TRUE,
-                         # status = 'warning',
                          title = "L",
                          DT::dataTableOutput('pt_p_l')
                          )
                        ),
-                column(3,
-                       bs4Dash::bs4Box(
-                         width = NULL,
-                         higth = '300px',
-                         collapsible = TRUE,
-                         # status = 'warning',
-                         title = "G",
-                         DT::dataTableOutput('pt_p_g')
-                         )
-                       ),
-                column(3,
-                       bs4Dash::bs4Box(
+                column(1),
+                # column(4,
+                #        bs4Dash::bs4Box(
+                #          width = NULL,
+                #          higth = '300px',
+                #          collapsible = TRUE,
+                #          # status = 'warning',
+                #          title = "G",
+                #          DT::dataTableOutput('pt_p_g')
+                #          )
+                #        )
+                ),
+              br(),
+              br(),
+              #2 ----
+              fluidRow(
+                column(4,
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1791,14 +1851,10 @@ leaders <- function(stat, .ip = 0){
                          title = "GS",
                          DT::dataTableOutput('pt_p_gs')
                          )
-                       )
-                ),
-              br(),
-              br(),
-              #2 ----
-              fluidRow(
-                column(3,
-                       bs4Box(
+                       ),
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1806,17 +1862,24 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_p_ip')
                          )
                        ),
-                column(3,
-                       bs4Box(
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
                          title = "SO",
                          DT::dataTableOutput('pt_p_so')
                          )
-                       ),
-                column(3,
-                       bs4Box(
+                       )
+                ),
+              br(),
+              br(),
+              #3 ----
+              fluidRow(
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1825,8 +1888,9 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_p_h')
                          )
                        ),
-                column(3,
-                       bs4Box(
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1834,14 +1898,10 @@ leaders <- function(stat, .ip = 0){
                          title = "BB",
                          DT::dataTableOutput('pt_p_bb')
                          )
-                       )
-                ),
-              br(),
-              br(),
-              #3 ----
-              fluidRow(
-                column(3,
-                       bs4Box(
+                       ),
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1849,27 +1909,35 @@ leaders <- function(stat, .ip = 0){
                          title = "SV",
                          DT::dataTableOutput('pt_p_sv')
                          )
-                       ),
-                column(3,
-                       bs4Box(
+                       )
+                ),
+              br(),
+              br(),
+              #4 ----
+              fluidRow(
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
                          title = "WHIP",
                          DT::dataTableOutput('pt_p_whip')
-                         )
-                       ),
-                column(3,
-                       bs4Box(
+                       )
+                ),
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
                          title = "ERA",
                          DT::dataTableOutput('pt_p_era')
-                         )
-                       ),
-                column(3,
-                       bs4Box(
+                       )
+                ),
+                column(4,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1878,41 +1946,44 @@ leaders <- function(stat, .ip = 0){
                          )
                        )
                 ),
-              br(),
-              br(),
-              #4 ----
-              fluidRow(
-                column(3,
-                       bs4Box(
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "H/9",
-                         DT::dataTableOutput('pt_p_h9')
-                         )
-                       ),
-                column(3,
-                       bs4Box(
-                         width = NULL,
-                         higth = '300px',
-                         collapsible = TRUE,
-                         # status = 'warning',
-                         title = "SO/9",
-                         DT::dataTableOutput('pt_p_so9')
-                         )
-                       ),
-                column(3,
-                       bs4Box(
-                         width = NULL,
-                         higth = '300px',
-                         collapsible = TRUE,
-                         # status = 'warning',
-                         title = "BB/9",
-                         DT::dataTableOutput('pt_p_bb9')
-                         )
-                       )
-                )
+            br(),
+            br(),
+              #5 ------
+            fluidRow(
+              column(4,
+                     bs4Card(
+                       closable = FALSE,
+                       width = NULL,
+                       higth = '100px',
+                       collapsible = TRUE,
+                       title = "H/9",
+                       DT::dataTableOutput('pt_p_h9')
+                     )
               ),
+              column(4,
+                     bs4Card(
+                       closable = FALSE,
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = "SO/9",
+                       DT::dataTableOutput('pt_p_so9')
+                     )
+              ),
+              column(4,
+                     bs4Card(
+                       closable = FALSE,
+                       width = NULL,
+                       higth = '300px',
+                       collapsible = TRUE,
+                       # status = 'warning',
+                       title = "BB/9",
+                       DT::dataTableOutput('pt_p_bb9')
+                       )
+                     )
+              )
+            ),
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
@@ -1920,7 +1991,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1930,7 +2002,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1940,7 +2013,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1950,7 +2024,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1965,7 +2040,8 @@ leaders <- function(stat, .ip = 0){
               #2 ----
               fluidRow(
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1974,7 +2050,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -1984,7 +2061,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -1993,7 +2071,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -2008,7 +2087,8 @@ leaders <- function(stat, .ip = 0){
               #3 ----
               fluidRow(
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -2017,7 +2097,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '100px',
                          collapsible = TRUE,
@@ -2026,7 +2107,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
@@ -2036,7 +2118,8 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
                 column(3,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
                          collapsible = TRUE,
