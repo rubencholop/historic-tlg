@@ -1167,28 +1167,30 @@ leaders <- function(stat, .ip = 0){
                            closable = FALSE,
                            width = NULL,
                            title = "Temporada Regular",
-                           DT::dataTableOutput('info_position_pit')
+                           DT::dataTableOutput('info_position_rs_pit')
                            )
                          )
                   ),
               # Stats by round Robin ----
+              br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Temporada Regular",
+                         title = "Roun Robin",
                          DT::dataTableOutput('info_position_rr_pit')
                          )
                        )
                 ),
               # Stats by finals ----
+              br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Temporada Regular",
+                         title = "Final",
                          DT::dataTableOutput('info_position_final_pit')
                          )
                        )
@@ -1224,23 +1226,25 @@ leaders <- function(stat, .ip = 0){
                     )
                   ),
               # Stats by round robin ----
+              br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Temporada Regular",
+                         title = "Round Robin",
                          DT::dataTableOutput('info_position_rr_bat')
                          )
                        )
                 ),
               # Stats by final ----
+              br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Temporada Regular",
+                         title = "Final",
                          DT::dataTableOutput('info_position_final_bat')
                          )
                        )
@@ -5366,19 +5370,18 @@ leaders <- function(stat, .ip = 0){
       
       #By position ----
       # Table bateo regular season by P ----
-      output$info_position_pit <- DT::renderDataTable({
+      output$info_position_rs_pit <- DT::renderDataTable({
         req(input$select_posicion_pit)
 
         # Data ----
         df <- prs() %>%
-          filter(ronda == "regular")
+          filter(ronda == "regular") %>% 
           mutate(key = paste(as.character(years), jugador)) %>%
           select(key, 1:28) %>%
           left_join(Rosters() %>%
                       mutate(key = paste(as.character(years), jugador)) %>%
                       select(key, pos, first_name, last_name, ID), by = "key"
           ) %>% 
-          # filter(position == input$select_posicion_pit) %>% 
           select(-key, -`w-l%`, -years) %>%
           group_by(ID) %>%
           summarise(
@@ -5855,7 +5858,7 @@ leaders <- function(stat, .ip = 0){
           select(2:3, pos, first_name, last_name, 3:31) %>%
           arrange(years, jugador)  %>%
           select(-years, -edad) %>%
-          filter(pos == "C") %>% 
+          filter(pos == input$select_posicion_bat) %>% 
           group_by(jugador)  %>%
           summarise(
             pos  = last(pos),
@@ -5974,7 +5977,7 @@ leaders <- function(stat, .ip = 0){
         
         # Data ----
         batting_player <- brs() %>%
-          filter(ronda == "round robin") %>% 
+          filter(ronda == "finales") %>% 
           mutate(key = paste(as.character(years), jugador)) %>%
           select(key, 1:28) %>%
           left_join(Rosters() %>%
