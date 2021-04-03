@@ -898,21 +898,24 @@ leaders <- function(stat, .ip = 0){
                 br(),
                 column(12,
                        br(),
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Temporada Regular",
                          DT::dataTableOutput('picheo_jugador')
                        ),
                        br(),
                        br(),
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Round Robin",
                          DT::dataTableOutput('picheo_jugador_rr')
                        ),
                        br(),
                        br(),
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Finales",
                          DT::dataTableOutput('picheo_jugador_final')
@@ -1109,20 +1112,22 @@ leaders <- function(stat, .ip = 0){
               fluidRow(
                 br(),
                 column(12,
-                       box(
-                         headerBorder = TRUE,
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Temporada Regular",
                          DT::dataTableOutput('bat_rs')
                        ),
                        br(),
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Round Robin",
                          DT::dataTableOutput('bat_rr')
                        ),
                        br(),
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Finales",
                          DT::dataTableOutput('bat_final')
@@ -1163,10 +1168,32 @@ leaders <- function(stat, .ip = 0){
                            width = NULL,
                            title = "Temporada Regular",
                            DT::dataTableOutput('info_position_pit')
+                           )
                          )
-                      )
-                  )
+                  ),
+              # Stats by round Robin ----
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         title = "Temporada Regular",
+                         DT::dataTableOutput('info_position_rr_pit')
+                         )
+                       )
                 ),
+              # Stats by finals ----
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         title = "Temporada Regular",
+                         DT::dataTableOutput('info_position_final_pit')
+                         )
+                       )
+                )
+              ),
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
@@ -1237,7 +1264,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Temporada Regular",
                          DT::dataTableOutput('picheo_rs_country')
@@ -1247,7 +1275,8 @@ leaders <- function(stat, .ip = 0){
                 br(),
               fluidRow(
                 column(12,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Round Robin",
                          DT::dataTableOutput('picheo_rr_country')
@@ -1257,7 +1286,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Finales",
                          DT::dataTableOutput('picheo_finals_country')
@@ -1296,7 +1326,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Temporada Regular",
                          DT::dataTableOutput('bateo_rs_country')
@@ -1306,7 +1337,8 @@ leaders <- function(stat, .ip = 0){
                 br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Round Robin",
                          DT::dataTableOutput('bateo_rr_country')
@@ -1316,7 +1348,8 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 column(12,
-                       bs4Box(
+                       bs4Card(
+                         closable = FALSE,
                          width = NULL,
                          title = "Finales",
                          DT::dataTableOutput('bateo_finals_country')
