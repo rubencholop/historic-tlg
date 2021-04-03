@@ -5839,6 +5839,264 @@ leaders <- function(stat, .ip = 0){
       })
       
       
+      # Table bateo round robin by position players ----
+      output$info_position_rr_bat <- DT::renderDataTable({
+        req(input$select_posicion_bat)
+        
+        # Data ----
+        batting_player <- brs() %>%
+          filter(ronda == "round robin") %>% 
+          mutate(key = paste(as.character(years), jugador)) %>%
+          select(key, 1:28) %>%
+          left_join(Rosters() %>%
+                      mutate(key = paste(as.character(years), jugador)) %>%
+                      select(key, pos, first_name, last_name), by = "key"
+          ) %>%
+          select(2:3, pos, first_name, last_name, 3:31) %>%
+          arrange(years, jugador)  %>%
+          select(-years, -edad) %>%
+          filter(pos == "C") %>% 
+          group_by(jugador)  %>%
+          summarise(
+            pos  = last(pos),
+            first_name = last(first_name),
+            last_name = last(last_name),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          mutate(player = paste0(first_name, " ", last_name, sep = " ")) %>%
+          select(player, 5:27) %>%
+          arrange(desc(g)) %>%
+          rename(
+            Jugador = player,
+            `G` = g,
+            `PA` = pa,
+            `AB` = ab,
+            `R` = r,
+            `H` = h,
+            `2B` = '2b',
+            `3B` = '3b',
+            `HR` = hr,
+            `RBI` = rbi,
+            `SB` = sb,
+            `CS` = cs,
+            `BB` = bb,
+            `SO` = so,
+            `AVG` = avg,
+            `OBP` = obp,
+            `SLG` = slg,
+            `OPS` = ops,
+            `RC` = rc,
+            `TB` = tb,
+            `XB` = xb,
+            # `IR` = ir,
+            `HBP` = hbp,
+            `SH` = sh,
+            `SF` = sf
+          )
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        ) 
+        
+        
+        # Table ----
+        DT::datatable(
+          batting_player,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          style = ,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(
+              list(
+                width = '120px', targets = 0,
+                width = '10px', targets = c(1:23))),
+            # columnDefs = list(
+            #   list(
+            #     className = "dt-center", targets = 0:23)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+
+      })
+      
+      
+      # Table bateo final by position players ----
+      output$info_position_final_bat <- DT::renderDataTable({
+        req(input$select_posicion_bat)
+        
+        # Data ----
+        batting_player <- brs() %>%
+          filter(ronda == "round robin") %>% 
+          mutate(key = paste(as.character(years), jugador)) %>%
+          select(key, 1:28) %>%
+          left_join(Rosters() %>%
+                      mutate(key = paste(as.character(years), jugador)) %>%
+                      select(key, pos, first_name, last_name), by = "key"
+          ) %>%
+          select(2:3, pos, first_name, last_name, 3:31) %>%
+          arrange(years, jugador)  %>%
+          select(-years, -edad) %>%
+          filter(pos == input$select_posicion_bat) %>% 
+          group_by(jugador)  %>%
+          summarise(
+            pos  = last(pos),
+            first_name = last(first_name),
+            last_name = last(last_name),
+            g = sum(g, na.rm = T),
+            pa = sum(pa, na.rm = T),
+            ab = sum(ab, na.rm = T),
+            r = sum(r, na.rm = T),
+            h = sum(h, na.rm = T),
+            `2b` = sum(`2b`, na.rm = T),
+            `3b` = sum(`3b`, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            rbi = sum(rbi, na.rm = T),
+            sb = sum(sb, na.rm = T),
+            cs = sum(cs, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            avg = round(h/ab, 3),
+            obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
+            slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
+            ops = round(slg + obp, 3),
+            rc = sum(rc, na.rm = T),
+            tb = sum(tb, na.rm = T),
+            xb = sum(xb, na.rm = T),
+            hbp = sum(hbp, na.rm = T),
+            sh = sum(sh, na.rm = T),
+            sf = sum(sf, na.rm = T),
+            .groups = 'drop'
+          ) %>% 
+          mutate(player = paste0(first_name, " ", last_name, sep = " ")) %>%
+          select(player, 5:27) %>%
+          arrange(desc(g)) %>%
+          rename(
+            Jugador = player,
+            `G` = g,
+            `PA` = pa,
+            `AB` = ab,
+            `R` = r,
+            `H` = h,
+            `2B` = '2b',
+            `3B` = '3b',
+            `HR` = hr,
+            `RBI` = rbi,
+            `SB` = sb,
+            `CS` = cs,
+            `BB` = bb,
+            `SO` = so,
+            `AVG` = avg,
+            `OBP` = obp,
+            `SLG` = slg,
+            `OPS` = ops,
+            `RC` = rc,
+            `TB` = tb,
+            `XB` = xb,
+            # `IR` = ir,
+            `HBP` = hbp,
+            `SH` = sh,
+            `SF` = sf
+          )
+        
+        
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        ) 
+        
+        
+        # Table ----
+        DT::datatable(
+          batting_player,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          style = ,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Las estadísticas PA, OBP, OPS, CS, SB, BB, SO, HBP, RC, SH y SF
+                            son registradas desde la temporada 2005-06')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(
+              list(
+                width = '120px', targets = 0,
+                width = '10px', targets = c(1:23))),
+            # columnDefs = list(
+            #   list(
+            #     className = "dt-center", targets = 0:23)),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+
+      })
+      
+      
       #By country ----
       # Table pitching regular season by country ----
       output$picheo_rs_country <- renderDataTable({
