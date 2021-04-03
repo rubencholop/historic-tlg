@@ -5371,6 +5371,7 @@ leaders <- function(stat, .ip = 0){
 
         # Data ----
         df <- prs() %>%
+          filter(ronda == "regular")
           mutate(key = paste(as.character(years), jugador)) %>%
           select(key, 1:28) %>%
           left_join(Rosters() %>%
@@ -5463,9 +5464,237 @@ leaders <- function(stat, .ip = 0){
               list(
                 width = '120px', targets = 0,
                 width = '10px', targets = c(1:20))),
-            # className = "left", targets = c(1:24))),
-            # width = "200px", targets = 1)),
-            # list(width = '200px', targets = "_all")),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+
+        
+
+      })
+      
+      
+      # Table bateo round robin by P ----
+      output$info_position_rr_pit <- DT::renderDataTable({
+        req(input$select_posicion_pit)
+
+        # Data ----
+        df <- prs() %>%
+          filter(ronda == "round robin") %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+          select(player_id, 1:28) %>%
+          left_join(Rosters() %>%
+                      select(player_id, years, name, ID, first_name, last_name),
+                    by = c("player_id", "years")) %>% 
+          # mutate(key = paste(as.character(years), jugador)) %>%
+          # select(key, 1:28) %>%
+          # left_join(Rosters %>%
+          #             mutate(key = paste(as.character(years), jugador)) %>%
+          #             select(key, pos, first_name, last_name, ID), by = "key"
+          # ) %>% 
+          select(-`w-l%`, -years) %>%
+          group_by(player_id) %>%
+          summarise(
+            first_name = last(first_name),
+            last_name = last(last_name),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = round((er * 9) / ip, 2),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            `h/9` = round((h/ip)*9, 2),
+            `hr/9` = round((hr/ip)*9, 2),
+            `bb/9` = round((bb/ip)*9, 2),
+            `so/9` = round((so/ip)*9, 2),
+            `so/bb` = round(so/bb, 2),
+            .groups = 'drop'
+          ) %>%
+          mutate(player = paste0(first_name, " ", last_name, sep = " ")) %>%
+          select(player, 4:24) %>%
+          arrange(desc(ip)) %>%
+          rename(
+            Jugador = player,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+            )
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        ) 
+        
+        
+        DT::datatable(
+          df,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          style = ,
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(
+              list(
+                width = '120px', targets = 0,
+                width = '10px', targets = c(1:20))),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+
+        
+
+      })
+      
+      
+      # Table bateo final by P ----
+      output$info_position_final_pit <- DT::renderDataTable({
+        req(input$select_posicion_pit)
+
+        # Data ----
+        df <- prs() %>%
+          filter(ronda == "finales") %>% 
+          mutate(key = paste0(as.character(years), jugador, sep = "")) %>%
+          select(player_id, 1:28) %>%
+          left_join(Rosters() %>%
+                      select(player_id, years, name, ID, first_name, last_name),
+                    by = c("player_id", "years")) %>% 
+          group_by(player_id) %>%
+          summarise(
+            first_name = last(first_name),
+            last_name = last(last_name),
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = round((er * 9) / ip, 2),
+            whip = as.character(round(sum(bb, h, na.rm = TRUE)/ ip, 2)),
+            `h/9` = round((h/ip)*9, 2),
+            `hr/9` = round((hr/ip)*9, 2),
+            `bb/9` = round((bb/ip)*9, 2),
+            `so/9` = round((so/ip)*9, 2),
+            `so/bb` = round(so/bb, 2),
+            .groups = 'drop'
+          ) %>%
+          mutate(player = paste0(first_name, " ", last_name, sep = " ")) %>%
+          select(player, 4:24) %>%
+          arrange(desc(ip)) %>%
+          rename(
+            Jugador = player,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+            )
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        ) 
+        
+        
+        DT::datatable(
+          df,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          style = ,
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(
+              list(
+                width = '120px', targets = 0,
+                width = '10px', targets = c(1:20))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
