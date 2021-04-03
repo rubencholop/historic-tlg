@@ -1160,7 +1160,7 @@ leaders <- function(stat, .ip = 0){
                        )
                 )
               ),
-              # Stats by position ----
+              # Stats by regular season ----
               fluidRow(
                   column(12,
                          bs4Card(
@@ -1212,7 +1212,7 @@ leaders <- function(stat, .ip = 0){
                        )
                 )
               ),
-              # Stats by position ----
+              # Stats by regular season ----
               fluidRow(
                 column(12,
                        bs4Card(
@@ -1222,9 +1222,31 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('info_position_bat')
                        )
                     )
-                  )
+                  ),
+              # Stats by round robin ----
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         title = "Temporada Regular",
+                         DT::dataTableOutput('info_position_rr_bat')
+                         )
+                       )
+                ),
+              # Stats by final ----
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         title = "Temporada Regular",
+                         DT::dataTableOutput('info_position_final_bat')
+                         )
+                       )
                 )
               )
+            )
           ),
         # TabItem by country ----
         tabItem(
