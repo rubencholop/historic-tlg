@@ -1507,17 +1507,41 @@ leaders <- function(stat, .ip = 0){
                          )
                   )
                 ),
-                br(),
+              # Regular Season ----
                 br(),
                 fluidRow(
                   column(12,
                          bs4Card(
                            closable = FALSE,
                            width = NULL,
-                           title = "Totales por temporada en Temporada Regular",
+                           title = "Temporada Regular",
                            DT::dataTableOutput('versus_bat')
                          )
                   )
+                ),
+              # Round Robin ----
+              br(),
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         title = "Round Robin",
+                         DT::dataTableOutput('versus_rr_bat')
+                       )
+                )
+              ),
+              # Regular Season ----
+              br(),
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         title = "Final",
+                         DT::dataTableOutput('versus_final_bat')
+                         )
+                       )
                 )
               )
             )
