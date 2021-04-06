@@ -1487,7 +1487,7 @@ leaders <- function(stat, .ip = 0){
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Temporada Regular",
+                         title = "Final",
                          DT::dataTableOutput('versus_final_pit')
                        )
                 )
@@ -11591,7 +11591,7 @@ leaders <- function(stat, .ip = 0){
         ) 
       })
       #Vzla vs importados ----
-      # Table Geo pitching vzla vs importado totales  ----
+      # Table pitching vzla vs importado totales  ----
       output$versus_total_pit <- renderDataTable({
         
         # Data ----
@@ -11708,7 +11708,7 @@ leaders <- function(stat, .ip = 0){
         ) 
      
       })
-      # Table Geo pitching vzla vs importado ----
+      # Table pitching vzla vs importado ----
       output$versus_pit <- renderDataTable({
         req(input$select_country)
         
@@ -11821,7 +11821,227 @@ leaders <- function(stat, .ip = 0){
         ) 
      
       })
-      # Table Geo batting vzla vs importado totales ----
+      # Table pitching vzla vs importado round robin ----
+      output$versus_rr_pit <- renderDataTable({
+        req(input$select_country)
+        
+        # Data ----
+        versus_pit <- prs() %>% 
+          filter(ronda == "round robin") %>%
+          select(player_id, 1:31) %>%
+          left_join(Rosters() %>%
+                      select(player_id, years, name, ID, first_name, last_name, pais),
+                    by = c("player_id", "years")) %>%
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   )
+          )  %>% 
+          group_by(importados, years) %>% 
+          summarise(
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(so/bb, 2)),
+            .groups = "drop"
+          ) %>% 
+          arrange(desc(years)) %>% 
+          rename(
+            Grupo = importados,
+            Temporada = years, 
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+          )
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          versus_pit ,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Existen jugadores que no tienen información de su país y se asigna "Desconocidos"')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+     
+      })
+      # Table pitching vzla vs importado final ----
+      output$versus_final_pit <- renderDataTable({
+        req(input$select_country)
+        
+        # Data ----
+        versus_pit <- prs() %>% 
+          filter(ronda == "finales") %>%
+          select(player_id, 1:31) %>%
+          left_join(Rosters() %>%
+                      select(player_id, years, name, ID, first_name, last_name, pais),
+                    by = c("player_id", "years")) %>% 
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   )
+          )  %>% 
+          group_by(importados, years) %>% 
+          summarise(
+            w = sum(w, na.rm = T),
+            l = sum(l, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = as.character(round(so/bb, 2)),
+            .groups = "drop"
+          ) %>% 
+          arrange(desc(years)) %>% 
+          rename(
+            Grupo = importados,
+            Temporada = years, 
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+          )
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To deleate header line horizontal in bottom of colums name
+        
+        DT::datatable(
+          versus_pit ,
+          # escape = FALSE,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Existen jugadores que no tienen información de su país y se asigna "Desconocidos"')),
+          options = list(
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            autoWidth = TRUE,
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 25,
+            lengthMenu = c(25, 20, 100),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) 
+     
+      })
+      # Table batting vzla vs importado totales ----
       output$versus_total_bat <- renderDataTable({
         
         # Data ----
@@ -11934,7 +12154,7 @@ leaders <- function(stat, .ip = 0){
         
       })
       
-      # Table Geo batting vzla vs importado  ----
+      # Table batting vzla vs importado  ----
       output$versus_bat <- renderDataTable({
         
         versus_bat <- brs() %>% 
@@ -12050,6 +12270,7 @@ leaders <- function(stat, .ip = 0){
         
       })
       
+      # Demographics -----
       # Table Geo Pitching stats by city ----
       output$city_pit <- renderDataTable({
         req(input$select_country)
