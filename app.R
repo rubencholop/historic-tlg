@@ -1395,8 +1395,8 @@ leaders <- function(stat, .ip = 0){
           # input roster ----
           fluidRow(
             br(),
-            column(1),
-            column(3,
+            column(3),
+            column(2,
                    selectInput(
                      inputId = 'select_rosters',
                      label = 'Temporadas',
@@ -1404,35 +1404,37 @@ leaders <- function(stat, .ip = 0){
                                               temporadas)),
                      selected = "2020-21"
                      # multiple = TRUE
-                   )
-            ),
-            column(3,
+                     )
+                   ),
+            column(2,
                    selectInput(
                      inputId = 'countrys',
                      label = 'Paises',
                      choices = c("Todos los Paises", .paises)
-                   )
-            ),
-            column(3,
+                     )
+                   ),
+            column(2,
                    selectInput(
                      inputId = 'posiciones',
                      label = 'Posiciones',
                      choices = c("Todas las Posiciones", posiciones)
-                   )
-            )
+                     )
+                   ),
+            column(3)
           ),
           # Stats by roster ----
           br(),
           fluidRow(
             column(1),
-            column(9,
+            column(10,
                    bs4Card(
                      closable = FALSE,
                      width = NULL,
                      title = "Temporada Regular",
                      DT::dataTableOutput('info_roster')
-                   )
-            )
+                     )
+                   ),
+            column(1)
           )
         ),
         # Tabitem Estadísticas Vzla vs importados ----
@@ -1594,7 +1596,6 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
               br(),
-              br(),
               #2 ----
               fluidRow(
                 column(4,
@@ -1629,7 +1630,6 @@ leaders <- function(stat, .ip = 0){
                          )
                        )
               ),
-              br(),
               br(),
               #3 ----
               fluidRow(
@@ -1668,7 +1668,6 @@ leaders <- function(stat, .ip = 0){
                        )
               ),
               br(),
-              br(),
               #4 ----
               fluidRow(
                 column(4,
@@ -1702,7 +1701,6 @@ leaders <- function(stat, .ip = 0){
                        )
                 )
               ),
-              br(),
               br(),
               #5 ----
               fluidRow(
@@ -1781,7 +1779,6 @@ leaders <- function(stat, .ip = 0){
                        )
               ),
               br(),
-              br(),
               #2 ----
               fluidRow(
                 column(4,
@@ -1816,7 +1813,6 @@ leaders <- function(stat, .ip = 0){
                          )
                        )
                   ),
-              br(),
               br(),
               #3 ----
               fluidRow(
@@ -1853,7 +1849,6 @@ leaders <- function(stat, .ip = 0){
                          )
                        )
                   ),
-              br(),
               br(),
               #4 ----
               fluidRow(
@@ -1945,7 +1940,6 @@ leaders <- function(stat, .ip = 0){
                 #        )
                 ),
               br(),
-              br(),
               #2 ----
               fluidRow(
                 column(4,
@@ -1980,7 +1974,6 @@ leaders <- function(stat, .ip = 0){
                          )
                        )
                 ),
-              br(),
               br(),
               #3 ----
               fluidRow(
@@ -2019,7 +2012,6 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
               br(),
-              br(),
               #4 ----
               fluidRow(
                 column(4,
@@ -2053,7 +2045,6 @@ leaders <- function(stat, .ip = 0){
                          )
                        )
                 ),
-            br(),
             br(),
               #5 ------
             fluidRow(
@@ -2143,7 +2134,6 @@ leaders <- function(stat, .ip = 0){
                 )
               ),
               br(),
-              br(),
               #2 ----
               fluidRow(
                 column(3,
@@ -2189,7 +2179,6 @@ leaders <- function(stat, .ip = 0){
                        )
                 )
               ),
-              br(),
               br(),
               #3 ----
               fluidRow(
@@ -3488,7 +3477,7 @@ leaders <- function(stat, .ip = 0){
             fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = c(0, 2:23)),
                               list(width = '100px', targets = 1)
-            ),
+                              ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7399,6 +7388,7 @@ leaders <- function(stat, .ip = 0){
         
         # Data ----
         roster <- Rosters() %>%
+          filter(ronda == "regular") %>% 
           # filter(years == input$select_rosters) %>% 
           mutate(jugador = paste0(first_name, " ", last_name)) %>% 
           select(years, jugador, pos, bat, lan, pais, estado, ciudad) 
@@ -7444,7 +7434,7 @@ leaders <- function(stat, .ip = 0){
           style = ,
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
-            # autoWidth = TRUE,
+            autoWidth = TRUE,
             searching = FALSE,
             paging = TRUE,
             pageLegth = 25,
@@ -7452,15 +7442,9 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
-            # fixedHeader = TRUE,
-            # fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(
-              list(
-                width = '140px', targets = c(1, 5),
-                # width = '10px', targets = c(0, 2, 3, 4, 6, 7)
-                className = "dt-center", targets = c(0, 2, 3, 4, 6, 7))),
-            # width = "200px", targets = 1)),
-            # list(width = '200px', targets = "_all")),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:4)),
+                              list(width = '130px', targets = c(1, 5:7))
+                              ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
