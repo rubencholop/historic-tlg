@@ -1395,8 +1395,8 @@ leaders <- function(stat, .ip = 0){
           # input roster ----
           fluidRow(
             br(),
-            column(3),
-            column(2,
+            column(1),
+            column(3,
                    selectInput(
                      inputId = 'select_rosters',
                      label = 'Temporadas',
@@ -1406,21 +1406,21 @@ leaders <- function(stat, .ip = 0){
                      # multiple = TRUE
                      )
                    ),
-            column(2,
+            column(3,
                    selectInput(
                      inputId = 'countrys',
                      label = 'Paises',
                      choices = c("Todos los Paises", .paises)
                      )
                    ),
-            column(2,
+            column(3,
                    selectInput(
                      inputId = 'posiciones',
                      label = 'Posiciones',
                      choices = c("Todas las Posiciones", posiciones)
                      )
                    ),
-            column(3)
+            column(2)
           ),
           # Stats by roster ----
           br(),
@@ -1901,8 +1901,7 @@ leaders <- function(stat, .ip = 0){
               #1 ----
               br(),
               fluidRow(
-                column(1),
-                column(5,
+                column(4,
                        bs4Dash::bs4Card(
                          solidHeader = FALSE, 
                          collapsible = TRUE,
@@ -1913,7 +1912,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_p_w')
                          )
                        ),
-                column(5,
+                column(4,
                        bs4Dash::bs4Card(
                          solidHeader = FALSE, 
                          collapsible = TRUE,
@@ -1927,17 +1926,16 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_p_l')
                          )
                        ),
-                column(1),
-                # column(4,
-                #        bs4Dash::bs4Box(
-                #          width = NULL,
-                #          higth = '300px',
-                #          collapsible = TRUE,
-                #          # status = 'warning',
-                #          title = "G",
-                #          DT::dataTableOutput('pt_p_g')
-                #          )
-                #        )
+                column(4,
+                       bs4Dash::bs4Box(
+                         width = NULL,
+                         higth = '300px',
+                         collapsible = TRUE,
+                         # status = 'warning',
+                         title = "G",
+                         DT::dataTableOutput('pt_p_g')
+                         )
+                       )
                 ),
               br(),
               #2 ----
@@ -2235,7 +2233,7 @@ leaders <- function(stat, .ip = 0){
           br(),
           fluidRow(
             column(3),
-            column(5,
+            column(6,
                   bs4Dash::bs4Box(
                     width = 12,
                     higth = '1900px',
@@ -10631,7 +10629,8 @@ leaders <- function(stat, .ip = 0){
             Jugador = jugador,
             `BB/9` = `bb/9`,
             " " = img
-          ) 
+          ) %>% 
+          slice(1:(n()-1)) 
         
         # Table ----
         headerCallback <- c(
