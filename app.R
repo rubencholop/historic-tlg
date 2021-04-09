@@ -2236,8 +2236,8 @@ leaders <- function(stat, .ip = 0){
           h4('Records en la LVBP ', align = 'center'),
           br(),
           fluidRow(
-            column(3),
-            column(6,
+            column(2),
+            column(8,
                   bs4Dash::bs4Box(
                     width = 12,
                     higth = '1900px',
@@ -2246,7 +2246,7 @@ leaders <- function(stat, .ip = 0){
                     DT::dataTableOutput('lvbp_general')
                     )
                   ),
-            column(3)
+            column(2)
               )
           ),
         # Stats geographics ----
@@ -11546,15 +11546,27 @@ leaders <- function(stat, .ip = 0){
         ) 
       })
       #LVBP records ----
-      # Table Record LVBP Novato ----
+      # Table Records LVBP  ----
       output$lvbp_general <- renderDataTable({
+        
+        crown <- rep(1,nrow(novatos))
+        crown[[32]] <- '<img src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-crown-icon-png-image_4422282.jpg" width="25" height="25"></img>'
+        crown[[33]] <- '<img src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-crown-icon-png-image_4422282.jpg" width="25" height="25"></img>'
+        
         
         novatos <- lvbp() %>% 
           janitor::clean_names() %>% 
+          mutate(
+            flag = c('<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>'),
+            crown = if_else(crown == 1, " ", crown)
+            ) %>%
+          select(flag, jugador, years, premio, crown) %>% 
           rename(
-            Temporada = years,
+            Año = years,
             Premio = premio,
-            Jugador = jugador
+            Jugador = jugador,
+            " " = flag,
+            "  " = crown
           )
         
         
@@ -11573,18 +11585,20 @@ leaders <- function(stat, .ip = 0){
           #   style = 'caption-side: bottom; text-align: center;'
           #   , htmltools::em('Top 10 historico')),
           options = list(
-            ordering = F, # To delete Ordering
-            dom = 'ft',  # To remove showing 1 to n of entries fields
-            autoWidth = TRUE,
+            autoWidth = FALSE,
+            ordering = FALSE,
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
-            paging = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
-            headerCallback = JS(headerCallback),
+            fixedColumns = list(LeftColumns = 3),
             # fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 0:2)),
+            columnDefs = list(list(className = "dt-center", targets = 0:3)),
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
