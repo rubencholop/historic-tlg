@@ -2086,7 +2086,7 @@ leaders <- function(stat, .ip = 0){
               #1 ----
               br(),
               fluidRow(
-                column(3,
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2097,7 +2097,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_b_hits')
                        )
                 ),
-                column(3,
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2108,7 +2108,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_b_2b')
                        )
                 ),
-                column(3,
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2117,9 +2117,13 @@ leaders <- function(stat, .ip = 0){
                          # status = 'warning',
                          title = "3B",
                          DT::dataTableOutput('pt_b_3b')
+                         )
                        )
-                ),
-                column(3,
+              ),
+              br(),
+              #2 ----
+              fluidRow(
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2129,12 +2133,8 @@ leaders <- function(stat, .ip = 0){
                          title = "HR",
                          DT::dataTableOutput('pt_b_hr')
                        )
-                )
-              ),
-              br(),
-              #2 ----
-              fluidRow(
-                column(3,
+                ),
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2144,7 +2144,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_b_average')
                        )
                 ),
-                column(3,
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2153,9 +2153,13 @@ leaders <- function(stat, .ip = 0){
                          # status = 'warning',
                          title = "SLG",
                          DT::dataTableOutput('pt_b_slg')
+                         )
                        )
-                ),
-                column(3,
+              ),
+              br(),
+              #3 ----
+              fluidRow(
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2165,7 +2169,7 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('pt_b_obp')
                        )
                 ),
-                column(3,
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2175,12 +2179,8 @@ leaders <- function(stat, .ip = 0){
                          title = "OPS",
                          DT::dataTableOutput('pt_b_ops')
                        )
-                )
-              ),
-              br(),
-              #3 ----
-              fluidRow(
-                column(3,
+                ),
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2188,9 +2188,13 @@ leaders <- function(stat, .ip = 0){
                          collapsible = TRUE,
                          title = "RBI",
                          DT::dataTableOutput('pt_b_rbi')
+                         )
                        )
                 ),
-                column(3,
+              #4 ----
+              br(),
+              fluidRow(
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2198,9 +2202,9 @@ leaders <- function(stat, .ip = 0){
                          collapsible = TRUE,
                          title = "AB",
                          DT::dataTableOutput('pt_b_ab')
-                       )
-                ),
-                column(3,
+                         )
+                       ),
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2209,9 +2213,9 @@ leaders <- function(stat, .ip = 0){
                          # status = 'warning',
                          title = "SB",
                          DT::dataTableOutput('pt_b_sb')
-                       )
-                ),
-                column(3,
+                         )
+                       ),
+                column(4,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -2220,8 +2224,8 @@ leaders <- function(stat, .ip = 0){
                          # status = 'warning',
                          title = "XB",
                          DT::dataTableOutput('pt_b_xb')
+                         )
                        )
-                  )
                 )
               )
             )
