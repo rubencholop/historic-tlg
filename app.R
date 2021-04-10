@@ -11549,6 +11549,42 @@ leaders <- function(stat, .ip = 0){
       # Table Records LVBP  ----
       output$lvbp_general <- renderDataTable({
         
+        banderas <- c(
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #1
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>', #2
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #3
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #4
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>', #5
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #6
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #7
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #8
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #9
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #10
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #11 
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #12
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #13
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #14
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #15
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #16
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #17
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #18
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #19
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #20
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #21
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #22
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #23
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #24
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #25
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>', #26
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>', #27
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #28
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #29
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #30
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #31
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>', #32 
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>' #33 
+        )
+        
         crown <- rep(1,nrow(novatos))
         crown[[32]] <- '<img src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-crown-icon-png-image_4422282.jpg" width="25" height="25"></img>'
         crown[[33]] <- '<img src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-crown-icon-png-image_4422282.jpg" width="25" height="25"></img>'
@@ -11557,7 +11593,7 @@ leaders <- function(stat, .ip = 0){
         novatos <- lvbp() %>% 
           janitor::clean_names() %>% 
           mutate(
-            flag = c('<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>'),
+            flag = banderas,
             crown = if_else(crown == 1, " ", crown)
             ) %>%
           select(flag, jugador, years, premio, crown) %>% 
