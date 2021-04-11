@@ -359,9 +359,17 @@ leaders <- function(stat, .ip = 0){
             tabName = 'records',
             icon = "medal",
             bs4SidebarMenuSubItem('De por vida', tabName = 'deporvida', icon = "circle"),
-            bs4SidebarMenuSubItem('Por temporadas', tabName = 'por_temporadas', icon = "circle"),
-            bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "circle")
+            bs4SidebarMenuSubItem('Por temporadas', tabName = 'por_temporadas', icon = "circle")
+            # bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "circle")
             # bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "circle")
+          ),
+          # menuItem Premios ----
+          bs4SidebarMenuItem(
+            text = 'Premios',
+            tabName = 'premios',
+            icon = "gold",
+            bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "dot"),
+            bs4SidebarMenuSubItem('N Retirados', tabName = 'retirados', icon = "circle")
           ),
           # menuItem History ----
           bs4SidebarMenuItem(
@@ -2245,6 +2253,25 @@ leaders <- function(stat, .ip = 0){
                     title = "Premios en la LVBP",
                     DT::dataTableOutput('lvbp_general')
                     )
+                  ),
+            column(2)
+              )
+          ),
+        # Retirados ----
+        tabItem(
+          tabName = 'retirados',
+          h4('XXXXXXXXXXXXXXX', align = 'center'),
+          br(),
+          fluidRow(
+            column(2),
+            column(8
+                  # bs4Dash::bs4Box(
+                  #   width = 12,
+                  #   higth = '1900px',
+                  #   collapsible = TRUE,
+                  #   title = "Premios en la LVBP",
+                  #   DT::dataTableOutput('lvbp_general')
+                  #   )
                   ),
             column(2)
               )
@@ -11548,6 +11575,8 @@ leaders <- function(stat, .ip = 0){
       #LVBP records ----
       # Table Records LVBP  ----
       output$lvbp_general <- renderDataTable({
+        
+        
         
         banderas <- c(
           '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #1
