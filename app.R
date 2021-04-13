@@ -2297,48 +2297,62 @@ leaders <- function(stat, .ip = 0){
                      status = "success",
                      width = NULL,
                      userList(
+                     #1 ----
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         title = h6("Luis Salazar", style = "font-size': '12px'"),
                          subtitle = "28.04.2018"
-                       ),
+                         ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/knitr.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         title = h6("Ángel Bravo", style = "font-size': '12px'"),
                          subtitle = "28.04.2018"
-                       ),
+                         ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2017/05/rmarkdown.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         title = h6("Luis Aparicio", style = "font-size': '12px'"),
                          subtitle = "28.04.2018"
-                       ),
+                         ),
                        userListItem(
                          image = "https://d33wubrfki0l68.cloudfront.net/071952491ec4a6a532a3f70ecfa2507af4d341f9/c167c/images/hex-dplyr.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         title = h6("Oswaldo Guillén", style = "font-size': '12px'"),
                          subtitle = "28.04.2018"
+                         )
                        ),
+                     #2 ----
+                     hr(),
+                     userList(
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         title = h6("Gustavo Polidor", style = "font-size': '12px'"),
                          subtitle = "28.04.2018"
-                       ),
+                         ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/packrat.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         title = h6("Alfredo Pedrique", style = "font-size': '12px'"),
                          subtitle = "28.04.2018"
-                       ),
+                         ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
-                         subtitle = shinyflags::flag("FR", size = 15)
-                       ),
+                         title = h6("Raúl Pérez Tovar", style = "font-size': '12px'"),
+                         subtitle = shinyflags::flag("VE", size = 15, squared = TRUE)
+                         ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
-                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
-                         subtitle = "28.04.2018"
-                       )
+                         title = h6("Aurelio Monteagudo", style = "font-size': '12px'"),
+                         subtitle = shinyflags::flag("CB", size = 15, squared = TRUE)
+                         )
+                       ),
+                     #3 ----
+                       hr(),
+                       userList(
+                         userListItem(
+                           image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
+                           title = h6('Carlos "Café" Martínez', style = "font-size': '12px'"),
+                           subtitle = "28.04.2018"
+                           )
+                         )
                      )
-                   )
                   # bs4Dash::bs4Box(
                   #   width = 12,
                   #   higth = '1900px',
