@@ -11,6 +11,28 @@ library(readr)
 library(highcharter)
 library(shinyalert)
 library(stringi) 
+library(shinyflags)
+
+userList <- function(...) {
+  shiny::tags$ul(
+    class = "users-list clearfix",
+    ...
+  )
+}
+
+
+userListItem <- function(image, title, title2, subtitle = NULL) {
+  shiny::tags$li(
+    shiny::tags$img(
+      src = image, 
+      alt = "User Image",
+      shiny::tags$a(class = "users-list-name", title),
+      if (!is.null(subtitle)) {
+        shiny::tags$span(class = "users-list-date", subtitle)
+      }
+    )
+  )
+}
 
 # Choices ----
 
@@ -237,7 +259,7 @@ leaders <- function(stat, .ip = 0){
         status = "danger",
         border = TRUE,
         controlbarIcon = "th",
-        fixed = FALSE,
+        fixed = TRUE,
         tags$head(
           tags$style(
             HTML('
@@ -387,6 +409,12 @@ leaders <- function(stat, .ip = 0){
             bs4SidebarMenuSubItem('Glosario Sabermetrico', tabName = 'g_saberm', icon = "circle"),
             bs4SidebarMenuSubItem('Cálculos', tabName = 'calc', icon = "circle")
           ),
+          # menuItem Advanced Search ----
+          bs4SidebarMenuItem(
+            text = 'Busqueda Avanzada',
+            tabName = 'busqueda',
+            icon = "seach"
+          ),
           # menuItem About us ----
           bs4SidebarMenuItem(
             text = 'Nosotros',
@@ -503,16 +531,16 @@ leaders <- function(stat, .ip = 0){
            }
           '
         ))),
-        fluidRow(
-          column(2),
-          column(8, h2("Registro historico de Tiburones de la Guaira", 
-                       style = "color: #707070; text-align: center; 
-                                font-size: 1.6rem; font-family: 'Roboto Regular', sans-serif;
-                                font-weight: 500; text-transform: uppercase;",
-                       align = 'center'),
-                 style = "padding-left: 20px;"),
-          column(2)
-          ),
+        # fluidRow(
+        #   column(2),
+        #   column(8, h2("Registro historico de Tiburones de la Guaira", 
+        #                style = "color: #707070; text-align: center; 
+        #                         font-size: 1.6rem; font-family: 'Roboto Regular', sans-serif;
+        #                         font-weight: 500; text-transform: uppercase;",
+        #                align = 'center'),
+        #          style = "padding-left: 20px;"),
+        #   column(2)
+        #   ),
         tabItems(
         # TabItem Home ----
           tabItem(
@@ -521,7 +549,6 @@ leaders <- function(stat, .ip = 0){
             ),
         # TabItem by Team ----
         tabItem(
-          h4('Datos historicos por equipo', align = 'center'),
           tabName = 'equipo',
           bs4TabSetPanel(
             id = "tabset",
@@ -2264,7 +2291,54 @@ leaders <- function(stat, .ip = 0){
           br(),
           fluidRow(
             column(2),
-            column(8
+            column(8,
+                   bs4Dash::bs4Box(
+                     title = "User List example",
+                     status = "success",
+                     width = NULL,
+                     userList(
+                       userListItem(
+                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = "28.04.2018"
+                       ),
+                       userListItem(
+                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/knitr.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = "28.04.2018"
+                       ),
+                       userListItem(
+                         image = "https://www.rstudio.com/wp-content/uploads/2017/05/rmarkdown.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = "28.04.2018"
+                       ),
+                       userListItem(
+                         image = "https://d33wubrfki0l68.cloudfront.net/071952491ec4a6a532a3f70ecfa2507af4d341f9/c167c/images/hex-dplyr.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = "28.04.2018"
+                       ),
+                       userListItem(
+                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = "28.04.2018"
+                       ),
+                       userListItem(
+                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/packrat.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = "28.04.2018"
+                       ),
+                       userListItem(
+                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = shinyflags::flag("FR", size = 15)
+                       ),
+                       userListItem(
+                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
+                         title = h6("Aurelio Monteagudo - P", style = "font-size': '12px'"),
+                         subtitle = "28.04.2018"
+                       )
+                     )
+                   )
                   # bs4Dash::bs4Box(
                   #   width = 12,
                   #   higth = '1900px',
