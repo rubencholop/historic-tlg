@@ -391,7 +391,8 @@ leaders <- function(stat, .ip = 0){
             tabName = 'premios',
             icon = "gold",
             bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "dot"),
-            bs4SidebarMenuSubItem('N Retirados', tabName = 'retirados', icon = "circle")
+            bs4SidebarMenuSubItem('Números retirados', tabName = 'retirados', icon = "circle"),
+            bs4SidebarMenuSubItem('Salón de la Fama', tabName = 'fama', icon = "circle")
           ),
           # menuItem History ----
           bs4SidebarMenuItem(
@@ -400,6 +401,13 @@ leaders <- function(stat, .ip = 0){
             icon = "hourglass",
             bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "circle"),
             bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "circle")
+          ),
+          # menuItem Graficos ----
+          bs4SidebarMenuItem(
+            text ='Gráficos',
+            tabName = 'graficos',
+            icon = "hourglass",
+            bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "circle")
           ),
           # menuItem Glosary ----
           bs4SidebarMenuItem(
@@ -2287,36 +2295,36 @@ leaders <- function(stat, .ip = 0){
         # Retirados ----
         tabItem(
           tabName = 'retirados',
-          h4('XXXXXXXXXXXXXXX', align = 'center'),
+          h4('Números retirados', align = 'center'),
           br(),
           fluidRow(
             column(2),
             column(8,
                    bs4Dash::bs4Box(
-                     title = "User List example",
+                     # title = "User List example",
                      status = "success",
                      width = NULL,
                      userList(
                      #1 ----
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png",
-                         title = h6("Luis Salazar", style = "font-size': '12px'"),
-                         subtitle = "28.04.2018"
+                         title = h5("Luis Salazar", style = "font-size': '16px'"),
+                         subtitle = h6("SS - 1993", style = "font-size': '12px'"),
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/knitr.png",
-                         title = h6("Ángel Bravo", style = "font-size': '12px'"),
-                         subtitle = "28.04.2018"
+                         title = h5("Ángel Bravo", style = "font-size': '16px'"),
+                         subtitle = h6("Of - 1978", style = "font-size': '12px'"),
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2017/05/rmarkdown.png",
-                         title = h6("Luis Aparicio", style = "font-size': '12px'"),
-                         subtitle = "28.04.2018"
+                         title = h5("Luis Aparicio", style = "font-size': '16px'"),
+                         subtitle = h6("SS - 1968", style = "font-size': '12px'"),
                          ),
                        userListItem(
                          image = "https://d33wubrfki0l68.cloudfront.net/071952491ec4a6a532a3f70ecfa2507af4d341f9/c167c/images/hex-dplyr.png",
-                         title = h6("Oswaldo Guillén", style = "font-size': '12px'"),
-                         subtitle = "28.04.2018"
+                         title = h5("Oswaldo Guillén", style = "font-size': '16px'"),
+                         subtitle = h6("SS - 2000", style = "font-size': '12px'"),
                          )
                        ),
                      #2 ----
@@ -2324,23 +2332,23 @@ leaders <- function(stat, .ip = 0){
                      userList(
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
-                         title = h6("Gustavo Polidor", style = "font-size': '12px'"),
-                         subtitle = "28.04.2018"
+                         title = h5("Gustavo Polidor", style = "font-size': '16px'"),
+                         subtitle = h6("SS - 1995", style = "font-size': '12px'"),
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/packrat.png",
-                         title = h6("Alfredo Pedrique", style = "font-size': '12px'"),
-                         subtitle = "28.04.2018"
+                         title = h5("Alfredo Pedrique", style = "font-size': '16px'"),
+                         subtitle = h6("IF - 2003", style = "font-size': '12px'"),
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
-                         title = h6("Raúl Pérez Tovar", style = "font-size': '12px'"),
-                         subtitle = shinyflags::flag("VE", size = 15, squared = TRUE)
+                         title = h5("Raúl Pérez Tovar", style = "font-size': '16px'"),
+                         subtitle = h6("OF - 2020", style = "font-size': '12px'"),
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
-                         title = h6("Aurelio Monteagudo", style = "font-size': '12px'"),
-                         subtitle = shinyflags::flag("CB", size = 15, squared = TRUE)
+                         title = h5("Aurelio Monteagudo", style = "font-size': '16px'"),
+                         subtitle = h6("P - 1982", style = "font-size': '12px'"),
                          )
                        ),
                      #3 ----
@@ -2348,8 +2356,8 @@ leaders <- function(stat, .ip = 0){
                        userList(
                          userListItem(
                            image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
-                           title = h6('Carlos "Café" Martínez', style = "font-size': '12px'"),
-                           subtitle = "28.04.2018"
+                           title = h5('Carlos "Café" Martínez', style = "font-size': '16px'"),
+                           subtitle = h6("OF - 1997", style = "font-size': '12px'"),
                            )
                          )
                      )
