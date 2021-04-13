@@ -354,14 +354,14 @@ leaders <- function(stat, .ip = 0){
             tabName = 'datos',
             icon = "database",
             startExpanded = FALSE,
-            bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Paises', tabName = 'paises', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "circle"),
-            bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "circle"),
-            bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "circle"),
-            bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "circle")
+            bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "angle-right"),
+            bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "angle-right"),
+            bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "angle-right"),
+            bs4SidebarMenuSubItem(text = 'Paises', tabName = 'paises', icon = "angle-right"),
+            bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "angle-right"),
+            bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "angle-right")
             )
           ),
           # menuItem Graficos ----
@@ -373,61 +373,60 @@ leaders <- function(stat, .ip = 0){
           #   startExpanded = FALSE,
           #   tabName = 'geo_estadisticas',
           #   icon = "tasks"
-          #   # bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "circle")
+          #   # bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "angle-right")
           # ),
           # menuItem Records ----
           bs4SidebarMenuItem(
             text = 'Records',
             tabName = 'records',
             icon = "medal",
-            bs4SidebarMenuSubItem('De por vida', tabName = 'deporvida', icon = "circle"),
-            bs4SidebarMenuSubItem('Por temporadas', tabName = 'por_temporadas', icon = "circle")
-            # bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "circle")
-            # bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "circle")
+            bs4SidebarMenuSubItem('De por vida', tabName = 'deporvida', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Por temporadas', tabName = 'por_temporadas', icon = "angle-right")
+            # bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "angle-right")
+            # bs4SidebarMenuSubItem('Sabermetria', tabName = 'saberm', icon = "angle-right")
           ),
           # menuItem Premios ----
           bs4SidebarMenuItem(
             text = 'Premios',
             tabName = 'premios',
-            icon = "gold",
-            bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "dot"),
-            bs4SidebarMenuSubItem('Números retirados', tabName = 'retirados', icon = "circle"),
-            bs4SidebarMenuSubItem('Salón de la Fama', tabName = 'fama', icon = "circle")
+            icon = "trophy",
+            bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Números retirados', tabName = 'retirados', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Salón de la Fama', tabName = 'fama', icon = "angle-right")
           ),
           # menuItem History ----
           bs4SidebarMenuItem(
             text ='Historia',
             tabName = 'historia',
             icon = "hourglass",
-            bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "circle"),
-            bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "circle")
+            bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "angle-right")
           ),
           # menuItem Graficos ----
           bs4SidebarMenuItem(
             text ='Gráficos',
             tabName = 'graficos',
-            icon = "hourglass",
-            bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "circle")
+            icon = "chart-pie"
           ),
           # menuItem Glosary ----
           bs4SidebarMenuItem(
             text = 'Glosario',
             tabName = 'glosario',
             icon = "book",
-            bs4SidebarMenuSubItem('Glosario Sabermetrico', tabName = 'g_saberm', icon = "circle"),
-            bs4SidebarMenuSubItem('Cálculos', tabName = 'calc', icon = "circle")
+            bs4SidebarMenuSubItem('Glosario Sabermetrico', tabName = 'g_saberm', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Cálculos', tabName = 'calc', icon = "angle-right")
           ),
           # menuItem Advanced Search ----
           bs4SidebarMenuItem(
             text = 'Busqueda Avanzada',
             tabName = 'busqueda',
-            icon = "seach"
+            icon = "search-plus"
           ),
           # menuItem About us ----
           bs4SidebarMenuItem(
             text = 'Nosotros',
             tabName = 'nosotros',
-            icon = ""
+            icon = "user-friends"
           )
         ),
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
@@ -7515,8 +7514,36 @@ leaders <- function(stat, .ip = 0){
         roster <- Rosters() %>%
           filter(ronda == "regular") %>% 
           # filter(years == input$select_rosters) %>% 
-          mutate(jugador = paste0(first_name, " ", last_name)) %>% 
-          select(years, jugador, pos, bat, lan, pais, estado, ciudad) 
+          mutate(
+            jugador = paste0(first_name, " ", last_name),
+            flag = case_when(
+              pais == "Venezuela" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>',
+              pais == "Republica Dominicana" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_the_Dominican_Republic.svg" width="25" height="15"></img>',
+              pais == "Puerto Rico" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_Puerto_Rico.svg" width="25" height="15"></img>',
+              pais == "Cuba" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Flag_of_Cuba.svg" width="25" height="15"></img>',
+              pais == "Mexico" ~ '<img src="hhttps://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg" width="25" height="15"></img>',
+              pais == "Japon" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" width="25" height="15"></img>',
+              pais == "USA" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>',
+              pais == "Francia" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" width="25" height="15"></img>',
+              pais == "Colombia" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg" width="25" height="15"></img>',
+              pais == "Brasil" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_Brazil.svg" width="25" height="15"></img>',
+              pais == "Panama" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Flag_of_Panama.svg" width="25" height="15"></img>',
+              pais == "Alemania" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg" width="25" height="15"></img>',
+              pais == "Nueva Zelanda" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg" width="25" height="15"></img>',
+              pais == "Reino Unido" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg" width="25" height="15"></img>',
+              pais == "Canada" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg" width="25" height="15"></img>',
+              pais == "Australia" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg" width="25" height="15"></img>',
+              pais == "Espana" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Bandera_de_Espa%C3%B1a.svg" width="25" height="15"></img>',
+              pais == "Rusia" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg" width="25" height="15"></img>',
+              pais == "Curazao" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_Cura%C3%A7ao.svg" width="25" height="15"></img>',
+              pais == "Honduras" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Flag_of_Honduras.svg" width="25" height="15"></img>',
+              pais == "Aruba" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Aruba.svg" width="25" height="15"></img>',
+              pais == "Bahamas" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Flag_of_the_Bahamas.svg" width="25" height="15"></img>',
+              pais == "Nicaragua" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Nicaragua.svg" width="25" height="15"></img>',
+              pais == "El Salvador" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Flag_of_El_Salvador.svg" width="25" height="15"></img>'
+              )
+            ) %>% 
+          select(years, flag, jugador, pos, bat, lan, pais, estado, ciudad) 
           
         
         # # Filter data based on selections
@@ -7540,7 +7567,8 @@ leaders <- function(stat, .ip = 0){
             `Lanza` = lan,
             Pais = pais,
             `Estado` = estado,
-            `Ciudad` = ciudad
+            `Ciudad` = ciudad,
+            " " = flag
             ) %>% 
           arrange(Jugador)
         
@@ -7553,6 +7581,7 @@ leaders <- function(stat, .ip = 0){
         )  # To deleate header line horizontal in bottom of colums name
         
         DT::datatable(
+          escape = FALSE,
           roster,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -7567,8 +7596,8 @@ leaders <- function(stat, .ip = 0){
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
-            columnDefs = list(list(className = "dt-center", targets = c(0, 2:4)),
-                              list(width = '130px', targets = c(1, 5:7))
+            columnDefs = list(list(className = "dt-center", targets = c(0:5)),
+                              list(width = '130px', targets = c(2, 6:8))
                               ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
