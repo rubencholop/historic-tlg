@@ -2429,12 +2429,126 @@ leaders <- function(stat, .ip = 0){
           tabsetPanel(
             id = "tabset12",
             side = "left",
-            # Piceho ----
+            # Picheo ----
             tabPanel(
-              tabName = 'Piccheo',
-              br()
+              tabName = 'Picheo',
+              br(),
+              fluidRow(
+                # 1 ----
+                column(4,
+                       box(
+                         width = 12,
+                         collapsible = FALSE,
+                         closable = FALSE,
+                         checkboxGroupButtons(
+                           inputId = "Id049",
+                           label = "Selecciona una instancia", 
+                           choices = c("Temporada Regular",
+                                       "Round Robin", "Finales"),
+                           selected = "Temporada Regular",
+                           justified = TRUE
+                           # inline = FALSE, 
+                           # checkbox = TRUE
+                           ),
+                         # Seasons ----
+                         hr(),
+                         h6("Temporadas:"),
+                         fluidRow(
+                           column(6,
+                                  pickerInput(
+                                    inputId = "Id084",
+                                    label = "Desde", 
+                                    choices = attr(UScitiesD, "Labels"),
+                                    options = list(
+                                      `live-search` = TRUE)
+                                    ) 
+                                  ),
+                           column(6,
+                                  pickerInput(
+                                    inputId = "Id085",
+                                    label = "Hasta", 
+                                    choices = attr(UScitiesD, "Labels"),
+                                    options = list(
+                                      `live-search` = TRUE)
+                                    )
+                                  )
+                           ),
+                         # Experience ----
+                         hr(),
+                         h6("Experiencia:"),
+                         fluidRow(
+                           column(6,
+                                  pickerInput(
+                                    inputId = "Id086",
+                                    label = "Desde:", 
+                                    choices = seq(1,30,1),
+                                    selected = 1,
+                                    options = list(
+                                      `live-search` = TRUE)
+                                  ) 
+                           ),
+                           column(6,
+                                  pickerInput(
+                                    inputId = "Id087",
+                                    label = "Hasta:", 
+                                    choices = desc(seq(30,1, by = -1))*-1 ,
+                                    selected = 30,
+                                    options = list(
+                                      `live-search` = TRUE)
+                                    )
+                             )
+                           )
+                         )
+                       ),
+                # 2 ----
+                column(4,
+                       box(
+                         width = 12,
+                         collapsible = FALSE,
+                         closable = FALSE,
+                         solidHeader = FALSE,
+                         title = "",
+                         background = NULL,
+                         # status = "danger",
+                         footer = fluidRow(
+                           column(
+                             width = 6,
+                             descriptionBlock(
+                               number = "17%", 
+                               number_color = "green", 
+                               number_icon = "fa fa-caret-up",
+                               header = "$35,210.43", 
+                               text = "TOTAL REVENUE", 
+                               right_border = TRUE,
+                               margin_bottom = FALSE
+                               )
+                             ),
+                           column(
+                             width = 6,
+                             descriptionBlock(
+                               number = "18%", 
+                               number_color = "red", 
+                               number_icon = "fa fa-caret-down",
+                               header = "1200", 
+                               text = "GOAL COMPLETION", 
+                               right_border = FALSE,
+                               margin_bottom = FALSE
+                               )
+                             )
+                           )
+                         )
+                       ),
+                # 3 ----
+                column(4,
+                       box(
+                         width = 12,
+                         collapsible = FALSE,
+                         closable = FALSE
+                        )
+                       )
+                )
               ),
-            # bATEO ----
+            # Bateo ----
             tabPanel(
               tabName = 'Bateo',
               br()
