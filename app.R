@@ -2421,6 +2421,25 @@ leaders <- function(stat, .ip = 0){
                 )
               )
             )
+          ),
+        # Advanced Search ----
+        tabItem(
+          tabName = 'busqueda',
+          h4('Busqueda Avanzada', align = 'center'),
+          tabsetPanel(
+            id = "tabset12",
+            side = "left",
+            # Piceho ----
+            tabPanel(
+              tabName = 'Piccheo',
+              br()
+              ),
+            # bATEO ----
+            tabPanel(
+              tabName = 'Bateo',
+              br()
+              )
+            )
           )
         )
         # End body ----
