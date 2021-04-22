@@ -2425,31 +2425,28 @@ leaders <- function(stat, .ip = 0){
         # Advanced Search ----
         tabItem(
           tabName = 'busqueda',
-          h4('Busqueda Avanzada', align = 'center'),
           tabsetPanel(
-            id = "tabset12",
+            id = "tabset18",
             side = "left",
             # Picheo ----
             tabPanel(
               tabName = 'Picheo',
               br(),
               fluidRow(
-                # 1 ----
-                column(4,
-                       box(
-                         width = 12,
-                         collapsible = FALSE,
-                         closable = FALSE,
-                         checkboxGroupButtons(
-                           inputId = "Id049",
-                           label = "Selecciona una instancia", 
-                           choices = c("Temporada Regular",
-                                       "Round Robin", "Finales"),
-                           selected = "Temporada Regular",
-                           justified = TRUE
-                           # inline = FALSE, 
-                           # checkbox = TRUE
-                           ),
+                box(
+                  # title = h2('Busqueda Avanzada', align = "center"),
+                  width = 12,
+                  collapsible = FALSE,
+                  closable = FALSE,
+                  fluidRow(
+                    # 1 ----
+                    column(4,
+                         awesomeRadio(
+                           inputId = "Id045",
+                           label = "Ronda:", 
+                           choices = c("Regular", "Round Robin", "Finales"),
+                           selected = "Regular"
+                         ),
                          # Seasons ----
                          hr(),
                          h6("Temporadas:"),
@@ -2497,48 +2494,60 @@ leaders <- function(stat, .ip = 0){
                                       `live-search` = TRUE)
                                     )
                              )
+                           ),
+                         hr(),
+                         fluidRow(
+                           column(2),
+                           column(8,
+                                  actionBttn(
+                                    inputId = "Id104",
+                                    label = "Buscar", 
+                                    style = "material-flat",
+                                    color = "primary",
+                                    icon = icon("search-plus"),
+                                    block = TRUE
+                                    )
+                                  ),
+                           column(2)
                            )
-                         )
                        ),
-                # 2 ----
+                    # 2 ----
                 column(4,
-                       box(
-                         width = 12,
-                         collapsible = FALSE,
-                         closable = FALSE,
-                         solidHeader = FALSE,
-                         title = "",
-                         background = NULL,
-                         # status = "danger",
-                         footer = fluidRow(
-                           column(
-                             width = 6,
-                             descriptionBlock(
-                               number = "17%", 
-                               number_color = "green", 
-                               number_icon = "fa fa-caret-up",
-                               header = "$35,210.43", 
-                               text = "TOTAL REVENUE", 
-                               right_border = TRUE,
-                               margin_bottom = FALSE
-                               )
+                       fluidRow(
+                         column(
+                           width = 12,
+                           awesomeRadio(
+                             inputId = "Id049",
+                             label = "País de Nacimiento:", 
+                             choices = c("Nacido en", "No Nacido en"),
+                             selected = "Nacido en"
+                           ),
+                           pickerInput(
+                             inputId = "Id080",
+                             label = "País:",
+                             choices = c("Venezuela", "USA", "Cuba", "Republica Dominicana"),
+                             inline = FALSE,
+                             options = list(
+                               `live-search` = TRUE)
                              ),
-                           column(
-                             width = 6,
-                             descriptionBlock(
-                               number = "18%", 
-                               number_color = "red", 
-                               number_icon = "fa fa-caret-down",
-                               header = "1200", 
-                               text = "GOAL COMPLETION", 
-                               right_border = FALSE,
-                               margin_bottom = FALSE
-                               )
-                             )
+                           hr(),
+                           awesomeRadio(
+                             inputId = "Id050",
+                             label = "Lanza", 
+                             choices = c("Derecha", "Zurda", "Indistinto"),
+                             selected = "Indistinto"
+                             ),
+                           hr(),
+                           awesomeRadio(
+                             inputId = "Id051",
+                             label = "Refuerzo", 
+                             choices = c("Si", "No", "Indistinto"),
+                             selected = "Indistinto"
+                              )
                            )
                          )
                        ),
-                # 3 ----
+                    # 3 ----
                 column(4,
                        box(
                          width = 12,
@@ -2546,6 +2555,8 @@ leaders <- function(stat, .ip = 0){
                          closable = FALSE
                         )
                        )
+                    )
+                  )
                 )
               ),
             # Bateo ----
