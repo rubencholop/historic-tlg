@@ -2460,29 +2460,7 @@ leaders <- function(stat, .ip = 0){
                            choices = attr(UScitiesD, "Labels"),
                            options = list(
                              `live-search` = TRUE)
-                         ),
-                         pickerInput(
-                           inputId = "Id086",
-                           label = "Lanza", 
-                           choices = c("Derecha", "Izquierda", "Indistinto"),
-                           selected = "Indistinto",
-                           options = list(
-                             `live-search` = TRUE)
-                         ),
-                         fluidRow(
-                           column(2),
-                           column(8,
-                                  actionBttn(
-                                    inputId = "Id104",
-                                    label = "Buscar", 
-                                    style = "material-flat",
-                                    color = "primary",
-                                    icon = icon("search-plus"),
-                                    block = TRUE
-                                    )
-                                  ),
-                           column(2)
-                           )
+                         )
                        ),
                     # 2 ----
                 column(4,
@@ -2503,31 +2481,158 @@ leaders <- function(stat, .ip = 0){
                              options = list(
                                `live-search` = TRUE)
                              ),
-                           hr(),
                            pickerInput(
-                             inputId = "Id050",
+                             inputId = "Id086",
                              label = "Lanza", 
-                             choices = c("Derecha", "Zurda", "Indistinto"),
-                             selected = "Indistinto"
-                             ),
-                           hr(),
-                           pickerInput(
-                             inputId = "Id051",
-                             label = "Refuerzo", 
-                             choices = c("Si", "No", "Indistinto"),
-                             selected = "Indistinto"
-                              )
+                             choices = c("Derecha", "Izquierda", "Indistinto"),
+                             selected = "Indistinto",
+                             options = list(
+                               `live-search` = TRUE)
+                             )
                            )
                          )
                        ),
                     # 3 ----
                 column(4,
-                       box(
-                         width = 12,
-                         collapsible = FALSE,
-                         closable = FALSE
-                        )
+                       # 1 criteria ----
+                       fluidRow(
+                         column(4,
+                             pickerInput(
+                               inputId = "Id086",
+                               label = "Criterio 1:", 
+                               choices = c("W", "L", "GS", "SO", "WHIP"),
+                               selected = "W",
+                               options = list(
+                                 `live-search` = TRUE)
+                               )
+                             ),
+                           column(3,
+                                  pickerInput(
+                                    inputId = "Id086",
+                                    label = " L",
+                                    choices = c(">=", "<=", "="),
+                                    selected = "W",
+                                    options = list(
+                                      `live-search` = TRUE)
+                                    )
+                                  ),
+                           column(3,
+                                  textInput(
+                                    "criteria_1", 
+                                    " L", 
+                                    value = " "
+                                    ) 
+                                  )
+                           ),
+                       # 2 Criteria ----
+                       fluidRow(
+                         column(4,
+                                pickerInput(
+                                  inputId = "Id086",
+                                  label = "Criterio 1:", 
+                                  choices = c("W", "L", "GS", "SO", "WHIP"),
+                                  selected = "W",
+                                  options = list(
+                                    `live-search` = TRUE)
+                                )
+                         ),
+                         column(3,
+                                pickerInput(
+                                  inputId = "Id086",
+                                  label = " L",
+                                  choices = c(">=", "<=", "="),
+                                  selected = "W",
+                                  options = list(
+                                    `live-search` = TRUE)
+                                )
+                         ),
+                         column(3,
+                                textInput(
+                                  "criteria_1", 
+                                  " L", 
+                                  value = " "
+                                  ) 
+                                )
+                         ),
+                       # 3 Criteria ----
+                       fluidRow(
+                         column(4,
+                                pickerInput(
+                                  inputId = "Id086",
+                                  label = "Criterio 1:", 
+                                  choices = c("W", "L", "GS", "SO", "WHIP"),
+                                  selected = "W",
+                                  options = list(
+                                    `live-search` = TRUE)
+                                )
+                         ),
+                         column(3,
+                                pickerInput(
+                                  inputId = "Id086",
+                                  label = " L",
+                                  choices = c(">=", "<=", "="),
+                                  selected = "W",
+                                  options = list(
+                                    `live-search` = TRUE)
+                                )
+                         ),
+                         column(3,
+                                textInput(
+                                  "criteria_1", 
+                                  " L", 
+                                  value = " "
+                                  ) 
+                           )
+                         ),
+                       # 4 criteria ----
+                       fluidRow(
+                         column(4,
+                                pickerInput(
+                                  inputId = "Id086",
+                                  label = "Criterio 1:", 
+                                  choices = c("W", "L", "GS", "SO", "WHIP"),
+                                  selected = "W",
+                                  options = list(
+                                    `live-search` = TRUE)
+                                )
+                         ),
+                         column(3,
+                                pickerInput(
+                                  inputId = "Id086",
+                                  label = " L",
+                                  choices = c(">=", "<=", "="),
+                                  selected = "W",
+                                  options = list(
+                                    `live-search` = TRUE)
+                                )
+                         ),
+                         column(3,
+                                textInput(
+                                  "criteria_1", 
+                                  " L", 
+                                  value = " "
+                                  ) 
+                           )
+                         )
                        )
+                    ),
+                fluidRow(
+                  column(8,
+                         fluidRow(
+                           column(2),
+                           column(8,
+                                  actionBttn(
+                                    inputId = "Id104",
+                                    label = "Buscar", 
+                                    style = "material-flat",
+                                    color = "primary",
+                                    icon = icon("search-plus"),
+                                    block = TRUE
+                                  )
+                           ),
+                           column(2)
+                           )
+                         )
                     )
                   )
                 )
