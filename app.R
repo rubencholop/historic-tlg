@@ -2441,61 +2441,34 @@ leaders <- function(stat, .ip = 0){
                   fluidRow(
                     # 1 ----
                     column(4,
-                         awesomeRadio(
+                           pickerInput(
                            inputId = "Id045",
                            label = "Ronda:", 
-                           choices = c("Regular", "Round Robin", "Finales"),
-                           selected = "Regular"
+                           choices = c("Temporada Regular" , "Round Robin", "Finales"),
+                           selected = "Temporada Regular"
                          ),
-                         # Seasons ----
-                         hr(),
-                         h6("Temporadas:"),
-                         fluidRow(
-                           column(6,
-                                  pickerInput(
-                                    inputId = "Id084",
-                                    label = "Desde", 
-                                    choices = attr(UScitiesD, "Labels"),
-                                    options = list(
-                                      `live-search` = TRUE)
-                                    ) 
-                                  ),
-                           column(6,
-                                  pickerInput(
-                                    inputId = "Id085",
-                                    label = "Hasta", 
-                                    choices = attr(UScitiesD, "Labels"),
-                                    options = list(
-                                      `live-search` = TRUE)
-                                    )
-                                  )
-                           ),
-                         # Experience ----
-                         hr(),
-                         h6("Experiencia:"),
-                         fluidRow(
-                           column(6,
-                                  pickerInput(
-                                    inputId = "Id086",
-                                    label = "Desde:", 
-                                    choices = seq(1,30,1),
-                                    selected = 1,
-                                    options = list(
-                                      `live-search` = TRUE)
-                                  ) 
-                           ),
-                           column(6,
-                                  pickerInput(
-                                    inputId = "Id087",
-                                    label = "Hasta:", 
-                                    choices = desc(seq(30,1, by = -1))*-1 ,
-                                    selected = 30,
-                                    options = list(
-                                      `live-search` = TRUE)
-                                    )
-                             )
-                           ),
-                         hr(),
+                         pickerInput(
+                           inputId = "Id084",
+                           label = "Desde:", 
+                           choices = attr(UScitiesD, "Labels"),
+                           options = list(
+                             `live-search` = TRUE)
+                         ),
+                         pickerInput(
+                           inputId = "Id085",
+                           label = "Hasta:", 
+                           choices = attr(UScitiesD, "Labels"),
+                           options = list(
+                             `live-search` = TRUE)
+                         ),
+                         pickerInput(
+                           inputId = "Id086",
+                           label = "Lanza", 
+                           choices = c("Derecha", "Izquierda", "Indistinto"),
+                           selected = "Indistinto",
+                           options = list(
+                             `live-search` = TRUE)
+                         ),
                          fluidRow(
                            column(2),
                            column(8,
@@ -2516,7 +2489,7 @@ leaders <- function(stat, .ip = 0){
                        fluidRow(
                          column(
                            width = 12,
-                           awesomeRadio(
+                           pickerInput(
                              inputId = "Id049",
                              label = "País de Nacimiento:", 
                              choices = c("Nacido en", "No Nacido en"),
@@ -2531,14 +2504,14 @@ leaders <- function(stat, .ip = 0){
                                `live-search` = TRUE)
                              ),
                            hr(),
-                           awesomeRadio(
+                           pickerInput(
                              inputId = "Id050",
                              label = "Lanza", 
                              choices = c("Derecha", "Zurda", "Indistinto"),
                              selected = "Indistinto"
                              ),
                            hr(),
-                           awesomeRadio(
+                           pickerInput(
                              inputId = "Id051",
                              label = "Refuerzo", 
                              choices = c("Si", "No", "Indistinto"),
