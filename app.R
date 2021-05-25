@@ -2434,7 +2434,7 @@ leaders <- function(stat, .ip = 0){
               br(),
               fluidRow(
                 box(
-                  # title = h2('Busqueda Avanzada', align = "center"),
+                  title = h2('Parametros de busqueda', align = "center"),
                   width = 12,
                   collapsible = FALSE,
                   closable = FALSE,
@@ -2529,7 +2529,7 @@ leaders <- function(stat, .ip = 0){
                          column(4,
                                 pickerInput(
                                   inputId = "Id086",
-                                  label = "Criterio 1:", 
+                                  label = "Criterio 2:", 
                                   choices = c("W", "L", "GS", "SO", "WHIP"),
                                   selected = "W",
                                   options = list(
@@ -2548,7 +2548,7 @@ leaders <- function(stat, .ip = 0){
                          ),
                          column(3,
                                 textInput(
-                                  "criteria_1", 
+                                  "criteria_2", 
                                   " L", 
                                   value = " "
                                   ) 
@@ -2559,7 +2559,7 @@ leaders <- function(stat, .ip = 0){
                          column(4,
                                 pickerInput(
                                   inputId = "Id086",
-                                  label = "Criterio 1:", 
+                                  label = "Criterio 3:", 
                                   choices = c("W", "L", "GS", "SO", "WHIP"),
                                   selected = "W",
                                   options = list(
@@ -2578,7 +2578,7 @@ leaders <- function(stat, .ip = 0){
                          ),
                          column(3,
                                 textInput(
-                                  "criteria_1", 
+                                  "criteria_3", 
                                   " L", 
                                   value = " "
                                   ) 
@@ -2589,7 +2589,7 @@ leaders <- function(stat, .ip = 0){
                          column(4,
                                 pickerInput(
                                   inputId = "Id086",
-                                  label = "Criterio 1:", 
+                                  label = "Criterio 4:", 
                                   choices = c("W", "L", "GS", "SO", "WHIP"),
                                   selected = "W",
                                   options = list(
@@ -2608,7 +2608,7 @@ leaders <- function(stat, .ip = 0){
                          ),
                          column(3,
                                 textInput(
-                                  "criteria_1", 
+                                  "criteria_4", 
                                   " L", 
                                   value = " "
                                   ) 
@@ -2635,7 +2635,21 @@ leaders <- function(stat, .ip = 0){
                          )
                     )
                   )
+                ),
+              br(),
+              br(),
+              # Final table search ----
+              fluidRow(
+                column(12,
+                       bs4Dash::bs4Box(
+                         width = 12,
+                         # higth = '1900px',
+                         collapsible = TRUE,
+                         title = "Busqueda Avanzada",
+                         DT::dataTableOutput('advance_pitching')
+                       )
                 )
+              )
               ),
             # Bateo ----
             tabPanel(
@@ -2694,6 +2708,7 @@ leaders <- function(stat, .ip = 0){
       lvbp <- reactive({
         lvbp <- read_csv('data/records.csv')
       })
+      
       
       # Reactive Geographic Stats ----
       # Functions ----
@@ -14299,6 +14314,7 @@ leaders <- function(stat, .ip = 0){
         paste('', df, sep = ' ')
         
       })
+
     }
   )
 
