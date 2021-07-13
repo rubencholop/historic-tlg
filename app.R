@@ -10,8 +10,8 @@ library(stringr)
 library(readr)
 library(highcharter)
 library(shinyalert)
-library(stringi) 
-library(shinyflags)
+# library(stringi) 
+# library(shinyflags)
 
 userList <- function(...) {
   shiny::tags$ul(
@@ -2509,7 +2509,7 @@ leaders <- function(stat, .ip = 0){
                            column(3,
                                   pickerInput(
                                     inputId = "Id086",
-                                    label = " L",
+                                    label = " ",
                                     choices = c(">=", "<=", "="),
                                     selected = "W",
                                     options = list(
@@ -2519,7 +2519,7 @@ leaders <- function(stat, .ip = 0){
                            column(3,
                                   textInput(
                                     "criteria_1", 
-                                    " L", 
+                                    " ", 
                                     value = " "
                                     ) 
                                   )
@@ -2539,7 +2539,7 @@ leaders <- function(stat, .ip = 0){
                          column(3,
                                 pickerInput(
                                   inputId = "Id086",
-                                  label = " L",
+                                  label = " ",
                                   choices = c(">=", "<=", "="),
                                   selected = "W",
                                   options = list(
@@ -2549,7 +2549,7 @@ leaders <- function(stat, .ip = 0){
                          column(3,
                                 textInput(
                                   "criteria_2", 
-                                  " L", 
+                                  " ", 
                                   value = " "
                                   ) 
                                 )
@@ -2569,7 +2569,7 @@ leaders <- function(stat, .ip = 0){
                          column(3,
                                 pickerInput(
                                   inputId = "Id086",
-                                  label = " L",
+                                  label = " ",
                                   choices = c(">=", "<=", "="),
                                   selected = "W",
                                   options = list(
@@ -2579,7 +2579,7 @@ leaders <- function(stat, .ip = 0){
                          column(3,
                                 textInput(
                                   "criteria_3", 
-                                  " L", 
+                                  " ", 
                                   value = " "
                                   ) 
                            )
@@ -2599,7 +2599,7 @@ leaders <- function(stat, .ip = 0){
                          column(3,
                                 pickerInput(
                                   inputId = "Id086",
-                                  label = " L",
+                                  label = " ",
                                   choices = c(">=", "<=", "="),
                                   selected = "W",
                                   options = list(
@@ -2609,7 +2609,7 @@ leaders <- function(stat, .ip = 0){
                          column(3,
                                 textInput(
                                   "criteria_4", 
-                                  " L", 
+                                  " ", 
                                   value = " "
                                   ) 
                            )
@@ -2718,8 +2718,7 @@ leaders <- function(stat, .ip = 0){
       #     select(-bk)
       # }
       
-      # -----TABLES ----
-      #By Team
+      #By Team -----
       # Table pitching regular season by team ----
       output$Preseason_team <- DT::renderDataTable({
         
@@ -13159,7 +13158,151 @@ leaders <- function(stat, .ip = 0){
           arrange(pais, desc(jugador))
         
       })
-      # ------ INFOBOX -----
+      # -----TABLES ----
+      #By Team
+      # Table Pitching advanced ----
+      output$advance_pitching <- DT::renderDataTable({
+        
+        # Data ----
+        player_summarise <- prs() %>% 
+          filter(ronda == "regular") %>% 
+          arrange(years, jugador) %>% 
+          select(-bk, -refuerzo, -ronda, -resultado) %>% 
+          summarise(
+            years = 'Total',
+            edad = round(mean(edad, na.rm = T), 1),
+            w = as.character(sum(w, na.rm = T)),
+            l = as.character(sum(l, na.rm = T)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            whip = round((bb + h)/ ip, 2),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2),
+            .groups = 'drop'
+          ) 
+        
+        pitching_player <- prs() %>% 
+          filter(ronda == "regular") %>% 
+          arrange(years, jugador) %>% 
+          select(-bk, -refuerzo, -ronda, -resultado) %>% 
+          group_by(years) %>% 
+          summarise(
+            edad = as.character(round(mean(edad, na.rm = T), 1)),
+            w = as.character(sum(w, na.rm = T)),
+            l = as.character(sum(l, na.rm = T)),
+            g = sum(g, na.rm = T),
+            gs = sum(gs, na.rm = T),
+            cg = sum(cg, na.rm = T),
+            sho = sum(sho, na.rm = T),
+            sv = sum(sv, na.rm = T),
+            h = sum(h, na.rm = T),
+            r = sum(r, na.rm = T),
+            hr = sum(hr, na.rm = T),
+            bb = sum(bb, na.rm = T),
+            so = sum(so, na.rm = T),
+            er = sum(er, na.rm = T),
+            ip = IP(ip),
+            era = as.character(round((er * 9) / ip, 2)),
+            whip = round((bb + h)/ ip, 2),
+            `h/9` = as.character(round((h/ip)*9, 2)),
+            `hr/9` = as.character(round((hr/ip)*9, 2)),
+            `bb/9` = as.character(round((bb/ip)*9, 2)),
+            `so/9` = as.character(round((so/ip)*9, 2)),
+            `so/bb` = round(so / bb, 2),
+            .groups = 'drop'
+          ) %>% 
+          ungroup() %>% 
+          arrange(desc(years))
+        
+        
+        df <- rbind(pitching_player, player_summarise) %>% 
+          rename(
+            `Temporada` = years,
+            `Edad` = edad,
+            `W` = w,
+            `L` = l,
+            `ERA` = era,
+            `G` = g,
+            `GS` = gs,
+            `CG` = cg,
+            `SHO` = sho,
+            `SV` = sv,
+            `IP` = ip,
+            `H` = h,
+            `R` = r,
+            `ER` = er,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `WHIP` = whip,
+            `H/9` = `h/9`,
+            `HR/9` = `hr/9`,
+            `BB/9` = `bb/9`,
+            `SO/9` = `so/9`,
+            `SO/BB` = `so/bb`
+          ) 
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To delete header line horizontal in bottom of columns name
+        
+        DT::datatable(
+          df,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'
+            , htmltools::em('Las estadísticas SHO, R, HR y HR/9
+                            son registradas desde la temporada 2005-06')),
+          options = list(
+            autoWidth = TRUE,
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))
+                              # list(width = '100px', targets = 1)
+            ),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        ) %>% 
+          formatStyle(
+            'Temporada',
+            target = "row",
+            fontWeight = styleEqual(c('Total'), "bold")
+          )
+        
+      })
       # InfoBox Position player ----
       output$pos <- renderInfoBox({
         
