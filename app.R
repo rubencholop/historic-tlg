@@ -2442,22 +2442,23 @@ leaders <- function(stat, .ip = 0){
                     # 1 ----
                     column(4,
                            pickerInput(
-                           inputId = "Id045",
+                           inputId = "ronda",
                            label = "Ronda:", 
-                           choices = c("Temporada Regular" , "Round Robin", "Finales"),
-                           selected = "Temporada Regular"
+                           choices = c("regular" , "Round Robin", "Finales"),
+                           selected = "Finales"
                          ),
                          pickerInput(
-                           inputId = "Id084",
+                           inputId = "desde_p",
                            label = "Desde:", 
-                           choices = attr(UScitiesD, "Labels"),
+                           # choices = attr(UScitiesD, "Labels"),
+                           choices = temporadas,
                            options = list(
                              `live-search` = TRUE)
                          ),
                          pickerInput(
-                           inputId = "Id085",
+                           inputId = "hasta_p",
                            label = "Hasta:", 
-                           choices = attr(UScitiesD, "Labels"),
+                           choices = temporadas,
                            options = list(
                              `live-search` = TRUE)
                          )
@@ -2476,7 +2477,8 @@ leaders <- function(stat, .ip = 0){
                            pickerInput(
                              inputId = "Id080",
                              label = "País:",
-                             choices = c("Venezuela", "USA", "Cuba", "Republica Dominicana"),
+                             # choices = c("Venezuela", "USA", "Cuba", "Republica Dominicana"),
+                             choices = .paises_pitching,
                              inline = FALSE,
                              options = list(
                                `live-search` = TRUE)
@@ -2508,7 +2510,7 @@ leaders <- function(stat, .ip = 0){
                              ),
                            column(3,
                                   pickerInput(
-                                    inputId = "Id086",
+                                    inputId = "Id076",
                                     label = " ",
                                     choices = c(">=", "<=", "="),
                                     selected = "W",
@@ -2616,18 +2618,19 @@ leaders <- function(stat, .ip = 0){
                          )
                        )
                     ),
+                # Search Icon ----
                 fluidRow(
                   column(8,
                          fluidRow(
                            column(2),
                            column(8,
                                   actionBttn(
-                                    inputId = "Id104",
+                                    inputId = "btn_searh_pit",
                                     label = "Buscar", 
                                     style = "material-flat",
                                     color = "primary",
                                     icon = icon("search-plus"),
-                                    block = TRUE
+                                    block = FALSE
                                   )
                            ),
                            column(2)
@@ -2647,9 +2650,9 @@ leaders <- function(stat, .ip = 0){
                          collapsible = TRUE,
                          title = "Busqueda Avanzada",
                          DT::dataTableOutput('advance_pitching')
+                         )
                        )
                 )
-              )
               ),
             # Bateo ----
             tabPanel(
@@ -13159,77 +13162,18 @@ leaders <- function(stat, .ip = 0){
         
       })
       # -----TABLES ----
-      #By Team
+      #Advanced Search
       # Table Pitching advanced ----
-      output$advance_pitching <- DT::renderDataTable({
+      observeEvent(input$btn_searh_pit, {
+        
+        # cat("Showing", input$ronda, "rows\n")
         
         # Data ----
-        player_summarise <- prs() %>% 
-          filter(ronda == "regular") %>% 
-          arrange(years, jugador) %>% 
-          select(-bk, -refuerzo, -ronda, -resultado) %>% 
-          summarise(
-            years = 'Total',
-            edad = round(mean(edad, na.rm = T), 1),
-            w = as.character(sum(w, na.rm = T)),
-            l = as.character(sum(l, na.rm = T)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            whip = round((bb + h)/ ip, 2),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = round(so / bb, 2),
-            .groups = 'drop'
-          ) 
-        
-        pitching_player <- prs() %>% 
-          filter(ronda == "regular") %>% 
-          arrange(years, jugador) %>% 
-          select(-bk, -refuerzo, -ronda, -resultado) %>% 
-          group_by(years) %>% 
-          summarise(
-            edad = as.character(round(mean(edad, na.rm = T), 1)),
-            w = as.character(sum(w, na.rm = T)),
-            l = as.character(sum(l, na.rm = T)),
-            g = sum(g, na.rm = T),
-            gs = sum(gs, na.rm = T),
-            cg = sum(cg, na.rm = T),
-            sho = sum(sho, na.rm = T),
-            sv = sum(sv, na.rm = T),
-            h = sum(h, na.rm = T),
-            r = sum(r, na.rm = T),
-            hr = sum(hr, na.rm = T),
-            bb = sum(bb, na.rm = T),
-            so = sum(so, na.rm = T),
-            er = sum(er, na.rm = T),
-            ip = IP(ip),
-            era = as.character(round((er * 9) / ip, 2)),
-            whip = round((bb + h)/ ip, 2),
-            `h/9` = as.character(round((h/ip)*9, 2)),
-            `hr/9` = as.character(round((hr/ip)*9, 2)),
-            `bb/9` = as.character(round((bb/ip)*9, 2)),
-            `so/9` = as.character(round((so/ip)*9, 2)),
-            `so/bb` = round(so / bb, 2),
-            .groups = 'drop'
-          ) %>% 
-          ungroup() %>% 
-          arrange(desc(years))
-        
-        
-        df <- rbind(pitching_player, player_summarise) %>% 
+        pit_search <- prs() %>% 
+          left_join(Rosters() %>% 
+                      select(player_id, years, first_name, last_name, pos, bat, lan, exp, pais, estado, ciudad, f_nac,
+                             ronda),
+                    by = c("player_id", "years", "ronda")) %>% 
           rename(
             `Temporada` = years,
             `Edad` = edad,
@@ -13254,8 +13198,15 @@ leaders <- function(stat, .ip = 0){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          ) 
-        
+          ) %>% 
+          # arrange(years, jugador) %>% 
+          filter(
+            ronda == input$ronda
+            # years == input$desde,
+            )  %>%
+          select(2:27) 
+          
+    
         # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
@@ -13264,7 +13215,7 @@ leaders <- function(stat, .ip = 0){
         )  # To delete header line horizontal in bottom of columns name
         
         DT::datatable(
-          df,
+          pit_search,
           extensions = "ColReorder",
           rownames = FALSE,
           caption = htmltools::tags$caption(
@@ -13283,7 +13234,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))
+            columnDefs = list(list(className = "dt-center", targets = c(0:25))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
