@@ -13166,15 +13166,31 @@ leaders <- function(stat, .ip = 0){
       # Table Pitching advanced ----
       observeEvent(input$btn_searh_pit, {
         
-        # cat("Showing", input$ronda, "rows\n")
-        
+        output$advance_pitching <- renderDataTable({
         # Data ----
-        pit_search <- prs() %>% 
-          left_join(Rosters() %>% 
+        pit_search <- prs %>% 
+          left_join(Rosters%>% 
                       select(player_id, years, first_name, last_name, pos, bat, lan, exp, pais, estado, ciudad, f_nac,
                              ronda),
                     by = c("player_id", "years", "ronda")) %>% 
+          mutate(
+            from = as.numeric(str_sub(years, 1, 4)),
+            to = from + 1
+          ) %>% 
+          filter(
+            ronda == "regular",
+            # ronda == input$ronda,
+            # from == as.numeric(str_sub(input$desde, 1, 4))
+            from <= as.numeric(str_sub("2020-21", 1, 4)),
+            # to == as.numeric(str_sub(input$hasta, 1, 4))
+            to >= as.numeric(str_sub("2010-11", 1, 4))
+          ) %>% 
+          arrange(years, jugador)
+        
+        %>% 
+          select(2:27) %>% 
           rename(
+            Jugador = jugador,
             `Temporada` = years,
             `Edad` = edad,
             `W` = w,
@@ -13198,13 +13214,8 @@ leaders <- function(stat, .ip = 0){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          ) %>% 
-          # arrange(years, jugador) %>% 
-          filter(
-            ronda == input$ronda
-            # years == input$desde,
-            )  %>%
-          select(2:27) 
+          )
+      
           
     
         # Table ----
@@ -13252,8 +13263,10 @@ leaders <- function(stat, .ip = 0){
             target = "row",
             fontWeight = styleEqual(c('Total'), "bold")
           )
-        
+        })
       })
+      
+    # Info Boxes ----
       # InfoBox Position player ----
       output$pos <- renderInfoBox({
         
