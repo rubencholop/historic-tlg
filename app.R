@@ -1969,11 +1969,12 @@ leaders <- function(stat, .ip = 0){
                          )
                        ),
                 column(4,
-                       bs4Dash::bs4Box(
+                       bs4Dash::bs4Card(
+                         solidHeader = FALSE, 
+                         collapsible = TRUE,
+                         closable = FALSE,
                          width = NULL,
                          higth = '300px',
-                         collapsible = TRUE,
-                         # status = 'warning',
                          title = "G",
                          DT::dataTableOutput('pt_p_g')
                          )
@@ -2052,40 +2053,6 @@ leaders <- function(stat, .ip = 0){
                        )
                 ),
               br(),
-              #4 ----
-              fluidRow(
-                column(4,
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "WHIP",
-                         DT::dataTableOutput('pt_p_whip')
-                       )
-                ),
-                column(4,
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "ERA",
-                         DT::dataTableOutput('pt_p_era')
-                       )
-                ),
-                column(4,
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "SO/BB",
-                         DT::dataTableOutput('pt_p_sobb')
-                         )
-                       )
-                ),
-            br(),
               #5 ------
             fluidRow(
               column(4,
@@ -2275,7 +2242,7 @@ leaders <- function(stat, .ip = 0){
         # Records LVBP ----
         tabItem(
           tabName = 'lvbp',
-          h4('Records en la LVBP ', align = 'center'),
+          h2('Records en la LVBP ', align = 'center'),
           br(),
           fluidRow(
             column(2),
@@ -2284,7 +2251,7 @@ leaders <- function(stat, .ip = 0){
                     width = 12,
                     higth = '1900px',
                     collapsible = TRUE,
-                    title = "Premios en la LVBP",
+                    title = " ",
                     DT::dataTableOutput('lvbp_general')
                     )
                   ),
@@ -2297,76 +2264,70 @@ leaders <- function(stat, .ip = 0){
           h4('Números retirados', align = 'center'),
           br(),
           fluidRow(
-            column(2),
-            column(8,
+            column(1),
+            column(10,
                    bs4Dash::bs4Box(
-                     # title = "User List example",
+                     # height = "1200px",
                      status = "success",
-                     width = NULL,
-                     userList(
+                     width = 12,
+                       # title = "Premios en la LVBP",
                      #1 ----
+                     userList(
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png",
-                         title = h5("Luis Salazar", style = "font-size': '16px'"),
-                         subtitle = h6("SS - 1993", style = "font-size': '12px'"),
-                         ),
+                         title = h5("Luis Salazar", style = "font-size': '14px'"),
+                         subtitle = h6("SS - Retirado en 1993", style = "font-size': '12px'")
+                       ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/knitr.png",
-                         title = h5("Ángel Bravo", style = "font-size': '16px'"),
-                         subtitle = h6("Of - 1978", style = "font-size': '12px'"),
+                         title = h5("Ángel Bravo", style = "font-size': '14px'"),
+                         subtitle = h6("OF - Retirado en 1978", style = "font-size': '12px'")
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2017/05/rmarkdown.png",
-                         title = h5("Luis Aparicio", style = "font-size': '16px'"),
-                         subtitle = h6("SS - 1968", style = "font-size': '12px'"),
+                         title = h5("Luis Aparicio", style = "font-size': '14px'"),
+                         subtitle = h6("SS - Retirado en 1968", style = "font-size': '12px'")
                          ),
                        userListItem(
-                         image = "https://d33wubrfki0l68.cloudfront.net/071952491ec4a6a532a3f70ecfa2507af4d341f9/c167c/images/hex-dplyr.png",
-                         title = h5("Oswaldo Guillén", style = "font-size': '16px'"),
-                         subtitle = h6("SS - 2000", style = "font-size': '12px'"),
-                         )
+                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
+                         title = h5('Carlos "Café" Martínez', style = "font-size': '14px'"),
+                         subtitle = h6("OF - Retirado en 1997", style = "font-size': '12px'"),
+                        )
                        ),
                      #2 ----
                      hr(),
                      userList(
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
-                         title = h5("Gustavo Polidor", style = "font-size': '16px'"),
-                         subtitle = h6("SS - 1995", style = "font-size': '12px'"),
+                         title = h5("Gustavo Polidor", style = "font-size': '14px'"),
+                         subtitle = h6("SS - Retirado en 1995", style = "font-size': '12px'")
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/packrat.png",
-                         title = h5("Alfredo Pedrique", style = "font-size': '16px'"),
-                         subtitle = h6("IF - 2003", style = "font-size': '12px'"),
+                         title = h5("Alfredo Pedrique", style = "font-size': '14px'"),
+                         subtitle = h6("IF - Retirado en 2003", style = "font-size': '12px'")
                          ),
                        userListItem(
                          image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
-                         title = h5("Raúl Pérez Tovar", style = "font-size': '16px'"),
-                         subtitle = h6("OF - 2020", style = "font-size': '12px'"),
+                         title = h5("Raúl Pérez Tovar", style = "font-size': '14px'"),
+                         subtitle = h6("OF - Retirado en 2020", style = "font-size': '12px'")
                          ),
                        userListItem(
-                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
-                         title = h5("Aurelio Monteagudo", style = "font-size': '16px'"),
-                         subtitle = h6("P - 1982", style = "font-size': '12px'"),
-                         )
+                         image = "https://d33wubrfki0l68.cloudfront.net/071952491ec4a6a532a3f70ecfa2507af4d341f9/c167c/images/hex-dplyr.png",
+                         title = h5("Oswaldo Guillén", style = "font-size': '14px'"),
+                         subtitle = h6("SS - Retirado en 2000", style = "font-size': '12px'")
+                        )
                        ),
                      #3 ----
                        hr(),
                        userList(
                          userListItem(
-                           image = "https://www.rstudio.com/wp-content/uploads/2014/04/tidyr.png",
-                           title = h5('Carlos "Café" Martínez', style = "font-size': '16px'"),
-                           subtitle = h6("OF - 1997", style = "font-size': '12px'"),
+                           image = "https://www.rstudio.com/wp-content/uploads/2014/04/sparklyr.png",
+                           title = h5("Aurelio Monteagudo", style = "font-size': '14px'"),
+                           subtitle = h6("P - Retirado en 1982", style = "font-size': '12px'")
                            )
                          )
                      )
-                  # bs4Dash::bs4Box(
-                  #   width = 12,
-                  #   higth = '1900px',
-                  #   collapsible = TRUE,
-                  #   title = "Premios en la LVBP",
-                  #   DT::dataTableOutput('lvbp_general')
-                  #   )
                   ),
             column(2)
               )
@@ -13168,8 +13129,8 @@ leaders <- function(stat, .ip = 0){
         
         output$advance_pitching <- renderDataTable({
         # Data ----
-        pit_search <- prs %>% 
-          left_join(Rosters%>% 
+        pit_search <- prs() %>% 
+          left_join(Rosters ()%>% 
                       select(player_id, years, first_name, last_name, pos, bat, lan, exp, pais, estado, ciudad, f_nac,
                              ronda),
                     by = c("player_id", "years", "ronda")) %>% 
@@ -13185,9 +13146,7 @@ leaders <- function(stat, .ip = 0){
             # to == as.numeric(str_sub(input$hasta, 1, 4))
             to >= as.numeric(str_sub("2010-11", 1, 4))
           ) %>% 
-          arrange(years, jugador)
-        
-        %>% 
+          arrange(years, jugador) %>% 
           select(2:27) %>% 
           rename(
             Jugador = jugador,
