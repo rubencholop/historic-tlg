@@ -151,6 +151,13 @@ temporadas <- data.table::rbindlist(
 # %>% 
 #   pull()
 
+temporadas_asc <- data.table::rbindlist(
+  lapply(pages, season), fill = TRUE
+) %>% 
+  arrange(df) %>% 
+  rename(temporadas = df) %>% 
+  pull() %>% as.character()
+
 
 # Special datos to some metrics with OBP, OPS and SLG
 from1 <- 2005
@@ -2412,7 +2419,7 @@ leaders <- function(stat, .ip = 0){
                            inputId = "desde_p",
                            label = "Desde:", 
                            # choices = attr(UScitiesD, "Labels"),
-                           choices = temporadas,
+                           choices = temporadas_asc,
                            options = list(
                              `live-search` = TRUE)
                          ),
@@ -2463,7 +2470,8 @@ leaders <- function(stat, .ip = 0){
                              pickerInput(
                                inputId = "Id086",
                                label = "Criterio 1:", 
-                               choices = c("W", "L", "GS", "SO", "WHIP"),
+                               # choices = c("W" = "w", "L" = "l", "GS" = "gs", "SO" = "so", "WHIP" = "whip"),
+                               choices = c("w", "l", "gs", "so", "whip"),
                                selected = "W",
                                options = list(
                                  `live-search` = TRUE)
@@ -2481,9 +2489,8 @@ leaders <- function(stat, .ip = 0){
                                   ),
                            column(3,
                                   textInput(
-                                    "criteria_1", 
-                                    " ", 
-                                    value = " "
+                                    "criteria_1",
+                                    label = " "
                                     ) 
                                   )
                            ),
@@ -13130,7 +13137,7 @@ leaders <- function(stat, .ip = 0){
         output$advance_pitching <- renderDataTable({
         # Data ----
         pit_search <- prs() %>% 
-          left_join(Rosters ()%>% 
+          left_join(Rosters() %>% 
                       select(player_id, years, first_name, last_name, pos, bat, lan, exp, pais, estado, ciudad, f_nac,
                              ronda),
                     by = c("player_id", "years", "ronda")) %>% 
@@ -13139,12 +13146,14 @@ leaders <- function(stat, .ip = 0){
             to = from + 1
           ) %>% 
           filter(
-            ronda == "regular",
-            # ronda == input$ronda,
-            # from == as.numeric(str_sub(input$desde, 1, 4))
-            from <= as.numeric(str_sub("2020-21", 1, 4)),
-            # to == as.numeric(str_sub(input$hasta, 1, 4))
-            to >= as.numeric(str_sub("2010-11", 1, 4))
+            ronda == input$ronda,
+            # ronda == "regular",
+            to == as.numeric(str_sub(input$hasta_p, 1, 4)),
+            # to <= as.numeric(str_sub("2010-11", 1, 4)),
+            from == as.numeric(str_sub(input$desde_p, 1, 4)),
+            # from >= as.numeric(str_sub("1970-71", 1, 4)),
+            # input$Id086 >= as.numeric(input$criteria_1)
+            w >= input$criteria_1
           ) %>% 
           arrange(years, jugador) %>% 
           select(2:27) %>% 
