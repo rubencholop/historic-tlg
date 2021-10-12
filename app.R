@@ -1328,19 +1328,6 @@ leaders <- function(stat, .ip = 0){
               # Tables Picheo ----
               fluidRow(
                 column(12,
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "Estadisticas Globales",
-                         DT::dataTableOutput('country_pit')
-                       )
-                )
-              ),
-              br(),
-              fluidRow(
-                column(12,
                        bs4Dash::bs4Card(
                          closable = FALSE,
                          width = NULL,
@@ -1370,7 +1357,20 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('picheo_finals_country')
                          )
                        )
+                ),
+              br(), 
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "Estadisticas Globales",
+                         DT::dataTableOutput('country_pit')
+                       )
                 )
+              )
             ),
             # TabPanel Bateo ----
             tabPanel(
@@ -1388,19 +1388,6 @@ leaders <- function(stat, .ip = 0){
                 )
               ),
               # Tables Bateo ----
-              fluidRow(
-                column(12,
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         higth = '100px',
-                         collapsible = TRUE,
-                         title = "Estadisticas Globales",
-                         DT::dataTableOutput('country_bat')
-                       )
-                )
-              ),
-              br(),
               fluidRow(
                 column(12,
                        bs4Card(
@@ -1432,7 +1419,20 @@ leaders <- function(stat, .ip = 0){
                          DT::dataTableOutput('bateo_finals_country')
                          )
                        )
+                ),
+              fluidRow(
+                column(12,
+                       bs4Card(
+                         closable = FALSE,
+                         width = NULL,
+                         higth = '100px',
+                         collapsible = TRUE,
+                         title = "Estadisticas Globales",
+                         DT::dataTableOutput('country_bat')
+                       )
                 )
+              ),
+              br()
             )
             # TabPanel Fildeo ----
             # tabPanel(tabName = 'Fildeo', tableOutput('fildeo_rs'))
