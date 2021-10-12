@@ -13,6 +13,8 @@ library(shinyalert)
 # library(stringi) 
 # library(shinyflags)
 
+# Functions shiny ----
+
 userList <- function(...) {
   shiny::tags$ul(
     class = "users-list clearfix",
@@ -2281,7 +2283,7 @@ leaders <- function(stat, .ip = 0){
                      #1 ----
                      userList(
                        userListItem(
-                         image = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png",
+                         image = "luissalazar3.png",
                          title = h5("Luis Salazar", style = "font-size': '14px'"),
                          subtitle = h6("SS - Retirado en 1993", style = "font-size': '12px'")
                        ),
