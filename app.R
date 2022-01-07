@@ -135,7 +135,7 @@ year(today()) -1
 
 # Dates 
 from <- 1962
-to <- lubridate::year(Sys.Date()) 
+to <- lubridate::year(Sys.Date())+1 
 range_ <- c(from:to)
 pages <- c(1:(to - (from)))
 
@@ -470,9 +470,9 @@ leaders <- function(stat, .ip = 0){
             )
           )
         ),
-          span("Creado por:"),
-        a(href = "https://www.linkedin.com/in/macv1031/", target = "_blank", "Ruben Lopez"),
-        br(),
+        #   span("Creado por:"),
+        # a(href = "https://www.linkedin.com/in/macv1031/", target = "_blank", "Ruben Lopez"),
+        # br(),
         span("Fuente de datos:"),
         a(href = "http://www.pelotabinaria.com.ve/beisbol/", target = "_blank", "http://www.pelotabinaria.com.ve/"),
         right_text = h6("© 2020 Tibu Stats. Todos los derechos reservados.", align = "center"),
@@ -484,7 +484,31 @@ leaders <- function(stat, .ip = 0){
                    img(src = 'TS Horizontal Color (2).png', aling = "center")
                  )
           ),
-          column(5)
+          column(3),
+          column(2,
+                 shinydashboardPlus::socialButton(
+                   href = "https://www.instagram.com/tibustats/",
+                   icon = icon("instagram")
+                   ),
+                 shinydashboardPlus::socialButton(
+                   href = "https://twitter.com/tibu_stats",
+                   icon = icon("twitter")
+                   )
+                 ),
+          fluidRow(
+            column(5),
+            column(2,
+                   shinydashboardPlus::socialButton(
+                     href = "https://www.instagram.com/tibustats/",
+                     icon = icon("instagram")
+                     ),
+                   shinydashboardPlus::socialButton(
+                     href = "https://twitter.com/tibu_stats",
+                     icon = icon("twitter")
+                     )
+                   ),
+            column(5)
+          )
         )
       # fluidRow(
       #   column(9),
@@ -765,32 +789,30 @@ leaders <- function(stat, .ip = 0){
             tabPanel(
               tabName = 'Picheo',
               br(),
-              fluidRow(
-              box( 
-                width = 12,
-                title = h2("Estadisticas historicas de lanzadores", 
-                           style = 'color: #b90e13;
-                                          font-size: 19px;
-                                          font-weight: 400;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: center;
-                                          text-transform: uppercase;
-                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
-                ),
+                box( 
+                  width = 12,
+                  title = h2("Estadisticas historicas de lanzadores", 
+                             style = 'color: #b90e13;
+                                      font-size: 19px;
+                                      font-weight: 400;
+                                      font-family: "Roboto Regular", sans-serif;
+                                      text-align: center;
+                                      text-transform: uppercase;
+                                      text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
+                  ),
                 height = "350px",
                 collapsed = FALSE,
                 collapsible = FALSE,
                 closable = FALSE,
-              # Input ----
-                br(),
+              # input ----
+              fluidRow(
                 column(3,
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Lanzadores',
                          choices = .pitchers
-                         )
-                       ),
-              br(),
+                       )
+                ),
               # Image ----
               fluidRow(
                 # Player name ----
@@ -801,8 +823,6 @@ leaders <- function(stat, .ip = 0){
                               height = "230px"
                               ),
                        column(6,
-                              br(),
-                              br(),
                               br(),
                               h2(textOutput("first_name_pit"),
                                  style = "text-transform: uppercase;
@@ -817,8 +837,8 @@ leaders <- function(stat, .ip = 0){
                                            font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
                                                     ")
                               )
-                        )
-                       ),
+                       )
+                      ),
                 # Player info ----
                 column(4,
                        br(),
@@ -979,21 +999,21 @@ leaders <- function(stat, .ip = 0){
               tabName = 'Bateo',
               br(),
               fluidRow(
-              box( 
-                width = 12,
-                title = h2("Estadisticas historicas de lBateadores", 
-                           style = 'color: #b90e13;
-                                          font-size: 19px;
-                                          font-weight: 400;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: center;
-                                          text-transform: uppercase;
-                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
-                ),
-                height = "350px",
-                collapsed = FALSE,
-                collapsible = FALSE,
-                closable = FALSE,
+                box( 
+                  width = 12,
+                  title = h2("Estadisticas historicas de Bateadores", 
+                             style = 'color: #b90e13;
+                                            font-size: 19px;
+                                            font-weight: 400;
+                                            font-family: "Roboto Regular", sans-serif;
+                                            text-align: center;
+                                            text-transform: uppercase;
+                                            text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
+                  ),
+                  height = "350px",
+                  collapsed = FALSE,
+                  collapsible = FALSE,
+                  closable = FALSE,
               # Input ----
               fluidRow(
                 br(),
@@ -1453,7 +1473,7 @@ leaders <- function(stat, .ip = 0){
                      label = 'Temporadas',
                      choices = as.character(c("Todas las Temporadas", 
                                               temporadas)),
-                     selected = "2020-21"
+                     selected = "2021-22"
                      # multiple = TRUE
                      )
                    ),
@@ -12217,7 +12237,7 @@ leaders <- function(stat, .ip = 0){
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
-            searching = FALSE,
+            searching = TRUE,
             paging = TRUE,
             pageLegth = 25,
             lengthMenu = c(25, 20, 100),
@@ -14003,35 +14023,11 @@ leaders <- function(stat, .ip = 0){
         
       })
       # -----IMAGE ----
-      # image Batting player ----
-      output$jugador_ <- renderImage({
-        req(input$select_jugador)
-        
-        player <- paste('www/batting/', input$select_jugador, '.jpg', sep = '')
-        
-        if (is.null(input$select_jugador))
-          return(cat('Not image'))
-        
-        if (input$select_jugador == input$select_jugador) {
-          return(list(
-            src = player,
-            contentType = "image/jpg",
-            width = 150,
-            height = 150
-            # alt = 'Selecciona un jugador'
-          ))
-        }
-      }, deleteFile = FALSE)
-      
-      
-      # Text Outputs
-      
-      
       # image Pitching Player ----
       output$jugador_pit <- renderImage({
         # req(input$select_jugador_pit)
         
-        player <- paste('www/pitching/',input$select_jugador_pit,'.jpg', sep = '')
+        player <- 'www/sombra_jugador.png'
         # player <- paste('www/pitching/',"A. Cardona",'.jpg', sep = '')
         logo <- "www/pitching/ts_isotipo.png"
         
@@ -14039,12 +14035,12 @@ leaders <- function(stat, .ip = 0){
           return(
             list(
               src = player,
-              contenType = "image/jpg",
+              contenType = "image/png",
               width = 160,
               height = 220,
               align = "center"
-                )
-              )
+            )
+          )
         }
         
         else if (file.exists(player) == FALSE) {
@@ -14054,12 +14050,46 @@ leaders <- function(stat, .ip = 0){
               contentType = "image/png",
               width = 160,
               height = 160
-                )
-              )
+            )
+          )
         }
         
       }, deleteFile = FALSE)
       
+      
+      
+      # image Batting player ----
+      output$jugador_bat <- renderImage({
+        # req(input$select_jugador)
+          
+          player <- 'www/sombra_jugador.png'
+          # player <- paste('www/pitching/',"A. Cardona",'.jpg', sep = '')
+          logo <- "www/pitching/ts_isotipo.png"
+          
+          if (file.exists(player) == TRUE) {
+            return(
+              list(
+                src = player,
+                contenType = "image/png",
+                width = 160,
+                height = 220,
+                align = "center"
+              )
+            )
+          }
+          
+          else if (file.exists(player) == FALSE) {
+            return(
+              list(
+                src = logo,
+                contentType = "image/png",
+                width = 160,
+                height = 160
+              )
+            )
+          }
+          
+        }, deleteFile = FALSE)
       
       
       # image Record AVG ----
@@ -14089,8 +14119,8 @@ leaders <- function(stat, .ip = 0){
           filter(
             player == input$select_jugador_pit) %>% 
           #Before first space
-          mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
-          select(player) %>% 
+          # mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
+          select(first_name) %>% 
           unique() %>% 
           pull()
       })
@@ -14104,8 +14134,8 @@ leaders <- function(stat, .ip = 0){
           filter(
             player == input$select_jugador_bat) %>% 
           #Before first space
-          mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
-          select(player) %>% 
+          # mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
+          select(first_name) %>% 
           unique() %>% 
           pull()
       })
@@ -14120,7 +14150,7 @@ leaders <- function(stat, .ip = 0){
             pos == "P",
             player == input$select_jugador_pit
             ) %>% 
-          mutate(player = sub("^\\S+\\s+", '', player)) %>% 
+          # mutate(player = sub("^\\S+\\s+", '', player)) %>% 
           select(last_name) %>% 
           unique() %>% 
           pull()
@@ -14135,7 +14165,7 @@ leaders <- function(stat, .ip = 0){
           filter(
             player == input$select_jugador_bat
             ) %>% 
-          mutate(player = sub("^\\S+\\s+", '', player)) %>% 
+          # mutate(player = sub("^\\S+\\s+", '', player)) %>% 
           select(last_name) %>% 
           unique() %>% 
           pull()

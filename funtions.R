@@ -38,56 +38,54 @@ get_roster <- function(.URL){
 }
 
 
-# Batting players ---- 
-get_batting <- function(.URL){
-  flog.info('Getting available URl')
-  years <- str_extract(.URL, '(?<=TIB&TE=).*')
+# Roster players New format ----
+get_roster <- function(.URL){
   
-  batting <- read_html(.URL) %>% 
+  .URL <- "https://pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2021-22" 
+  flog.info('Getting available URl')
+  years <- stringr::str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  roster <- read_html(.URL) %>% 
     html_nodes(css = '.sortable') %>% 
     html_table(fill = TRUE) %>% 
-    .[[2]] %>% 
-    as.data.frame() %>% 
-    select(-X2) %>% 
-    rename(
-      'jugador' = X1,
-      'edad' = X3,
-      'g' = X4,
-      'pa' = X5,
-      'ab' = X6,
-      'r' = X7,
-      'h' = X8,
-      '2b' = X9,
-      '3b' = X10,
-      'hr' = X11,
-      'rbi' = X12,
-      'sb' = X13,
-      'cs' = X14,
-      'bb' = X15,
-      'so' = X16,
-      'avg' = X17,
-      'obp' = X18,
-      'slg' = X19,
-      'ops' = X20,
-      'ir' = X21,
-      'rc' = X22,
-      'tb' = X23,
-      'xb' = X24,
-      'hbp' = X25,
-      'sh' = X26,
-      'sf' = X27
-    ) %>% 
-    subset(edad != 'EDAD') %>% 
-    slice(1:(n()-3)
-    ) %>% 
-    mutate(years = years) 
-  # %>% 
-    # select(years, jugador, edad, g, pa, ab, r, h, '2b', '3b', hr, rbi, sb, cs, bb,s,
-    #        oavg, obp, slg, ops, ir, rc, tb, xb, hbp, sh, sf)
+    .[[1]] %>% 
+    as.data.frame()%>% 
+    select(-X1) %>% 
+    janitor::row_to_names(row_number = 1) %>% 
+    janitor::clean_names() %>% 
+    subset(jugador != 'Nombre') %>% 
+    mutate(years = years) %>% 
+    select(years, jugador,x , f_nac, edad, exp)
   flog.info('Data Wrangling completed')
   
+  write.csv(roster, "roster_new_season.csv")
+
   
-  flog.info('Batting Df')
+}
+
+
+# Batting players ---- 
+get_batting <- function(.URL){
+  futile.logger::flog.info('Getting data from URL')
+  years <- stringr::str_extract(.URL, '(?<=TIB&TE=).*')
+  
+  batting <- rvest::read_html(.URL) %>% 
+    rvest::html_nodes(css = '.sortable') %>% 
+    rvest::html_table(fill = TRUE) %>% 
+    .[[2]] %>% 
+    as.data.frame() %>% 
+    janitor::row_to_names(row_number = 1) %>% 
+    janitor::clean_names() %>% 
+    dplyr::select(-na, -rend, -hr4, -babip) %>% 
+    dplyr::mutate(years = years) %>% 
+    dplyr::filter(pa > 0) %>% 
+    subset(edad != 'EDAD') %>% 
+    dplyr::slice(1:(n()-1)) %>% 
+    dplyr::mutate(player = paste0(stringr::str_sub(jugador, 1, 1), ". ", sub("^\\S+\\s+", '', jugador)),
+                  jugador = player) %>% 
+    dplyr::select(-player)
+
+  futile.logger::flog.info('Data Wrangling completed')
   batting
 }
 
@@ -192,8 +190,6 @@ get_batting_finals <- function(.URL){
   flog.info('Batting Df')
   batting_finals
 }
-
-
 # Batting stats but with other order in the table
 get_batting_finals1 <- function(.URL){
   flog.info('Getting available URl')
@@ -261,39 +257,17 @@ get_pitching <- function(.URL){
     html_table(fill = TRUE) %>% 
     .[[3]] %>% 
     as.data.frame() %>% 
-    rename(
-      'jugador' = X1,
-      'X2' = X2,
-      'edad' = X3,
-      'w' = X4,
-      'l' = X5,
-      'w-l%' = X6,
-      'era' = X7,
-      'g' = X8,
-      'gs' = X9,
-      'cg' = X10,
-      'sho' = X11,
-      'sv' = X12,
-      'ip' = X13,
-      'h' = X14,
-      'r' = X15,
-      'er' = X16,
-      'hr' = X17,
-      'bb' = X18,
-      'so' = X19,
-      'ir' = X20,
-      'whip' = X21,
-      'h/9' = X22,
-      'hr/9' = X23,
-      'bb/9' = X24,
-      'so/9' = X25,
-      'so/bb' = X26,
-      'bk' = X27
-    ) %>% 
-    mutate(years = years) %>% 
-    select(-X2) %>% 
-    subset(edad != 'EDAD')
-  flog.info('Data Wrangling completed')
+    janitor::row_to_names(row_number = 1) %>% 
+    janitor::clean_names() %>% 
+    dplyr::select(-na, -rend, -hr4, -babip) %>% 
+    dplyr::mutate(years = years) %>% 
+    dplyr::filter(pa > 0) %>% 
+    subset(edad != 'EDAD') %>% 
+    dplyr::slice(1:(n()-1)) %>% 
+    dplyr::mutate(player = paste0(stringr::str_sub(jugador, 1, 1), ". ", sub("^\\S+\\s+", '', jugador)),
+                  jugador = player) %>% 
+    dplyr::select(-player)
+    
   
   flog.info('Pitching Df')
   pitching
@@ -730,15 +704,29 @@ str(.df)
   filter(IP >= 0)
 
 # Functions to extract New data by season by hitter ----
-.URL <- "https://pelotabinaria.com.ve/beisbol/even-bat.php?tipo=temp&t-desde=2021-22&t-hasta=2021-22&t-ex-desde=1&t-ex-hasta=30&e-desde=0&e-hasta=99&nov=x&activo=x&cr-pais=%3D&pais=Todos&equipo=TIB&franquicia=Todos&posicion%5B%5D=p&posicion%5B%5D=c&posicion%5B%5D=1b&posicion%5B%5D=2b&posicion%5B%5D=3b&posicion%5B%5D=ss&posicion%5B%5D=lf&posicion%5B%5D=cf&posicion%5B%5D=rf&posicion%5B%5D=bd&premio=X&mlb=x&batea=X&crs1=G&cr1=%3E%3D&vl1=0&crs2=G&cr2=%3E%3D&vl2=0&crs3=G&cr3=%3E%3D&vl3=0&crs4=G&cr4=%3E%3D&vl4=0&crs5=G&cr5=%3E%3D&vl5=0&crs6=G&cr6=%3E%3D&vl6=0&orden=HR&c_orden=DESC&buscar=1" %>% 
-  read_html() %>% 
-  html_nodes(".sortable") %>% 
-  html_table(fill = TRUE) %>% 
-  .[[1]] %>% 
-  as.data.frame() %>%
-  select(-X1) %>% 
-  janitor::row_to_names(row_number = 1) %>% 
-  filter(PA > 0)
 
-%>% 
-  select(-X1)
+.URL <- "https://pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2021-22"
+
+
+# append data new ---
+new_batting <- get_batting(.URL) %>% 
+  dplyr::select(-gs) %>% 
+  dplyr::mutate(refuerzo = "NO",
+                ronda = "regular",
+                resultado = " ",
+                player_id = " ") %>% 
+  dplyr::select(player_id, years, jugador:sf, refuerzo, ronda, resultado)
+  
+
+brs <- readr::read_csv('data/batting_reseason.csv') %>% 
+  filter(years == stringr::str_extract(.URL, '(?<=TIB&TE=).*')) %>% 
+  dplyr::select(-ir)
+  dplyr::bind_cols(new_batting)
+  
+  
+
+write.table(new_batting, "data/batting_reseason.csv", sep = ",",
+            col.names = FALSE, append = T, row.names = FALSE)
+
+
+
