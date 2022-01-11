@@ -260,6 +260,7 @@ leaders <- function(stat, .ip = 0){
   shiny::shinyApp(
 # Page ----
     ui = bs4DashPage(
+      tags$head(includeHTML(("google-analytics.html"))),
       enable_preloader = TRUE, # Icon before preloader
       controlbar_overlay = TRUE,
       sidebar_collapsed = TRUE,
