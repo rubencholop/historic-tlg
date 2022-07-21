@@ -10,6 +10,7 @@ library(stringr)
 library(readr)
 library(highcharter)
 library(shinyalert)
+library(renv)
 # library(stringi) 
 # library(shinyflags)
 
@@ -260,7 +261,7 @@ leaders <- function(stat, .ip = 0){
   shiny::shinyApp(
 # Page ----
     ui = bs4DashPage(
-      tags$head(includeHTML(("google-analytics.html"))),
+      # tags$head(includeHTML(("google-analytics.html"))),
       enable_preloader = TRUE, # Icon before preloader
       controlbar_overlay = TRUE,
       sidebar_collapsed = TRUE,
@@ -353,10 +354,10 @@ leaders <- function(stat, .ip = 0){
             bs4SidebarMenuItem(
             text = 'Inicio',
             tabName = 'inicio',
-            badgeLabel = "new", 
-            badgeColor = "green",
+            # badgeLabel = "new", 
+            # badgeColor = "green",
             icon = "home",
-            startExpanded = FALSE
+            startExpanded = TRUE
           ),
           # MenuSubItem Datos ----
           bs4SidebarMenuItem(
@@ -471,78 +472,55 @@ leaders <- function(stat, .ip = 0){
             )
           )
         ),
-        #   span("Creado por:"),
-        # a(href = "https://www.linkedin.com/in/macv1031/", target = "_blank", "Ruben Lopez"),
-        # br(),
-        span("Fuente de datos:"),
-        a(href = "http://www.pelotabinaria.com.ve/beisbol/", target = "_blank", "http://www.pelotabinaria.com.ve/"),
-        right_text = h6("© 2020 Tibu Stats. Todos los derechos reservados.", align = "center"),
+        # Social networks ----
         fluidRow(
           column(5),
           column(2,
                  div(
                    id = "logo",
                    img(src = 'TS Horizontal Color (2).png', aling = "center")
-                 )
-          ),
-          column(3),
-          column(2,
-                 shinydashboardPlus::socialButton(
-                   href = "https://www.instagram.com/tibustats/",
-                   icon = icon("instagram")
-                   ),
-                 shinydashboardPlus::socialButton(
-                   href = "https://twitter.com/tibu_stats",
-                   icon = icon("twitter")
                    )
                  ),
-          fluidRow(
-            column(5),
-            column(2,
-                   shinydashboardPlus::socialButton(
-                     href = "https://www.instagram.com/tibustats/",
-                     icon = icon("instagram")
-                     ),
-                   shinydashboardPlus::socialButton(
-                     href = "https://twitter.com/tibu_stats",
-                     icon = icon("twitter")
+          column(3),
+          column(2,
+                 tags$ul(
+                   class = "network-icon",
+                   tags$li(
+                     tags$a(href = "https://twitter.com/rubencholop",
+                            tags$i(class = "fab fa-twitter big-icon")
                      )
                    ),
-            column(5)
+                   tags$li(
+                     tags$a(href = "https://www.instagram.com/rubencholop/",
+                            tags$i(class = "fab fa-instagram big-icon")
+                            )
+                     )
+                   )
+                 )
+        ),
+        # Source Pelotabinaria ----
+        fluidRow(
+          column(6,
+                 span("Fuente de datos:"),
+                 a(href = "http://www.pelotabinaria.com.ve/beisbol/", target = "_blank", "http://www.pelotabinaria.com.ve/")
+          ),
+          column(6)
+          ),
+        br(),
+        # Derechos reservados ----
+        fluidRow(
+          column(2),
+          column(8,
+                 h6("© 2020 Tibu Stats. Todos los derechos reservados.", align = "center")
+                 ),
+          column(2)
           )
-        )
-      # fluidRow(
-      #   column(9),
-      #   column(3,
-      #          div(
-      #            id = "logo",
-      #            img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
-      #          )
-      #   )
-      # )
-      # div(
-      #   id = "logo",
-      #   img(src = 'https://tjrn.sfo2.cdn.digitaloceanspaces.com/assets/tiburones/img/site/logo_top.png')
-      # ),
-      
-      # span(
-      #   style = "font-size: 1em",
-      #   span("Created by "),
-      #   a("Ruben Lopez",
-      #     href = 'https://www.linkedin.com/in/ruben-lopez-28002bb4/',
-      #     target = "_blank")
-      # ),
-      #   copyrights = a(
-      #     href = "https://twitter.com/divadnojnarg", 
-      #     target = "_blank", "@DivadNojnarg"
-      #   ),
-      #   right_text = "2020"
-      # ),
-    ),
+        ),
       # Title ----
       title = 'Tiburones de la Guaira B.B.C',
       # Body ----
       body = bs4DashBody(
+        tags$head(shiny::includeHTML(("google-analytics.html"))),
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
         tags$head(tags$style(HTML(
           '
@@ -585,8 +563,9 @@ leaders <- function(stat, .ip = 0){
         tabItems(
         # TabItem Home ----
           tabItem(
-            tabName = 'inicio'
-            # h2('Registro Estadístico historico de Tiburones de la Guaira', align = 'center')
+            tabName = 'inicio',
+            tags$h2("BIENVENIDO A 60 AÑOS DE ESTADISTICAS DE TIBURONES DE LA GUAIRA", align = 'center'),
+            img(src = 'logo_60_anos.jpeg')
             ),
         # TabItem by Team ----
         tabItem(
@@ -13257,7 +13236,7 @@ leaders <- function(stat, .ip = 0){
         })
       })
       
-    # Info Boxes ----
+       # Info Boxes ----
       # InfoBox Position player ----
       output$pos <- renderInfoBox({
         
@@ -14426,7 +14405,5 @@ leaders <- function(stat, .ip = 0){
     }
   )
 
-#hi
-  # hcmap("https://code.highcharts.com/mapdata/countries/ve/ve-all.js") %>%
-  #   hc_title(text = "Venezuela")
+
   
