@@ -1,5 +1,6 @@
 # Libraries ----
 library(dplyr)
+library(readr)
 source("analysis/Dataset.R")
 
 # Auxiliar functions ----
@@ -160,7 +161,7 @@ pit_nacionalidad <- prs %>%
   ) %>% 
   dplyr::ungroup() %>%
   top_n(20, years) %>% 
-  filter(nacionalidad == "Importado")
+  filter(nacionalidad == "Venezolano")
   
 # Analysis by country pitching (resular season) ----
 
@@ -201,3 +202,101 @@ pit_pais <- prs %>%
 
 # top_n(20, years)
   
+# Analysis by decade batting (regular season) ----
+
+decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
+
+
+bat_decade <- brs %>% 
+  dplyr::filter(ronda == "regular") %>% 
+  dplyr::left_join(roster %>% 
+                     dplyr::filter(ronda == "regular"), 
+                   by = c("player_id", "years", "jugador")) %>% 
+  dplyr::select(-ronda.y) %>% 
+  group_by(decade) %>%
+  summarise(
+    seasons = n_distinct(years),
+    pa = sum(pa, na.rm = TRUE),
+    ab = sum(ab, na.rm = TRUE),
+    r = sum(r, na.rm = TRUE),
+    h = sum(h, na.rm = TRUE),
+    `2b` = sum(`2b`, na.rm = TRUE),
+    `3b` = sum(`3b`, na.rm = TRUE),
+    `hr` = sum(`hr`, na.rm = TRUE),
+    rbi = sum(rbi, na.rm = TRUE),
+    sb = sum(sb, na.rm = TRUE),
+    cs = sum(cs, na.rm = TRUE),
+    bb = sum(bb, na.rm = TRUE),
+    so = sum(so, na.rm = TRUE),
+    th = sum(`2b`, `3b`, hr, h, na.rm = TRUE),
+    avg = round(th / ab, 3),
+    obp = round(sum(h, bb, hbp, na.rm = TRUE) / sum(ab, bb, hbp, sh, na.rm = TRUE), 3),
+    slg = round(sum(h, `2b` * 2, `3b` * 3, `hr` * 4) / ab, 3),
+    ops = obp + slg,
+    tb = sum(tb, na.rm = TRUE),
+    xb = sum(xb, na.rm = TRUE),
+    hbp = sum(hbp, na.rm = TRUE),
+    sh = sum(sh, na.rm = TRUE),
+    sf = sum(sf, na.rm = TRUE),
+    .groups = "drop"
+  ) 
+
+
+%>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    # decade = as.factor(decade),
+    decade = forcats::fct_relevel(
+      decade, "60","70", "80", "90", "00", "10", "20"
+    )
+  ) %>% 
+  arrange(decade)
+
+
+# group_by(years, nacionalidad) %>%
+# dplyr::filter(nacionalidad == "Importad") %>% 
+top_n(20, years)
+# 
+
+# Analysis by year - nacionalidad (regular season) ----
+
+decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
+
+
+bat_decade_nat<- brs %>% 
+  dplyr::filter(ronda == "regular") %>% 
+  dplyr::left_join(roster %>% 
+                     dplyr::filter(ronda == "regular"), 
+                   by = c("player_id", "years", "jugador")) %>% 
+  dplyr::select(-ronda.y) %>% 
+  group_by(decade, nacionalidad) %>%
+  summarise(
+    seasons = n_distinct(years),
+    pa = sum(pa, na.rm = TRUE),
+    ab = sum(ab, na.rm = TRUE),
+    r = sum(r, na.rm = TRUE),
+    h = sum(h, na.rm = TRUE),
+    `2b` = sum(`2b`, na.rm = TRUE),
+    `3b` = sum(`3b`, na.rm = TRUE),
+    `hr` = sum(`hr`, na.rm = TRUE),
+    rbi = sum(rbi, na.rm = TRUE),
+    sb = sum(sb, na.rm = TRUE),
+    cs = sum(cs, na.rm = TRUE),
+    bb = sum(bb, na.rm = TRUE),
+    so = sum(so, na.rm = TRUE),
+    th = sum(`2b`, `3b`, hr, h, na.rm = TRUE),
+    avg = round(th / ab, 3),
+    obp = round(sum(h, bb, hbp, na.rm = TRUE) / sum(ab, bb, hbp, sh, na.rm = TRUE), 3),
+    slg = round(sum(h, `2b` * 2, `3b` * 3, `hr` * 4) / ab, 3),
+    ops = obp + slg,
+    tb = sum(tb, na.rm = TRUE),
+    xb = sum(xb, na.rm = TRUE),
+    hbp = sum(hbp, na.rm = TRUE),
+    sh = sum(sh, na.rm = TRUE),
+    sf = sum(sf, na.rm = TRUE),
+    .groups = "drop"
+  ) 
+
+
+
+# 

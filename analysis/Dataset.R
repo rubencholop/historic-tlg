@@ -17,7 +17,14 @@ roster <- .Rosters %>%
     )
 
 # Batting -----
-brs <- readr::read_csv('data/batting_reseason.csv') %>% 
+# brs <- readr::read_csv('data/batting_reseason.csv') %>% 
+brs <- readr::read_csv("data/batting_reseason.csv", 
+                       col_types = cols(pa = col_double(), cs = col_double(), 
+                                        bb = col_number(), so = col_double(), 
+                                        obp = col_double(), ir = col_double(), 
+                                        rc = col_double(), hbp = col_double(), 
+                                        sh = col_double(), sf = col_double())
+                       ) %>% 
   dplyr::mutate(
     decade = dplyr::case_when(
       years %in% c("1962-63", "1963-64", "1964-65", "1965-66", "1966-67", "1967-68", "1968-69", "1969-70") ~ "60",
@@ -34,6 +41,8 @@ brs <- readr::read_csv('data/batting_reseason.csv') %>%
       years %in% c("2020-21", "2021-22", "2022-23") ~ "20"
       )
     )
+
+
   
 
 # Pitching ----
