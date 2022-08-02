@@ -13,7 +13,30 @@ roster <- .Rosters %>%
   dplyr::mutate(
     key = paste0(as.character(years), jugador),
     f_nac = as.Date(f_nac, format = "%m/%d/%Y"),
-    nacionalidad = ifelse(pais == "Venezuela", "Venezolano", "Importado")
+    nacionalidad = ifelse(pais == "Venezuela", "Venezolano", "Importado"),
+    player_type = ifelse(pos == "P", "Lanzador", "Bateador"),
+    decade = dplyr::case_when(
+      years %in% c("1962-63", "1963-64", "1964-65", "1965-66", "1966-67", "1967-68", "1968-69", "1969-70") ~ "60",
+      years %in% c("1970-71", "1971-72", "1972-73", "1973-74", "1974-75", "1975-76", "1976-77", "1977-78", "1978-79", 
+                   "1979-80") ~ "70",
+      years %in% c("1980-81", "1981-82", "1982-83", "1983-84", "1984-85", "1985-86", "1986-87", "1987-88", "1988-89", 
+                   "1989-90") ~ "80",
+      years %in% c("1990-91", "1991-92", "1992-93", "1993-94", "1994-95", "1995-96", "1996-97", "1997-98", "1998-99", 
+                   "1999-00") ~ "90",
+      years %in% c("2000-01", "2001-02", "2002-03", "2003-04", "2004-05", "2005-06", "2006-07", "2007-08", "2008-09", 
+                   "2009-10") ~ "00",
+      years %in% c("2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2015-16", "2016-17", "2017-18", "2018-19", 
+                   "2019-20") ~ "10",
+      years %in% c("2020-21", "2021-22", "2022-23") ~ "20"
+    ),
+    position = dplyr::case_when(
+      pos == "P" & lan == "D" ~ "RHP",
+      pos == "P" & lan == "Z" ~ "LHP",
+      pos %in% c("1B", "2B", "SS", "3B", "IF") ~ "IF",
+      pos %in% c("RF", "LF", "CF", "3B") ~ "OF",
+      pos %in% c("BD", "CE", "BE") ~ "BD",
+      pos == "C" ~ "C"
+      )
     )
 
 # Batting -----
