@@ -300,3 +300,22 @@ bat_decade_nat<- brs %>%
 
 
 # 
+
+# Players debutantes by season ----
+debutantes <- roster %>% 
+  dplyr::filter(
+    ronda == "regular",
+    pais == "Venezuela",
+    exp == 1
+    ) %>% 
+  dplyr::group_by(years) %>% 
+  dplyr::summarise(
+    
+  )
+
+%>% 
+  dplyr::left_join(roster %>% 
+                     dplyr::filter(ronda == "regular"), 
+                   by = c("player_id", "years", "jugador")) %>% 
+  dplyr::select(-ronda.y) %>% 
+  group_by(decade) 
