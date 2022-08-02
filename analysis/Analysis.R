@@ -301,7 +301,43 @@ bat_decade_nat<- brs %>%
 
 # 
 
-# Players totals Venezuelan----
+# Players ----
+players <- roster %>% 
+  dplyr::filter(
+    ronda == "regular"
+  ) %>% 
+  dplyr::group_by(player_id) %>% 
+  dplyr::summarise(
+    seasons = n(),
+    jugador = last(jugador),
+    name = last(name),
+    first_name = last(first_name),
+    last_name = last(last_name),
+    pos = last(pos),
+    bat = last(bat),
+    lan = last(lan),
+    pais = last(pais),
+    estado = last(estado),
+    ciudad = last(ciudad),
+    f_nac = last(f_nac),
+    b_reference_id = last(b_reference_id),
+    ID = last(ID),
+    key = last(key),
+    nacionalidad = last(nacionalidad),
+    player_type = last(player_type),
+    decade = last(decade),
+    position = last(position),
+    .groups = "drop"
+  )
+
+# Players totals by position ----
+player_total_pos <- players %>% 
+  dplyr::group_by(pos) %>% 
+  dplyr::summarise(
+    players = n()
+  )
+
+# Players totals Venezuelan ----
 player_total_vzla <- roster %>% 
   dplyr::filter(
     ronda == "regular",
@@ -314,7 +350,7 @@ player_total_vzla <- roster %>%
     players = n()
   )
 
-# Players totals Venezuelan----
+# Players totals imported ----
 player_total_others <- roster %>% 
   dplyr::filter(
     ronda == "regular",
@@ -327,19 +363,6 @@ player_total_others <- roster %>%
     players = n()
   )
 
-# Players totals Venezuelan----
-player_total <- roster %>% 
-  dplyr::filter(
-    ronda == "regular",
-  ) %>% 
-  dplyr::group_by(player_id) %>% 
-  dplyr::summarise(
-    first_name = last(first_name),
-    last_name = last(last_name),
-    seasons = n()
-  )
-
-
 # Players debutantes by season ----
 debutantes <- roster %>% 
   dplyr::filter(
@@ -350,8 +373,32 @@ debutantes <- roster %>%
   dplyr::group_by(years) %>% 
   dplyr::summarise(
     players = n()
-  )
+  ) %>% 
+  dplyr::ungroup() %>%
+  top_n(10, years) 
 
+# Players debutantes by decade by nacionality ----
+decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
+
+debutantes_dec_nac <- roster %>% 
+  dplyr::filter(
+    ronda == "regular",
+    # pais == "Venezuela",
+    exp == 1
+  ) %>% 
+  dplyr::group_by(decade, nacionalidad) %>% 
+  dplyr::summarise(
+    players = n(),
+    .groups = "drop"
+  ) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    # decade = as.factor(decade),
+    decade = forcats::fct_relevel(
+      decade, "60","70", "80", "90", "00", "10", "20"
+    )
+  ) %>% 
+  arrange(decade)
 # Players debutantes by decade ----
 decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
 
@@ -373,3 +420,6 @@ debutantes_dec <- roster %>%
     )
   ) %>% 
   arrange(decade)
+
+
+#La Guaira en los 70 analisis de un seguidor @trucutu1
