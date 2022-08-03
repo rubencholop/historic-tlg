@@ -760,220 +760,79 @@ leaders <- function(stat, .ip = 0){
           ),
         # TabItem by Player ----
         tabItem(
-          # h4('Estadisticas historicas por jugador', align = 'center'),
           tabName = 'jugador',
           tabsetPanel(
             id = "tabset2",
             side = "left",
             # Picheo ----
             tabPanel(
+              h2("Estadisticas historicas de lanzadores", 
+                 style = 'color: #b90e13;
+                         font-size: 19px;
+                         font-weight: 400;
+                         font-family: "Roboto Regular", sans-serif;
+                         text-align: center;
+                         text-transform: uppercase;
+                         text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'),
               tabName = 'Picheo',
               br(),
-                box( 
-                  width = 12,
-                  title = h2("Estadisticas historicas de lanzadores", 
-                             style = 'color: #b90e13;
-                                      font-size: 19px;
-                                      font-weight: 400;
-                                      font-family: "Roboto Regular", sans-serif;
-                                      text-align: center;
-                                      text-transform: uppercase;
-                                      text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
-                  ),
-                height = "350px",
-                collapsed = FALSE,
-                collapsible = FALSE,
-                closable = FALSE,
-              # input ----
               fluidRow(
+                column(9),
                 column(3,
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Lanzadores',
                          choices = .pitchers
+                         )
                        )
                 ),
-              # Image ----
               fluidRow(
                 # Player name ----
-                column(4,
-                       fluidRow(
-                       column(6,
-                              imageOutput('jugador_pit'),
-                              height = "230px"
-                              ),
-                       column(6,
-                              br(),
-                              h2(textOutput("first_name_pit"),
-                                 style = "text-transform: uppercase;
-                                                     font-size: 1.4em;
-                                                     font-weight: 200;
-                                                     font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                                    "),
-                              h2(textOutput("last_name_pit"),
-                                  style = "text-transform: uppercase;
-                                           font-size: 1.5em;
-                                           font-weight: 700;
-                                           font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                                    ")
-                              )
-                       )
-                      ),
-                # Player info ----
-                column(4,
-                       br(),
-                       br(),
-                       fluidRow(
-                         column(4,
-                         h2("FDN:",
-                            style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                         ),  
-                         column(8,
-                         h2(textOutput("FDN"),
-                            style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                          )
-                         ),
-                       fluidRow(
-                         column(4,
-                         h2("B/L:",
-                                  style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                         ),
-                         column(8,
-                         h4(textOutput("B_L_L"),
-                            style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                         )
-                       ),
-                       fluidRow(
-                         column(4,
-                         h2("Posición:",
-                            style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                         ),
-                         column(8,
-                         h2(textOutput("POS_L"),
-                            style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                          )
-                         ),
-                       fluidRow(
-                         column(4,
-                         h2("Nacido en:",
-                            style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                         ),
-                         column(8,
-                         h2(textOutput("BORN"),
-                            style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                          )
-                         ),
-                       fluidRow(
-                         column(4,
-                         h2("Temporadas:",
-                            style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                         ),
-                         column(8,
-                         h2(textOutput("EXP_L"),
-                            style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                          )
-                         )
+                column(1),
+                column(4, imageOutput('jugador_pit')),
+                column(6),
+                column(1)
               ),
-                # Summarise stats ----
-                column(4,
-                       br(),
-                       box(
-                         status = "primary",
-                         # gradientColor = "blue",
-                         # solidHeader = TRUE,
-                         inputId = "stats",
-                         collapsed = FALSE,
-                         collapsible = FALSE,
-                         title = h2("Estadisticas Generales", 
-                                  style = 'color: #ffffff;
-                                          font-size: 19px;
-                                          font-weight: 400;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: center;
-                                          text-transform: uppercase;
-                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
-                                    ),
-                         overflow = TRUE,
-                         headerBorder = FALSE,
-                         width = 12,
-                         closable = FALSE,
+              br(),
+              tabsetPanel(
+                id = "tabset2",
+                side = "left",
+                tabPanel(tabName = 'Info'),
+                tabPanel(tabName = 'Carrera',
                          fluidRow(
-                           shinydashboard::valueBoxOutput("g_p", width = 3),
-                           shinydashboard::valueBoxOutput("era", width = 3),
-                           shinydashboard::valueBoxOutput("k", width = 3),
-                           shinydashboard::valueBoxOutput("whip", width = 3)
+                           br(),
+                           column(12,
+                                  br(),
+                                  bs4Card(
+                                    closable = FALSE,
+                                    width = NULL,
+                                    title = "Temporada Regular",
+                                    DT::dataTableOutput('picheo_jugador')
+                                  ),
+                                  br(),
+                                  br(),
+                                  bs4Card(
+                                    closable = FALSE,
+                                    width = NULL,
+                                    title = "Round Robin",
+                                    DT::dataTableOutput('picheo_jugador_rr')
+                                  ),
+                                  br(),
+                                  br(),
+                                  bs4Card(
+                                    closable = FALSE,
+                                    width = NULL,
+                                    title = "Finales",
+                                    DT::dataTableOutput('picheo_jugador_final')
+                                    )
+                                  )
                            )
-                          )
-                       )
-                  )
-                )
+                         ),
+                tabPanel(tabName = 'Game Log'),
+                tabPanel(tabName = 'Splits')
               ),
-              hr(),
-              # Table  ----
-              fluidRow(
-                br(),
-                column(12,
-                       br(),
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         title = "Temporada Regular",
-                         DT::dataTableOutput('picheo_jugador')
-                       ),
-                       br(),
-                       br(),
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         title = "Round Robin",
-                         DT::dataTableOutput('picheo_jugador_rr')
-                       ),
-                       br(),
-                       br(),
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         title = "Finales",
-                         DT::dataTableOutput('picheo_jugador_final')
-                       ) 
-                    )
-                  )
-                ),
+              hr()
+              ),
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
@@ -14016,8 +13875,8 @@ leaders <- function(stat, .ip = 0){
             list(
               src = player,
               contenType = "image/png",
-              width = 160,
-              height = 220,
+              width = 70,
+              height = 100,
               align = "center"
             )
           )
