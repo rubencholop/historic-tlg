@@ -346,8 +346,8 @@ leaders <- function(stat, .ip = 0){
         src = "ts_isotipo.png",
         elevation = 4,
         opacity = 0.8,
-        expand_on_hover = FALSE,
-        fixed = FALSE,
+        expand_on_hover = TRUE,
+        fixed = TRUE,
         sidebarMenu(
           # meniItem Tiburones de la Guaira ----
           bs4SidebarMenu(
@@ -782,21 +782,25 @@ leaders <- function(stat, .ip = 0){
                        selectInput(
                          inputId = 'select_jugador_pit',
                          label = 'Lanzadores',
-                         choices = .pitchers
+                         choices = .pitchers,
+                         selected = .pitchers[1]
+                            
                          )
                        )
                 ),
               fluidRow(
                 # Player name ----
-                column(1),
-                column(2, imageOutput('jugador_pit')),
+                # column(1),
+                column(2, imageOutput('jugador_pit', height = "100px", )),
                 column(4, 
+                       br(),
                        h2(textOutput("first_name_pit"),
                           style = "font-size: 1.5em;
                                    font-weight: 700;
                                    font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;"),
+                       h6(textOutput("POS_L"))
                        ),
-                column(1)
+                column(6)
               ),
               br(),
               tabsetPanel(
@@ -13880,9 +13884,9 @@ leaders <- function(stat, .ip = 0){
             list(
               src = player,
               contenType = "image/png",
-              width = 70,
+              width = 75,
               height = 100,
-              align = "left"
+              align = "center"
             )
           )
         }
@@ -13892,8 +13896,9 @@ leaders <- function(stat, .ip = 0){
             list(
               src = logo,
               contentType = "image/png",
-              width = 160,
-              height = 160
+              width = 75,
+              height = 100,
+              align = "center"
             )
           )
         }
@@ -14142,7 +14147,7 @@ leaders <- function(stat, .ip = 0){
           unique() %>% 
           pull()
         
-        paste(" ", df, sep = ' ')
+        paste0("Tiburones de la Guaira    •️ " ,df )
         
       })
       
