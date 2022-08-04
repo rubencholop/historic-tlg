@@ -789,8 +789,13 @@ leaders <- function(stat, .ip = 0){
               fluidRow(
                 # Player name ----
                 column(1),
-                column(4, imageOutput('jugador_pit')),
-                column(6),
+                column(2, imageOutput('jugador_pit')),
+                column(4, 
+                       h2(textOutput("first_name_pit"),
+                          style = "font-size: 1.5em;
+                                   font-weight: 700;
+                                   font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;"),
+                       ),
                 column(1)
               ),
               br(),
@@ -819,7 +824,7 @@ leaders <- function(stat, .ip = 0){
                                   ),
                                   br(),
                                   br(),
-                                  bs4Card(
+                                  bs4Card( 
                                     closable = FALSE,
                                     width = NULL,
                                     title = "Finales",
@@ -13877,7 +13882,7 @@ leaders <- function(stat, .ip = 0){
               contenType = "image/png",
               width = 70,
               height = 100,
-              align = "center"
+              align = "left"
             )
           )
         }
@@ -13959,7 +13964,7 @@ leaders <- function(stat, .ip = 0){
             player == input$select_jugador_pit) %>% 
           #Before first space
           # mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
-          select(first_name) %>% 
+          select(player) %>% 
           unique() %>% 
           pull()
       })

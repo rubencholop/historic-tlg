@@ -125,3 +125,8 @@ ul.network-icon {
 }
 
 
+
+.shiny-image-output shiny-bound-output {
+  width:100%;
+  height:4px;
+}

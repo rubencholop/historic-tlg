@@ -210,7 +210,8 @@ decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
 bat_decade <- brs %>% 
   dplyr::filter(ronda == "regular") %>% 
   dplyr::left_join(roster %>% 
-                     dplyr::filter(ronda == "regular"), 
+                     dplyr::filter(ronda == "regular") %>% 
+                     dplyr::select(-decade), 
                    by = c("player_id", "years", "jugador")) %>% 
   dplyr::select(-ronda.y) %>% 
   group_by(decade) %>%
@@ -239,10 +240,7 @@ bat_decade <- brs %>%
     sh = sum(sh, na.rm = TRUE),
     sf = sum(sf, na.rm = TRUE),
     .groups = "drop"
-  ) 
-
-
-%>% 
+  ) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(
     # decade = as.factor(decade),
@@ -300,6 +298,95 @@ bat_decade_nat<- brs %>%
 
 
 # 
+
+# Analysis by year (regular season) ----
+
+decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
+
+
+bat_decade_year<- brs %>% 
+  dplyr::filter(ronda == "regular") %>% 
+  dplyr::left_join(roster %>% 
+                     dplyr::filter(ronda == "regular"), 
+                   by = c("player_id", "years", "jugador")) %>% 
+  dplyr::select(-ronda.y) %>% 
+  group_by(years) %>%
+  summarise(
+    pa = sum(pa, na.rm = TRUE),
+    ab = sum(ab, na.rm = TRUE),
+    r = sum(r, na.rm = TRUE),
+    h = sum(h, na.rm = TRUE),
+    `2b` = sum(`2b`, na.rm = TRUE),
+    `3b` = sum(`3b`, na.rm = TRUE),
+    `hr` = sum(`hr`, na.rm = TRUE),
+    rbi = sum(rbi, na.rm = TRUE),
+    sb = sum(sb, na.rm = TRUE),
+    cs = sum(cs, na.rm = TRUE),
+    bb = sum(bb, na.rm = TRUE),
+    so = sum(so, na.rm = TRUE),
+    th = sum(`2b`, `3b`, hr, h, na.rm = TRUE),
+    tb = sum(tb, na.rm = TRUE),
+    xb = sum(xb, na.rm = TRUE),
+    hbp = sum(hbp, na.rm = TRUE),
+    sh = sum(sh, na.rm = TRUE),
+    sf = sum(sf, na.rm = TRUE),
+    avg = round(th / ab, 3),
+    obp = round(sum(h, bb, hbp, na.rm = TRUE) / sum(ab, bb, hbp, sh, na.rm = TRUE), 3),
+    slg = round(sum(h, `2b` * 2, `3b` * 3, `hr` * 4) / ab, 3),
+    ops = obp + slg,
+    .groups = "drop"
+  ) 
+
+
+
+
+
+
+# Analysis by year - nacionalidad (regular season) ----
+
+decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
+
+
+bat_decade_year_nac <- brs %>% 
+  dplyr::filter(ronda == "regular") %>% 
+  dplyr::left_join(roster %>% 
+                     dplyr::filter(ronda == "regular"), 
+                   by = c("player_id", "years", "jugador")) %>% 
+  dplyr::select(-ronda.y) %>% 
+  group_by(years, nacionalidad) %>%
+  summarise(
+    pa = sum(pa, na.rm = TRUE),
+    ab = sum(ab, na.rm = TRUE),
+    r = sum(r, na.rm = TRUE),
+    h = sum(h, na.rm = TRUE),
+    `2b` = sum(`2b`, na.rm = TRUE),
+    `3b` = sum(`3b`, na.rm = TRUE),
+    `hr` = sum(`hr`, na.rm = TRUE),
+    rbi = sum(rbi, na.rm = TRUE),
+    sb = sum(sb, na.rm = TRUE),
+    cs = sum(cs, na.rm = TRUE),
+    bb = sum(bb, na.rm = TRUE),
+    so = sum(so, na.rm = TRUE),
+    th = sum(`2b`, `3b`, hr, h, na.rm = TRUE),
+    tb = sum(tb, na.rm = TRUE),
+    xb = sum(xb, na.rm = TRUE),
+    hbp = sum(hbp, na.rm = TRUE),
+    sh = sum(sh, na.rm = TRUE),
+    sf = sum(sf, na.rm = TRUE),
+    avg = round(h / ab, 3),
+    obp = round(sum(h, bb, hbp, na.rm = TRUE) / sum(ab, bb, hbp, sf, na.rm = TRUE), 3),
+    slg = round(sum(h, `2b` * 2, `3b` * 3, `hr` * 4) / ab, 3),
+    ops = obp + slg,
+    .groups = "drop"
+  ) %>% 
+  dplyr::filter(nacionalidad == "Venezolano") %>% 
+  tail(10)
+  
+
+
+
+
+
 
 # Players ----
 players <- roster %>% 
@@ -423,3 +510,53 @@ debutantes_dec <- roster %>%
 
 
 #La Guaira en los 70 analisis de un seguidor @trucutu1
+# Analysis by owner (PPP vs Herrera) ----
+
+decades_name <- as.factor(c("60","70", "80", "90", "00", "10", "20"))
+
+
+ppp <- roster %>% 
+  dplyr::filter(
+    ronda == "regular",
+    propietario == "PPP") %>% 
+  dplyr::left_join(prs %>% 
+                     dplyr::filter(ronda == "regular") %>% 
+                     dplyr::select(-decade), 
+                   by = c("player_id", "years", "jugador")) %>% 
+  dplyr::select(-ronda.y) %>% 
+  dplyr::filter(!is.na(w)) %>% 
+  group_by(decade) %>%
+  summarise(
+    seasons = n_distinct(years),
+    w = sum(w, na.rm = TRUE),
+    l = sum(l, na.rm = TRUE),
+    # g = sum(g, na.rm = TRUE),
+    gs = sum(gs, na.rm = TRUE),
+    cg = sum(cg, na.rm = TRUE),
+    sho = sum(sho, na.rm = TRUE),
+    sv = sum(sv, na.rm = TRUE),
+    ip = sum(IP(ip), na.rm = TRUE),
+    h = sum(h, na.rm = TRUE),
+    r = sum(r, na.rm = TRUE),
+    er = sum(er, na.rm = TRUE),
+    hr = sum(hr, na.rm = TRUE),
+    bb = sum(bb, na.rm = TRUE),
+    so = sum(so, na.rm = TRUE),
+    # era = (ip / er) * 9,
+    era = round((er / IP(ip)) * 9, 3),
+    whip = round((bb + h) / IP(ip), 3),
+    `h/9` = round((h / IP(ip)) * 9, 2),
+    `hr/9` = round((hr / IP(ip)) * 9, 2),
+    `bb/9` = round((bb / IP(ip)) * 9, 2),
+    `so/9` = round((so / IP(ip)) * 9, 2),
+    `so/bb` = round(so / bb, 2),
+    .groups = "drop"
+    ) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(
+    # decade = as.factor(decade),
+    decade = forcats::fct_relevel(
+      decade, "60","70", "80", "90", "00")
+    ) %>% 
+  arrange(decade)
+
