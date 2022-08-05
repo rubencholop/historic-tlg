@@ -40,6 +40,14 @@ userListItem <- function(image, title, title2, subtitle = NULL) {
 # Choices ----
 
 Rosters <- read_csv('data/rosters_clean.csv')
+PitchingLog <- read_csv('data/Pitching Log.csv')
+
+.pitching_log <- PitchingLog %>% 
+  janitor::clean_names() %>% 
+  select(temporada) %>% 
+  unique() %>% 
+  pull()
+
 
 .rosters <- Rosters %>% 
   arrange(jugador, years) %>% 
@@ -783,7 +791,7 @@ leaders <- function(stat, .ip = 0){
                          inputId = 'select_jugador_pit',
                          label = 'Lanzadores',
                          choices = .pitchers,
-                         selected = .pitchers[1]
+                         selected = "Junior Guerra"
                             
                          )
                        )
@@ -803,10 +811,13 @@ leaders <- function(stat, .ip = 0){
                 column(6)
               ),
               br(),
+              # Tabpanel stats and info ----
               tabsetPanel(
                 id = "tabset2",
                 side = "left",
+                # info ----
                 tabPanel(tabName = 'Info'),
+                # Carrera ----
                 tabPanel(tabName = 'Carrera',
                          fluidRow(
                            br(),
@@ -837,7 +848,33 @@ leaders <- function(stat, .ip = 0){
                                   )
                            )
                          ),
-                tabPanel(tabName = 'Game Log'),
+                # Game logs ----
+                tabPanel(
+                  tabName = 'Game Log',
+                  # fluidRow(
+                  #   column(2,
+                  #          selectInput(
+                  #            inputId = 'select_temporada_pitlog',
+                  #            label = 'Temporadas',
+                  #            choices = .pitching_log
+                  #            )
+                  #          )
+                  # ),
+                  fluidRow(
+                    column(2),
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "Pitching Log",
+                             DT::dataTableOutput('pit_log')
+                             )
+                           ),
+                    column(2)
+                  )
+                 ),
+                # Splits ---- 
                 tabPanel(tabName = 'Splits')
               ),
               hr()
@@ -2552,12 +2589,105 @@ leaders <- function(stat, .ip = 0){
       
       
       # Reactive Geographic Stats ----
-      # Functions ----
-      # pitching <- function(){
-      #   prs() <- filter(ronda == "regular") %>% 
-      #     arrange(years, jugador) %>% 
-      #     select(-bk)
-      # }
+      # Reactive Pitching Logs ----
+      Pitlog <- reactive({
+        pitching_log <- read_csv('data/Pitching Log.csv') %>% 
+          janitor::clean_names() %>% 
+          dplyr::rename(years = temporada) %>% 
+          dplyr::select(-jugador) %>% 
+          dplyr::left_join(Rosters, 
+                           by = c("player_id", "years")) %>% 
+          dplyr::mutate(oponente = 
+                          dplyr::case_when(
+                            oponente == "Tiburones de la Guaira" ~ "TIB",
+                            oponente == "Caribes de Anzoategui" ~ "CAR",
+                            oponente == "Cardenales de Lara" ~ "CARD",
+                            oponente == "Aguilas del Zulia" ~ "AGU",
+                            oponente == "Leones del Caracas" ~ "LEO",
+                            oponente == "Bravos de Margarita" ~ "BRA",
+                            oponente == "Navegantes del Magallanes" ~ "NAV",
+                            oponente == "Tigres de Aragua" ~ "TIG")
+                        )
+      })
+      
+      #By Pitching Log -----
+      # Table pitching log ----
+      output$pit_log <- DT::renderDataTable({
+
+        # Data ----
+        # data <- pitching_log %>%
+        data <- Pitlog() %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          select(years, fecha, player,  n, fecha, ip, h, c, cl, hr, bb, so,bf, efe, sv, hld, g, p, oponente, equipo) %>% 
+          filter(
+          #   # player == input$select_jugador_pit
+          #   # years == input$select_temporada_pitlog
+            equipo == "Tiburones de la Guaira"
+          #   # player == "Junior Guerra",
+          #   # years == "2021-22"
+            ) %>%
+          mutate(whip = round((bb + h)/ ip, 2)) %>% 
+          arrange(n, fecha) %>% 
+          select(fecha, oponente, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld) %>% 
+          rename(
+            `DATE` = fecha,
+            `VS` = oponente,
+            `IP` = ip,
+            `ERA` = efe,
+            `WHIP` = whip,
+            `H` = h,
+            `R` = c,
+            `ER` = cl,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `BF` = bf,
+            `G` = g,
+            `P` = p,
+            `SV` = sv,
+            `HLD` = hld
+            ) 
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To delete header line horizontal in bottom of columns name
+        
+        DT::datatable(
+          data,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'),
+          options = list(
+            autoWidth = TRUE,
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:15))
+                              # list(width = '100px', targets = 1)
+            ),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+
+      })
       
       #By Team -----
       # Table pitching regular season by team ----
