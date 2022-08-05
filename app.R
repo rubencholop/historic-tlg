@@ -2566,7 +2566,13 @@ leaders <- function(stat, .ip = 0){
       
       # Reactive Batting ----
       brs <- reactive({
-        brs <- read_csv('data/batting_reseason.csv')
+        brs <- readr::read_csv("data/batting_reseason.csv", 
+                               col_types = cols(pa = col_double(), cs = col_double(), 
+                                                bb = col_number(), so = col_double(), 
+                                                obp = col_double(), ir = col_double(), 
+                                                rc = col_double(), hbp = col_double(), 
+                                                sh = col_double(), sf = col_double())
+                               )
       })
       
       # Reactive Pitching ----
