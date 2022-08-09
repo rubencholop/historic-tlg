@@ -851,15 +851,15 @@ leaders <- function(stat, .ip = 0){
                 # Game logs ----
                 tabPanel(
                   tabName = 'Game Log',
-                  # fluidRow(
-                  #   column(2,
-                  #          selectInput(
-                  #            inputId = 'select_temporada_pitlog',
-                  #            label = 'Temporadas',
-                  #            choices = .pitching_log
-                  #            )
-                  #          )
-                  # ),
+                  fluidRow(
+                    column(2,
+                           selectInput(
+                             inputId = 'select_temporada_pitlog',
+                             label = 'Temporada',
+                             choices = .pitching_log
+                             )
+                           )
+                  ),
                   fluidRow(
                     column(2),
                     column(8,
@@ -2597,11 +2597,12 @@ leaders <- function(stat, .ip = 0){
       # Reactive Geographic Stats ----
       # Reactive Pitching Logs ----
       Pitlog <- reactive({
-        pitching_log <- read_csv('data/Pitching Log.csv') %>% 
+        pitlog <- read_csv('data/Pitching Log.csv') %>% 
           janitor::clean_names() %>% 
           dplyr::rename(years = temporada) %>% 
           dplyr::select(-jugador) %>% 
-          dplyr::left_join(Rosters, 
+          dplyr::left_join(Rosters() %>% 
+                             dplyr::select(-ronda),
                            by = c("player_id", "years")) %>% 
           dplyr::mutate(oponente = 
                           dplyr::case_when(
@@ -2621,19 +2622,20 @@ leaders <- function(stat, .ip = 0){
       output$pit_log <- DT::renderDataTable({
 
         # Data ----
-        # data <- pitching_log %>%
         data <- Pitlog() %>%
-          mutate(player = paste0(first_name, " ", last_name)) %>% 
-          select(years, fecha, player,  n, fecha, ip, h, c, cl, hr, bb, so,bf, efe, sv, hld, g, p, oponente, equipo) %>% 
+          dplyr::mutate(player = paste0(first_name, " ", last_name)) %>% 
+          dplyr::select(years, fecha, player,  n, fecha, ip, h, c, cl, hr, bb, so,bf, efe, sv, hld, g, p,
+                        oponente, equipo, ronda) %>% 
           filter(
-          #   # player == input$select_jugador_pit
-          #   # years == input$select_temporada_pitlog
-            equipo == "Tiburones de la Guaira"
-          #   # player == "Junior Guerra",
+            ronda == "regular",
+            equipo == "Tiburones de la Guaira",
+            player == input$select_jugador_pit,
+            years == input$select_temporada_pitlog
+            # player == "Junior Guerra",
           #   # years == "2021-22"
             ) %>%
           mutate(whip = round((bb + h)/ ip, 2)) %>% 
-          arrange(n, fecha) %>% 
+          arrange(n, desc(fecha)) %>% 
           select(fecha, oponente, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld) %>% 
           rename(
             `DATE` = fecha,
