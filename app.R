@@ -2778,16 +2778,96 @@ leaders <- function(stat, .ip = 0){
         )  # To delete header line horizontal in bottom of columns name
         
         DT::datatable(
-          horario_pit,
+         df,
           extensions = "ColReorder",
           rownames = FALSE,
           options = list(
             autoWidth = TRUE,
-            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
-            paging = TRUE,
-            pageLegth = 20,
-            lengthMenu = c(20, 50, 70),
+            paging = FALSE,
+            # pageLegth = 20,
+            # lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:13))
+                              # list(width = '100px', targets = 1)
+            ),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+        
+      })
+      
+      
+      # Table Splits by Day/Night ----
+      output$split_oponnent_pit<- DT::renderDataTable({
+        
+        # Data ----
+        df <- pitlog %>% 
+          mutate(op = paste0("vs", " ", oponente)) %>% 
+          filter(
+            ronda == "regular",
+            equipo == "Tiburones de la Guaira",
+            player == input$select_jugador_pit,
+            years == input$select_temporada_split
+            # jugador == "J. Guerra",
+            #   # years == "2021-22"
+          ) %>%
+          mutate(whip = round((bb + h)/ ip, 2)) %>% 
+          arrange(n, desc(fecha)) %>% 
+          select(fecha, oponente, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld, horario) %>% 
+          group_by(horario) %>% 
+          summarise(
+            H = sum(h, na.rm = TRUE),
+            R = sum(c, na.rm = TRUE),
+            ER = sum(cl, na.rm = TRUE),
+            HR = sum(hr, na.rm = TRUE),
+            BB = sum(bb, na.rm = TRUE),
+            SO = sum(so, na.rm = TRUE),
+            BF = sum(bf, na.rm = TRUE),
+            G = sum(g, na.rm = TRUE),
+            P = sum(p, na.rm = TRUE),
+            SV = sum(sv, na.rm = TRUE),
+            HLD = sum(hld, na.rm = TRUE),
+            IP = IP(ip),
+            WHIP = round(sum(h, bb) / IP, 2),
+            .groups = "drop"
+          ) %>% 
+          rename(
+            `CATEGORY` = horario
+          ) %>% 
+          select(CATEGORY, 9:10, 13:14, 2:8,11:12)
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To delete header line horizontal in bottom of columns name
+        
+        DT::datatable(
+          df,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          options = list(
+            autoWidth = TRUE,
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = FALSE,
+            # pageLegth = 20,
+            # lengthMenu = c(20, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
             rownames = FALSE,
