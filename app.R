@@ -383,17 +383,6 @@ leaders <- function(stat, .ip = 0){
             bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "angle-right")
             )
           ),
-          # menuItem Graficos ----
-          # bs4SidebarMenuItem(
-          #   text = 'Estadísticas', 
-          #     # HTML(paste(
-          #     #             bs4Badge("New", position = "left", status = "success"))
-          #     #           ),
-          #   startExpanded = FALSE,
-          #   tabName = 'geo_estadisticas',
-          #   icon = "tasks"
-          #   # bs4SidebarMenuSubItem('Historicas', tabName = 'historicas', icon = "angle-right")
-          # ),
           # menuItem Records ----
           bs4SidebarMenuItem(
             text = 'Records',
@@ -422,11 +411,11 @@ leaders <- function(stat, .ip = 0){
             bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "angle-right")
           ),
           # menuItem Graficos ----
-          bs4SidebarMenuItem(
-            text ='Gráficos',
-            tabName = 'graficos',
-            icon = "chart-pie"
-          ),
+          # bs4SidebarMenuItem(
+          #   text ='Gráficos',
+          #   tabName = 'graficos',
+          #   icon = "chart-pie"
+          # ),
           # menuItem Glosary ----
           bs4SidebarMenuItem(
             text = 'Glosario',
@@ -572,8 +561,8 @@ leaders <- function(stat, .ip = 0){
         # TabItem Home ----
           tabItem(
             tabName = 'inicio',
-            tags$h2("BIENVENIDO A 60 AÑOS DE ESTADISTICAS DE TIBURONES DE LA GUAIRA", align = 'center'),
-            img(src = 'logo_60_anos.jpeg')
+            tags$h2("BIENVENIDO A 60 AÑOS DE ESTADISTICAS DE TIBURONES DE LA GUAIRA", align = 'center')
+            # img(src = 'logo_60_anos.jpeg')
             ),
         # TabItem by Team ----
         tabItem(
@@ -907,13 +896,26 @@ leaders <- function(stat, .ip = 0){
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "OPONENT",
-                             DT::dataTableOutput('split_oponnent_pit')
+                             title = "OPPONENT",
+                             DT::dataTableOutput('split_opponent_pit')
                            )
                     ),
                     column(2)
                     ),
                   # Stadium ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "STADIUM",
+                             DT::dataTableOutput('split_stadium_pit')
+                           )
+                    ),
+                    column(2)
+                    ),
+                  # Home Away ----
                   )
               ),
               hr()
@@ -2747,7 +2749,7 @@ leaders <- function(stat, .ip = 0){
       output$split_horario_pit<- DT::renderDataTable({
         
         # Data ----
-        horario_pit <- Pitlog() %>% 
+        df <- Pitlog() %>% 
           left_join(GameResult() %>% 
                       select(-fecha), by = "juego") %>% 
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -2777,12 +2779,14 @@ leaders <- function(stat, .ip = 0){
             HLD = sum(hld, na.rm = TRUE),
             IP = IP(ip),
             WHIP = round(sum(h, bb) / IP, 2),
+            ERA = round((sum(ER, na.rm = TRUE) / IP) * 9, 3),
+            # BA = sum(H, na.rm = TRUE)
             .groups = "drop"
           ) %>% 
         rename(
           `CATEGORY` = horario
         ) %>% 
-          select(CATEGORY, 9:10, 13:14, 2:8,11:12)
+          select(CATEGORY, 9:10, 13:15, 2:8,11:12)
           
         
         # Table ----
@@ -2808,7 +2812,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:13))
+            columnDefs = list(list(className = "dt-center", targets = c(0:14))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
@@ -2825,19 +2829,20 @@ leaders <- function(stat, .ip = 0){
       })
       
       
-      # Table Splits by Day/Night ----
-      output$split_oponnent_pit <- DT::renderDataTable({
+      # Table Splits by Opponet ----
+      output$split_opponent_pit <- DT::renderDataTable({
         
         # Data ----
-        df <- pitlog %>% 
-          mutate(op = paste0("vs", " ", oponente)) %>% 
+        df <- Pitlog() %>% 
+          mutate(
+            op = paste0("vs", " ", oponente),
+            player = paste0(first_name, " ", last_name)) %>% 
           filter(
             ronda == "regular",
             equipo == "Tiburones de la Guaira",
-            # player == input$select_jugador_pit,
-            # years == input$select_temporada_split
-            jugador == "J. Guerra",
-            #   # years == "2021-22"
+            player == input$select_jugador_pit,
+            years == input$select_temporada_split
+            # jugador == "J. Guerra",
           ) %>%
           mutate(whip = round((bb + h)/ ip, 2)) %>% 
           arrange(n, desc(fecha)) %>% 
@@ -2857,12 +2862,13 @@ leaders <- function(stat, .ip = 0){
             HLD = sum(hld, na.rm = TRUE),
             IP = IP(ip),
             WHIP = round(sum(h, bb) / IP, 2),
+            ERA = round((sum(ER, na.rm = TRUE) / IP) * 9, 2),
             .groups = "drop"
           ) %>% 
           rename(
             `CATEGORY` = op
           ) %>% 
-          select(CATEGORY, 9:10, 13:14, 2:8,11:12)
+          select(CATEGORY, 9:10, 13:15, 2:8,11:12)
         
         
         # Table ----
@@ -2888,7 +2894,89 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:13))
+            columnDefs = list(list(className = "dt-center", targets = c(0:14))
+                              # list(width = '100px', targets = 1)
+            ),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+        
+      })
+      
+      
+      # Table Splits by stadium ----
+      output$split_stadium_pit <- DT::renderDataTable({
+        
+        # Data ----
+        df <- Pitlog() %>% 
+          mutate(
+            player = paste0(first_name, " ", last_name)
+            ) %>% 
+          filter(
+            ronda == "regular",
+            equipo == "Tiburones de la Guaira",
+            player == input$select_jugador_pit,
+            years == input$select_temporada_split
+            # jugador == "J. Guerra",
+          ) %>%
+          mutate(whip = round((bb + h)/ ip, 2)) %>% 
+          arrange(n, desc(fecha)) %>% 
+          select(fecha, estadio, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld) %>% 
+          group_by(estadio) %>% 
+          summarise(
+            H = sum(h, na.rm = TRUE),
+            R = sum(c, na.rm = TRUE),
+            ER = sum(cl, na.rm = TRUE),
+            HR = sum(hr, na.rm = TRUE),
+            BB = sum(bb, na.rm = TRUE),
+            SO = sum(so, na.rm = TRUE),
+            BF = sum(bf, na.rm = TRUE),
+            G = sum(g, na.rm = TRUE),
+            P = sum(p, na.rm = TRUE),
+            SV = sum(sv, na.rm = TRUE),
+            HLD = sum(hld, na.rm = TRUE),
+            IP = IP(ip),
+            WHIP = round(sum(h, bb) / IP, 2),
+            ERA = round((sum(ER, na.rm = TRUE) / IP) * 9, 2),
+            .groups = "drop"
+          ) %>% 
+          rename(
+            `CATEGORY` = estadio
+          ) %>% 
+          select(CATEGORY, 9:10, 13:15, 2:8,11:12)
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To delete header line horizontal in bottom of columns name
+        
+        DT::datatable(
+          df,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          options = list(
+            autoWidth = TRUE,
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = FALSE,
+            # pageLegth = 20,
+            # lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:14))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
