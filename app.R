@@ -2597,7 +2597,7 @@ leaders <- function(stat, .ip = 0){
       # Reactive Geographic Stats ----
       # Reactive Pitching Logs ----
       Pitlog <- reactive({
-        pitlog <- read_csv('data/Pitching Log.csv') %>% 
+        pitlog <- read_csv('data/pitching_log.csv') %>% 
           janitor::clean_names() %>% 
           dplyr::rename(years = temporada) %>% 
           dplyr::select(-jugador) %>% 
@@ -2614,7 +2614,13 @@ leaders <- function(stat, .ip = 0){
                             oponente == "Bravos de Margarita" ~ "BRA",
                             oponente == "Navegantes del Magallanes" ~ "NAV",
                             oponente == "Tigres de Aragua" ~ "TIG")
-                        )
+          )
+      })
+      
+      # Reactive Game results ----
+      GameResult <- reactive({
+        game_result <- read_csv('data/game_result.csv') %>% 
+          janitor::clean_names() 
       })
       
       #By Pitching Log -----
