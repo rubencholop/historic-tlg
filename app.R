@@ -2697,6 +2697,8 @@ leaders <- function(stat, .ip = 0){
 
       })
       
+      #By Pitching splits ----
+      
       #By Team -----
       # Table pitching regular season by team ----
       output$Preseason_team <- DT::renderDataTable({

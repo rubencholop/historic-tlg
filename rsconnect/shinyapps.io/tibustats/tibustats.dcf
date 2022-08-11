@@ -5,10 +5,10 @@ account: tibustats
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4835661
-bundleId: 5691710
+bundleId: 6184187
 url: https://tibustats.shinyapps.io/tibustats/
-when: 1647444221.11409
-lastSyncTime: 1647444221.11411
+when: 1660060705.03924
+lastSyncTime: 1660060705.03926
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: 2020-21- batting.csv|2020-21- pitching.csv|2020-21- roster.csv|app_tiburones.R|connect_data.R|img_rowtable.R|last_season_tables.R|script de tablas nuevas tlg
+ignoredFiles: analysis/Analysis.R|analysis/charts.R|analysis/Dataset.R|app_tiburones.R|connect_data.R|img_rowtable.R|last_season_tables.R|script de tablas nuevas tlg
