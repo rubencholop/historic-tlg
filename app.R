@@ -877,17 +877,19 @@ leaders <- function(stat, .ip = 0){
                 # Splits ---- 
                 tabPanel(
                   tabName = 'Splits',
+                 
                   fluidRow(
                     column(2,
                            selectInput(
                              inputId = 'select_temporada_split',
                              label = 'Temporada',
                              choices = .pitching_log
+                             )
                            )
-                    )
-                  ),
+                    ),
+                  # Day/Night ----
                   fluidRow(
-                    column(9,
+                    column(8,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -897,9 +899,22 @@ leaders <- function(stat, .ip = 0){
                            )
                     ),
                     column(2)
+                    ),
+                  # Opponent ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "OPONENT",
+                             DT::dataTableOutput('split_oponnent_pit')
+                           )
+                    ),
+                    column(2)
+                    ),
+                  # Stadium ----
                   )
-                         
-                         )
               ),
               hr()
               ),
@@ -2811,7 +2826,7 @@ leaders <- function(stat, .ip = 0){
       
       
       # Table Splits by Day/Night ----
-      output$split_oponnent_pit<- DT::renderDataTable({
+      output$split_oponnent_pit <- DT::renderDataTable({
         
         # Data ----
         df <- pitlog %>% 
@@ -2819,15 +2834,15 @@ leaders <- function(stat, .ip = 0){
           filter(
             ronda == "regular",
             equipo == "Tiburones de la Guaira",
-            player == input$select_jugador_pit,
-            years == input$select_temporada_split
-            # jugador == "J. Guerra",
+            # player == input$select_jugador_pit,
+            # years == input$select_temporada_split
+            jugador == "J. Guerra",
             #   # years == "2021-22"
           ) %>%
           mutate(whip = round((bb + h)/ ip, 2)) %>% 
           arrange(n, desc(fecha)) %>% 
-          select(fecha, oponente, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld, horario) %>% 
-          group_by(horario) %>% 
+          select(fecha, oponente, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, op, hld) %>% 
+          group_by(op) %>% 
           summarise(
             H = sum(h, na.rm = TRUE),
             R = sum(c, na.rm = TRUE),
@@ -2845,7 +2860,7 @@ leaders <- function(stat, .ip = 0){
             .groups = "drop"
           ) %>% 
           rename(
-            `CATEGORY` = horario
+            `CATEGORY` = op
           ) %>% 
           select(CATEGORY, 9:10, 13:14, 2:8,11:12)
         
