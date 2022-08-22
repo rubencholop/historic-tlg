@@ -1128,6 +1128,19 @@ leaders <- function(stat, .ip = 0){
                            )
                     ),
                     column(2)
+                    ),
+                  # Order Bat ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "ORDEN AL BATE",
+                             DT::dataTableOutput('split_order_bat')
+                           )
+                    ),
+                    column(2)
                     )
                   )
                 ),
@@ -3600,6 +3613,96 @@ leaders <- function(stat, .ip = 0){
             `3B` = x3b,
           ) %>% 
           rename(`CATEGORY` = homeaway) %>% 
+          select(-TH)
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To delete header line horizontal in bottom of columns name
+        
+        DT::datatable(
+          df,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          options = list(
+            autoWidth = TRUE,
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = FALSE,
+            # pageLegth = 20,
+            # lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:12)),
+                              list(width = '200px', targets = 0)
+            ),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+        
+      })
+      
+      
+      
+      
+      # Table bateo by bat order ----
+      output$split_order_bat <- DT::renderDataTable({
+        
+        # Data ----
+        df <- Batlog() %>%
+          left_join(GameResult(), by = "juego") %>%
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            ronda == "regular",
+            player == input$select_jugador_bat,
+            years == input$select_temporada_split_bat
+            # player == "Lorenzo Cedrola",
+              # years == "2021-22"
+          ) %>%
+          dplyr::select(
+            years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, orden_bat
+          ) %>% 
+          mutate( 
+            avg = round((h) / ab, 3),
+            tb = (h - x2b - x3b - hr) + (x2b * 2) + (x3b * 3) + (hr * 4),
+            x1b = (h - x2b - x3b - hr)
+            ) %>% 
+          arrange(n, desc(fecha)) %>% 
+          group_by(orden_bat) %>% 
+          summarise(
+            G = n(),
+            AB = sum(ab, na.rm = TRUE),
+            R = sum(r, na.rm = TRUE),
+            H = sum(x1b, na.rm = TRUE),
+            x2b = sum(x2b, na.rm = TRUE),
+            x3b = sum(x3b, na.rm = TRUE),
+            HR = sum(hr, na.rm = TRUE),
+            BB = sum(bb, na.rm = TRUE),
+            SO = sum(so, na.rm = TRUE),
+            SO = sum(so, na.rm = TRUE),
+            TB = sum(tb, na.rm = TRUE),
+            TH = sum(h, na.rm = TRUE),
+            AVG = round(TH / AB, 3),
+            SLG = round((sum(x1b) + (x2b * 2) + ((x3b) * 3) + (HR * 4)) / AB, 3)
+          ) %>% 
+          rename(
+            `2B` = x2b,
+            `3B` = x3b,
+          ) %>% 
+          rename(`CATEGORY` = orden_bat) %>% 
           select(-TH)
         
         
