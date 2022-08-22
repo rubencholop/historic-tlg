@@ -796,7 +796,6 @@ leaders <- function(stat, .ip = 0){
                                    font-weight: 700;
                                    font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;"),
                        h6(textOutput("POS_L")),
-                       # h6(textOutput("BORN")),
                        h6(textOutput("EXP_L")),
                        ),
                 column(6)
@@ -950,214 +949,87 @@ leaders <- function(stat, .ip = 0){
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
+              h2("Estadisticas historicas de bateadores", 
+                 style = 'color: #b90e13;
+                         font-size: 19px;
+                         font-weight: 400;
+                         font-family: "Roboto Regular", sans-serif;
+                         text-align: center;
+                         text-transform: uppercase;
+                         text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'),
               br(),
               fluidRow(
-                box( 
-                  width = 12,
-                  title = h2("Estadisticas historicas de Bateadores", 
-                             style = 'color: #b90e13;
-                                            font-size: 19px;
-                                            font-weight: 400;
-                                            font-family: "Roboto Regular", sans-serif;
-                                            text-align: center;
-                                            text-transform: uppercase;
-                                            text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
-                  ),
-                  height = "350px",
-                  collapsed = FALSE,
-                  collapsible = FALSE,
-                  closable = FALSE,
-              # Input ----
-              fluidRow(
-                br(),
+                column(9),
                 column(3,
                        selectInput(
                          inputId = 'select_jugador_bat',
-                         label = "Bateadores",
-                         choices = .bateadores
+                         label = 'Bateadores',
+                         choices = .bateadores,
+                         selected = "Danry Vasquez"
+                         )
                        )
-                )
-              ),
-              br(),
-              # Image ----
+                ),
               fluidRow(
                 # Player name ----
-                column(4,
-                       fluidRow(
-                         column(6,
-                                imageOutput('jugador_bat')
-                         ),
-                         column(6,
-                                br(),
-                                br(),
-                                br(),
-                                h2(textOutput("first_name_bat"),
-                                   style = "text-transform: uppercase;
-                                   font-size: 1.5em;
-                                   font-weight: 200;
-                                   font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                   "),
-                                h2(textOutput("last_name_bat"),
-                                   style = "text-transform: uppercase;
-                                   font-size: 1.6em;
+                # column(1),
+                column(2, imageOutput('jugador_bat', height = "100%", )),
+                column(4, 
+                       br(),
+                       h2(textOutput("first_name_bat"),
+                          style = "font-size: 1.5em;
                                    font-weight: 700;
-                                   font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
-                                   ")
-                                    )
-                                  )
-                                ),
-                # Player info ----
-                column(4,
-                       br(),
-                       br(),
-                       fluidRow(
-                         column(4,
-                                h2("FDN:",
-                                   style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                                ),  
-                         column(8,
-                                h2(textOutput("FDN_B"),
-                                   style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                                  )
-                                ),
-                       fluidRow(
-                         column(4,
-                                h2("B/L:",
-                                   style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                                ),
-                         column(8,
-                                h4(textOutput("B_L_B"),
-                                   style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                                  )
-                                ),
-                       fluidRow(
-                         column(4,
-                                h2("Posición:",
-                                   style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                                ),
-                         column(8,
-                                h2(textOutput("POS_B"),
-                                   style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                                  )
-                                ),
-                       fluidRow(
-                         column(4,
-                                h2("Nacido en:",
-                                   style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                                ),
-                         column(8,
-                                h2(textOutput("BORN_B"),
-                                   style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                                  )
-                                ),
-                       fluidRow(
-                         column(4,
-                                h2("Temporadas:",
-                                   style = 'color: #6c6d6f;
-                                          font-size: 15px;
-                                          font-weight: 700;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: rigth;')
-                         ),
-                         column(8,
-                                h2(textOutput("EXP_B"),
-                                   style = 'font-size: 15px;
-                                           font-weight: 700;
-                                           font-family: "Roboto Regular", sans-serif;
-                                           text-align: rigth;')
-                                )
-                         )
-                       ),
-                # Summarise stats ----
-                column(4,
-                       br(),
-                       box(
-                         status = "primary",
-                         # gradientColor = "blue",
-                         # solidHeader = TRUE,
-                         inputId = "stats_bat",
-                         collapsed = FALSE,
-                         collapsible = FALSE,
-                         title = h2("Estadisticas Generales", 
-                                    style = 'color: #ffffff;
-                                          font-size: 19px;
-                                          font-weight: 400;
-                                          font-family: "Roboto Regular", sans-serif;
-                                          text-align: center;
-                                          text-transform: uppercase;
-                                          text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'
-                         ),
-                         overflow = TRUE,
-                         headerBorder = FALSE,
-                         width = 12,
-                         closable = FALSE,
-                         fluidRow(
-                           shinydashboard::valueBoxOutput("avg_b", width = 3),
-                           shinydashboard::valueBoxOutput("hr_b", width = 3),
-                           shinydashboard::valueBoxOutput("rbi_b", width = 3),
-                           shinydashboard::valueBoxOutput("slg_b", width = 3)
-                             )
-                          )
-                       )
-                    )
-                  )
+                                   font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;"),
+                       h6(textOutput("POS_B")),
+                       h6(textOutput("EXP_B"))
                 ),
-              hr(),
+                column(6)
+              ),
               br(),
-              # Table  ----
-              fluidRow(
-                br(),
-                column(12,
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         title = "Temporada Regular",
-                         DT::dataTableOutput('bat_rs')
-                       ),
-                       br(),
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         title = "Round Robin",
-                         DT::dataTableOutput('bat_rr')
-                       ),
-                       br(),
-                       bs4Card(
-                         closable = FALSE,
-                         width = NULL,
-                         title = "Finales",
-                         DT::dataTableOutput('bat_final')
-                       ) 
+              # Tabpanel stats and info ----
+              tabsetPanel(
+                id = "tabset222",
+                side = "left",
+                # Carrera ----
+                tabPanel(
+                  active = TRUE,
+                  tabName = 'Carrera',
+                  fluidRow(
+                    br(),
+                    column(12,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "Temporada Regular",
+                             DT::dataTableOutput('bat_rs')
+                           ),
+                           br(),
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "Round Robin",
+                             DT::dataTableOutput('bat_rr')
+                           ),
+                           br(),
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "Finales",
+                             DT::dataTableOutput('bat_final')
+                             ) 
+                           )
                     )
-                  )
+                  ),
+                # Game Logs -----
+                tabPanel(
+                  tabName = 'Game Log'),
+                # Splits ----
+                tabPanel(
+                  tabName = 'Splits')
+                
+                ),
               )
             )
           ),
@@ -14558,8 +14430,8 @@ leaders <- function(stat, .ip = 0){
               list(
                 src = player,
                 contenType = "image/png",
-                width = 160,
-                height = 220,
+                width = 75,
+                height = 100,
                 align = "center"
               )
             )
@@ -14570,8 +14442,9 @@ leaders <- function(stat, .ip = 0){
               list(
                 src = logo,
                 contentType = "image/png",
-                width = 160,
-                height = 160
+                width = 75,
+                height = 100,
+                align = "center"
               )
             )
           }
@@ -14622,7 +14495,7 @@ leaders <- function(stat, .ip = 0){
             player == input$select_jugador_bat) %>% 
           #Before first space
           # mutate(player = stri_extract_first(player, regex = "\\w+")) %>% 
-          select(first_name) %>% 
+          select(player) %>% 
           unique() %>% 
           pull()
       })
@@ -14658,18 +14531,6 @@ leaders <- function(stat, .ip = 0){
           pull()
 
       })
-      # Text output Lanzador batea-lanza ----
-      output$FDN_PIT <- renderText({
-        "FDN:  "
-        
-      })
-      
-      # Text output Bateador batea-lanza ----
-      output$B_L <- renderText({
-        "B/L:  "
-        
-      })
-      
       # Text output Pitching Jugador batea-lanza ----
       output$B_L_L <- renderText({
         req(input$select_jugador_pit)
@@ -14742,21 +14603,27 @@ leaders <- function(stat, .ip = 0){
         
       })
       
-      # Text output Jugador position ----
-      output$POS_PIT <- renderText({
-        "Posicion:"
-        
-      })
-      
       # Text output Batting Jugador position ----
       output$POS_B <- renderText({
         req(input$select_jugador_bat)
         
+        df_h <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>%
+            # player == "Rainer Olmedo") %>%
+          summarise(
+            hand = paste0(bat, "/", lan),
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
         df <- Rosters() %>% 
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(
-            player == input$select_jugador_bat) %>% 
-          select(pos) %>% 
+            player == input$select_jugador_bat) %>%
+            # player == "Rainer Olmedo") %>%
           summarise(
             pos = last(pos),
             .groups = "drop"
@@ -14764,28 +14631,45 @@ leaders <- function(stat, .ip = 0){
           unique() %>% 
           pull()
         
-        paste(" ", df, sep = ' ')
+        
+        # Final Result   
+        
+        df1 <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>%
+          # player == "Rainer Olmedo") %>%
+          select(pais) %>% 
+          summarise(
+            pais = last(pais)
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        df2 <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(player == input$select_jugador_bat) %>%
+          # filter(player == "Rainer Olmedo") %>%
+          select(ciudad) %>% 
+          summarise(
+            estado = last(ciudad)
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        if (is.na(df1) == TRUE) {
+          paste0(df, "     • ", df_h)
+          
+        } else if (is.na(df1) == FALSE) {
+          paste0(df1,', ', df2, "   •  ", df , "   •   ", "B/L:" , df_h)
+        }
         
       })
       
       # Text output Pitching Jugador position ----
       output$POS_L <- renderText({
         req(input$select_jugador_pit)
-        
-        df <- Rosters() %>% 
-          mutate(player = paste0(first_name, " ", last_name)) %>% 
-          filter(
-            pos == "P",
-            player == input$select_jugador_pit) %>% 
-          select(pos) %>% 
-          summarise(
-            pos = last(pos),
-            .groups = "drop"
-          ) %>% 
-          unique() %>% 
-          pull()
-        
-        
+
         df_h <- Rosters() %>% 
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(
@@ -14834,7 +14718,7 @@ leaders <- function(stat, .ip = 0){
           pull()
         
         if (is.na(df1) == TRUE) {
-          paste0(df, "     • ", df_h)
+          paste0(df1, "     • ", df_h)
           
         } else if (is.na(df1) == FALSE) {
           paste0(df1,', ', df2, "   •  ", df_h)
@@ -14967,7 +14851,20 @@ leaders <- function(stat, .ip = 0){
           unique() %>% 
           pull()
         
-        paste('', df, sep = ' ')
+        
+        df1 <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            player == input$select_jugador_bat) %>% 
+          summarise(
+            fecha = last(f_nac), 
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        
+        paste("Nac:", df1, '    • Exp:', df, sep = ' ')
         
       })
 
