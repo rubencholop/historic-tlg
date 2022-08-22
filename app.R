@@ -41,6 +41,7 @@ userListItem <- function(image, title, title2, subtitle = NULL) {
 
 Rosters <- read_csv('data/rosters_clean.csv')
 PitchingLog <- read_csv('data/pitching_log.csv')
+BattingLog <- read_csv('data/batting_log.csv')
 
 .pitching_log <- PitchingLog %>% 
   janitor::clean_names() %>% 
@@ -48,6 +49,12 @@ PitchingLog <- read_csv('data/pitching_log.csv')
   unique() %>% 
   pull()
 
+
+.batting_log <- BattingLog %>% 
+  janitor::clean_names() %>% 
+  select(temporada) %>% 
+  unique() %>% 
+  pull()
 
 .rosters <- Rosters %>% 
   arrange(jugador, years) %>% 
@@ -851,7 +858,6 @@ leaders <- function(stat, .ip = 0){
                            )
                   ),
                   fluidRow(
-                    column(2),
                     column(8,
                            br(),
                            bs4Card(
@@ -861,19 +867,18 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('pit_log')
                              )
                            ),
-                    column(2)
+                    column(4)
                   )
                  ),
                 # Splits ---- 
                 tabPanel(
                   tabName = 'Splits',
-                 
                   fluidRow(
                     column(2,
                            selectInput(
                              inputId = 'select_temporada_split',
                              label = 'Temporada',
-                             choices = .pitching_log
+                             choices = .batting_log
                              )
                            )
                     ),
@@ -965,7 +970,7 @@ leaders <- function(stat, .ip = 0){
                          inputId = 'select_jugador_bat',
                          label = 'Bateadores',
                          choices = .bateadores,
-                         selected = "Danry Vasquez"
+                         selected = "Lorenzo Cedrola"
                          )
                        )
                 ),
@@ -1024,11 +1029,107 @@ leaders <- function(stat, .ip = 0){
                   ),
                 # Game Logs -----
                 tabPanel(
-                  tabName = 'Game Log'),
+                  tabName = 'Game Log',
+                  fluidRow(
+                    column(2,
+                           selectInput(
+                             inputId = 'select_temporada_batlog',
+                             label = 'Temporada',
+                             choices = .batting_log
+                           )
+                    )
+                  ),
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "BATEO LOG",
+                             DT::dataTableOutput('bat_log')
+                           )
+                    ),
+                    column(4)
+                    )
+                  ),
                 # Splits ----
                 tabPanel(
-                  tabName = 'Splits')
-                
+                  tabName = 'Splits',
+                  fluidRow(
+                    column(2,
+                           selectInput(
+                             inputId = 'select_temporada_split_bat',
+                             label = 'Temporada',
+                             choices = .pitching_log
+                           )
+                    )
+                  ),
+                  # Day/Night ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "DIA/NOCHE",
+                             DT::dataTableOutput('split_horario_bat')
+                           )
+                    ),
+                    column(2)
+                  ),
+                  # Opponent ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "OPONENTE",
+                             DT::dataTableOutput('split_opponent_bat')
+                           )
+                    ),
+                    column(2)
+                  ),
+                  # Stadium ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "ESTADIO",
+                             DT::dataTableOutput('split_stadium_bat')
+                           )
+                    ),
+                    column(2)
+                  ),
+                  # Month ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "MES",
+                             DT::dataTableOutput('split_month_bat')
+                           )
+                    ),
+                    column(2)
+                  ),
+                  # Home Away ----
+                  fluidRow(
+                    column(8,
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "EN CASA/VISITANTE",
+                             DT::dataTableOutput('split_homeaway_bat')
+                           )
+                    ),
+                    column(2)
+                    )
+                  )
                 ),
               )
             )
@@ -2557,6 +2658,28 @@ leaders <- function(stat, .ip = 0){
           )
       })
       
+      # Reactive Batting Logs ----
+      Batlog <- reactive({
+        batlog <- read_csv('data/batting_log.csv') %>% 
+          janitor::clean_names() %>% 
+          dplyr::rename(years = temporada) %>% 
+          dplyr::select(-jugador) %>% 
+          dplyr::left_join(Rosters() %>% 
+                             dplyr::select(-ronda),
+                           by = c("player_id", "years")) %>% 
+          dplyr::mutate(oponente = 
+                          dplyr::case_when(
+                            oponente == "Tiburones de la Guaira" ~ "TIB",
+                            oponente == "Caribes de Anzoategui" ~ "CAR",
+                            oponente == "Cardenales de Lara" ~ "CARD",
+                            oponente == "Aguilas del Zulia" ~ "AGU",
+                            oponente == "Leones del Caracas" ~ "LEO",
+                            oponente == "Bravos de Margarita" ~ "BRA",
+                            oponente == "Navegantes del Magallanes" ~ "NAV",
+                            oponente == "Tigres de Aragua" ~ "TIG")
+          )
+      })
+      
       # Reactive Game results ----
       GameResult <- reactive({
         game_result <- read_csv('data/game_result.csv') %>% 
@@ -2643,9 +2766,87 @@ leaders <- function(stat, .ip = 0){
 
       })
       
-      #By Pitching splits ----
-      # Table Splits by Day/Night ----
-      output$split_horario_pit<- DT::renderDataTable({
+      # Table batting log ----
+      output$bat_log <- DT::renderDataTable({
+
+        # Data ----
+        data <- Batlog() %>%
+        # data <- batlog %>%
+          dplyr::mutate(player = paste0(first_name, " ", last_name)) %>% 
+          dplyr::select(
+            years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, orden_bat
+          ) %>% 
+          filter(
+            ronda == "regular",
+            equipo == "Tiburones de la Guaira",
+            player == input$select_jugador_bat,
+            years == input$select_temporada_batlog
+            # player == "Lorenzo Cedrola",
+          #   # years == "2021-22"
+            ) %>%
+          mutate(
+            avg = round((h) / ab, 3)
+            ) %>% 
+          arrange(n, desc(fecha)) %>% 
+          select(fecha, oponente, ab, r, h, x2b, x3b, hr, bb, so, avg, ) %>% 
+          rename(
+            `DATE` = fecha,
+            `VS` = oponente,
+            `AB` = ab,
+            `R` = r,
+            `H` = h,
+            `2B` = x2b,
+            `3B` = x3b,
+            `HR` = hr,
+            `BB` = bb,
+            `SO` = so,
+            `AVG` = avg
+            ) 
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To delete header line horizontal in bottom of columns name
+        
+        DT::datatable(
+          data,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;'),
+          options = list(
+            autoWidth = TRUE,
+            # dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = TRUE,
+            pageLegth = 20,
+            lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:10))
+                              # list(width = '100px', targets = 1)
+            ),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+
+      })
+      
+      #By Splits ----
+      # Table picheo Splits by Day/Night ----
+      output$split_horario_pit <- DT::renderDataTable({
         
         # Data ----
         df <- Pitlog() %>% 
@@ -2728,7 +2929,7 @@ leaders <- function(stat, .ip = 0){
       })
       
       
-      # Table Splits by Opponet ----
+      # Table picheo Splits by Opponet ----
       output$split_opponent_pit <- DT::renderDataTable({
         
         # Data ----
@@ -2810,7 +3011,7 @@ leaders <- function(stat, .ip = 0){
       })
       
       
-      # Table Splits by Stadium ----
+      # Table picheo by Stadium ----
       output$split_stadium_pit <- DT::renderDataTable({
         
         # Data ----
@@ -2892,7 +3093,7 @@ leaders <- function(stat, .ip = 0){
       })
       
       
-      # Table Splits by Month ----
+      # Table picheo by Month ----
       output$split_month_pit <- DT::renderDataTable({
         
         # Data ----
@@ -2982,7 +3183,7 @@ leaders <- function(stat, .ip = 0){
       })
       
       
-      # Table Splits by Homeaway ----
+      # Table picheo by Homeaway ----
       output$split_homeaway_pit <- DT::renderDataTable({
         
         # Data ----
@@ -3067,6 +3268,92 @@ leaders <- function(stat, .ip = 0){
         )
         
       })
+      
+      
+      # Table bateo Splits by Day/Night ----
+      output$split_horario_bat <- DT::renderDataTable({
+        
+        # Data ----
+        df <- Pitlog() %>% 
+          left_join(GameResult() %>% 
+                      select(-fecha), by = "juego") %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            ronda == "regular",
+            equipo == "Tiburones de la Guaira",
+            player == input$select_jugador_pit,
+            years == input$select_temporada_split
+            # jugador == "J. Guerra",
+            #   # years == "2021-22"
+          ) %>%
+          mutate(whip = round((bb + h)/ ip, 2)) %>% 
+          arrange(n, desc(fecha)) %>% 
+          select(fecha, oponente, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld, horario) %>% 
+          group_by(horario) %>% 
+          summarise(
+            H = sum(h, na.rm = TRUE),
+            R = sum(c, na.rm = TRUE),
+            ER = sum(cl, na.rm = TRUE),
+            HR = sum(hr, na.rm = TRUE),
+            BB = sum(bb, na.rm = TRUE),
+            SO = sum(so, na.rm = TRUE),
+            BF = sum(bf, na.rm = TRUE),
+            G = sum(g, na.rm = TRUE),
+            P = sum(p, na.rm = TRUE),
+            SV = sum(sv, na.rm = TRUE),
+            HLD = sum(hld, na.rm = TRUE),
+            IP = IP(ip),
+            WHIP = round(sum(h, bb) / IP, 2),
+            ERA = round((sum(ER, na.rm = TRUE) / IP) * 9, 3),
+            # BA = sum(H, na.rm = TRUE)
+            .groups = "drop"
+          ) %>% 
+          rename(
+            `CATEGORY` = horario
+          ) %>% 
+          select(CATEGORY, 9:10, 13:15, 2:8,11:12)
+        
+        
+        # Table ----
+        headerCallback <- c(
+          "function(thead, data, start, end, display){",
+          "  $('th', thead).css('border-bottom', 'none');",
+          "}"
+        )  # To delete header line horizontal in bottom of columns name
+        
+        DT::datatable(
+          df,
+          extensions = "ColReorder",
+          rownames = FALSE,
+          options = list(
+            autoWidth = TRUE,
+            dom = 'ft',  # To remove showing 1 to n of entries fields
+            searching = FALSE,
+            paging = FALSE,
+            # pageLegth = 20,
+            # lengthMenu = c(20, 50, 70),
+            lengthChange = FALSE,
+            scrollX = TRUE,
+            rownames = FALSE,
+            fixedHeader = TRUE,
+            fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:14))
+                              # list(width = '100px', targets = 1)
+            ),
+            headerCallback = JS(headerCallback),
+            initComplete = JS(
+              "function(settings, json) {",
+              "$(this.api().table().body()).css({'font-family': 'Calibri'});",
+              "$(this.api().table().body()).css({'font-size': '12px'});",
+              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "}"
+            )
+          )
+        )
+        
+      })
+      
+      
       
       
       #By Team -----
