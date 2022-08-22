@@ -2821,7 +2821,7 @@ leaders <- function(stat, .ip = 0){
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             searching = FALSE,
             paging = TRUE,
-            pageLegth = 20,
+            pageLegth = 30,
             lengthMenu = c(20, 50, 70),
             lengthChange = FALSE,
             scrollX = TRUE,
@@ -3274,44 +3274,51 @@ leaders <- function(stat, .ip = 0){
       output$split_horario_bat <- DT::renderDataTable({
         
         # Data ----
-        df <- Pitlog() %>% 
+        df <- Batlog() %>%
+        # df <- batlog %>% 
           left_join(GameResult() %>% 
                       select(-fecha), by = "juego") %>% 
           mutate(player = paste0(first_name, " ", last_name)) %>% 
           filter(
             ronda == "regular",
             equipo == "Tiburones de la Guaira",
-            player == input$select_jugador_pit,
-            years == input$select_temporada_split
-            # jugador == "J. Guerra",
-            #   # years == "2021-22"
+            player == input$select_jugador_bat,
+            years == input$select_temporada_split_bat
+            # player == "Lorenzo Cedrola",
+              # years == "2021-22"
           ) %>%
-          mutate(whip = round((bb + h)/ ip, 2)) %>% 
+          dplyr::select(
+            years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, orden_bat, horario
+          ) %>% 
+          mutate( 
+            avg = round((h) / ab, 3),
+            tb = (h - x2b - x3b - hr) + (x2b * 2) + (x3b * 3) + (hr * 4),
+            x1b = (h - x2b - x3b - hr)
+            ) %>% 
           arrange(n, desc(fecha)) %>% 
-          select(fecha, oponente, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld, horario) %>% 
           group_by(horario) %>% 
           summarise(
-            H = sum(h, na.rm = TRUE),
-            R = sum(c, na.rm = TRUE),
-            ER = sum(cl, na.rm = TRUE),
+            G = n(),
+            AB = sum(ab, na.rm = TRUE),
+            R = sum(r, na.rm = TRUE),
+            H = sum(x1b, na.rm = TRUE),
+            x2b = sum(x2b, na.rm = TRUE),
+            x3b = sum(x3b, na.rm = TRUE),
             HR = sum(hr, na.rm = TRUE),
             BB = sum(bb, na.rm = TRUE),
             SO = sum(so, na.rm = TRUE),
-            BF = sum(bf, na.rm = TRUE),
-            G = sum(g, na.rm = TRUE),
-            P = sum(p, na.rm = TRUE),
-            SV = sum(sv, na.rm = TRUE),
-            HLD = sum(hld, na.rm = TRUE),
-            IP = IP(ip),
-            WHIP = round(sum(h, bb) / IP, 2),
-            ERA = round((sum(ER, na.rm = TRUE) / IP) * 9, 3),
-            # BA = sum(H, na.rm = TRUE)
-            .groups = "drop"
+            SO = sum(so, na.rm = TRUE),
+            TB = sum(tb, na.rm = TRUE),
+            TH = sum(h, na.rm = TRUE),
+            AVG = round(TH / AB, 3),
+            SLG = round((sum(x1b) + (x2b * 2) + ((x3b) * 3) + (HR * 4)) / AB, 3)
           ) %>% 
           rename(
-            `CATEGORY` = horario
+            `2B` = x2b,
+            `3B` = x3b,
           ) %>% 
-          select(CATEGORY, 9:10, 13:15, 2:8,11:12)
+          rename(`CATEGORY` = horario) %>% 
+          select(-TH)
         
         
         # Table ----
@@ -3337,7 +3344,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:14))
+            columnDefs = list(list(className = "dt-center", targets = c(0:12))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
