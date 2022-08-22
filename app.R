@@ -954,7 +954,7 @@ leaders <- function(stat, .ip = 0){
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "EN CASA/VISITANTE",
+                             title = "TIPO DE PITCHER",
                              DT::dataTableOutput('split_pitchertype_pit')
                            )
                     ),
@@ -3301,7 +3301,7 @@ leaders <- function(stat, .ip = 0){
         # Data ----
         df <- Pitlog() %>%
         # df <- pitlog %>%
-          left_join(GameResult, by = "juego") %>% 
+          left_join(GameResult() %>% dplyr::select(-fecha), by = "juego") %>% 
           mutate(
             player = paste0(first_name, " ", last_name),
             pitchertype = case_when(
@@ -3314,10 +3314,11 @@ leaders <- function(stat, .ip = 0){
             equipo == "Tiburones de la Guaira",
             player == input$select_jugador_pit,
             years == input$select_temporada_split
-            # player == "Junior Guerra"
-          ) %>% 
+            # player == "Junior Guerra",
+          ) %>%
           mutate(whip = round((bb + h)/ ip, 2)) %>% 
-          select(pitchertype, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld) %>% 
+          arrange(n, desc(fecha)) %>% 
+          select(fecha, pitchertype, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld) %>% 
           group_by(pitchertype) %>% 
           summarise(
             H = sum(h, na.rm = TRUE),
