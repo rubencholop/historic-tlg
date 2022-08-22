@@ -795,7 +795,9 @@ leaders <- function(stat, .ip = 0){
                           style = "font-size: 1.5em;
                                    font-weight: 700;
                                    font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;"),
-                       h6(textOutput("POS_L"))
+                       h6(textOutput("POS_L")),
+                       # h6(textOutput("BORN")),
+                       h6(textOutput("EXP_L")),
                        ),
                 column(6)
               ),
@@ -804,39 +806,39 @@ leaders <- function(stat, .ip = 0){
               tabsetPanel(
                 id = "tabset2",
                 side = "left",
-                # info ----
-                tabPanel(tabName = 'Info'),
                 # Carrera ----
-                tabPanel(tabName = 'Carrera',
-                         fluidRow(
+                tabPanel(
+                  active = TRUE,
+                  tabName = 'Carrera',
+                  fluidRow(
+                    br(),
+                    column(12,
                            br(),
-                           column(12,
-                                  br(),
-                                  bs4Card(
-                                    closable = FALSE,
-                                    width = NULL,
-                                    title = "Temporada Regular",
-                                    DT::dataTableOutput('picheo_jugador')
-                                  ),
-                                  br(),
-                                  br(),
-                                  bs4Card(
-                                    closable = FALSE,
-                                    width = NULL,
-                                    title = "Round Robin",
-                                    DT::dataTableOutput('picheo_jugador_rr')
-                                  ),
-                                  br(),
-                                  br(),
-                                  bs4Card( 
-                                    closable = FALSE,
-                                    width = NULL,
-                                    title = "Finales",
-                                    DT::dataTableOutput('picheo_jugador_final')
-                                    )
-                                  )
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "Temporada Regular",
+                             DT::dataTableOutput('picheo_jugador')
+                             ),
+                           br(),
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "Round Robin",
+                             DT::dataTableOutput('picheo_jugador_rr')
+                             ),
+                           br(),
+                           br(),
+                           bs4Card(
+                             closable = FALSE,
+                             width = NULL,
+                             title = "Finales",
+                             DT::dataTableOutput('picheo_jugador_final')
+                             )
                            )
-                         ),
+                    )
+                  ),
                 # Game logs ----
                 tabPanel(
                   tabName = 'Game Log',
@@ -878,12 +880,12 @@ leaders <- function(stat, .ip = 0){
                     ),
                   # Day/Night ----
                   fluidRow(
-                    column(9,
+                    column(8,
                            br(),
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "DAY/NIGHT",
+                             title = "DIA/NOCHE",
                              DT::dataTableOutput('split_horario_pit')
                            )
                     ),
@@ -891,12 +893,12 @@ leaders <- function(stat, .ip = 0){
                     ),
                   # Opponent ----
                   fluidRow(
-                    column(9,
+                    column(8,
                            br(),
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "OPPONENT",
+                             title = "OPONENTE",
                              DT::dataTableOutput('split_opponent_pit')
                            )
                     ),
@@ -904,12 +906,12 @@ leaders <- function(stat, .ip = 0){
                     ),
                   # Stadium ----
                   fluidRow(
-                    column(9,
+                    column(8,
                            br(),
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "STADIUM",
+                             title = "ESTADIO",
                              DT::dataTableOutput('split_stadium_pit')
                            )
                     ),
@@ -917,12 +919,12 @@ leaders <- function(stat, .ip = 0){
                     ),
                   # Month ----
                   fluidRow(
-                    column(9,
+                    column(8,
                            br(),
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "MONTH",
+                             title = "MES",
                              DT::dataTableOutput('split_month_pit')
                            )
                     ),
@@ -930,12 +932,12 @@ leaders <- function(stat, .ip = 0){
                     ),
                   # Home Away ----
                   fluidRow(
-                    column(9,
+                    column(8,
                            br(),
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "HOME/AWAY",
+                             title = "EN CASA/VISITANTE",
                              DT::dataTableOutput('split_homeaway_pit')
                            )
                     ),
@@ -3124,13 +3126,12 @@ leaders <- function(stat, .ip = 0){
           ) %>% 
           filter(
             ronda == "regular",
-            equipo == "Tiburones de la Guaira",
+            # equipo == "Tiburones de la Guaira",
             player == input$select_jugador_pit,
             years == input$select_temporada_split
             # jugador == "J. Guerra"
           ) %>% 
           mutate(whip = round((bb + h)/ ip, 2)) %>% 
-          arrange(n, desc(fecha)) %>% 
           select(homeaway, ip, efe, whip, h, c, cl, hr, bb, so, bf, g, p, sv, hld) %>% 
           group_by(homeaway) %>% 
           summarise(
@@ -14657,13 +14658,13 @@ leaders <- function(stat, .ip = 0){
           pull()
 
       })
-      # Text output Jugador batea-lanza ----
+      # Text output Lanzador batea-lanza ----
       output$FDN_PIT <- renderText({
         "FDN:  "
         
       })
       
-      # Text output Jugador batea-lanza ----
+      # Text output Bateador batea-lanza ----
       output$B_L <- renderText({
         "B/L:  "
         
@@ -14784,7 +14785,60 @@ leaders <- function(stat, .ip = 0){
           unique() %>% 
           pull()
         
-        paste0("Tiburones de la Guaira    •️ " ,df )
+        
+        df_h <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            pos == "P",
+            player == input$select_jugador_pit) %>% 
+          select(lan) %>% 
+          summarise(
+            hand = ifelse(lan == "D", "RHP", "LHP"),
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        if (is.na(df_h) == TRUE) {
+          "P"
+          
+        } else if (is.na(df_h) == FALSE) {
+          df_h
+        }
+        
+        
+     # Final Result   
+        
+        df1 <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            pos == "P",
+            player == input$select_jugador_pit) %>%
+            # player == "Junior Guerra") %>%
+          select(pais) %>% 
+          summarise(
+            pais = last(pais)
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        df2 <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(player == input$select_jugador_pit) %>%
+          # filter(player == "Junior Guerra") %>% 
+          select(ciudad) %>% 
+          summarise(
+            estado = last(ciudad)
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        if (is.na(df1) == TRUE) {
+          paste0(df, "     • ", df_h)
+          
+        } else if (is.na(df1) == FALSE) {
+          paste0(df1,', ', df2, "   •  ", df_h)
+        }
         
       })
       
@@ -14865,11 +14919,6 @@ leaders <- function(stat, .ip = 0){
         
       })
       
-      # Text output Experience ----
-      output$EXP_PIT <- renderText({
-        'Temporadas:'
-        
-      })
       # Text output Pitching Experience ----
       output$EXP_L <- renderText({
         req(input$select_jugador_pit)
@@ -14886,7 +14935,21 @@ leaders <- function(stat, .ip = 0){
           unique() %>% 
           pull()
         
-        paste('', df, sep = ' ')
+        
+        df1 <- Rosters() %>% 
+          mutate(player = paste0(first_name, " ", last_name)) %>% 
+          filter(
+            pos == "P",
+            player == input$select_jugador_pit) %>% 
+          summarise(
+            fecha = last(f_nac), 
+            .groups = "drop"
+          ) %>% 
+          unique() %>% 
+          pull()
+        
+        
+        paste("Nac:", df1, '    • Exp:', df, sep = ' ')
         
       })
       # Text output Batting Experience ----
