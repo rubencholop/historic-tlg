@@ -3567,7 +3567,7 @@ leaders <- function(stat, .ip = 0){
         
         # Data ----
         df <- Batlog() %>%
-          left_join(GameResult(), by = "juego") %>%
+          left_join(GameResult() %>% dplyr::select(-fecha), by = "juego") %>%
           mutate(
             player = paste0(first_name, " ", last_name),
             homeaway = case_when(
@@ -3639,9 +3639,9 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(1:12)),
-                              list(width = '200px', targets = 0)
-            ),
+            columnDefs = list(list(className = "dt-center", targets = c(0:12))
+                              # list(width = '100px', targets = 1)
+            ),,
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -3663,8 +3663,22 @@ leaders <- function(stat, .ip = 0){
         
         # Data ----
         df <- Batlog() %>%
-          left_join(GameResult(), by = "juego") %>%
-          mutate(player = paste0(first_name, " ", last_name)) %>% 
+        # df <- batlog %>%
+          left_join(GameResult() %>% dplyr::select(-fecha), by = "juego") %>%
+          mutate(
+            player = paste0(first_name, " ", last_name),
+            ordenbat = case_when(
+              orden_bat == 1 ~ "1ero",
+              orden_bat == 2 ~ "2do",
+              orden_bat == 3 ~ "3ero",
+              orden_bat == 4 ~ "4to",
+              orden_bat == 5 ~ "5to",
+              orden_bat == 6 ~ "6to",
+              orden_bat == 7 ~ "7mo",
+              orden_bat == 8 ~ "8vo",
+              orden_bat == 9 ~ "9no"
+              )
+            ) %>% 
           filter(
             ronda == "regular",
             player == input$select_jugador_bat,
@@ -3673,7 +3687,7 @@ leaders <- function(stat, .ip = 0){
               # years == "2021-22"
           ) %>%
           dplyr::select(
-            years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, orden_bat
+            years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, ordenbat
           ) %>% 
           mutate( 
             avg = round((h) / ab, 3),
@@ -3681,7 +3695,7 @@ leaders <- function(stat, .ip = 0){
             x1b = (h - x2b - x3b - hr)
             ) %>% 
           arrange(n, desc(fecha)) %>% 
-          group_by(orden_bat) %>% 
+          group_by(ordenbat) %>% 
           summarise(
             G = n(),
             AB = sum(ab, na.rm = TRUE),
@@ -3702,7 +3716,7 @@ leaders <- function(stat, .ip = 0){
             `2B` = x2b,
             `3B` = x3b,
           ) %>% 
-          rename(`CATEGORY` = orden_bat) %>% 
+          rename(`CATEGORY` = ordenbat) %>% 
           select(-TH)
         
         
@@ -3729,8 +3743,8 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(1:12)),
-                              list(width = '200px', targets = 0)
+            columnDefs = list(list(className = "dt-center", targets = c(0:12))
+                              # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
