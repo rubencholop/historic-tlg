@@ -6,11 +6,13 @@ library(lubridate)
 library(plotly)
 library(dplyr)
 library(DT)
-library(stringr)
+# library(stringr)
 library(readr)
 library(highcharter)
 library(shinyalert)
 library(renv)
+library(tweetrmd)
+library(rtweet)
 # library(stringi) 
 # library(shinyflags)
 
@@ -568,7 +570,40 @@ leaders <- function(stat, .ip = 0){
         # TabItem Home ----
           tabItem(
             tabName = 'inicio',
-            tags$h2("BIENVENIDO A 60 AÑOS DE ESTADISTICAS DE TIBURONES DE LA GUAIRA", align = 'center')
+            tags$h2("BIENVENIDO A 60 AÑOS DE ESTADISTICAS DE TIBURONES DE LA GUAIRA", align = 'center'),
+            fluidRow(
+              column(7),
+              column(5,
+                     tags$head(
+                       tags$script('!function(d,s,id){var js,fjs=d.getElementsByTagName(s)  
+                                 [0],p=/^http:/.test(d.location)?\'http\':\'https\';
+                                 if(!d.getElementById(id)){js=d.createElement(s);
+                                 js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+                                 fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");')
+                     ),
+                     tabsetPanel(
+                       id = "tabset122",
+                       side = "left",
+                       # TibuStats ----
+                       tabPanel(
+                         tabName = 'TibuStats',
+                           a("TibuStats en Twitter",
+                             class = "twitter-timeline", 
+                             href = "https://twitter.com/tibu_stats" 
+                           )
+                       ),
+                     # Tiburones BBC ----
+                       tabPanel(
+                         tabName = 'Tiburones BBC',
+                           a("Tiburones BBC en Twitter",
+                             class = "twitter-timeline", 
+                             href = "https://twitter.com/tiburones_net" 
+                           )
+
+                       )
+                     )
+                  )
+                )
             # img(src = 'logo_60_anos.jpeg')
             ),
         # TabItem by Team ----
@@ -2382,7 +2417,7 @@ leaders <- function(stat, .ip = 0){
                   closable = FALSE,
                   fluidRow(
                     # 1 ----
-                    column(4,
+                    column(2,
                            pickerInput(
                            inputId = "ronda",
                            label = "Ronda:", 
