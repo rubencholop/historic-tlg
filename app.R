@@ -489,17 +489,24 @@ leaders <- function(stat, .ip = 0){
                  ),
           column(3),
           column(2,
-                 tags$ul(
-                   class = "network-icon",
-                   tags$li(
-                     tags$a(href = "https://twitter.com/rubencholop",
-                            tags$i(class = "fab fa-twitter big-icon")
-                     )
-                   ),
-                   tags$li(
-                     tags$a(href = "https://www.instagram.com/rubencholop/",
-                            tags$i(class = "fab fa-instagram big-icon")
-                            )
+                 tags$div(
+                   class = "portrait-title",
+                   tags$ul(
+                     class = "network-icon",
+                     tags$li(
+                       tags$a(href = "https://twitter.com/tibu_stats",
+                              tags$i(class = "fab fa-twitter big-icon"),
+                              style = "border-left-style: solid;border-left-width: 0px;padding-left: 
+                              10px;padding-right: 10px; font-size:1.5rem"
+                              )
+                       ),
+                     tags$li(
+                       tags$a(href = "https://www.instagram.com/rubencholop/",
+                              tags$i(class = "fab fa-instagram big-icon"),
+                              style = "border-left-style: solid;border-left-width: 0px;padding-left: 
+                              10px;padding-right: 10px; font-size:1.5rem;"
+                              )
+                       )
                      )
                    )
                  )
@@ -517,7 +524,7 @@ leaders <- function(stat, .ip = 0){
         fluidRow(
           column(2),
           column(8,
-                 h6("© 2020 Tibu Stats. Todos los derechos reservados.", align = "center")
+                 h6("© 2022 Tibu Stats. Todos los derechos reservados.", align = "center")
                  ),
           column(2)
           )

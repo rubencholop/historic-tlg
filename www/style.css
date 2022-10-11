@@ -130,3 +130,11 @@ ul.network-icon {
 }
 
 
+
+
+.portrait-title  {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(0,0,0,.54);
+  margin: 0 0 10px;
+}
