@@ -13339,13 +13339,14 @@ leaders <- function(stat, .ip = 0){
                       select(key, name, ID, first_name, last_name, pais, 
                              estado, ciudad), by = 'key') %>%
           select(-player_id, ID, key, first_name,last_name, jugador, 2:35) %>% 
-          mutate(importados =
-                   case_when(
-                     pais == "Venezuela" ~ "Venezolanos",
-                     pais %in% .paises_pitching[-c(9, 21)] ~ " Importados",
-                     TRUE ~ "Desconocido"
-                     )
-                 ) %>% 
+          mutate(
+            importados =
+              case_when(
+                pais == "Venezuela" ~ "Venezolanos",
+                pais %in% .paises_pitching[-c(9, 21)] ~ " Importados",
+                TRUE ~ "Desconocido"
+                )
+            ) %>% 
           # filter(importados %in% c("Importados", "Venezolanos")) %>% 
           select(-edad) %>% 
           group_by(importados) %>% 
@@ -13795,7 +13796,7 @@ leaders <- function(stat, .ip = 0){
                      pais == "Venezuela" ~ "Venezolanos",
                      TRUE ~ "Desconocido"
                    )
-          )  %>% 
+          ) %>% 
           group_by(importados) %>% 
           summarise(
             g = sum(g, na.rm = T),
@@ -13902,12 +13903,13 @@ leaders <- function(stat, .ip = 0){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
-          mutate(importados = ifelse(pais %in% .paises_batting[-c(8, 17)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-                                     )
-                 ) %>% 
-          filter(importados %in% c("Importados", "Venezolanos")) %>% 
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_batting[-c(8, 17)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   )
+          )  %>%
           group_by(importados, years) %>% 
           summarise(
             g = sum(g, na.rm = T),
@@ -14020,11 +14022,13 @@ leaders <- function(stat, .ip = 0){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
-          mutate(importados = ifelse(pais %in% .paises_batting[-c(8, 17)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-          )) %>% 
-          filter(importados %in% c("Importados", "Venezolanos")) %>% 
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_batting[-c(8, 17)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   )
+          )  %>%
           group_by(importados, years) %>% 
           summarise(
             g = sum(g, na.rm = T),
@@ -14138,11 +14142,13 @@ leaders <- function(stat, .ip = 0){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
-          mutate(importados = ifelse(pais %in% .paises_batting[-c(8, 17)], 
-                                     "Importados", 
-                                     ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-          )) %>% 
-          filter(importados %in% c("Importados", "Venezolanos")) %>% 
+          mutate(importados =
+                   case_when(
+                     pais %in% .paises_batting[-c(8, 17)] ~ " Importados",
+                     pais == "Venezuela" ~ "Venezolanos",
+                     TRUE ~ "Desconocido"
+                   )
+          )  %>%
           group_by(importados, years) %>% 
           summarise(
             g = sum(g, na.rm = T),
