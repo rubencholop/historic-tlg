@@ -4099,7 +4099,8 @@ leaders <- function(stat, .ip = 0){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          ) 
+          ) %>% 
+          select(-G)
         
         # Table ----
         headerCallback <- c(
@@ -4128,7 +4129,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))
+            columnDefs = list(list(className = "dt-center", targets = c(0:21))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
@@ -4244,7 +4245,8 @@ leaders <- function(stat, .ip = 0){
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`,
             `REF` = `ref`
-          ) 
+          ) %>% 
+          select(-G)
         
         # Table ----
         headerCallback <- c(
@@ -4281,7 +4283,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:23))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -4427,7 +4429,9 @@ leaders <- function(stat, .ip = 0){
             `HR/9` = `hr/9`,
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
-            `SO/BB` = `so/bb`) 
+            `SO/BB` = `so/bb`
+            ) %>% 
+          select(-G)
         
         
         # Table ----
@@ -4465,7 +4469,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:24))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:23))),
             headerCallback = JS(headerCallback),
             # rowCallback = JS("function(r,d) {$(r).attr('height', '20px')}"),
             initComplete = JS(
@@ -9043,7 +9047,7 @@ leaders <- function(stat, .ip = 0){
               pais == "Republica Dominicana" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_the_Dominican_Republic.svg" width="25" height="15"></img>',
               pais == "Puerto Rico" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_Puerto_Rico.svg" width="25" height="15"></img>',
               pais == "Cuba" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Flag_of_Cuba.svg" width="25" height="15"></img>',
-              pais == "Mexico" ~ '<img src="hhttps://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg" width="25" height="15"></img>',
+              pais == "Mexico" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg" width="25" height="15"></img>',
               pais == "Japon" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" width="25" height="15"></img>',
               pais == "USA" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>',
               pais == "Francia" ~ '<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" width="25" height="15"></img>',
@@ -9204,8 +9208,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9275,8 +9279,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9342,8 +9346,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9414,8 +9418,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9481,8 +9485,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9549,8 +9553,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9618,8 +9622,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9687,8 +9691,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9757,8 +9761,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9826,8 +9830,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9900,8 +9904,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -9974,8 +9978,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10048,8 +10052,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10124,8 +10128,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10199,8 +10203,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10296,8 +10300,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10390,8 +10394,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10486,8 +10490,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10583,8 +10587,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -13322,12 +13326,12 @@ leaders <- function(stat, .ip = 0){
         ) 
       })
       #Vzla vs importados ----
-      # Table pitching vzla vs importado totales  ----
+      # Table pitching vzla vs importado totales ----
       output$versus_total_pit <- renderDataTable({
         
         # Data ----
         versus_totales <- prs() %>% 
-          filter(ronda ==  "regular") %>% 
+          filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
           left_join(Rosters() %>%
@@ -13338,7 +13342,7 @@ leaders <- function(stat, .ip = 0){
           mutate(importados =
                    case_when(
                      pais == "Venezuela" ~ "Venezolanos",
-                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
+                     pais %in% .paises_pitching[-c(9, 21)] ~ " Importados",
                      TRUE ~ "Desconocido"
                      )
                  ) %>% 
@@ -13361,15 +13365,14 @@ leaders <- function(stat, .ip = 0){
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
             `so/9` = as.character(round((so/ip)*9, 2)),
             `so/bb` = as.character(round(so/bb, 2)),
             .groups = "drop"
-          ) %>% 
-          # arrange(desc(years)) %>% 
+          ) %>%
           rename(
             Grupo = importados,
             `W` = w,
@@ -13393,7 +13396,8 @@ leaders <- function(stat, .ip = 0){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-            )
+            ) %>% 
+          select(-G)
         
         
         
@@ -13422,11 +13426,9 @@ leaders <- function(stat, .ip = 0){
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
-            fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(1:21)),
-                              list(width = '120px', targets = 0)
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(1:20))
                               ),
-            
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -13439,12 +13441,11 @@ leaders <- function(stat, .ip = 0){
         ) 
      
       })
-      # Table pitching vzla vs importado ----
+      # Table pitching vzla vs importado  Regular season ----
       output$versus_pit <- renderDataTable({
-        req(input$select_country)
         
         # Data ----
-        versus_pit <- prs() %>% 
+        versus_pit_rs <- prs() %>% 
           filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:27) %>% 
@@ -13454,7 +13455,7 @@ leaders <- function(stat, .ip = 0){
           select(ID, key, first_name,last_name, jugador, 2:35) %>% 
           mutate(importados =
                    case_when(
-                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
+                     pais %in% .paises_pitching[-c(9, 21)] ~ " Importados",
                      pais == "Venezuela" ~ "Venezolanos",
                      TRUE ~ "Desconocido"
                    )
@@ -13462,6 +13463,8 @@ leaders <- function(stat, .ip = 0){
           select(-edad) %>% 
           group_by(importados, years) %>% 
           summarise(
+            importados = last(importados),
+            years = last(years),
             w = sum(w, na.rm = T),
             l = sum(l, na.rm = T),
             er = sum(er, na.rm = T),
@@ -13477,7 +13480,7 @@ leaders <- function(stat, .ip = 0){
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -13510,7 +13513,8 @@ leaders <- function(stat, .ip = 0){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          )
+          ) %>% 
+          select(-G) 
         
         # Table ----
         headerCallback <- c(
@@ -13520,7 +13524,7 @@ leaders <- function(stat, .ip = 0){
         )  # To deleate header line horizontal in bottom of colums name
         
         DT::datatable(
-          versus_pit ,
+          versus_pit_rs ,
           # escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -13539,7 +13543,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -13554,10 +13558,9 @@ leaders <- function(stat, .ip = 0){
       })
       # Table pitching vzla vs importado round robin ----
       output$versus_rr_pit <- renderDataTable({
-        req(input$select_country)
         
         # Data ----
-        versus_pit <- prs() %>% 
+        versus_pit_rr <- prs() %>% 
           filter(ronda == "round robin") %>%
           select(player_id, 1:31) %>%
           left_join(Rosters() %>%
@@ -13565,7 +13568,7 @@ leaders <- function(stat, .ip = 0){
                     by = c("player_id", "years")) %>%
           mutate(importados =
                    case_when(
-                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
+                     pais %in% .paises_pitching[-c(9, 21)] ~ " Importados",
                      pais == "Venezuela" ~ "Venezolanos",
                      TRUE ~ "Desconocido"
                    )
@@ -13587,7 +13590,7 @@ leaders <- function(stat, .ip = 0){
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -13620,7 +13623,8 @@ leaders <- function(stat, .ip = 0){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          )
+          ) %>% 
+          select(-G)
         
         # Table ----
         headerCallback <- c(
@@ -13630,7 +13634,7 @@ leaders <- function(stat, .ip = 0){
         )  # To deleate header line horizontal in bottom of colums name
         
         DT::datatable(
-          versus_pit ,
+          versus_pit_rr ,
           # escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -13640,7 +13644,7 @@ leaders <- function(stat, .ip = 0){
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
-            searching = FALSE,
+            searching = TRUE,
             paging = TRUE,
             pageLegth = 25,
             lengthMenu = c(25, 20, 100),
@@ -13649,7 +13653,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -13664,22 +13668,22 @@ leaders <- function(stat, .ip = 0){
       })
       # Table pitching vzla vs importado final ----
       output$versus_final_pit <- renderDataTable({
-        req(input$select_country)
         
         # Data ----
-        versus_pit <- prs() %>% 
+        versus_final_pit <- prs() %>% 
           filter(ronda == "finales") %>%
           select(player_id, 1:31) %>%
           left_join(Rosters() %>%
                       select(player_id, years, name, ID, first_name, last_name, pais),
                     by = c("player_id", "years")) %>% 
-          mutate(importados =
-                   case_when(
-                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
-                     pais == "Venezuela" ~ "Venezolanos",
-                     TRUE ~ "Desconocido"
-                   )
-          )  %>% 
+          mutate(
+            importados =
+              case_when(
+                pais %in% .paises_pitching[-c(9, 21)] ~ " Importados",
+                pais == "Venezuela" ~ "Venezolanos",
+                TRUE ~ "Desconocido"
+                )
+            )  %>% 
           group_by(importados, years) %>% 
           summarise(
             w = sum(w, na.rm = T),
@@ -13697,7 +13701,7 @@ leaders <- function(stat, .ip = 0){
             hr = sum(hr, na.rm = T),
             bb = sum(bb, na.rm = T),
             so = sum(so, na.rm = T),
-            whip = as.character(round(mean(whip, na.rm = T), 2)),
+            whip = round((bb + h)/ ip, 2),
             `h/9` = as.character(round((h/ip)*9, 2)),
             `hr/9` = as.character(round((hr/ip)*9, 2)),
             `bb/9` = as.character(round((bb/ip)*9, 2)),
@@ -13730,7 +13734,8 @@ leaders <- function(stat, .ip = 0){
             `BB/9` = `bb/9`,
             `SO/9` = `so/9`,
             `SO/BB` = `so/bb`
-          )
+          ) %>% 
+          select(-G)
         
         # Table ----
         headerCallback <- c(
@@ -13740,7 +13745,7 @@ leaders <- function(stat, .ip = 0){
         )  # To deleate header line horizontal in bottom of colums name
         
         DT::datatable(
-          versus_pit ,
+          versus_final_pit,
           # escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -13750,7 +13755,7 @@ leaders <- function(stat, .ip = 0){
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
-            searching = FALSE,
+            searching = TRUE,
             paging = TRUE,
             pageLegth = 25,
             lengthMenu = c(25, 20, 100),
@@ -13758,8 +13763,8 @@ leaders <- function(stat, .ip = 0){
             scrollX = TRUE,
             rownames = FALSE,
             fixedHeader = TRUE,
-            fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            # fixedColumns = list(LeftColumns = 3),
+            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -13786,7 +13791,7 @@ leaders <- function(stat, .ip = 0){
           select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
           mutate(importados =
                    case_when(
-                     pais %in% .paises_pitching[-c(8, 19)] ~ " Importados",
+                     pais %in% .paises_batting[-c(8, 17)] ~ " Importados",
                      pais == "Venezuela" ~ "Venezolanos",
                      TRUE ~ "Desconocido"
                    )
@@ -13888,6 +13893,7 @@ leaders <- function(stat, .ip = 0){
       # Table batting vzla vs importado  ----
       output$versus_bat <- renderDataTable({
         
+        # Data ----
         versus_bat <- brs() %>% 
           filter(ronda == "regular") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
@@ -13896,10 +13902,11 @@ leaders <- function(stat, .ip = 0){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 19)], 
+          mutate(importados = ifelse(pais %in% .paises_batting[-c(8, 17)], 
                                      "Importados", 
                                      ifelse(pais == "Venezuela", "Venezolanos", "N/A")
-          )) %>% 
+                                     )
+                 ) %>% 
           filter(importados %in% c("Importados", "Venezolanos")) %>% 
           group_by(importados, years) %>% 
           summarise(
@@ -13959,7 +13966,7 @@ leaders <- function(stat, .ip = 0){
             `SF` = sf
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -13978,7 +13985,7 @@ leaders <- function(stat, .ip = 0){
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
-            searching = FALSE,
+            searching = TRUE,
             paging = TRUE,
             pageLegth = 25,
             lengthMenu = c(25, 20, 100),
@@ -14004,6 +14011,7 @@ leaders <- function(stat, .ip = 0){
       # Table batting vzla vs importado round robin ----
       output$versus_rr_bat <- renderDataTable({
         
+        # Data ----
         versus_bat <- brs() %>% 
           filter(ronda == "round robin") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
@@ -14012,7 +14020,7 @@ leaders <- function(stat, .ip = 0){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 19)], 
+          mutate(importados = ifelse(pais %in% .paises_batting[-c(8, 17)], 
                                      "Importados", 
                                      ifelse(pais == "Venezuela", "Venezolanos", "N/A")
           )) %>% 
@@ -14076,6 +14084,7 @@ leaders <- function(stat, .ip = 0){
           ) 
         
         
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -14094,7 +14103,7 @@ leaders <- function(stat, .ip = 0){
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
-            searching = FALSE,
+            searching = TRUE,
             paging = TRUE,
             pageLegth = 25,
             lengthMenu = c(25, 20, 100),
@@ -14120,7 +14129,8 @@ leaders <- function(stat, .ip = 0){
       # Table batting vzla vs importado finals ----
       output$versus_final_bat <- renderDataTable({
         
-        versus_bat <- brs() %>% 
+        # Data ----
+        versus_bat_final <- brs() %>% 
           filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
           select(key, 1:28) %>% 
@@ -14128,7 +14138,7 @@ leaders <- function(stat, .ip = 0){
                       mutate(key = paste0(as.character(years), jugador)) %>%
                       select(key, name, ID, first_name, last_name, pais, estado, ciudad), by = 'key') %>%
           select(ID, key, first_name,last_name, jugador, 2:35, -player_id) %>%
-          mutate(importados = ifelse(pais %in% .paises_pitching[-c(8, 19)], 
+          mutate(importados = ifelse(pais %in% .paises_batting[-c(8, 17)], 
                                      "Importados", 
                                      ifelse(pais == "Venezuela", "Venezolanos", "N/A")
           )) %>% 
@@ -14153,7 +14163,7 @@ leaders <- function(stat, .ip = 0){
             slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
             # ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
+            # rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -14182,7 +14192,7 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
+            # `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             # `IR` = ir,
@@ -14191,15 +14201,16 @@ leaders <- function(stat, .ip = 0){
             `SF` = sf
           ) 
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
           "}"
         )  # To deleate header line horizontal in bottom of colums name
         
+        
         DT::datatable(
-          versus_bat,
+          versus_bat_final,
           # escape = FALSE,
           extensions = "ColReorder",
           rownames = FALSE,
@@ -14210,7 +14221,7 @@ leaders <- function(stat, .ip = 0){
           options = list(
             # dom = 'ft',  # To remove showing 1 to n of entries fields
             autoWidth = TRUE,
-            searching = FALSE,
+            searching = TRUE,
             paging = TRUE,
             pageLegth = 25,
             lengthMenu = c(25, 20, 100),
@@ -14219,7 +14230,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:23))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
