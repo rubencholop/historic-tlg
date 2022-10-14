@@ -10689,8 +10689,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10787,8 +10787,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10885,8 +10885,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -10983,8 +10983,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11078,8 +11078,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11173,8 +11173,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11267,8 +11267,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11362,8 +11362,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11431,8 +11431,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11500,8 +11500,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11567,8 +11567,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11635,8 +11635,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11699,8 +11699,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11765,8 +11765,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11831,8 +11831,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11898,8 +11898,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -11966,8 +11966,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12052,8 +12052,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12119,8 +12119,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12186,8 +12186,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12255,8 +12255,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12348,8 +12348,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12435,8 +12435,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12503,8 +12503,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12567,8 +12567,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12632,8 +12632,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12695,8 +12695,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12761,8 +12761,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12824,8 +12824,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12891,8 +12891,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -12958,8 +12958,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -13023,8 +13023,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -13087,8 +13087,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -13152,8 +13152,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -13216,8 +13216,8 @@ leaders <- function(stat, .ip = 0){
             initComplete = JS(
               "function(settings, json) {",
               "$(this.api().table().body()).css({'font-family': 'Calibri'});",
-              "$(this.api().table().body()).css({'font-size': '12px'});",
-              "$(this.api().table().header()).css({'font-size': '12px', 'font-family': 'Courier'});",
+              "$(this.api().table().body()).css({'font-size': '10px'});",
+              "$(this.api().table().header()).css({'font-size': '14px', 'font-family': 'Courier'});",
               "}"
             )
           )
@@ -13226,9 +13226,8 @@ leaders <- function(stat, .ip = 0){
       #LVBP records ----
       # Table Records LVBP  ----
       output$lvbp_general <- renderDataTable({
-        
-        
-        
+
+        # Data ----
         banderas <- c(
           '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #1
           '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>', #2
@@ -13262,10 +13261,11 @@ leaders <- function(stat, .ip = 0){
           '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #30
           '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #31
           '<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" width="25" height="15"></img>', #32 
-          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>' #33 
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>', #33
+          '<img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg" width="25" height="15"></img>' #34
         )
         
-        crown <- rep(1,nrow(novatos))
+        crown <- rep(1, length(banderas))
         crown[[32]] <- '<img src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-crown-icon-png-image_4422282.jpg" width="25" height="25"></img>'
         crown[[33]] <- '<img src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-crown-icon-png-image_4422282.jpg" width="25" height="25"></img>'
         
@@ -13285,7 +13285,7 @@ leaders <- function(stat, .ip = 0){
             "  " = crown
           )
         
-        
+        # Table ----
         headerCallback <- c(
           "function(thead, data, start, end, display){",
           "  $('th', thead).css('border-bottom', 'none');",
@@ -13324,6 +13324,7 @@ leaders <- function(stat, .ip = 0){
             )
           )
         ) 
+        
       })
       #Vzla vs importados ----
       # Table pitching vzla vs importado totales ----
