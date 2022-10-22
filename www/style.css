@@ -151,3 +151,8 @@ ul.network-icon {
   font-size: .9rem;
 }
 
+
+.footer-flex-container:nth-child(4n+1) {
+  width: 300px;
+  padding-left: 1rem;
+}

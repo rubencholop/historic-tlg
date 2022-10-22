@@ -2409,15 +2409,46 @@ leaders <- function(stat, .ip = 0){
         # Glosary ----
         tabItem(
           tabName = "g_stat",
+          # First row ----
           fluidRow(
-            column(4,
+            column(3,
                    tags$div(class = "footer-glossary-title", tags$a("Wins (W)")),
                    tags$div(class = "footer-glossary-text", "Juegos ganados")
                    ),
-            column(4,"L (Loss): Juegos perdidos" ),
-            column(4, "GS (Game Start): Juegos Iniciados"),
-          )
-          
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Losses (L)")),
+                   tags$div(class = "footer-glossary-text", "Juegos perdidos")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Games Pitched (G)")),
+                   tags$div(class = "footer-glossary-text", "Juegos lanzados")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Game Started (GS)")),
+                   tags$div(class = "footer-glossary-text", "Juegos perdidos")
+                   )
+            ),
+          br(),
+          br(),
+          # Second row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Game Complete (GC)")),
+                   tags$div(class = "footer-glossary-text", "Juegos ganados")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Shutout (SHO)")),
+                   tags$div(class = "footer-glossary-text", "Juegos completo sin permitir carreras")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Saves (SV)")),
+                   tags$div(class = "footer-glossary-text", "Juegos salvados")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Hits Allowed (H)")),
+                   tags$div(class = "footer-glossary-text", "Sencillos permitidos")
+                   )
+            )
         ),
         # Advanced Search ----
         tabItem(
