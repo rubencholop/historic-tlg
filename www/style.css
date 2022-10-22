@@ -138,3 +138,16 @@ ul.network-icon {
   color: rgba(0,0,0,.54);
   margin: 0 0 10px;
 }
+
+
+
+.footer-glossary-title {
+  font-weight: bold;
+  font-size: .9rem;
+}
+
+
+.footer-glossary-text {
+  font-size: .9rem;
+}
+

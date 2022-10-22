@@ -430,8 +430,8 @@ leaders <- function(stat, .ip = 0){
             text = 'Glosario',
             tabName = 'glosario',
             icon = "book",
-            bs4SidebarMenuSubItem('Glosario Sabermetrico', tabName = 'g_saberm', icon = "angle-right"),
-            bs4SidebarMenuSubItem('Cálculos', tabName = 'calc', icon = "angle-right")
+            bs4SidebarMenuSubItem('Estadistícas', tabName = 'g_stat', icon = "angle-right"),
+            bs4SidebarMenuSubItem('Sabermetría', tabName = 'sabermetrics', icon = "angle-right")
           ),
           # menuItem Advanced Search ----
           bs4SidebarMenuItem(
@@ -2406,6 +2406,19 @@ leaders <- function(stat, .ip = 0){
               )
             )
           ),
+        # Glosary ----
+        tabItem(
+          tabName = "g_stat",
+          fluidRow(
+            column(4,
+                   tags$div(class = "footer-glossary-title", tags$a("Wins (W)")),
+                   tags$div(class = "footer-glossary-text", "Juegos ganados")
+                   ),
+            column(4,"L (Loss): Juegos perdidos" ),
+            column(4, "GS (Game Start): Juegos Iniciados"),
+          )
+          
+        ),
         # Advanced Search ----
         tabItem(
           tabName = 'busqueda',
