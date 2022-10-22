@@ -2406,9 +2406,12 @@ leaders <- function(stat, .ip = 0){
               )
             )
           ),
-        # Glosary ----
+        # Glossary ----
         tabItem(
           tabName = "g_stat",
+          h4('PITCHING', align = 'center'),
+          br(),
+          
           # First row ----
           fluidRow(
             column(3,
@@ -2429,7 +2432,6 @@ leaders <- function(stat, .ip = 0){
                    )
             ),
           br(),
-          br(),
           # Second row ----
           fluidRow(
             column(3,
@@ -2448,7 +2450,171 @@ leaders <- function(stat, .ip = 0){
                    tags$div(class = "footer-glossary-title", tags$a("Hits Allowed (H)")),
                    tags$div(class = "footer-glossary-text", "Sencillos permitidos")
                    )
+            ),
+          br(),
+          # Third row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Run (R)")),
+                   tags$div(class = "footer-glossary-text", "Carreras permitidas")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Earned Run (ER)")),
+                   tags$div(class = "footer-glossary-text", "Carreras limpias")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Strike Outs (SO)")),
+                   tags$div(class = "footer-glossary-text", "Ponches")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Bases on Ball (BB)")),
+                   tags$div(class = "footer-glossary-text", "Base por bolas")
+                   )
+            ),
+          br(),
+          # Forth row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Home Run (HR)")),
+                   tags$div(class = "footer-glossary-text", "Jonrón")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Innings Pitched (IP)")),
+                   tags$div(class = "footer-glossary-text", "Entradas lanzadas")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Earned Run Average (ERA)")),
+                   tags$div(class = "footer-glossary-text", "Promedio de carreras permitidas")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Walks + Hits / Innings Pitched (WHIP)")),
+                   tags$div(class = "footer-glossary-text", "Hits y bases por bolas entre inning lanzados")
+                   )
+            ),
+          br(),
+          # Fifth row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Hits per 9 innings (H/9)")),
+                   tags$div(class = "footer-glossary-text", "Sencillos por cada 9 inning")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Home Run per 9 inning (HR/9)")),
+                   tags$div(class = "footer-glossary-text", "Jonron por cada 9 inning")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Strike Out per 9 inning (SO/9)")),
+                   tags$div(class = "footer-glossary-text", "Ponches por cada 9 innings")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Strike Out / Bases on balls (SO/BB)")),
+                   tags$div(class = "footer-glossary-text", "Ponches entre bases por bolas")
+                   )
+            ),
+          # Batting -----
+          br(),
+          h4('BATTING', align = 'center'),
+          br(),
+          br(),
+          # Firts row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Games (G)")),
+                   tags$div(class = "footer-glossary-text", "Juegos jugados")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Plate Appearances (PA)")),
+                   tags$div(class = "footer-glossary-text", "Apariciones al home")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("At Bat (AB)")),
+                   tags$div(class = "footer-glossary-text", "Turnos al bate")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Runs (R)")),
+                   tags$div(class = "footer-glossary-text", "Carreras anotadas")
+                   )
+            ),
+          br(),
+          # Second row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Doubles (2B)")),
+                   tags$div(class = "footer-glossary-text", "Dobles")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Triples (3B)")),
+                   tags$div(class = "footer-glossary-text", "Triples")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Home Run (HR)")),
+                   tags$div(class = "footer-glossary-text", "Jonrón")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Runs Batted In (RBI)")),
+                   tags$div(class = "footer-glossary-text", "Carreras impulsadas")
+                   )
+            ),
+          br(),
+          # Third row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Stolen Bases (SB)")),
+                   tags$div(class = "footer-glossary-text", "Bases robadas")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Caught Stealing (CS)")),
+                   tags$div(class = "footer-glossary-text", "Atrapado robando")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Bases on Balls (BB)")),
+                   tags$div(class = "footer-glossary-text", "Bases por bolas")
+                   ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Strike Outs (SO)")),
+                   tags$div(class = "footer-glossary-text", "Ponches")
+                   )
+            ),
+          br(),
+          # Fourth row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Hit By Pitch (HBP)")),
+                   tags$div(class = "footer-glossary-text", "Bases robadas")
+            ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Sacrifice Hits (SH)")),
+                   tags$div(class = "footer-glossary-text", "Toque de sacrificio")
+            ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Sacrifice Flies (SF)")),
+                   tags$div(class = "footer-glossary-text", "Elevados de sacrificio")
+            ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Extra Bases (XB)")),
+                   tags$div(class = "footer-glossary-text", "Extra bases")
             )
+          ),
+          br(),
+          # Fifth row ----
+          fluidRow(
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Average (AVG)")),
+                   tags$div(class = "footer-glossary-text", "Promedio de bateo")
+            ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("On-Base Percentage (OBP)")),
+                   tags$div(class = "footer-glossary-text", "Porcentaje de embasado")
+            ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("Sacrifice Flies (SLG)")),
+                   tags$div(class = "footer-glossary-text", "Porcentaje slugging")
+            ),
+            column(3,
+                   tags$div(class = "footer-glossary-title", tags$a("On-base percentage plus slugging percentage (OPS)")),
+                   tags$div(class = "footer-glossary-text", " Slugging mas Porcentaje de embasado")
+            )
+          )
         ),
         # Advanced Search ----
         tabItem(
