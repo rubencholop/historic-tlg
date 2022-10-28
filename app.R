@@ -393,8 +393,8 @@ leaders <- function(stat, .ip = 0){
             bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "angle-right"),
-            bs4SidebarMenuSubItem(text = 'Paises', tabName = 'paises', icon = "angle-right"),
-            bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "angle-right"),
+            bs4SidebarMenuSubItem(text = 'Países', tabName = 'paises', icon = "angle-right"),
+            bs4SidebarMenuSubItem(text = 'Posición', tabName = 'posicion', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "angle-right"),
             # bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "angle-right"),
             bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "angle-right")
@@ -1498,7 +1498,7 @@ leaders <- function(stat, .ip = 0){
                      label = 'Temporadas',
                      choices = as.character(c("Todas las Temporadas", 
                                               temporadas)),
-                     selected = "2021-22"
+                     selected = "2022-23"
                      # multiple = TRUE
                      )
                    ),
@@ -7137,7 +7137,7 @@ leaders <- function(stat, .ip = 0){
       output$bat_final <- DT::renderDataTable({
         req(input$select_jugador_bat)
         
-        
+        # Data ----
         player_summarise <- brs() %>%
           filter(ronda == "finales") %>% 
           mutate(key = paste0(as.character(years), jugador)) %>% 
@@ -7250,7 +7250,9 @@ leaders <- function(stat, .ip = 0){
         
         
         if (nrow(df) > 1) {
-          # Datatable ----
+          
+          
+    # Datatable ----
           headerCallback <- c(
             "function(thead, data, start, end, display){",
             "  $('th', thead).css('border-bottom', 'none');",
@@ -7276,7 +7278,7 @@ leaders <- function(stat, .ip = 0){
               fixedHeader = TRUE,
               columnDefs = list(list(className = "dt-center", targets = 0:25),
                                 list(width = '50px', targets = 25)
-              ),
+                                ),
               headerCallback = JS(headerCallback),
               initComplete = JS(
                 "function(settings, json) {",
@@ -7397,10 +7399,10 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(
-              list(
-                width = '120px', targets = 0,
-                width = '10px', targets = c(1:20))),
+            columnDefs = 
+              list(list(className = "dt-center", targets = 1:21),
+                   list(width = '120px', targets = 0)
+                   ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7516,10 +7518,10 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(
-              list(
-                width = '120px', targets = 0,
-                width = '10px', targets = c(1:20))),
+            columnDefs = 
+              list(list(className = "dt-center", targets = 1:21),
+                   list(width = '120px', targets = 0)
+                   ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7628,10 +7630,10 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(
-              list(
-                width = '120px', targets = 0,
-                width = '10px', targets = c(1:20))),
+            columnDefs = 
+              list(list(className = "dt-center", targets = 1:21),
+                   list(width = '120px', targets = 0)
+                   ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -7686,7 +7688,7 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
+            # rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -7716,7 +7718,7 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
+            # `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             # `IR` = ir,
@@ -7755,10 +7757,9 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(
-              list(
-                width = '120px', targets = 0,
-                width = '10px', targets = c(1:23))),
+            columnDefs = list(list(className = "dt-center", targets = 1:22),
+                              list(width = '120px', targets = 0)
+                              ),
             # columnDefs = list(
             #   list(
             #     className = "dt-center", targets = 0:23)),
@@ -7815,7 +7816,7 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
+            # rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -7845,7 +7846,7 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
+            # `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             # `IR` = ir,
@@ -7884,10 +7885,9 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(
-              list(
-                width = '120px', targets = 0,
-                width = '10px', targets = c(1:23))),
+            columnDefs = list(list(className = "dt-center", targets = 1:22),
+                              list(width = '120px', targets = 0)
+                              ),
             # columnDefs = list(
             #   list(
             #     className = "dt-center", targets = 0:23)),
@@ -7944,7 +7944,7 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
+            # rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -7974,7 +7974,7 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
+            # `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             # `IR` = ir,
@@ -8013,10 +8013,9 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(
-              list(
-                width = '120px', targets = 0,
-                width = '10px', targets = c(1:23))),
+            columnDefs = list(list(className = "dt-center", targets = 1:22),
+                              list(width = '120px', targets = 0)
+                              ),
             # columnDefs = list(
             #   list(
             #     className = "dt-center", targets = 0:23)),
