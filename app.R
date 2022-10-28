@@ -45,18 +45,25 @@ Rosters <- read_csv('data/rosters_clean.csv')
 PitchingLog <- read_csv('data/pitching_log.csv')
 BattingLog <- read_csv('data/batting_log.csv')
 
-.pitching_log <- PitchingLog %>% 
-  janitor::clean_names() %>% 
-  select(temporada) %>% 
-  unique() %>% 
-  pull()
+.pitching_log <- c("2022-23", "2021-22")
+  
+  # 
+  # PitchingLog %>% 
+  # janitor::clean_names() %>% 
+  # filter(equipo == "Tiburones de la Guaira") %>%
+  # select(temporada) %>% 
+  # arrange(temporada) %>% 
+  # unique() %>% 
+  # pull()
 
 
-.batting_log <- BattingLog %>% 
-  janitor::clean_names() %>% 
-  select(temporada) %>% 
-  unique() %>% 
-  pull()
+.batting_log <- c("2022-23", "2021-22")
+  
+  # BattingLog %>% 
+  # janitor::clean_names() %>% 
+  # select(temporada) %>% 
+  # unique() %>% 
+  # pull()
 
 .rosters <- Rosters %>% 
   arrange(jugador, years) %>% 
@@ -363,32 +370,33 @@ leaders <- function(stat, .ip = 0){
         src = "ts_isotipo.png",
         elevation = 4,
         opacity = 0.8,
-        expand_on_hover = TRUE,
+        expand_on_hover = FALSE,
         fixed = TRUE,
         sidebarMenu(
           # meniItem Tiburones de la Guaira ----
           bs4SidebarMenu(
-            bs4SidebarMenuItem(
-            text = 'Inicio',
-            tabName = 'inicio',
-            # badgeLabel = "new", 
-            # badgeColor = "green",
-            icon = "home",
-            startExpanded = TRUE
-          ),
+          # Home ----
+            # bs4SidebarMenuItem(
+            # text = 'Inicio',
+            # tabName = 'inicio',
+            # # badgeLabel = "new", 
+            # # badgeColor = "green",
+            # icon = "home",
+            # startExpanded = TRUE
+            # ),
           # MenuSubItem Datos ----
           bs4SidebarMenuItem(
             text = 'Datos',
             tabName = 'datos',
             icon = "database",
-            startExpanded = FALSE,
+            startExpanded = TRUE,
             bs4SidebarMenuSubItem(text = 'Equipo', tabName = 'equipo', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Temporada', tabName = 'temporada', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Jugador', tabName = 'jugador', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Paises', tabName = 'paises', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Posicion', tabName = 'posicion', icon = "angle-right"),
             bs4SidebarMenuSubItem(text = 'Roster', tabName = 'roster', icon = "angle-right"),
-            bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "angle-right"),
+            # bs4SidebarMenuSubItem('Geograficas', tabName = 'geograficas', icon = "angle-right"),
             bs4SidebarMenuSubItem('Vzla vs Importados', tabName = 'vzla', icon = "angle-right")
             )
           ),
@@ -407,18 +415,18 @@ leaders <- function(stat, .ip = 0){
             text = 'Premios',
             tabName = 'premios',
             icon = "trophy",
-            bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "angle-right"),
-            bs4SidebarMenuSubItem('Números retirados', tabName = 'retirados', icon = "angle-right"),
-            bs4SidebarMenuSubItem('Salón de la Fama', tabName = 'fama', icon = "angle-right")
-          ),
+            bs4SidebarMenuSubItem('Premios en la LVBP', tabName = 'lvbp', icon = "angle-right")
+            # bs4SidebarMenuSubItem('Números retirados', tabName = 'retirados', icon = "angle-right"),
+            # bs4SidebarMenuSubItem('Salón de la Fama', tabName = 'fama', icon = "angle-right")
+            ),
           # menuItem History ----
-          bs4SidebarMenuItem(
-            text ='Historia',
-            tabName = 'historia',
-            icon = "hourglass",
-            bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "angle-right"),
-            bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "angle-right")
-          ),
+          # bs4SidebarMenuItem(
+          #   text ='Historia',
+          #   tabName = 'historia',
+          #   icon = "hourglass",
+          #   bs4SidebarMenuSubItem('Tiburones de la Guaira', tabName = 'en_num', icon = "angle-right"),
+          #   bs4SidebarMenuSubItem('Estadio', tabName = 'rr_sm', icon = "angle-right")
+          # ),
           # menuItem Graficos ----
           # bs4SidebarMenuItem(
           #   text ='Gráficos',
@@ -430,15 +438,15 @@ leaders <- function(stat, .ip = 0){
             text = 'Glosario',
             tabName = 'glosario',
             icon = "book",
-            bs4SidebarMenuSubItem('Estadistícas', tabName = 'g_stat', icon = "angle-right"),
-            bs4SidebarMenuSubItem('Sabermetría', tabName = 'sabermetrics', icon = "angle-right")
+            bs4SidebarMenuSubItem('Estadistícas', tabName = 'g_stat', icon = "angle-right")
+            # bs4SidebarMenuSubItem('Sabermetría', tabName = 'sabermetrics', icon = "angle-right")
           ),
           # menuItem Advanced Search ----
-          bs4SidebarMenuItem(
-            text = 'Busqueda Avanzada',
-            tabName = 'busqueda',
-            icon = "search-plus"
-          ),
+          # bs4SidebarMenuItem(
+          #   text = 'Busqueda Avanzada',
+          #   tabName = 'busqueda',
+          #   icon = "search-plus"
+          # ),
           # menuItem About us ----
           bs4SidebarMenuItem(
             text = 'Nosotros',
@@ -575,46 +583,49 @@ leaders <- function(stat, .ip = 0){
         #   ),
         tabItems(
         # TabItem Home ----
-          tabItem(
-            tabName = 'inicio',
-            tags$h2("BIENVENIDO A 60 AÑOS DE ESTADISTICAS DE TIBURONES DE LA GUAIRA", align = 'center'),
-            fluidRow(
-              column(7),
-              column(5,
-                     tags$head(
-                       tags$script('!function(d,s,id){var js,fjs=d.getElementsByTagName(s)  
-                                 [0],p=/^http:/.test(d.location)?\'http\':\'https\';
-                                 if(!d.getElementById(id)){js=d.createElement(s);
-                                 js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
-                                 fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");')
-                     ),
-                     tabsetPanel(
-                       id = "tabset122",
-                       side = "left",
-                       # TibuStats ----
-                       tabPanel(
-                         tabName = 'TibuStats',
-                           a("TibuStats en Twitter",
-                             class = "twitter-timeline", 
-                             href = "https://twitter.com/tibu_stats" 
-                           )
-                       ),
-                     # Tiburones BBC ----
-                       tabPanel(
-                         tabName = 'Tiburones BBC',
-                           a("Tiburones BBC en Twitter",
-                             class = "twitter-timeline", 
-                             href = "https://twitter.com/tiburones_net" 
-                           )
-
-                       )
-                     )
-                  )
-                )
-            # img(src = 'logo_60_anos.jpeg')
-            ),
+          # tabItem(
+          #   tabName = 'inicio',
+          #   tags$h2("BIENVENIDO A 60 AÑOS DE ESTADISTICAS DE TIBURONES DE LA GUAIRA", align = 'center'),
+          #   fluidRow(
+          #     column(7),
+          #     column(5,
+          #            tags$head(
+          #              tags$script('!function(d,s,id){var js,fjs=d.getElementsByTagName(s)  
+          #                        [0],p=/^http:/.test(d.location)?\'http\':\'https\';
+          #                        if(!d.getElementById(id)){js=d.createElement(s);
+          #                        js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+          #                        fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");')
+          #            ),
+          #            tabsetPanel(
+          #              id = "tabset122",
+          #              side = "left",
+          #              # TibuStats ----
+          #              tabPanel(
+          #                tabName = 'TibuStats',
+          #                  a("TibuStats en Twitter",
+          #                    class = "twitter-timeline", 
+          #                    href = "https://twitter.com/tibu_stats" 
+          #                  )
+          #              )
+          #              # Tiburones BBC ----
+          #              # tabPanel(
+          #              #   tabName = 'Tiburones BBC',
+          #              #     a("Tiburones BBC en Twitter",
+          #              #       class = "twitter-timeline", 
+          #              #       href = "https://twitter.com/tiburones_net" 
+          #              #     )
+          #              # 
+          #              # )
+          #            )
+          #         )
+          #       )
+          #   # img(src = 'logo_60_anos.jpeg')
+          #   ),
         # TabItem by Team ----
         tabItem(
+          h4('DATOS HISTÓRICOS DEL EQUIPO', align = "center", style = " color: #0d3583; 
+                                                                        text-transform: uppercase;
+                                                                        text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabName = 'equipo',
           bs4TabSetPanel(
             id = "tabset",
@@ -622,7 +633,7 @@ leaders <- function(stat, .ip = 0){
             tabPanel(
             # Picheo ----
               tabName = 'Picheo',
-            br(),
+              br(),
               fluidRow(
                 column(12,
                        bs4Dash::bs4Card(
@@ -697,7 +708,9 @@ leaders <- function(stat, .ip = 0){
           ),
         # TabItem by Season ----
         tabItem(
-          h4('Datos historicos por temporada', align = "center"),
+          h4('DATOS HISTÓRICOS POR TEMPORADAS', align = "center", style = " color: #0d3583; 
+                                                                        text-transform: uppercase;
+                                                                        text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabName = 'temporada',
           tabsetPanel(
             id = "tabset1",
@@ -806,22 +819,21 @@ leaders <- function(stat, .ip = 0){
           ),
         # TabItem by Player ----
         tabItem(
+          h4('DATOS HISTÓRICOS POR JUGADOR',
+          align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabName = 'jugador',
           tabsetPanel(
             id = "tabset2",
             side = "left",
             # Picheo ----
             tabPanel(
-              h2("Estadisticas historicas de lanzadores", 
-                 style = 'color: #b90e13;
-                         font-size: 19px;
-                         font-weight: 400;
-                         font-family: "Roboto Regular", sans-serif;
-                         text-align: center;
-                         text-transform: uppercase;
-                         text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'),
               tabName = 'Picheo',
-              br(),
+              h6('ESTADÍSTICAS DE LANZADORES', align = "center", style = " color: black; 
+                                                                        text-transform: uppercase;
+                                                                        font-weight: 700;
+                                                                        font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;"),
               fluidRow(
                 column(9),
                 column(3,
@@ -900,7 +912,8 @@ leaders <- function(stat, .ip = 0){
                            )
                   ),
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -909,7 +922,7 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('pit_log')
                              )
                            ),
-                    column(4)
+                    column(1)
                   )
                  ),
                 # Splits ---- 
@@ -926,7 +939,8 @@ leaders <- function(stat, .ip = 0){
                     ),
                   # Day/Night ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -935,11 +949,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_horario_pit')
                            )
                     ),
-                    column(2)
+                    column(1)
                     ),
                   # Opponent ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -948,11 +963,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_opponent_pit')
                            )
                     ),
-                    column(2)
+                    column(1)
                     ),
                   # Stadium ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -961,11 +977,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_stadium_pit')
                            )
                     ),
-                    column(2)
+                    column(1)
                     ),
                   # Month ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -974,11 +991,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_month_pit')
                            )
                     ),
-                    column(2)
+                    column(1)
                     ),
                   # Home Away ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -987,11 +1005,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_homeaway_pit')
                            )
                     ),
-                    column(2)
+                    column(1)
                     ),
                   # Pitcher Type ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1000,7 +1019,7 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_pitchertype_pit')
                            )
                     ),
-                    column(2)
+                    column(1)
                     )
                   )
               ),
@@ -1009,15 +1028,11 @@ leaders <- function(stat, .ip = 0){
             # Bateo ----
             tabPanel(
               tabName = 'Bateo',
-              h2("Estadisticas historicas de bateadores", 
-                 style = 'color: #b90e13;
-                         font-size: 19px;
-                         font-weight: 400;
-                         font-family: "Roboto Regular", sans-serif;
-                         text-align: center;
-                         text-transform: uppercase;
-                         text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);'),
-              br(),
+              h6('ESTADÍSTICAS DE BATEADORES',
+              align = "center", style = " color: black;
+                                        text-transform: uppercase;
+                                        font-weight: 700;
+                                        font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;"),
               fluidRow(
                 column(9),
                 column(3,
@@ -1025,7 +1040,7 @@ leaders <- function(stat, .ip = 0){
                          inputId = 'select_jugador_bat',
                          label = 'Bateadores',
                          choices = .bateadores,
-                         selected = "Lorenzo Cedrola"
+                         selected = "Maikel García"
                          )
                        )
                 ),
@@ -1095,7 +1110,8 @@ leaders <- function(stat, .ip = 0){
                     )
                   ),
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1104,7 +1120,7 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('bat_log')
                            )
                     ),
-                    column(4)
+                    column(1)
                     )
                   ),
                 # Splits ----
@@ -1121,7 +1137,8 @@ leaders <- function(stat, .ip = 0){
                   ),
                   # Day/Night ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1130,11 +1147,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_horario_bat')
                            )
                     ),
-                    column(2)
+                    column(1)
                   ),
                   # Opponent ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1143,11 +1161,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_opponent_bat')
                            )
                     ),
-                    column(2)
+                    column(1)
                   ),
                   # Stadium ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1156,11 +1175,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_stadium_bat')
                            )
                     ),
-                    column(2)
+                    column(1)
                   ),
                   # Month ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1169,11 +1189,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_month_bat')
                            )
                     ),
-                    column(2)
+                    column(1)
                   ),
                   # Home Away ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1182,11 +1203,12 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_homeaway_bat')
                            )
                     ),
-                    column(2)
+                    column(1)
                     ),
                   # Order Bat ----
                   fluidRow(
-                    column(8,
+                    column(1),
+                    column(10,
                            br(),
                            bs4Card(
                              closable = FALSE,
@@ -1195,7 +1217,7 @@ leaders <- function(stat, .ip = 0){
                              DT::dataTableOutput('split_order_bat')
                            )
                     ),
-                    column(2)
+                    column(1)
                     )
                   )
                 ),
@@ -1204,7 +1226,10 @@ leaders <- function(stat, .ip = 0){
           ),
         # TabItem by Position ----
         bs4TabItem(
-          h4('Datos historicos por posicion', align = 'center'),
+          h4('DATOS HISTÓRICOS POR POSICIÓN',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabName = 'posicion',
             # Picheo ----
           tabsetPanel(
@@ -1319,7 +1344,10 @@ leaders <- function(stat, .ip = 0){
           ),
         # TabItem by country ----
         tabItem(
-          h4('Datos historicos por Paises', align = "center"),
+          h4('DATOS HISTÓRICOS POR PAÍSES',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabName = 'paises',
           tabsetPanel(
             id = "tabset10",
@@ -1454,7 +1482,10 @@ leaders <- function(stat, .ip = 0){
         ),
         # TabItem by Roster ----
         bs4TabItem(
-          h4('Rosters historicos por posicion', align = 'center'),
+          h4('DATOS DE ROSTERS',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabName = 'roster',
           br(),
           # input roster ----
@@ -1504,7 +1535,10 @@ leaders <- function(stat, .ip = 0){
         ),
         # Tabitem Estadísticas Vzla vs importados ----
         tabItem(
-          h4('Venezolanos vs Importados', align = "center"),
+          h4('VENEZOLANOS VS IMPORTADOS',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabName = 'vzla',
           tabsetPanel(
             id = "tabpanel11",
@@ -2356,56 +2390,59 @@ leaders <- function(stat, .ip = 0){
               )
           ),
         # Stats geographics ----
-        tabItem(
-          tabName = 'geograficas',
-          h4('Dashboard de estadísticas geográficas', align = 'center'),
-          tabsetPanel(
-            id = "tabset8",
-            side = "left",
-            # General ----
-            tabPanel(
-              tabName = 'General',
-              br(),
-              fluidRow(
-                column(8,
-                       # highchartOutput('country_chart', width = '800px', height = '800px')
-                       highchartOutput('country_chart', width = '800px', height = '800px')
-                       # highchartOutput('country_chart')
-                       ),
-                # column(2,
-                #        bs4ValueBoxOutput("valuebox_cpit", width = 12),
-                #        bs4ValueBoxOutput("valuebox_lan", width = 12),
-                #        bs4ValueBoxOutput("valuebox_right", width = 12),
-                #        bs4ValueBoxOutput("valuebox_left", width = 12)
-                #        ),
-                column(4,
-                       highchartOutput('foreign_chart'),
-                       highchartOutput('position_chart')
-                       )
-                )
-              ),
-            # Por paises -----
-            tabPanel(
-              tabName = 'Por Paises',
-              br(),
-              fluidRow(
-                column(8,
-                       highchartOutput('paises_chart', width = '800px', height = '800px')
-                ),
-                # column(2,
-                #        bs4ValueBoxOutput("valuebox_cpit", width = 12),
-                #        bs4ValueBoxOutput("valuebox_lan", width = 12),
-                #        bs4ValueBoxOutput("valuebox_right", width = 12),
-                #        bs4ValueBoxOutput("valuebox_left", width = 12)
-                #        ),
-                column(4,
-                       highchartOutput('foreign_chart_paises'),
-                       highchartOutput('position_chart_paises')
-                  )
-                )
-              )
-            )
-          ),
+        # tabItem(
+        #   tabName = 'geograficas',
+        #   h4('DATOS HISTÓRICOS GEOGRÁFICoS',
+        #      align = "center", style = " color: #0d3583; 
+        #                             text-transform: uppercase;
+        #                             text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
+        #   tabsetPanel(
+        #     id = "tabset8",
+        #     side = "left",
+        #     # General ----
+        #     tabPanel(
+        #       tabName = 'General',
+        #       br(),
+        #       fluidRow(
+        #         column(8,
+        #                # highchartOutput('country_chart', width = '800px', height = '800px')
+        #                highchartOutput('country_chart', width = '800px', height = '800px')
+        #                # highchartOutput('country_chart')
+        #                ),
+        #         # column(2,
+        #         #        bs4ValueBoxOutput("valuebox_cpit", width = 12),
+        #         #        bs4ValueBoxOutput("valuebox_lan", width = 12),
+        #         #        bs4ValueBoxOutput("valuebox_right", width = 12),
+        #         #        bs4ValueBoxOutput("valuebox_left", width = 12)
+        #         #        ),
+        #         column(4,
+        #                highchartOutput('foreign_chart'),
+        #                highchartOutput('position_chart')
+        #                )
+        #         )
+        #       ),
+        #     # Por paises -----
+        #     tabPanel(
+        #       tabName = 'Por Paises',
+        #       br(),
+        #       fluidRow(
+        #         column(8,
+        #                highchartOutput('paises_chart', width = '800px', height = '800px')
+        #         ),
+        #         # column(2,
+        #         #        bs4ValueBoxOutput("valuebox_cpit", width = 12),
+        #         #        bs4ValueBoxOutput("valuebox_lan", width = 12),
+        #         #        bs4ValueBoxOutput("valuebox_right", width = 12),
+        #         #        bs4ValueBoxOutput("valuebox_left", width = 12)
+        #         #        ),
+        #         column(4,
+        #                highchartOutput('foreign_chart_paises'),
+        #                highchartOutput('position_chart_paises')
+        #           )
+        #         )
+        #       )
+        #     )
+        #   ),
         # Glossary ----
         tabItem(
           tabName = "g_stat",
@@ -2440,7 +2477,7 @@ leaders <- function(stat, .ip = 0){
                    ),
             column(3,
                    tags$div(class = "footer-glossary-title", tags$a("Shutout (SHO)")),
-                   tags$div(class = "footer-glossary-text", "Juegos completo sin permitir carreras")
+                   tags$div(class = "footer-glossary-text", "Blanqueos")
                    ),
             column(3,
                    tags$div(class = "footer-glossary-title", tags$a("Saves (SV)")),
@@ -2513,8 +2550,8 @@ leaders <- function(stat, .ip = 0){
             ),
           # Batting -----
           br(),
-          h4('BATTING', align = 'center'),
           br(),
+          h4('BATTING', align = 'center'),
           br(),
           # Firts row ----
           fluidRow(
@@ -2607,7 +2644,7 @@ leaders <- function(stat, .ip = 0){
                    tags$div(class = "footer-glossary-text", "Porcentaje de embasado")
             ),
             column(3,
-                   tags$div(class = "footer-glossary-title", tags$a("Sacrifice Flies (SLG)")),
+                   tags$div(class = "footer-glossary-title", tags$a("Slugging (SLG)")),
                    tags$div(class = "footer-glossary-text", "Porcentaje slugging")
             ),
             column(3,
@@ -13639,7 +13676,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             # fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(1:20))
+            columnDefs = list(list(className = "dt-center", targets = c(0:20))
                               ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
@@ -14141,7 +14178,7 @@ leaders <- function(stat, .ip = 0){
             slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
             # ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
+            # rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -14170,7 +14207,6 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             # `IR` = ir,
@@ -14207,7 +14243,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -14260,7 +14296,7 @@ leaders <- function(stat, .ip = 0){
             slg = round(sum(h - `2b` - `3b` - hr, (2 *`2b`), (3 * `3b`), (4 * hr), na.rm = T) / ab, 3),
             ops = round(sum(slg, obp, na.rm = T), 3),
             # ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
+            # rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -14289,7 +14325,7 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
+            # `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             # `IR` = ir,
@@ -14327,7 +14363,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:22))),
+            columnDefs = list(list(className = "dt-center", targets = c(0:21))),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",

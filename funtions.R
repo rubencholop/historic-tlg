@@ -705,7 +705,7 @@ str(.df)
 
 # Functions to extract New data by season by hitter ----
 
-.URL <- "https://pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2021-22"
+.URL <- "https://pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2022-23"
 
 
 # append data new ---
