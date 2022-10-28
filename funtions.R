@@ -693,15 +693,12 @@ str(.df)
 .test_pitching <- get_pitching(.URL = "http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=TIB&TE=2020-21")
 
 # Functions to extract New data by season by pitcher ----
-.URL_pit<- "https://pelotabinaria.com.ve/beisbol/even-lan.php?tipo=temp&t-desde=2021-22&t-hasta=2021-22&t-ex-desde=1&t-ex-hasta=30&e-desde=0&e-hasta=99&nov=x&activo=x&mlb=x&cr-pais=%3D&pais=Todos&equipo=TIB&franquicia=Todos&lanza=X&premio=X&crs1=W&cr1=%3E%3D&vl1=0&crs2=W&cr2=%3E%3D&vl2=0&crs3=W&cr3=%3E%3D&vl3=0&crs4=W&cr4=%3E%3D&vl4=0&crs5=W&cr5=%3E%3D&vl5=0&crs6=W&cr6=%3E%3D&vl6=0&orden=SO&c_orden=DESC&buscar=1" %>% 
-  read_html() %>% 
-  html_nodes(".sortable") %>% 
-  html_table(fill = TRUE) %>% 
-  .[[1]] %>% 
-  as.data.frame() %>% 
-  select(-X1) %>% 
-  janitor::row_to_names(row_number = 1) %>% 
-  filter(IP >= 0)
+
+
+
+
+
+
 
 # Functions to extract New data by season by hitter ----
 
@@ -718,15 +715,45 @@ new_batting <- get_batting(.URL) %>%
   dplyr::select(player_id, years, jugador:sf, refuerzo, ronda, resultado)
   
 
-brs <- readr::read_csv('data/batting_reseason.csv') %>% 
+brs_ <- readr::read_csv('data/batting_reseason.csv') %>% 
   filter(years == stringr::str_extract(.URL, '(?<=TIB&TE=).*')) %>% 
-  dplyr::select(-ir)
+  dplyr::select(-ir) %>% 
   dplyr::bind_cols(new_batting)
   
+
+# REVISAR EN EL CODIGO LOS IR ESTA MALLLLL ELIMINARLO SO CORRERLOS ASI.
   
 
 write.table(new_batting, "data/batting_reseason.csv", sep = ",",
             col.names = FALSE, append = T, row.names = FALSE)
 
+
+
+
+new_pitching <- read_html(.URL) %>% 
+  html_nodes(css = '.sortable') %>% 
+  html_table(fill = TRUE) %>% 
+  .[[3]] %>% 
+  as.data.frame() %>% 
+  janitor::row_to_names(row_number = 1) %>% 
+  janitor::clean_names() %>% 
+  dplyr::mutate(years = "2022-23") %>% 
+  dplyr::slice(1:(n()-1)) %>% 
+  dplyr::mutate(
+    player = paste0(stringr::str_sub(jugador, 1, 1), ". ", sub("^\\S+\\s+", '', jugador)),
+    jugador = player,
+    player_id = " "
+    ) %>% 
+  dplyr::select(player_id, years, jugador, edad, w, l, wlp, era, g, gs, cg, sho, sv, ip, h, r, er, hr,
+                bb, so, ir, whip, h9, hr9, bb9, so9, sobb, bk)
+
+
+write.table(new_pitching, "data/pitching_reseason.csv", sep = ",",
+            col.names = FALSE, append = T, row.names = FALSE)
+
+prs_ <- readr::read_csv('data/pitching_reseason.csv') %>% 
+  filter(years == stringr::str_extract(.URL, '(?<=TIB&TE=).*')) %>% 
+  dplyr::select(-ir) %>% 
+  dplyr::bind_cols(new_batting)
 
 

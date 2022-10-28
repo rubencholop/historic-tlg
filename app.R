@@ -440,7 +440,7 @@ leaders <- function(stat, .ip = 0){
             icon = "book",
             bs4SidebarMenuSubItem('Estadistícas', tabName = 'g_stat', icon = "angle-right")
             # bs4SidebarMenuSubItem('Sabermetría', tabName = 'sabermetrics', icon = "angle-right")
-          ),
+          )
           # menuItem Advanced Search ----
           # bs4SidebarMenuItem(
           #   text = 'Busqueda Avanzada',
@@ -448,11 +448,11 @@ leaders <- function(stat, .ip = 0){
           #   icon = "search-plus"
           # ),
           # menuItem About us ----
-          bs4SidebarMenuItem(
-            text = 'Nosotros',
-            tabName = 'nosotros',
-            icon = "user-friends"
-          )
+          # bs4SidebarMenuItem(
+          #   text = 'Nosotros',
+          #   tabName = 'nosotros',
+          #   icon = "user-friends"
+          # )
         ),
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
         tags$head(
@@ -3002,7 +3002,7 @@ leaders <- function(stat, .ip = 0){
           janitor::clean_names() 
       })
       
-      #By Pitching Log -----
+      #By Game Log -----
       # Table pitching log ----
       output$pit_log <- DT::renderDataTable({
 
@@ -3097,8 +3097,8 @@ leaders <- function(stat, .ip = 0){
             equipo == "Tiburones de la Guaira",
             player == input$select_jugador_bat,
             years == input$select_temporada_batlog
-            # player == "Lorenzo Cedrola",
-          #   # years == "2021-22"
+          # player == "Maikel García",
+          #   years == "2022-23"
             ) %>%
           mutate(
             avg = round((h) / ab, 3)
@@ -4753,7 +4753,7 @@ leaders <- function(stat, .ip = 0){
           summarise(
             years = 'Total',
             edad = round(mean(edad), 2),
-            g = sum(g, na.rm = T),
+            # g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
@@ -4785,7 +4785,7 @@ leaders <- function(stat, .ip = 0){
           group_by(years) %>% 
           summarise(
             edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
+            # g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
@@ -4815,7 +4815,7 @@ leaders <- function(stat, .ip = 0){
           rename(
             Temporada = years,
             `Edad` = edad,
-            `G` = g,
+            # `G` = g,
             `PA` = pa,
             `AB` = ab,
             `R` = r,
@@ -4867,7 +4867,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:23))
+            columnDefs = list(list(className = "dt-center", targets = c(0:22))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
@@ -4897,7 +4897,7 @@ leaders <- function(stat, .ip = 0){
           summarise(
             years = 'Total',
             edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
+            # g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
@@ -4930,7 +4930,7 @@ leaders <- function(stat, .ip = 0){
           group_by(years) %>% 
           summarise(
             edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
+            # g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
@@ -4962,7 +4962,7 @@ leaders <- function(stat, .ip = 0){
             `Temporada` = years,
             `Refuerzo` = refuerzo,
             `Edad` = edad,
-            `G` = g,
+            # `G` = g,
             `PA` = pa,
             `AB` = ab,
             `R` = r,
@@ -5015,7 +5015,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 0:24)),
+            columnDefs = list(list(className = "dt-center", targets = 0:23)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -5044,7 +5044,7 @@ leaders <- function(stat, .ip = 0){
           group_by(years) %>% 
           summarise(
             edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
+            # g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
@@ -5073,7 +5073,7 @@ leaders <- function(stat, .ip = 0){
           summarise(
             years = "Total",
             edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
+            # g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
@@ -5107,7 +5107,7 @@ leaders <- function(stat, .ip = 0){
           group_by(years) %>% 
           summarise(
             edad = round(mean(edad), 1),
-            g = sum(g, na.rm = T),
+            # g = sum(g, na.rm = T),
             pa = sum(pa, na.rm = T),
             ab = sum(ab, na.rm = T),
             r = sum(r, na.rm = T),
@@ -5139,7 +5139,7 @@ leaders <- function(stat, .ip = 0){
           rename(
             `Temporada` = years,
             `Edad` = edad,
-            `G` = g,
+            # `G` = g,
             `PA` = pa,
             `AB` = ab,
             `R` = r,
@@ -5193,8 +5193,8 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedColumns = list(LeftColumns = 3),
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 0:25),
-                              list(width = '80px', targets = 26)
+            columnDefs = list(list(className = "dt-center", targets = 0:24),
+                              list(width = '80px', targets = 24)
             ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
@@ -5747,6 +5747,7 @@ leaders <- function(stat, .ip = 0){
         player_summarise <- brs() %>%
           filter(
             years == input$select_temporada_bat,
+            # years == "2022-23",
             ronda == "regular"
             ) %>% 
           mutate(
@@ -5807,6 +5808,7 @@ leaders <- function(stat, .ip = 0){
         batting_player <- brs() %>%
           filter(
             years == input$select_temporada_bat,
+            # years == "2022-23",
             ronda == "regular"
             ) %>%
           select(-ronda, -resultado, -refuerzo, -player_id, -ir, -rc) %>% 
@@ -6262,7 +6264,7 @@ leaders <- function(stat, .ip = 0){
             fixedHeader = TRUE,
             columnDefs = list(list(className = "dt-center", targets = c(0, 2:25)),
                               list(width = '100px', targets = 1),
-                              list(width = '85px', targets = 27)
+                              list(width = '85px', targets = 25)
                               ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
