@@ -1116,7 +1116,7 @@ leaders <- function(stat, .ip = 0){
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "BATEO LOG",
+                             title = "BATTING LOG",
                              DT::dataTableOutput('bat_log')
                            )
                     ),
@@ -3771,7 +3771,11 @@ leaders <- function(stat, .ip = 0){
         
         # Data ----
         df <- Batlog() %>%
-        # df <- batlog %>% 
+        # df <- batlog %>%
+          mutate(
+            op = paste0("vs", " ", oponente),
+            player = paste0(first_name, " ", last_name)
+            ) %>% 
           left_join(GameResult() %>% 
                       select(-fecha), by = "juego") %>% 
           mutate(player = paste0(first_name, " ", last_name)) %>% 
@@ -3784,7 +3788,7 @@ leaders <- function(stat, .ip = 0){
               # years == "2021-22"
           ) %>%
           dplyr::select(
-            years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, orden_bat, oponente
+            years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, orden_bat, op
           ) %>% 
           mutate( 
             avg = round((h) / ab, 3),
@@ -3792,7 +3796,7 @@ leaders <- function(stat, .ip = 0){
             x1b = (h - x2b - x3b - hr)
             ) %>% 
           arrange(n, desc(fecha)) %>% 
-          group_by(oponente) %>% 
+          group_by(op) %>% 
           summarise(
             G = n(),
             AB = sum(ab, na.rm = TRUE),
@@ -3813,7 +3817,7 @@ leaders <- function(stat, .ip = 0){
             `2B` = x2b,
             `3B` = x3b,
           ) %>% 
-          rename(`CATEGORY` = oponente) %>% 
+          rename(`CATEGORY` = op) %>% 
           select(-TH)
         
         
@@ -3957,7 +3961,8 @@ leaders <- function(stat, .ip = 0){
         
         # Data ----
         df <- Batlog() %>%
-          left_join(GameResult() %>% dplyr::select(-fecha), by = "juego") %>%
+          # df <- batlog %>%
+          left_join(game_result %>% dplyr::select(-fecha), by = "juego") %>%
           mutate(
             player = paste0(first_name, " ", last_name),
             homeaway = case_when(
@@ -3970,7 +3975,7 @@ leaders <- function(stat, .ip = 0){
             player == input$select_jugador_bat,
             years == input$select_temporada_split_bat
             # player == "Lorenzo Cedrola",
-              # years == "2021-22"
+            # years == "2021-22"
           ) %>%
           dplyr::select(
             years, fecha, player, ab, r, h, x2b, x3b, hr, bb, so, estadio ,oponente, equipo, ronda, n, orden_bat, homeaway
@@ -4031,7 +4036,7 @@ leaders <- function(stat, .ip = 0){
             fixedColumns = list(LeftColumns = 3),
             columnDefs = list(list(className = "dt-center", targets = c(0:12))
                               # list(width = '100px', targets = 1)
-            ),,
+            ),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -4765,8 +4770,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            # ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -4799,8 +4802,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            # ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -4831,10 +4832,8 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
-            # `IR` = ir,
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf
@@ -4868,7 +4867,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0:24))
+            columnDefs = list(list(className = "dt-center", targets = c(0:23))
                               # list(width = '100px', targets = 1)
             ),
             headerCallback = JS(headerCallback),
@@ -4915,7 +4914,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -4949,7 +4947,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -4960,7 +4957,7 @@ leaders <- function(stat, .ip = 0){
           ) %>% 
           arrange(desc(years))
         
-        df <-  rbind(player_summarise, batting_player) %>%
+        df <-  rbind(batting_player, player_summarise) %>%
           rename(
             `Temporada` = years,
             `Refuerzo` = refuerzo,
@@ -4982,7 +4979,6 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             `HBP` = hbp,
@@ -5019,7 +5015,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = 0:25)),
+            columnDefs = list(list(className = "dt-center", targets = 0:24)),
             headerCallback = JS(headerCallback),
             initComplete = JS(
               "function(settings, json) {",
@@ -5065,7 +5061,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -5095,7 +5090,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -5130,7 +5124,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -5163,7 +5156,6 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             `HBP` = hbp,
@@ -5201,7 +5193,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedColumns = list(LeftColumns = 3),
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = 0:26),
+            columnDefs = list(list(className = "dt-center", targets = 0:25),
                               list(width = '80px', targets = 26)
             ),
             headerCallback = JS(headerCallback),
@@ -5774,8 +5766,6 @@ leaders <- function(stat, .ip = 0){
             obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            ir = as.numeric(ir),
-            rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
             hbp = as.numeric(hbp),
@@ -5805,8 +5795,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            ir = sum(ir, na.rm = T),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -5821,7 +5809,7 @@ leaders <- function(stat, .ip = 0){
             years == input$select_temporada_bat,
             ronda == "regular"
             ) %>%
-          select(-ronda, -resultado, -refuerzo, -player_id) %>% 
+          select(-ronda, -resultado, -refuerzo, -player_id, -ir, -rc) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -5839,8 +5827,6 @@ leaders <- function(stat, .ip = 0){
             obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            ir = as.numeric(ir),
-            rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
             hbp = as.numeric(hbp),
@@ -5872,10 +5858,8 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
-            `IR` = ir,
             `HBP` = hbp,
             `SH` = sh,
             `SF` = sf
@@ -5911,7 +5895,7 @@ leaders <- function(stat, .ip = 0){
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
             # columnDefs = list(list(className = "dt-center", targets = c(0:26))),
-            columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:24)),
                               list(width = '100px', targets = 1)
                               ),
             # list(width = '100px', targets = 1)),
@@ -5961,7 +5945,6 @@ leaders <- function(stat, .ip = 0){
             obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
             hbp = as.numeric(hbp),
@@ -5991,7 +5974,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -6008,7 +5990,7 @@ leaders <- function(stat, .ip = 0){
             ronda == "round robin"
                  # trimws(X5) != '' 
                  ) %>%
-          select(-ronda, -resultado, -ir, -player_id) %>% 
+          select(-ronda, -resultado, -ir, -player_id, -rc) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -6026,7 +6008,6 @@ leaders <- function(stat, .ip = 0){
             obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
             hbp = as.numeric(hbp),
@@ -6059,7 +6040,6 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             `HBP` = hbp,
@@ -6097,7 +6077,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             fixedHeader = TRUE,
             fixedColumns = list(LeftColumns = 3),
-            columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:25)),
                               list(width = '100px', targets = 1)
                               ),
             headerCallback = JS(headerCallback),
@@ -6146,7 +6126,6 @@ leaders <- function(stat, .ip = 0){
             obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
             hbp = as.numeric(hbp),
@@ -6176,7 +6155,6 @@ leaders <- function(stat, .ip = 0){
             obp = round(sum(h, bb, hbp, na.rm = T) / sum(ab, bb, hbp, sf, na.rm = T), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = sum(rc, na.rm = T),
             tb = sum(tb, na.rm = T),
             xb = sum(xb, na.rm = T),
             hbp = sum(hbp, na.rm = T),
@@ -6193,7 +6171,7 @@ leaders <- function(stat, .ip = 0){
             years == input$select_temporada_bat,
             ronda == "finales",
             trimws(pa) != '' ) %>% 
-          select(-ronda, -ir, -player_id) %>% 
+          select(-ronda, -ir, -player_id, -rc) %>% 
           mutate(
             edad = as.numeric(edad),
             g = as.numeric(g),
@@ -6211,7 +6189,6 @@ leaders <- function(stat, .ip = 0){
             obp = round((h + bb + hbp) / (ab + bb + hbp + sf), 3),
             slg = round((h - `2b` - `3b` - hr + (2 *`2b`) + (3 * `3b`)+  (4 * hr))/ ab, 3),
             ops = round(slg + obp, 3),
-            rc = as.numeric(rc),
             tb = as.numeric(tb),
             xb = as.numeric(xb),
             hbp = as.numeric(hbp),
@@ -6246,7 +6223,6 @@ leaders <- function(stat, .ip = 0){
             `OBP` = obp,
             `SLG` = slg,
             `OPS` = ops,
-            `RC` = rc,
             `TB` = tb,
             `XB` = xb,
             `HBP` = hbp,
@@ -6284,7 +6260,7 @@ leaders <- function(stat, .ip = 0){
             rownames = FALSE,
             # fixedColumns = list(LeftColumns = 3),
             fixedHeader = TRUE,
-            columnDefs = list(list(className = "dt-center", targets = c(0, 2:26)),
+            columnDefs = list(list(className = "dt-center", targets = c(0, 2:25)),
                               list(width = '100px', targets = 1),
                               list(width = '85px', targets = 27)
                               ),
