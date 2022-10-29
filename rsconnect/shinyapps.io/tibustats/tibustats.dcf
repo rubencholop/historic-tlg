@@ -5,10 +5,10 @@ account: tibustats
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4835661
-bundleId: 6449684
+bundleId: 6451795
 url: https://tibustats.shinyapps.io/tibustats/
-when: 1666932673.93299
-lastSyncTime: 1666932673.93306
+when: 1666977965.03797
+lastSyncTime: 1666977965.03799
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: analysis/Analysis.R|analysis/charts.R|analysis/Dataset.R|app_tiburones.R|connect_data.R|img_rowtable.R|last_season_tables.R|scraper_lvbp.R|script de tablas nuevas tlg

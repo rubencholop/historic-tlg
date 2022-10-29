@@ -440,7 +440,7 @@ leaders <- function(stat, .ip = 0){
             icon = "book",
             bs4SidebarMenuSubItem('Estadistícas', tabName = 'g_stat', icon = "angle-right")
             # bs4SidebarMenuSubItem('Sabermetría', tabName = 'sabermetrics', icon = "angle-right")
-          )
+          ),
           # menuItem Advanced Search ----
           # bs4SidebarMenuItem(
           #   text = 'Busqueda Avanzada',
@@ -448,12 +448,13 @@ leaders <- function(stat, .ip = 0){
           #   icon = "search-plus"
           # ),
           # menuItem About us ----
-          # bs4SidebarMenuItem(
-          #   text = 'Nosotros',
-          #   tabName = 'nosotros',
-          #   icon = "user-friends"
-          # )
+          bs4SidebarMenuItem(
+            text = 'Nosotros',
+            tabName = 'nosotros',
+            icon = "user-friends"
+          )
         ),
+        # Side bar custom ----
         tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
         tags$head(
           tags$style(
@@ -509,7 +510,7 @@ leaders <- function(stat, .ip = 0){
                               )
                        ),
                      tags$li(
-                       tags$a(href = "https://www.instagram.com/rubencholop/",
+                       tags$a(href = "https://www.instagram.com/tibu_stats/",
                               tags$i(class = "fab fa-instagram big-icon"),
                               style = "border-left-style: solid;border-left-width: 0px;padding-left: 
                               10px;padding-right: 10px; font-size:1.5rem;"
@@ -520,14 +521,14 @@ leaders <- function(stat, .ip = 0){
                  )
         ),
         # Source Pelotabinaria ----
-        fluidRow(
-          column(6,
-                 span("Fuente de datos:"),
-                 a(href = "http://www.pelotabinaria.com.ve/beisbol/", target = "_blank", "http://www.pelotabinaria.com.ve/")
-          ),
-          column(6)
-          ),
-        br(),
+        # fluidRow(
+        #   column(6,
+        #          span("Fuente de datos:"),
+        #          a(href = "http://www.pelotabinaria.com.ve/beisbol/", target = "_blank", "http://www.pelotabinaria.com.ve/")
+        #   ),
+        #   column(6)
+        #   ),
+        # br(),
         # Derechos reservados ----
         fluidRow(
           column(2),
@@ -538,7 +539,7 @@ leaders <- function(stat, .ip = 0){
           )
         ),
       # Title ----
-      title = 'Tiburones de la Guaira B.B.C',
+      title = 'TIBUSTATS',
       # Body ----
       body = bs4DashBody(
         tags$head(shiny::includeHTML(("google-analytics.html"))),
@@ -1651,7 +1652,10 @@ leaders <- function(stat, .ip = 0){
         # Tabitem Records ----
         tabItem(
           tabName = 'deporvida',
-          h4('Records de por vida', align = 'center'),
+          h4('RECORDS DE POR VIDA',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabsetPanel(
             id = "tabpanel4",
             side = "left",
@@ -1991,7 +1995,10 @@ leaders <- function(stat, .ip = 0){
         # Records by season ----
         tabItem(
           tabName = 'por_temporadas',
-          h4('Records por temporadas ', align = 'center'),
+          h4('PREOMIOS POR TEMPORADA',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           tabsetPanel(
             id = "tabpanel6",
             side = "left",
@@ -2297,10 +2304,13 @@ leaders <- function(stat, .ip = 0){
               )
             )
           ),
-        # Records LVBP ----
+        # Goals LVBP ----
         tabItem(
           tabName = 'lvbp',
-          h2('Records en la LVBP ', align = 'center'),
+          h4('PREMIOS DE GUAIRISTAS EN LA LVBP',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           br(),
           fluidRow(
             column(2),
@@ -2447,9 +2457,14 @@ leaders <- function(stat, .ip = 0){
         # Glossary ----
         tabItem(
           tabName = "g_stat",
+          h4('GLOSARIO',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
+          br(),
+          br(),
           h4('PITCHING', align = 'center'),
           br(),
-          
           # First row ----
           fluidRow(
             column(3,
@@ -2892,7 +2907,91 @@ leaders <- function(stat, .ip = 0){
               br()
               )
             )
+          ),
+        # About us ----
+        tabItem(
+          tabName = 'nosotros',
+          h4('NOSOTROS',
+             align = "center", style = " color: #0d3583; 
+                                    text-transform: uppercase;
+                                    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
+          br(),
+          br(),
+          # Description ----
+          fluidRow(
+            column(7,
+                   tags$p("TibuStats nace en 2020, durante la pandemia, cuando surgía la inquietud de acceder a información de
+                   iburones de la Guaira de forma fácil, rápida y sin mucha búsqueda... Es por ello que el creador de TibuStats,",
+                  tags$a(href = "https://ruben-lopez.shinyapps.io/Portfolio/", target = "_blank", "Rubén López"),
+                   "decidió iniciar la creación de una opción web de TibuStats.", align = "justify"),
+                  
+                  tags$p("Para ello, se extrajo un número importante de registros históricos de diferentes fuentes de dato.
+                         TibuStats es un lugar único de estadísticas de jugadores que han pasado por Tiburones de la Guaira y  
+                         un regalo para la fanaticada, y una oportunidad especial para celebrar los 60 aniversarios del equipo.",
+                         align = "justify"),
+
+                   
+                  tags$p("Esta Aplicación web consta de más de 60 años de historia recopilada de dos fuentes gratuitas de 
+                   información:", align = "justify"),
+                  tags$div(
+                    tags$ul(
+                      tags$li(
+                        tags$a(href = "https://pelotabinaria.com.ve/beisbol/", target = "_blank", "Pelota Binaria"),
+                        tags$div(
+                          tags$p("Se extrajo información de Tiburones de la Guaira desde la temporada 196-63 hasta la 
+                                 temporada 2014-15.",
+                                 align = "justify")
+                        )
+                      ),
+                      tags$li(
+                        tags$a(href = "https://sportsdata.io/developers/api-documentation/mlb",
+                               target = "_blank", "MLB API"),
+                        tags$div(
+                          tags$p("Se extrajo información via el API publica de MLB desde 2015 hasta la actual temporada",
+                                 style = "font-size: .95rem", align = "justify")
+                          )
+                        )
+                      )
+                    )
+                  ),
+            # Ruben Lopez -----
+            column(5,
+                   box(
+                     width = 12,
+                     collapsed = FALSE,
+                     collapsible = FALSE,
+                     closable = FALSE,
+                     socialBox(
+                       collapsible = FALSE,
+                       collapsed = FALSE,
+                       closable = FALSE,
+                       title = userBlock(
+                         image = "Ruben_1.jpeg",
+                         title = "Rubén López",
+                         subtitle = " "
+                       ),
+                       socialButton(
+                         href = "https://www.instagram.com/rubencholop/",
+                         icon = icon("twitter")
+                       ),
+                       socialButton(
+                         href = "https://www.instagram.com/rubencholop/",
+                         icon = icon("instagram")
+                       ),
+                       footer = "Data Scientist"
+                       )
+                     ),
+                   br(),
+                   br(),
+                   tags$p("Especial agradecimiento a las personas que creyeron en la idea y en el proyecto desde sus inicios a medido
+                   de 2020, son parte importante de este espacio por sus ideas y propuestas para que cada vez fuera mejor.",
+                          align = "justify")
+                   
+                   )
+            # End ----
+            )
           )
+
         )
         # End body ----
       )
