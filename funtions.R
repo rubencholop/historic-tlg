@@ -81,9 +81,11 @@ get_batting <- function(.URL){
     dplyr::filter(pa > 0) %>% 
     subset(edad != 'EDAD') %>% 
     dplyr::slice(1:(n()-1)) %>% 
-    dplyr::mutate(player = paste0(stringr::str_sub(jugador, 1, 1), ". ", sub("^\\S+\\s+", '', jugador)),
-                  jugador = player) %>% 
-    dplyr::select(-player)
+    dplyr::mutate(
+      player = paste0(stringr::str_sub(jugador, 1, 1), ". ", sub("^\\S+\\s+", '', jugador)),
+      jugador = player
+      ) %>% 
+    dplyr::select(-player) 
 
   futile.logger::flog.info('Data Wrangling completed')
   batting

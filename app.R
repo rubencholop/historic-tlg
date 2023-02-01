@@ -1,16 +1,16 @@
 # Libraries ----
 library(shiny)
+library(shinydashboardPlus)
 library(bs4Dash)
 library(shinyWidgets)
 library(lubridate)
 library(plotly)
 library(dplyr)
 library(DT)
-# library(stringr)
 library(readr)
-library(highcharter)
+# library(highcharter)
 library(shinyalert)
-library(renv)
+# library(renv)
 library(tweetrmd)
 library(rtweet)
 # library(stringi) 
@@ -282,6 +282,9 @@ leaders <- function(stat, .ip = 0){
   
 }
 
+
+
+# APP ----
   shiny::shinyApp(
 # Page ----
     ui = bs4DashPage(
@@ -290,7 +293,7 @@ leaders <- function(stat, .ip = 0){
       controlbar_overlay = TRUE,
       sidebar_collapsed = TRUE,
       # Navbar ----
-      navbar = bs4DashNavbar(
+      navbar = bs4Dash::bs4DashNavbar(
         status = "danger",
         border = TRUE,
         controlbarIcon = "th",
@@ -651,7 +654,7 @@ leaders <- function(stat, .ip = 0){
                        bs4Dash::bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Round Robin", 
+                         title = "Postemporada", 
                          DT::dataTableOutput('Prr_team')
                          )
                       )
@@ -688,7 +691,7 @@ leaders <- function(stat, .ip = 0){
                               bs4Card(
                                 closable = FALSE,
                                 width = NULL,
-                                title = "Round Robin",
+                                title = "Postemporada",
                                 DT::dataTableOutput('Brr_team')
                               )
                             )
@@ -748,7 +751,7 @@ leaders <- function(stat, .ip = 0){
                               bs4Dash::bs4Card(
                                 closable = FALSE,
                                 width = NULL,
-                                title = "Round Robin",
+                                title = "Postemporada",
                                 DT::dataTableOutput('picheo_rr_sm')
                                 )
                               )
@@ -886,7 +889,7 @@ leaders <- function(stat, .ip = 0){
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "Round Robin",
+                             title = "Postemporada",
                              DT::dataTableOutput('picheo_jugador_rr')
                              ),
                            br(),
@@ -1084,7 +1087,7 @@ leaders <- function(stat, .ip = 0){
                            bs4Card(
                              closable = FALSE,
                              width = NULL,
-                             title = "Round Robin",
+                             title = "Postemporada",
                              DT::dataTableOutput('bat_rr')
                            ),
                            br(),
@@ -1262,14 +1265,14 @@ leaders <- function(stat, .ip = 0){
                            )
                          )
                   ),
-              # Stats by round Robin ----
+              # Stats by Postemporada ----
               br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Roun Robin",
+                         title = "Postemporada",
                          DT::dataTableOutput('info_position_rr_pit')
                          )
                        )
@@ -1316,14 +1319,14 @@ leaders <- function(stat, .ip = 0){
                        )
                     )
                   ),
-              # Stats by round robin ----
+              # Stats by Postemporada ----
               br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Round Robin",
+                         title = "Postemporada",
                          DT::dataTableOutput('info_position_rr_bat')
                          )
                        )
@@ -1385,7 +1388,7 @@ leaders <- function(stat, .ip = 0){
                        bs4Dash::bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Round Robin",
+                         title = "Postemporada",
                          DT::dataTableOutput('picheo_rr_country')
                          )
                        )
@@ -1447,7 +1450,7 @@ leaders <- function(stat, .ip = 0){
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Round Robin",
+                         title = "Postemporada",
                          DT::dataTableOutput('bateo_rr_country')
                          )
                        )
@@ -1571,14 +1574,14 @@ leaders <- function(stat, .ip = 0){
                        )
                 )
               ),
-              # Round Robin ----
+              # Postemporada ----
               br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Round Robin",
+                         title = "Postemporada",
                          DT::dataTableOutput('versus_rr_pit')
                        )
                 )
@@ -1622,14 +1625,14 @@ leaders <- function(stat, .ip = 0){
                          )
                   )
                 ),
-              # Round Robin ----
+              # Postemporada ----
               br(),
               fluidRow(
                 column(12,
                        bs4Card(
                          closable = FALSE,
                          width = NULL,
-                         title = "Round Robin",
+                         title = "Postemporada",
                          DT::dataTableOutput('versus_rr_bat')
                        )
                 )
@@ -2670,249 +2673,249 @@ leaders <- function(stat, .ip = 0){
           )
         ),
         # Advanced Search ----
-        tabItem(
-          tabName = 'busqueda',
-          tabsetPanel(
-            id = "tabset18",
-            side = "left",
-            # Picheo ----
-            tabPanel(
-              tabName = 'Picheo',
-              br(),
-              fluidRow(
-                box(
-                  title = h2('Parametros de busqueda', align = "center"),
-                  width = 12,
-                  collapsible = FALSE,
-                  closable = FALSE,
-                  fluidRow(
-                    # 1 ----
-                    column(2,
-                           pickerInput(
-                           inputId = "ronda",
-                           label = "Ronda:", 
-                           choices = c("regular" , "Round Robin", "Finales"),
-                           selected = "Finales"
-                         ),
-                         pickerInput(
-                           inputId = "desde_p",
-                           label = "Desde:", 
-                           # choices = attr(UScitiesD, "Labels"),
-                           choices = temporadas_asc,
-                           options = list(
-                             `live-search` = TRUE)
-                         ),
-                         pickerInput(
-                           inputId = "hasta_p",
-                           label = "Hasta:", 
-                           choices = temporadas,
-                           options = list(
-                             `live-search` = TRUE)
-                         )
-                       ),
-                    # 2 ----
-                column(4,
-                       fluidRow(
-                         column(
-                           width = 12,
-                           pickerInput(
-                             inputId = "Id049",
-                             label = "País de Nacimiento:", 
-                             choices = c("Nacido en", "No Nacido en"),
-                             selected = "Nacido en"
-                           ),
-                           pickerInput(
-                             inputId = "Id080",
-                             label = "País:",
-                             # choices = c("Venezuela", "USA", "Cuba", "Republica Dominicana"),
-                             choices = .paises_pitching,
-                             inline = FALSE,
-                             options = list(
-                               `live-search` = TRUE)
-                             ),
-                           pickerInput(
-                             inputId = "Id086",
-                             label = "Lanza", 
-                             choices = c("Derecha", "Izquierda", "Indistinto"),
-                             selected = "Indistinto",
-                             options = list(
-                               `live-search` = TRUE)
-                             )
-                           )
-                         )
-                       ),
-                    # 3 ----
-                column(4,
-                       # 1 criteria ----
-                       fluidRow(
-                         column(4,
-                             pickerInput(
-                               inputId = "Id086",
-                               label = "Criterio 1:", 
-                               # choices = c("W" = "w", "L" = "l", "GS" = "gs", "SO" = "so", "WHIP" = "whip"),
-                               choices = c("w", "l", "gs", "so", "whip"),
-                               selected = "W",
-                               options = list(
-                                 `live-search` = TRUE)
-                               )
-                             ),
-                           column(3,
-                                  pickerInput(
-                                    inputId = "Id076",
-                                    label = " ",
-                                    choices = c(">=", "<=", "="),
-                                    selected = "W",
-                                    options = list(
-                                      `live-search` = TRUE)
-                                    )
-                                  ),
-                           column(3,
-                                  textInput(
-                                    "criteria_1",
-                                    label = " "
-                                    ) 
-                                  )
-                           ),
-                       # 2 Criteria ----
-                       fluidRow(
-                         column(4,
-                                pickerInput(
-                                  inputId = "Id086",
-                                  label = "Criterio 2:", 
-                                  choices = c("W", "L", "GS", "SO", "WHIP"),
-                                  selected = "W",
-                                  options = list(
-                                    `live-search` = TRUE)
-                                )
-                         ),
-                         column(3,
-                                pickerInput(
-                                  inputId = "Id086",
-                                  label = " ",
-                                  choices = c(">=", "<=", "="),
-                                  selected = "W",
-                                  options = list(
-                                    `live-search` = TRUE)
-                                )
-                         ),
-                         column(3,
-                                textInput(
-                                  "criteria_2", 
-                                  " ", 
-                                  value = " "
-                                  ) 
-                                )
-                         ),
-                       # 3 Criteria ----
-                       fluidRow(
-                         column(4,
-                                pickerInput(
-                                  inputId = "Id086",
-                                  label = "Criterio 3:", 
-                                  choices = c("W", "L", "GS", "SO", "WHIP"),
-                                  selected = "W",
-                                  options = list(
-                                    `live-search` = TRUE)
-                                )
-                         ),
-                         column(3,
-                                pickerInput(
-                                  inputId = "Id086",
-                                  label = " ",
-                                  choices = c(">=", "<=", "="),
-                                  selected = "W",
-                                  options = list(
-                                    `live-search` = TRUE)
-                                )
-                         ),
-                         column(3,
-                                textInput(
-                                  "criteria_3", 
-                                  " ", 
-                                  value = " "
-                                  ) 
-                           )
-                         ),
-                       # 4 criteria ----
-                       fluidRow(
-                         column(4,
-                                pickerInput(
-                                  inputId = "Id086",
-                                  label = "Criterio 4:", 
-                                  choices = c("W", "L", "GS", "SO", "WHIP"),
-                                  selected = "W",
-                                  options = list(
-                                    `live-search` = TRUE)
-                                )
-                         ),
-                         column(3,
-                                pickerInput(
-                                  inputId = "Id086",
-                                  label = " ",
-                                  choices = c(">=", "<=", "="),
-                                  selected = "W",
-                                  options = list(
-                                    `live-search` = TRUE)
-                                )
-                         ),
-                         column(3,
-                                textInput(
-                                  "criteria_4", 
-                                  " ", 
-                                  value = " "
-                                  ) 
-                           )
-                         )
-                       )
-                    ),
-                # Search Icon ----
-                fluidRow(
-                  column(8,
-                         fluidRow(
-                           column(2),
-                           column(8,
-                                  actionBttn(
-                                    inputId = "btn_searh_pit",
-                                    label = "Buscar", 
-                                    style = "material-flat",
-                                    color = "primary",
-                                    icon = icon("search-plus"),
-                                    block = FALSE
-                                  )
-                           ),
-                           column(2)
-                           )
-                         )
-                    )
-                  )
-                ),
-              br(),
-              br(),
-              # Final table search ----
-              fluidRow(
-                column(12,
-                       bs4Dash::bs4Box(
-                         width = 12,
-                         # higth = '1900px',
-                         collapsible = TRUE,
-                         title = "Busqueda Avanzada",
-                         DT::dataTableOutput('advance_pitching')
-                         )
-                       )
-                )
-              ),
-            # Bateo ----
-            tabPanel(
-              tabName = 'Bateo',
-              br()
-              )
-            )
-          ),
+        # tabItem(
+        #   tabName = 'busqueda',
+        #   tabsetPanel(
+        #     id = "tabset18",
+        #     side = "left",
+        #     # Picheo ----
+        #     tabPanel(
+        #       tabName = 'Picheo',
+        #       br(),
+        #       fluidRow(
+        #         box(
+        #           title = h2('Parametros de busqueda', align = "center"),
+        #           width = 12,
+        #           collapsible = FALSE,
+        #           closable = FALSE,
+        #           fluidRow(
+        #             # 1 ----
+        #             column(2,
+        #                    pickerInput(
+        #                    inputId = "ronda",
+        #                    label = "Ronda:", 
+        #                    choices = c("regular" , "Postemporada", "Finales"),
+        #                    selected = "Finales"
+        #                  ),
+        #                  pickerInput(
+        #                    inputId = "desde_p",
+        #                    label = "Desde:", 
+        #                    # choices = attr(UScitiesD, "Labels"),
+        #                    choices = temporadas_asc,
+        #                    options = list(
+        #                      `live-search` = TRUE)
+        #                  ),
+        #                  pickerInput(
+        #                    inputId = "hasta_p",
+        #                    label = "Hasta:", 
+        #                    choices = temporadas,
+        #                    options = list(
+        #                      `live-search` = TRUE)
+        #                  )
+        #                ),
+        #             # 2 ----
+        #         column(4,
+        #                fluidRow(
+        #                  column(
+        #                    width = 12,
+        #                    pickerInput(
+        #                      inputId = "Id049",
+        #                      label = "País de Nacimiento:", 
+        #                      choices = c("Nacido en", "No Nacido en"),
+        #                      selected = "Nacido en"
+        #                    ),
+        #                    pickerInput(
+        #                      inputId = "Id080",
+        #                      label = "País:",
+        #                      # choices = c("Venezuela", "USA", "Cuba", "Republica Dominicana"),
+        #                      choices = .paises_pitching,
+        #                      inline = FALSE,
+        #                      options = list(
+        #                        `live-search` = TRUE)
+        #                      ),
+        #                    pickerInput(
+        #                      inputId = "Id086",
+        #                      label = "Lanza", 
+        #                      choices = c("Derecha", "Izquierda", "Indistinto"),
+        #                      selected = "Indistinto",
+        #                      options = list(
+        #                        `live-search` = TRUE)
+        #                      )
+        #                    )
+        #                  )
+        #                ),
+        #             # 3 ----
+        #         column(4,
+        #                # 1 criteria ----
+        #                fluidRow(
+        #                  column(4,
+        #                      pickerInput(
+        #                        inputId = "Id086",
+        #                        label = "Criterio 1:", 
+        #                        # choices = c("W" = "w", "L" = "l", "GS" = "gs", "SO" = "so", "WHIP" = "whip"),
+        #                        choices = c("w", "l", "gs", "so", "whip"),
+        #                        selected = "W",
+        #                        options = list(
+        #                          `live-search` = TRUE)
+        #                        )
+        #                      ),
+        #                    column(3,
+        #                           pickerInput(
+        #                             inputId = "Id076",
+        #                             label = " ",
+        #                             choices = c(">=", "<=", "="),
+        #                             selected = "W",
+        #                             options = list(
+        #                               `live-search` = TRUE)
+        #                             )
+        #                           ),
+        #                    column(3,
+        #                           textInput(
+        #                             "criteria_1",
+        #                             label = " "
+        #                             ) 
+        #                           )
+        #                    ),
+        #                # 2 Criteria ----
+        #                fluidRow(
+        #                  column(4,
+        #                         pickerInput(
+        #                           inputId = "Id086",
+        #                           label = "Criterio 2:", 
+        #                           choices = c("W", "L", "GS", "SO", "WHIP"),
+        #                           selected = "W",
+        #                           options = list(
+        #                             `live-search` = TRUE)
+        #                         )
+        #                  ),
+        #                  column(3,
+        #                         pickerInput(
+        #                           inputId = "Id086",
+        #                           label = " ",
+        #                           choices = c(">=", "<=", "="),
+        #                           selected = "W",
+        #                           options = list(
+        #                             `live-search` = TRUE)
+        #                         )
+        #                  ),
+        #                  column(3,
+        #                         textInput(
+        #                           "criteria_2", 
+        #                           " ", 
+        #                           value = " "
+        #                           ) 
+        #                         )
+        #                  ),
+        #                # 3 Criteria ----
+        #                fluidRow(
+        #                  column(4,
+        #                         pickerInput(
+        #                           inputId = "Id086",
+        #                           label = "Criterio 3:", 
+        #                           choices = c("W", "L", "GS", "SO", "WHIP"),
+        #                           selected = "W",
+        #                           options = list(
+        #                             `live-search` = TRUE)
+        #                         )
+        #                  ),
+        #                  column(3,
+        #                         pickerInput(
+        #                           inputId = "Id086",
+        #                           label = " ",
+        #                           choices = c(">=", "<=", "="),
+        #                           selected = "W",
+        #                           options = list(
+        #                             `live-search` = TRUE)
+        #                         )
+        #                  ),
+        #                  column(3,
+        #                         textInput(
+        #                           "criteria_3", 
+        #                           " ", 
+        #                           value = " "
+        #                           ) 
+        #                    )
+        #                  ),
+        #                # 4 criteria ----
+        #                fluidRow(
+        #                  column(4,
+        #                         pickerInput(
+        #                           inputId = "Id086",
+        #                           label = "Criterio 4:", 
+        #                           choices = c("W", "L", "GS", "SO", "WHIP"),
+        #                           selected = "W",
+        #                           options = list(
+        #                             `live-search` = TRUE)
+        #                         )
+        #                  ),
+        #                  column(3,
+        #                         pickerInput(
+        #                           inputId = "Id086",
+        #                           label = " ",
+        #                           choices = c(">=", "<=", "="),
+        #                           selected = "W",
+        #                           options = list(
+        #                             `live-search` = TRUE)
+        #                         )
+        #                  ),
+        #                  column(3,
+        #                         textInput(
+        #                           "criteria_4", 
+        #                           " ", 
+        #                           value = " "
+        #                           ) 
+        #                    )
+        #                  )
+        #                )
+        #             ),
+        #         # Search Icon ----
+        #         fluidRow(
+        #           column(8,
+        #                  fluidRow(
+        #                    column(2),
+        #                    column(8,
+        #                           actionBttn(
+        #                             inputId = "btn_searh_pit",
+        #                             label = "Buscar", 
+        #                             style = "material-flat",
+        #                             color = "primary",
+        #                             icon = icon("search-plus"),
+        #                             block = FALSE
+        #                           )
+        #                    ),
+        #                    column(2)
+        #                    )
+        #                  )
+        #             )
+        #           )
+        #         ),
+        #       br(),
+        #       br(),
+        #       # Final table search ----
+        #       fluidRow(
+        #         column(12,
+        #                bs4Dash::bs4Box(
+        #                  width = 12,
+        #                  # higth = '1900px',
+        #                  collapsible = TRUE,
+        #                  title = "Busqueda Avanzada",
+        #                  DT::dataTableOutput('advance_pitching')
+        #                  )
+        #                )
+        #         )
+        #       ),
+        #     # Bateo ----
+        #     tabPanel(
+        #       tabName = 'Bateo',
+        #       br()
+        #       )
+        #     )
+        #   )
         # About us ----
         tabItem(
           tabName = 'nosotros',
           h4('NOSOTROS',
-             align = "center", style = " color: #0d3583; 
+             align = "center", style = " color: #0d3583;
                                     text-transform: uppercase;
                                     text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);"),
           br(),
@@ -2924,21 +2927,21 @@ leaders <- function(stat, .ip = 0){
                    iburones de la Guaira de forma fácil, rápida y sin mucha búsqueda... Es por ello que el creador de TibuStats,",
                   tags$a(href = "https://ruben-lopez.shinyapps.io/Portfolio/", target = "_blank", "Rubén López"),
                    "decidió iniciar la creación de una opción web de TibuStats.", align = "justify"),
-                  
+
                   tags$p("Para ello, se extrajo un número importante de registros históricos de diferentes fuentes de dato.
-                         TibuStats es un lugar único de estadísticas de jugadores que han pasado por Tiburones de la Guaira y  
+                         TibuStats es un lugar único de estadísticas de jugadores que han pasado por Tiburones de la Guaira y
                          un regalo para la fanaticada, y una oportunidad especial para celebrar los 60 aniversarios del equipo.",
                          align = "justify"),
 
-                   
-                  tags$p("Esta Aplicación web consta de más de 60 años de historia recopilada de dos fuentes gratuitas de 
+
+                  tags$p("Esta Aplicación web consta de más de 60 años de historia recopilada de dos fuentes gratuitas de
                    información:", align = "justify"),
                   tags$div(
                     tags$ul(
                       tags$li(
                         tags$a(href = "https://pelotabinaria.com.ve/beisbol/", target = "_blank", "Pelota Binaria"),
                         tags$div(
-                          tags$p("Se extrajo información de Tiburones de la Guaira desde la temporada 196-63 hasta la 
+                          tags$p("Se extrajo información de Tiburones de la Guaira desde la temporada 196-63 hasta la
                                  temporada 2014-15.",
                                  align = "justify")
                         )
@@ -2956,42 +2959,41 @@ leaders <- function(stat, .ip = 0){
                   ),
             # Ruben Lopez -----
             column(5,
-                   box(
-                     width = 12,
-                     collapsed = FALSE,
-                     collapsible = FALSE,
-                     closable = FALSE,
-                     socialBox(
-                       collapsible = FALSE,
-                       collapsed = FALSE,
-                       closable = FALSE,
-                       title = userBlock(
-                         image = "Ruben_1.jpeg",
-                         title = "Rubén López",
-                         subtitle = " "
-                       ),
-                       socialButton(
-                         href = "https://www.instagram.com/rubencholop/",
-                         icon = icon("twitter")
-                       ),
-                       socialButton(
-                         href = "https://www.instagram.com/rubencholop/",
-                         icon = icon("instagram")
-                       ),
-                       footer = "Data Scientist"
-                       )
-                     ),
-                   br(),
-                   br(),
+                   # box(
+                   #   width = 12,
+                   #   collapsed = FALSE,
+                   #   collapsible = FALSE,
+                   #   closable = FALSE,
+                   #   socialBox(
+                   #     collapsible = FALSE,
+                   #     collapsed = FALSE,
+                   #     closable = FALSE,
+                   #     title = userBlock(
+                   #       image = "Ruben_1.jpeg",
+                   #       title = "Rubén López",
+                   #       subtitle = " "
+                   #     ),
+                   #     socialButton(
+                   #       href = "https://www.instagram.com/rubencholop/",
+                   #       icon = icon("twitter")
+                   #     ),
+                   #     socialButton(
+                   #       href = "https://www.instagram.com/rubencholop/",
+                   #       icon = icon("instagram")
+                   #     ),
+                   #     footer = "Data Scientist"
+                   #     )
+                   #   ),
+                   # br(),
+                   # br(),
                    tags$p("Especial agradecimiento a las personas que creyeron en la idea y en el proyecto desde sus inicios a medido
                    de 2020, son parte importante de este espacio por sus ideas y propuestas para que cada vez fuera mejor.",
                           align = "justify")
-                   
+
                    )
             # End ----
             )
           )
-
         )
         # End body ----
       )
@@ -4502,7 +4504,7 @@ leaders <- function(stat, .ip = 0){
         
       })
       
-      # Table picheo round robin by team ----
+      # Table picheo Postemporada by team ----
       output$Prr_team <- DT::renderDataTable({
         
         # Data ----
